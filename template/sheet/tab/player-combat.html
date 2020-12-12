@@ -1,0 +1,176 @@
+<div class="combat">
+    <div class="wrapper-left">
+        <div class="abilities">
+            <h1>{{localize "TITLE.ABILITIES"}}</h1>
+            <div class="wrapper">
+                <div class="name">{{localize "HEADER.NAME"}}</div>
+                <div class="bonus">{{localize "HEADER.BONUS"}}</div>
+                <div class="total">{{localize "HEADER.TOTAL"}}</div>
+            </div>
+            <div class="wrapper">
+                <div class="initiative">
+                    <label>{{localize "HEADER.INITIATIVE"}}</label>
+                    <input name="data.combat.initiative.bonus" type="number" value="{{data.combat.initiative.bonus}}" data-dtype="Number" />
+                    <input type="number" value="{{data.combat.initiative.total}}" data-dtype="Number" disabled />
+                </div>
+                <div class="natural-awareness">
+                    <label>{{localize "HEADER.NATURAL_AWARENESS"}}</label>
+                    <input name="data.combat.naturalAwareness.bonus" type="number" value="{{data.combat.naturalAwareness.bonus}}" data-dtype="Number" />
+                    <input type="number" value="{{data.combat.naturalAwareness.total}}" data-dtype="Number" disabled />
+                </div>
+                <div class="melee">
+                    <label>{{localize "HEADER.MELEE"}}</label>
+                    <input name="data.combat.melee.bonus" type="number" value="{{data.combat.melee.bonus}}" data-dtype="Number" />
+                    <input type="text" value="{{combatAbilities data.combat.melee.total}}" disabled />
+                </div>
+                <div class="accuracy">
+                    <label>{{localize "HEADER.ACCURACY"}}</label>
+                    <input name="data.combat.accuracy.bonus" type="number" value="{{data.combat.accuracy.bonus}}" data-dtype="Number" />
+                    <input type="text" value="{{combatAbilities data.combat.accuracy.total}}" disabled />
+                </div>
+                <div class="defense">
+                    <label>{{localize "HEADER.DEFENSE"}}</label>
+                    <input name="data.combat.defense.bonus" type="number" value="{{data.combat.defense.bonus}}" data-dtype="Number" />
+                    <input type="text" value="{{combatAbilities data.combat.defense.total}}" disabled />
+                </div>
+                <div class="armour">
+                    <label>{{localize "HEADER.ARMOUR"}}</label>
+                    <input name="data.combat.armour.bonus" type="number" value="{{data.combat.armour.bonus}}" data-dtype="Number" />
+                    <input type="number" value="{{data.combat.armour.total}}" data-dtype="Number" disabled />
+                </div>
+                <div class="speed">
+                    <label>{{localize "HEADER.SPEED"}}</label>
+                    <input name="data.combat.speed" type="text" value="{{data.combat.speed}}" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper-right">
+        <div class="resources">
+            <h1>{{localize "TITLE.RESOURCES"}}</h1>
+            <div class="wrapper">
+                <div class="name">{{localize "HEADER.NAME"}}</div>
+                <div class="current">{{localize "HEADER.CURRENT"}}</div>
+                <div class="bonus">{{localize "HEADER.BONUS"}}</div>
+                <div class="total">{{localize "HEADER.TOTAL"}}</div>
+            </div>
+            <div class="wrapper">
+                <div class="toughness">
+                    <label>{{localize "HEADER.TOUGHNESS"}}</label>
+                    <input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" />
+                    <input name="data.combat.health.toughness.bonus" type="number" value="{{data.combat.health.toughness.bonus}}" data-dtype="Number" />
+                    <input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled />
+                </div>
+                <div class="mettle">
+                    <label>{{localize "HEADER.METTLE"}}</label>
+                    <input name="data.combat.mettle.value" type="number" value="{{data.combat.mettle.value}}" data-dtype="Number" />
+                    <input name="data.combat.mettle.bonus" type="number" value="{{data.combat.mettle.bonus}}" data-dtype="Number" />
+                    <input type="number" value="{{data.combat.mettle.total}}" data-dtype="Number" disabled />
+                </div>
+                <div class="wounds">
+                    <label>{{localize "HEADER.WOUND"}}</label>
+                    {{#if data.combat.health.wounds.deadly}}
+                    <input class="deadly" type="text" value="{{data.combat.health.wounds.value}}" disabled />
+                    {{else}}
+                    <input type="text" value="{{data.combat.health.wounds.value}}" disabled />
+                    {{/if}}
+                    <input name="data.combat.health.wounds.bonus" type="number" value="{{data.combat.health.wounds.bonus}}" data-dtype="Number" />
+                    <input type="text" value="{{data.combat.health.wounds.max}}" disabled />
+                </div>
+            </div>
+            <div class="item-list">
+                <div class="item-header">
+                    <b class="name">{{localize "WOUND.NAME"}}</b>
+                    <b class="damage">{{localize "WOUND.DAMAGE"}}</b>
+                    <div class="button">
+                        <a class="item-create" title="Add Wound" data-type="wound"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+                <div class="items">
+                    {{#each actor.items as |item|}}
+                    {{#if item.isWound}}
+                    <div class="wound item" data-item-id="{{item._id}}">
+                        <div class="name">
+                            <div class="image-container">
+                                <div class="image" style="background-image: url('{{item.img}}')"></div>
+                            </div>
+                            <div class="item-edit">{{item.name}}</div>
+                        </div>
+                        <div class="damage">{{item.data.damage}}</div>
+                        <div class="button">
+                            <a class="item-control item-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                    {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="weapons">
+        <h1>{{localize "TITLE.WEAPONS"}}</h1>
+        <div class="item-list">
+            <div class="item-header">
+                <b class="name">{{localize "WEAPON.NAME"}}</b>
+                <b class="pool">{{localize "HEADER.POOL"}}</b>
+                <b class="focus">{{localize "HEADER.FOCUS"}}</b>
+                <b class="damage">{{localize "WEAPON.DAMAGE"}}</b>
+                <b class="traits">{{localize "WEAPON.TRAITS"}}</b>
+            </div>
+            <div class="items">
+                {{#each actor.items as |item|}}
+                {{#if item.isAttack}}
+                {{#if item.isActive}}
+                <div class="weapon item" data-item-id="{{item._id}}">
+                    <div class="name">
+                        <div class="image-container">
+                            <div class="image" style="background-image: url('{{item.img}}')"></div>
+                        </div>
+                        <div class="roll-weapon">{{item.name}}</div>
+                    </div>
+                    <div class="pool">{{item.data.pool}}</div>
+                    <div class="focus">{{item.data.focus}}</div>
+                    <div class="damage">{{item.data.damage}}</div>
+                    <div class="traits">{{item.data.traits}}</div>
+                </div>
+                {{/if}}
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="powers">
+        <h1>{{localize "TITLE.POWERS"}}</h1>
+        <div class="item-list">
+            <div class="item-header">
+                <b class="name">{{localize "POWER.NAME"}}</b>
+                <b class="dn">{{localize "POWER.DN_COST"}}</b>
+                <b class="target">{{localize "POWER.TARGET"}}</b>
+                <b class="range">{{localize "POWER.RANGE"}}</b>
+                <b class="duration">{{localize "POWER.DURATION"}}</b>
+            </div>
+            <div class="items">
+                {{#each actor.items as |item|}}
+                {{#if item.isPower}}
+                <div class="power item" data-item-id="{{item._id}}">
+                    <div class="name">
+                        <div class="image-container">
+                            <div class="image" style="background-image: url('{{item.img}}')"></div>
+                        </div>
+                        <div class="roll-power">{{item.name}}</div>
+                    </div>
+                    {{#if item.isSpell}}
+                    <div class="dn">{{item.data.dn}}</div>
+                    {{else}}
+                    <div class="dn">{{item.data.cost}}</div>
+                    {{/if}}
+                    <div class="target">{{item.data.target}}</div>
+                    <div class="range">{{item.data.range}}</div>
+                    <div class="duration">{{item.data.duration}}</div>
+                </div>
+                {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

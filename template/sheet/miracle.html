@@ -1,0 +1,66 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="miracle">
+        <div class="sheet-header">
+            <div class="avatar">
+                <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+            </div>
+            <div class="wrapper-column">
+                <div class="name">
+                    <label>{{localize "MIRACLE.NAME"}}</label>
+                    <input name="name" type="text" value="{{item.name}}"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="sheet-tabs tabs" data-group="primary">
+            <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+            <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
+        </div>
+
+        <div class="sheet-body">
+            <div class="tab" data-group="primary" data-tab="description">
+                <div class="description">
+                    <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                </div>
+            </div>
+            <div class="tab" data-group="primary" data-tab="stats">
+                <div class="stats">
+                    <h1>{{localize "TITLE.STATS"}}</h1>
+                    <div class="wrapper">
+                        <label>{{localize "MIRACLE.GOD"}}</label>
+                        <input name="data.god" type="text" value="{{data.god}}"/>
+                    </div>
+                    <div class="wrapper">
+                        <label>{{localize "MIRACLE.COST"}}</label>
+                        <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number"/>
+                    </div>
+                    <div class="wrapper">
+                        <label>{{localize "MIRACLE.TARGET"}}</label>
+                        <input name="data.target" type="text" value="{{data.target}}" />
+                    </div>
+                    <div class="wrapper">
+                        <label>{{localize "MIRACLE.RANGE"}}</label>
+                        <select name="data.range">
+                            {{#select data.range}}
+                                <option value="self">{{localize "RANGE.SELF"}}</option>
+                                <option value="close">{{localize "RANGE.CLOSE"}}</option>
+                                <option value="short">{{localize "RANGE.SHORT"}}</option>
+                                <option value="medium">{{localize "RANGE.MEDIUM"}}</option>
+                                <option value="long">{{localize "RANGE.LONG"}}</option>
+                            {{/select}}
+                        </select>
+                    </div>
+                    <div class="wrapper">
+                        <label>{{localize "MIRACLE.DURATION"}}</label>
+                        <input name="data.duration" type="text" value="{{data.duration}}"/>
+                    </div>
+                    <div class="wrapper">
+                        <label>{{localize "MIRACLE.EFFECT"}}</label>
+                        <input name="data.effect" type="text" value="{{data.effect}}"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

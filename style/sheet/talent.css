@@ -1,0 +1,45 @@
+.age-of-sigmar-soulbound.sheet.item .talent {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .description {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    margin-top: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .description .editor {
+    height: 166px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    flex-wrap: wrap;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .wrapper .requirement,
+.age-of-sigmar-soulbound.sheet.item .talent .wrapper .effect {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .wrapper .effect {
+    margin-top: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .wrapper label {
+    width: 30%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .talent .wrapper input {
+    width: 70%;
+}

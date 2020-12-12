@@ -1,0 +1,89 @@
+.age-of-sigmar-soulbound.sheet.actor .party .members {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    margin: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-top: none;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor,
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor-content {
+    font-family: var(--font-text);
+    font-size: 14px;
+    color: var(--color-text);
+    height: 100%;
+    width: 100%;
+    background: url(../../../asset/image/input.jpg) repeat;
+    box-shadow: inset 0 0 6px var(--color-border);
+    font-weight: bold;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor {
+    border: 1px solid var(--color-border);
+    height: 496px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor-content {
+    padding: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor .tox .tox-tbtn svg {
+    fill: var(--color-title);
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor .tox .tox-toolbar__primary {
+    background: url(../../../asset/image/foreground.jpg) repeat;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .editor .tox .tox-tbtn svg:hover {
+    fill: var(--color-active);
+    text-shadow: 0 0 10px var(--color-active);
+    box-shadow: none;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .items {
+    height: 200px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .item-header .fas {
+    color: var(--color-header);
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .item-header b {
+    justify-content: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .name {
+    display: flex;
+    flex-basis: 40%;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .archetype,
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .species {
+    display: flex;
+    flex-basis: 25%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .button {
+    flex-basis: 10%;
+    text-align: center;
+    font-size: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .members .wrapper .item-list .member {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}

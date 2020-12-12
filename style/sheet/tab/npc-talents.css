@@ -1,0 +1,65 @@
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles {
+    margin-top: 15px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .items,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .items,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .items {
+    height: 188px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .item-header .fas,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .item-header .fas,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .item-header .fas {
+    color: var(--color-header);
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .item-header b,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .item-header b,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .item-header b {
+    justify-content: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .name,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .name,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .name {
+    display: flex;
+    flex-basis: 30%;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .effect,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .effect,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .effect {
+    display: flex;
+    flex-basis: 60%;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .button,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .button,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .button {
+    flex-basis: 10%;
+    text-align: center;
+    font-size: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .npc .power .talents .item-list .talent,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .spells .item-list .spell,
+.age-of-sigmar-soulbound.sheet.actor .npc .power .miracles .item-list .miracle {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}

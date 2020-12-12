@@ -1,0 +1,321 @@
+/*
+** Actor
+ */
+
+.age-of-sigmar-soulbound.sheet.actor .window-content {
+    background: url(../../asset/image/background.jpg) repeat;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .window-content .editable {
+    flex: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .foreground {
+    background: url(../../asset/image/foreground.jpg) repeat;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .border {
+    border-bottom: 5px solid transparent;
+    border-image: url(../../asset/image/foreground.jpg) 10 / 5px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor h1 {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+    border: 0 none;
+    background: url(../../asset/image/foreground.jpg) repeat;
+    color: var(--color-title);
+    font-family: var(--font-text);
+    font-weight: bold;
+}
+
+.age-of-sigmar-soulbound.sheet.actor label {
+    font-size: 14px;
+    color: var(--color-header);
+    font-family: var(--font-text);
+    font-weight: bold;
+    background: url(../../asset/image/header.jpg) repeat;
+    text-align: center;
+    padding: 5px;
+    height: 26px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor input[type="text"],
+.age-of-sigmar-soulbound.sheet.actor input[type="number"] {
+    background: url(../../asset/image/input.jpg) repeat;
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 6px var(--color-border);
+    color: var(--color-text);
+    font-size: 14px;
+    line-height: 16px;
+    flex-grow: 1;
+    font-family: var(--font-text);
+    border-left: 0;
+    border-radius: 0;
+    -moz-appearance: textfield;
+    text-align: center;
+    min-width: 0;
+    height: 26px;
+    font-weight: bold;
+}
+
+.age-of-sigmar-soulbound.sheet.actor input[type="number"]::-webkit-outer-spin-button,
+.age-of-sigmar-soulbound.sheet.actor input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .item-list {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-text);
+    font-size: 14px;
+    line-height: 16px;
+    min-height: 0;
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .item-list .item-header {
+    display: flex;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--color-header);
+    font-family: var(--font-text);
+    background: url(../../asset/image/header.jpg) repeat;
+    text-align: center;
+    padding: 5px;
+    margin: 5px 0;
+    border: none;
+    border-radius: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .item-list .items {
+    overflow-y: scroll;
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .item-list .items .item {
+    align-items: center;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .image-container {
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 6px var(--color-border);
+    margin-right: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .item-edit:hover,
+.age-of-sigmar-soulbound.sheet.actor .roll-weapon:hover,
+.age-of-sigmar-soulbound.sheet.actor .roll-power:hover {
+    text-shadow: 0 0 10px var(--color-active);
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .image-container .image {
+    background-size: 26px;
+    background-repeat: no-repeat;
+    height: 26px;
+    width: 26px;
+}
+
+/*
+** Item
+ */
+
+.age-of-sigmar-soulbound.sheet.item .window-content {
+    background: url(../../asset/image/background.jpg) repeat;
+}
+
+.age-of-sigmar-soulbound.sheet.item .window-content .editable {
+    flex: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.item h1 {
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    margin: 0;
+    text-align: center;
+    border: 0 none;
+    background: url(../../asset/image/foreground.jpg) repeat;
+    color: var(--color-title);
+    font-family: var(--font-text);
+    font-weight: bold;
+}
+
+.age-of-sigmar-soulbound.sheet.item label {
+    font-size: 14px;
+    color: var(--color-header);
+    font-family: var(--font-text);
+    font-weight: bold;
+    background: url(../../asset/image/header.jpg) repeat;
+    text-align: center;
+    padding: 5px;
+    height: 26px;
+    width: 100px;
+}
+
+.age-of-sigmar-soulbound.sheet.item input[type="text"],
+.age-of-sigmar-soulbound.sheet.item input[type="number"],
+.age-of-sigmar-soulbound.sheet.item select {
+    background: url(../../asset/image/input.jpg) repeat;
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 6px var(--color-border);
+    color: var(--color-text);
+    font-size: 14px;
+    line-height: 16px;
+    flex-grow: 1;
+    font-family: var(--font-text);
+    border-left: 0;
+    border-radius: 0;
+    -moz-appearance: textfield;
+    text-align: center;
+    min-width: 0;
+    font-weight: bold;
+    height: 26px;
+    text-align-last:center;
+    width: 100px;
+}
+
+.age-of-sigmar-soulbound.sheet.item input[type="checkbox"] {
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 6px var(--color-border);
+    color: var(--color-text);
+    border-radius: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.item input[type="number"]::-webkit-outer-spin-button,
+.age-of-sigmar-soulbound.sheet.item input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.age-of-sigmar-soulbound.sheet.item .window-content .fas {
+    color: var(--color-text);
+}
+
+.age-of-sigmar-soulbound.sheet.item .window-content .fas:hover,
+.age-of-sigmar-soulbound.sheet.item .window-content .button:hover,
+.age-of-sigmar-soulbound.sheet.item .window-content .item-control:hover {
+    text-shadow: 0 0 10px var(--color-active);
+    box-shadow: none;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header .avatar {
+    border: 1px solid var(--color-border);
+    box-shadow: inset 0 0 6px var(--color-border);
+    flex: 0 0 auto;
+    height: 100px;
+    width: 100px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header .avatar img {
+    border: 0 none;
+    width: 100px;
+    height: 100px;
+    margin: auto;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header .avatar img:hover {
+    box-shadow: none;
+    cursor: pointer;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header .wrapper-column {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    flex-grow: 1;
+    justify-content: space-evenly;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header .name {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-header .name input {
+    height: 26px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .editor,
+.age-of-sigmar-soulbound.sheet.item .editor-content {
+    font-family: var(--font-text);
+    font-size: 14px;
+    color: var(--color-text);
+    height: 100%;
+    width: 100%;
+    background: url(../../asset/image/input.jpg) repeat;
+    box-shadow: inset 0 0 6px var(--color-border);
+    font-weight: bold;
+}
+
+.age-of-sigmar-soulbound.sheet.item .editor {
+    border: 1px solid var(--color-border);
+    height: 130px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .editor-content {
+    padding: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .editor .tox .tox-tbtn svg {
+    fill: var(--color-title);
+}
+
+.age-of-sigmar-soulbound.sheet.item .editor .tox .tox-toolbar__primary {
+    background: url(../../asset/image/foreground.jpg) repeat;
+}
+
+.age-of-sigmar-soulbound.sheet.item .editor .tox .tox-tbtn svg:hover {
+    fill: var(--color-active);
+    text-shadow: 0 0 10px var(--color-header);
+    box-shadow: none;
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-tabs {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    flex-basis: 100%;
+    font-size: 18px;
+    margin: 15px 0;
+    padding: 5px;
+    background: url(../../asset/image/foreground.jpg) repeat;
+    font-family: var(--font-text);
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-tabs .item {
+    color: var(--color-title);
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-tabs .item:hover {
+    color: var(--color-active);
+    text-shadow: 0 0 10px var(--color-active);
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-tabs .item.active {
+    color: var(--color-active);
+    text-shadow: 0 0 10px var(--color-header);
+}
+
+.age-of-sigmar-soulbound.sheet.item .sheet-body {
+    flex-basis: 100%;
+}

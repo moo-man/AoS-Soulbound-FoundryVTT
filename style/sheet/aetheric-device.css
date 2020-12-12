@@ -1,0 +1,45 @@
+.age-of-sigmar-soulbound.sheet.item .aetheric-device {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .description .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .description,
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .bonus {
+    height: 354px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .description .editor {
+    height: 324px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .stats .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    margin-top: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .stats .wrapper label {
+    width: 30%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .stats .wrapper input,
+.age-of-sigmar-soulbound.sheet.item .aetheric-device .stats .wrapper select {
+    width: 70%;
+}

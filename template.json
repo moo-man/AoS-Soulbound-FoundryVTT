@@ -1,0 +1,430 @@
+{
+  "Actor": {
+    "types": [
+      "player",
+      "npc",
+      "party"
+    ],
+    "templates": {
+      "attributes": {
+        "attributes": {
+          "body": {
+            "label": "ATTRIBUTE.BODY",
+            "value": 0
+          },
+          "mind": {
+            "label": "ATTRIBUTE.MIND",
+            "value": 0
+          },
+          "soul": {
+            "label": "ATTRIBUTE.SOUL",
+            "value": 0
+          }
+        }
+      },
+      "skills": {
+        "skills": {
+          "arcana": {
+            "label": "SKILL.ARCANA",
+            "training": 0,
+            "focus": 0
+          },
+          "athletics": {
+            "label": "SKILL.ATHLETICS",
+            "training": 0,
+            "focus": 0
+          },
+          "awareness": {
+            "label": "SKILL.AWARENESS",
+            "training": 0,
+            "focus": 0
+          },
+          "ballisticSkill": {
+            "label": "SKILL.BALLISTIC_SKILL",
+            "training": 0,
+            "focus": 0
+          },
+          "beastHandling": {
+            "label": "SKILL.BEAST_HANDLING",
+            "training": 0,
+            "focus": 0
+          },
+          "channelling": {
+            "label": "SKILL.CHANNELLING",
+            "training": 0,
+            "focus": 0
+          },
+          "crafting": {
+            "label": "SKILL.CRAFTING",
+            "training": 0,
+            "focus": 0
+          },
+          "determination": {
+            "label": "SKILL.DETERMINATION",
+            "training": 0,
+            "focus": 0
+          },
+          "devotion": {
+            "label": "SKILL.DEVOTION",
+            "training": 0,
+            "focus": 0
+          },
+          "dexterity": {
+            "label": "SKILL.DEXTERITY",
+            "training": 0,
+            "focus": 0
+          },
+          "entertain": {
+            "label": "SKILL.ENTERTAIN",
+            "training": 0,
+            "focus": 0
+          },
+          "fortitude": {
+            "label": "SKILL.FORTITUDE",
+            "training": 0,
+            "focus": 0
+          },
+          "guile": {
+            "label": "SKILL.GUILE",
+            "training": 0,
+            "focus": 0
+          },
+          "intimidation": {
+            "label": "SKILL.INTIMIDATION",
+            "training": 0,
+            "focus": 0
+          },
+          "intuition": {
+            "label": "SKILL.INTUITION",
+            "training": 0,
+            "focus": 0
+          },
+          "lore": {
+            "label": "SKILL.LORE",
+            "training": 0,
+            "focus": 0
+          },
+          "medicine": {
+            "label": "SKILL.MEDICINE",
+            "training": 0,
+            "focus": 0
+          },
+          "might": {
+            "label": "SKILL.MIGHT",
+            "training": 0,
+            "focus": 0
+          },
+          "nature": {
+            "label": "SKILL.NATURE",
+            "training": 0,
+            "focus": 0
+          },
+          "reflexes": {
+            "label": "SKILL.REFLEXES",
+            "training": 0,
+            "focus": 0
+          },
+          "stealth": {
+            "label": "SKILL.STEALTH",
+            "training": 0,
+            "focus": 0
+          },
+          "survival": {
+            "label": "SKILL.SURVIVAL",
+            "training": 0,
+            "focus": 0
+          },
+          "theology": {
+            "label": "SKILL.THEOLOGY",
+            "training": 0,
+            "focus": 0
+          },
+          "weaponSkill": {
+            "label": "SKILL.WEAPON_SKILL",
+            "training": 0,
+            "focus": 0
+          }
+        }
+      },
+      "currencies": {
+        "currencies": {
+          "drops": 0,
+          "phials": 0,
+          "spheres": 0
+        }
+      },
+      "combat": {
+        "combat": {
+          "mettle": {
+            "value": 0,
+            "bonus": 0
+          },
+          "health": {
+            "toughness": {
+              "value": 0,
+              "bonus": 0
+            },
+            "wounds": {
+              "bonus": 0
+            }
+          },
+          "initiative": {
+            "bonus": 0
+          },
+          "naturalAwareness": {
+            "bonus": 0
+          },
+          "melee": {
+            "bonus": 0
+          },
+          "accuracy": {
+            "bonus": 0
+          },
+          "defense": {
+            "bonus": 0
+          },
+          "armour": {
+            "bonus": 0
+          },
+          "speed": ""
+        }
+      }
+    },
+    "player": {
+      "templates": [
+        "attributes",
+        "skills",
+        "combat",
+        "currencies"
+      ],
+      "bio": {
+        "archetype": "",
+        "species": "",
+        "age": "",
+        "eyes": "",
+        "hair": "",
+        "height": "",
+        "weight": "",
+        "distinguishingFeatures": "",
+        "background": ""
+      },
+      "experience": 0,
+      "notes": ""
+    },
+    "npc": {
+      "templates": [
+        "attributes",
+        "skills",
+        "combat",
+        "currencies"
+      ],
+      "bio": {
+        "size": "",
+        "type": "",
+        "faction": "",
+        "subfaction": "",
+        "role": ""
+      },
+      "notes": ""
+    },
+    "party": {
+      "soulfire": {
+        "value": 0,
+        "max": 0
+      },
+      "doom": 0,
+      "notes": ""
+    }
+  },
+  "Item": {
+    "types": [
+      "aethericDevice",
+      "ally",
+      "armour",
+      "connection",
+      "equipment",
+      "enemy",
+      "fear",
+      "goal",
+      "miracle",
+      "resource",
+      "rumour",
+      "rune",
+      "spell",
+      "talent",
+      "threat",
+      "weapon",
+      "wound"
+    ],
+    "templates": {
+      "bonus": {
+        "bonus": {
+          "attributes": {
+            "body": 0,
+            "mind": 0,
+            "soul": 0
+          },
+          "skills": {
+            "arcana": 0,
+            "athletics": 0,
+            "awareness": 0,
+            "ballisticSkill": 0,
+            "beastHandling": 0,
+            "channelling": 0,
+            "crafting": 0,
+            "determination": 0,
+            "devotion": 0,
+            "dexterity": 0,
+            "entertain": 0,
+            "fortitude": 0,
+            "guile": 0,
+            "intimidation": 0,
+            "intuition": 0,
+            "lore": 0,
+            "medicine": 0,
+            "might": 0,
+            "nature": 0,
+            "reflexes": 0,
+            "stealth": 0,
+            "survival": 0,
+            "theology": 0,
+            "weaponSkill": 0
+          },
+          "combat": {
+            "mettle": 0,
+            "health": {
+              "toughness": 0,
+              "wounds": 0
+            },
+            "initiative": 0,
+            "naturalAwareness": 0,
+            "melee": 0,
+            "accuracy": 0,
+            "defense": 0,
+            "armour": 0,
+            "damage": 0
+          }
+        }
+      }
+    },
+    "aethericDevice": {
+      "templates": [
+        "bonus"
+      ],
+      "description": "",
+      "cost": "",
+      "availability": "common",
+      "power": {
+        "consumption": 0,
+        "capacity": 0
+      },
+      "requirements": "",
+      "crafting": "",
+      "damage": "",
+      "traits": "",
+      "state": "other"
+    },
+    "ally": {
+      "description": "",
+      "state": true
+    },
+    "armour": {
+      "templates": [
+        "bonus"
+      ],
+      "description": "",
+      "type": "light",
+      "cost": "",
+      "availability": "common",
+      "requirements": "",
+      "benefit": 0,
+      "traits": "",
+      "state": "other"
+    },
+    "connection": {
+      "description": ""
+    },
+    "equipment": {
+      "templates": [
+        "bonus"
+      ],
+      "description": "",
+      "cost": "",
+      "availability": "common",
+      "state": "other"
+    },
+    "enemy": {
+      "description": "",
+      "state": true
+    },
+    "fear": {
+      "description": "",
+      "state": true
+    },
+    "goal": {
+      "description": "",
+      "type": "",
+      "completed": false
+    },
+    "miracle": {
+      "cost": 0,
+      "target": "",
+      "range": "self",
+      "duration": "",
+      "description": "",
+      "effect": "",
+      "god": ""
+    },
+    "resource": {
+      "description": "",
+      "state": true
+    },
+    "rumour": {
+      "description": "",
+      "state": true
+    },
+    "rune": {
+      "templates": [
+        "bonus"
+      ],
+      "description": "",
+      "state": "other"
+    },
+    "spell": {
+      "dn": "",
+      "target": "",
+      "range": "you",
+      "duration": "",
+      "test": "",
+      "overcast": "",
+      "description": "",
+      "effect": "",
+      "lore": ""
+    },
+    "talent": {
+      "description": "",
+      "effect": "",
+      "requirement": ""
+    },
+    "threat": {
+      "description": "",
+      "state": true
+    },
+    "weapon": {
+      "templates": [
+        "bonus"
+      ],
+      "description": "",
+      "category": "melee",
+      "damage": "",
+      "availability": "common",
+      "cost": "-",
+      "traits": "",
+      "state": "other"
+    },
+    "wound": {
+      "description": "",
+      "damage": 0
+    }
+  }
+}

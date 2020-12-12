@@ -1,0 +1,103 @@
+<div class="bio">
+    <div class="physical">
+        <h1 style="text-transform: uppercase">{{localize "TITLE.PHYSICAL"}}</h1>
+        <div class="wrapper">
+            <div class="age">
+                <label>{{localize "BIO.AGE"}}</label>
+                <input name="data.bio.age" type="text" value="{{data.bio.age}}"/>
+            </div>
+            <div class="eyes">
+                <label>{{localize "BIO.EYES"}}</label>
+                <input name="data.bio.eyes" type="text" value="{{data.bio.eyes}}"/>
+            </div>
+            <div class="hair">
+                <label>{{localize "BIO.HAIR"}}</label>
+                <input name="data.bio.hair" type="text" value="{{data.bio.hair}}"/>
+            </div>
+            <div class="height">
+                <label>{{localize "BIO.HEIGHT"}}</label>
+                <input name="data.bio.height" type="text" value="{{data.bio.height}}"/>
+            </div>
+            <div class="weight">
+                <label>{{localize "BIO.WEIGHT"}}</label>
+                <input name="data.bio.weight" type="text" value="{{data.bio.weight}}"/>
+            </div>
+        </div>
+        <div class="distinguishing-features">
+            <label>{{localize "BIO.DISTINGUISHING_FEATURES"}}</label>
+            <input name="data.bio.distinguishingFeatures" type="text" value="{{data.bio.distinguishingFeatures}}"/>
+        </div>
+    </div>
+    <div class="background">
+        <h1 style="text-transform: uppercase">{{localize "BIO.BACKGROUND"}}</h1>
+        {{editor content=data.bio.background target="data.bio.background" button=true owner=owner editable=editable}}
+    </div>
+    <div class="wrapper-left">
+        <div class="goals">
+            <h1 style="text-transform: uppercase">{{localize "TITLE.GOALS"}}</h1>
+            <div class="item-list">
+            <div class="item-header">
+                <b class="name">{{localize "GOAL.NAME"}}</b>
+                <b class="type">{{localize "GOAL.TYPE"}}</b>
+                <b class="completed">{{localize "GOAL.COMPLETED"}}</b>
+                <div class="button">
+                    <a class="item-create" title="Add Goal" data-type="goal"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="items">
+                {{#each actor.items as |item|}}
+                    {{#if item.isGoal}}
+                        <div class="goal item" data-item-id="{{item._id}}">
+                            <div class="name">
+                                <div class="image-container">
+                                    <div class="image" style="background-image: url('{{item.img}}')"></div>
+                                </div>
+                                <div class="item-edit">{{item.name}}</div>
+                            </div>
+                            <div class="type">{{item.data.type}}</div>
+                            {{#if item.data.completed}}
+                                <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
+                            {{else}}
+                                <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
+                            {{/if}}
+                            <div class="button">
+                                <a class="item-control item-delete" title="Delete Goal"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+        </div>
+    </div>
+    <div class="wrapper-right">
+        <div class="connections">
+            <h1 style="text-transform: uppercase">{{localize "TITLE.CONNECTIONS"}}</h1>
+            <div class="item-list">
+                <div class="item-header">
+                    <b class="name">{{localize "CONNECTION.NAME"}}</b>
+                    <div class="button">
+                        <a class="item-create" title="Add Connection" data-type="connection"><i class="fas fa-plus"></i></a>
+                    </div>
+                </div>
+                <div class="items">
+                    {{#each actor.items as |item|}}
+                        {{#if item.isConnection}}
+                            <div class="connection item" data-item-id="{{item._id}}">
+                                <div class="name">
+                                    <div class="image-container">
+                                        <div class="image" style="background-image: url('{{item.img}}')"></div>
+                                    </div>
+                                    <div class="item-edit">{{item.name}}</div>
+                                </div>
+                                <div class="button">
+                                    <a class="item-control item-delete" title="Delete Connection"><i class="fas fa-trash"></i></a>
+                                </div>
+                            </div>
+                        {{/if}}
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

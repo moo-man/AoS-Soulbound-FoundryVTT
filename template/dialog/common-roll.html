@@ -1,0 +1,34 @@
+<div class="age-of-sigmar-soulbound dialog">
+    <div class="wrapper">
+        <label>{{localize "DIALOG.ATTRIBUTE"}}</label>
+        <select id="attribute">
+            {{#each attributes as |attribute key|}}
+                {{#if attribute.selected}}
+                    <option value="{{key}}" selected>{{localize attribute.label}}</option>
+                {{else}}
+                    <option value="{{key}}">{{localize attribute.label}}</option>
+                {{/if}}
+            {{/each}}
+        </select>
+    </div>
+    <div class="wrapper">
+        <label>{{localize "DIALOG.SKILL"}}</label>
+        <select id="skill">
+            {{#each skills as |skill key|}}
+                {{#if skill.selected}}
+                    <option value="{{key}}" selected>{{localize skill.label}}</option>
+                {{else}}
+                    <option value="{{key}}">{{localize skill.label}}</option>
+                {{/if}}
+            {{/each}}
+        </select>
+    </div>
+    <div class="wrapper">
+        <label>{{localize "DIALOG.DN"}}</label>
+        <input id="dn" type="text" value="4:2" />
+    </div>
+    <div class="wrapper">
+        <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
+        <input id="double-training" type="checkbox" value="active" />
+    </div>
+</div>

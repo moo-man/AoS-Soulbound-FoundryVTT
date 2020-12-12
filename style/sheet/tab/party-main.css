@@ -1,0 +1,82 @@
+.age-of-sigmar-soulbound.sheet.actor .party .main {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .short-goals,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .long-goals,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .allies,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .enemies,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .resources,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .rumours,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .fears,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .threats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: calc(50% - 5px);
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .items {
+    height: 120px;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .item-header .fas {
+    color: var(--color-header);
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .item-header b {
+    justify-content: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .name {
+    display: flex;
+    flex-basis: 80%;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .completed:hover,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .completed .fas:hover {
+    text-shadow: none;
+    box-shadow: none;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .completed {
+    display: flex;
+    flex-basis: 10%;
+    align-items: center;
+    color: grey;
+    text-align: center;
+    justify-content: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .completed.active {
+    color: var(--color-border);
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .button {
+    flex-basis: 10%;
+    text-align: center;
+    font-size: 10px;
+    justify-content: center;
+}
+
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .goal,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .ally,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .enemy,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .resource,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .rumour,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .fear,
+.age-of-sigmar-soulbound.sheet.actor .party .main .wrapper .item-list .threat {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}

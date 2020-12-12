@@ -1,0 +1,34 @@
+<div class="members">
+    <div class="wrapper">
+        <h1>{{localize "TITLE.MEMBERS"}}</h1>
+        <div class="item-list">
+            <div class="item-header">
+                <b class="name">{{localize "MEMBER.NAME"}}</b>
+                <b class="archetype">{{localize "MEMBER.ARCHETYPE"}}</b>
+                <b class="species">{{localize "MEMBER.SPECIES"}}</b>
+                <div class="button"></div>
+            </div>
+            <div class="items">
+                {{#each members as |item|}}
+                <div class="member item" data-item-id="{{item._id}}">
+                    <div class="name">
+                        <div class="image-container">
+                            <div class="image" style="background-image: url('{{item.img}}')"></div>
+                        </div>
+                        <div class="item-edit">{{item.name}}</div>
+                    </div>
+                    <div class="archetype">{{item.data.data.bio.archetype}}</div>
+                    <div class="species">{{item.data.data.bio.species}}</div>
+                    <div class="button">
+                        <a class="item-control member-delete" title="Delete Member"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <h1>{{localize "TITLE.NOTES"}}</h1>
+        {{editor content=data.notes target="data.notes" button=true owner=owner editable=editable}}
+    </div>
+</div>

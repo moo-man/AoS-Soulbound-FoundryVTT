@@ -1,0 +1,76 @@
+<div class="stats">
+    <div class="attributes">
+        <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
+        <div class="wrapper">
+            {{#each data.attributes as |attribute key|}}
+                <div class="attribute">
+                    <label class="roll-attribute" data-attribute="{{key}}">{{localize attribute.label}}</label>
+                    <input name="data.attributes.{{key}}.value" type="number" value="{{attribute.value}}" data-dtype="Number" />
+                </div>
+            {{/each}}
+        </div>
+    </div>
+    <div class="skills">
+        <h1>{{localize "TITLE.SKILLS"}}</h1>
+        <div class="wrapper-left">
+            <div class="skill">
+                <div class="name">{{localize "HEADER.NAME"}}</div>
+                <div class="training">{{localize "HEADER.TRAINING"}}</div>
+                <div class="focus">{{localize "HEADER.FOCUS"}}</div>
+                <div class="focus">{{localize "HEADER.TOTAL"}}</div>
+            </div>
+            {{#each data.skills as |skill key|}}
+                {{#if skill.isLeft}}
+                    <div class="skill">
+                        <label class="roll-skill" data-skill="{{key}}">{{localize skill.label}}</label>
+                        <input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" />
+                        <input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" />
+                        <input name="data.skills.{{key}}.total" type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+        <div class="wrapper-right">
+            <div class="skill">
+                <div class="name">{{localize "HEADER.NAME"}}</div>
+                <div class="training">{{localize "HEADER.TRAINING"}}</div>
+                <div class="focus">{{localize "HEADER.FOCUS"}}</div>
+                <div class="focus">{{localize "HEADER.TOTAL"}}</div>
+            </div>
+            {{#each data.skills as |skill key|}}
+                {{#if skill.isRight}}
+                    <div class="skill">
+                        <label class="roll-skill" data-skill="{{key}}">{{localize skill.label}}</label>
+                        <input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" />
+                        <input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" />
+                        <input name="data.skills.{{key}}.total" type="number" value="{{skill.total}}" data-dtype="Number" disabled />
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+    <div class="talents">
+        <h1>{{localize "TITLE.TALENTS"}}</h1>
+        <div class="item-list">
+            <div class="item-header">
+                <b class="name">{{localize "TALENT.NAME"}}</b>
+                <b class="effect">{{localize "TALENT.EFFECT"}}</b>
+            </div>
+            <div class="items">
+                {{#each actor.items as |item|}}
+                    {{#if item.isTalent}}
+                        <div class="talent item" data-item-id="{{item._id}}">
+                            <div class="name">
+                                <div class="image-container">
+                                    <div class="image" style="background-image: url('{{item.img}}')"></div>
+                                </div>
+                                <div class="item-edit">{{item.name}}</div>
+                            </div>
+                            <div class="effect">{{item.data.effect}}</div>
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>

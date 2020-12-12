@@ -1,0 +1,10 @@
+.age-of-sigmar-soulbound.sheet.actor .window-content .fas:hover,
+.age-of-sigmar-soulbound.sheet.actor .window-content .button:hover,
+.age-of-sigmar-soulbound.sheet.actor .window-content .item-control:hover {
+    text-shadow: 0 0 10px var(--color-active);
+    box-shadow: none;
+}
+
+.window-app .window-content {
+    background: url(../../asset/image/background.jpg) repeat;
+}

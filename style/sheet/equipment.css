@@ -1,0 +1,56 @@
+.age-of-sigmar-soulbound.sheet.item .equipment {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .stats {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .cost,
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .availability {
+    display: flex;
+    flex-direction: row;
+    flex-basis: calc(50% - 5px);
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .cost {
+    margin-right: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .availability {
+    margin-left: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .cost label,
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .availability label {
+    width: 100px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .cost input,
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .cost select,
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .availability input,
+.age-of-sigmar-soulbound.sheet.item .equipment .stats .availability select {
+    width: 100px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .description {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    margin-top: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .description .editor {
+    height: 171px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .equipment .bonus {
+    height: 238px;
+}

@@ -1,0 +1,35 @@
+.age-of-sigmar-soulbound.sheet.item .miracle {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .miracle .description,
+.age-of-sigmar-soulbound.sheet.item .miracle .stats {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .miracle .description .editor {
+    height: 215px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .miracle .stats .wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-basis: 100%;
+    margin-top: 10px;
+}
+
+.age-of-sigmar-soulbound.sheet.item .miracle .stats .wrapper label {
+    width: 30%;
+}
+
+.age-of-sigmar-soulbound.sheet.item .miracle .stats .wrapper input,
+.age-of-sigmar-soulbound.sheet.item .miracle .stats .wrapper select {
+    width: 70%;
+}
