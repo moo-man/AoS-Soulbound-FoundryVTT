@@ -65,6 +65,7 @@
   "CHAT.DAMAGE": "Damage",
   "CHAT.TRAITS": "Traits",
   "CHAT.OVERCAST": "Overcast",
+  "CHAT.EFFECT": "Effect",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",

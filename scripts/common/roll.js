@@ -1,12 +1,12 @@
 export async function customRoll(pool, dn) {
     let result = _roll(pool, dn);
-    await _sendToChat(result, dn, 0, null, null, null);
+    await _sendToChat(result, dn, 0, null, null, null, null);
 }
 
 export async function commonRoll(attribute, skill, dn) {
     const numberOfDice = attribute.total + skill.total;
     let result = _roll(numberOfDice, dn);
-    await _sendToChat(result, dn, skill.focus, null, null, null);
+    await _sendToChat(result, dn, skill.focus, null, null, null, null);
 }
 
 export async function combatRoll(attribute, skill, combat, dn) {
@@ -19,19 +19,20 @@ export async function combatRoll(attribute, skill, combat, dn) {
     } else {
         damage = weapon.damage - combat.armour;
     }
-    await _sendToChat(result, dn, skill.focus, damage, weapon.traits, null);
+    await _sendToChat(result, dn, skill.focus, damage, weapon.traits, null, null);
 }
 
 export async function powerRoll(attribute, skill, power, dn) {
     const numberOfDice = attribute.total + skill.total;
     let result = _roll(numberOfDice, dn);
     let overcast;
+	let effect = power.data.data.effect
     if (power.type === "spell") {
         overcast = power.data.data.overcast;
     } else {
         overcast = null
     }
-    await _sendToChat(result, dn, skill.focus, null, null, overcast);
+    await _sendToChat(result, dn, skill.focus, null, null, overcast, effect);
 }
 
 function _roll(numberOfDice, dn) {
@@ -51,7 +52,7 @@ function _roll(numberOfDice, dn) {
     return result;
 }
 
-async function _sendToChat(result, dn, focus, damage, traits, overcast) {
+async function _sendToChat(result, dn, focus, damage, traits, overcast, effect) {
     const dices = result.success.concat(result.failed);
     const data = {
         hasSucceed: result.success.length >= dn.complexity,
@@ -61,6 +62,7 @@ async function _sendToChat(result, dn, focus, damage, traits, overcast) {
         dices: dices.sort(function (a, b) { return b - a; }),
         dn: dn,
         focus: focus,
+		effect: effect,
         damage: damage,
         traits: traits,
         overcast: overcast

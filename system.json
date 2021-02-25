@@ -4,9 +4,9 @@
   "description": "Perilous adventures in the mortal realms",
   "version": "2.3.0",
   "minimumCoreVersion": "0.7.5",
-  "compatibleCoreVersion": "0.7.5",
+  "compatibleCoreVersion": "0.7.9",
   "templateVersion": 2,
-  "author": "Moo Man, Perfectro",
+  "author": "Moo Man, Perfectro, Vendare",
   "scripts": [],
   "esmodules": [
     "scripts/common/hooks.js"
