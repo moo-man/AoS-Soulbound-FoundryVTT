@@ -12,6 +12,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
         html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
         html.find(".roll-power").click(async ev => await this._prepareRollPower(ev));
+		html.find(".show-power").click(async ev => await this._prepareShowPower(ev));
     }
 
     _getHeaderButtons() {
@@ -122,6 +123,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             skills = this._setSelectedSkill("devotion")
         }
         await preparePowerRoll(attributes, skills, power);
+    }
+	
+	async _prepareShowPower(event) {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        const power = this.actor.getOwnedItem(div.data("itemId"));
+        await power.sendToChat()
     }
 
     _setSelectedAttribute(attributeName) {
