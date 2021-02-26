@@ -19,7 +19,7 @@ import { initializeHandlebars } from "./handlebars.js";
 import { prepareCustomRoll } from "./dialog.js";
 
 Hooks.once("init", () => {
-    game.settings.register("age-of-sigmar", "initiativeRule", {
+    game.settings.register("age-of-sigmar-soulbound", "initiativeRule", {
         name: "SETTING.INIT_RULE",
         hint: "SETTING.INIT_HINT",
         scope: "world",
@@ -46,22 +46,22 @@ Hooks.once("init", () => {
     CONFIG.fontFamilies.push("Alegreya Sans SC");
     CONFIG.roll = prepareCustomRoll;
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("age-of-sigmar", PlayerSheet, { types: ["player"], makeDefault: true });
-    Actors.registerSheet("age-of-sigmar", NpcSheet, { types: ["npc"], makeDefault: true });
-    Actors.registerSheet("age-of-sigmar", PartySheet, { types: ["party"], makeDefault: true });
+    Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
+    Actors.registerSheet("age-of-sigmar-soulbound", NpcSheet, { types: ["npc"], makeDefault: true });
+    Actors.registerSheet("age-of-sigmar-soulbound", PartySheet, { types: ["party"], makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("age-of-sigmar", AethericDeviceSheet, { types: ["aethericDevice"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", ArmourSheet, { types: ["armour"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", ConnectionSheet, { types: ["connection"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", EquipmentSheet, { types: ["equipment"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", GoalSheet, { types: ["goal"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", MiracleSheet, { types: ["miracle"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", PartyItemSheet, { types: ["ally", "enemy", "fear", "resource", "rumour", "threat"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", RuneSheet, { types: ["rune"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", SpellSheet, { types: ["spell"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", TalentSheet, { types: ["talent"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", WeaponSheet, { types: ["weapon"], makeDefault: true });
-    Items.registerSheet("age-of-sigmar", WoundSheet, { types: ["wound"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", AethericDeviceSheet, { types: ["aethericDevice"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", ArmourSheet, { types: ["armour"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", ConnectionSheet, { types: ["connection"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", EquipmentSheet, { types: ["equipment"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", GoalSheet, { types: ["goal"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", MiracleSheet, { types: ["miracle"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", PartyItemSheet, { types: ["ally", "enemy", "fear", "resource", "rumour", "threat"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", RuneSheet, { types: ["rune"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", SpellSheet, { types: ["spell"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", TalentSheet, { types: ["talent"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", WeaponSheet, { types: ["weapon"], makeDefault: true });
+    Items.registerSheet("age-of-sigmar-soulbound", WoundSheet, { types: ["wound"], makeDefault: true });
     initializeHandlebars();
 });
 
