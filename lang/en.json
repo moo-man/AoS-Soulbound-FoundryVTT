@@ -67,6 +67,7 @@
   "CHAT.OVERCAST": "Overcast",
   "CHAT.EFFECT": "Effect",
   "CHAT.RESIST": "Resist",
+  "CHAT.DURATION": "Duration",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -273,4 +274,5 @@
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Damage",
   "WOUND.DESCRIPTION": "Description"
+  
 }

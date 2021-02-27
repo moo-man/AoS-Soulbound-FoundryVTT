@@ -6,17 +6,22 @@
         {{else}}
         <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED"}} <strong>{{missing}}</strong></h4>
         {{/if}}
-
         {{#if focus}}
         <p style="margin-top: 5px"><strong>{{localize "CHAT.FOCUS"}} :</strong> {{focus}}</p>
         {{/if}}
-        {{#if damage}}
-        <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{damage}}</p>
+		{{#if effect}}
+        <p style="margin-top: 5px"><strong>{{localize "CHAT.EFFECT"}} :</strong> {{effect}}</p>
         {{/if}}
-        {{#if traits}}
-        <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{traits}}</p>
+		{{#if duration}}
+        <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{duration}}</p>
         {{/if}}
-		
+		{{#if resist}}
+        <p style="margin-top: 5px"><strong>{{localize "CHAT.RESIST"}} :</strong> {{resist}}</p>
+        {{/if}}
+        {{#if overcast}}
+        <p style="margin-top: 5px"><strong>{{localize "CHAT.OVERCAST"}} :</strong> {{overcast}}</p>
+        {{/if}}
+
         {{#each dices as |dice|}}
             <img width='25px' height='25px' style='border:none;margin-right:2px;margin-top:2px' src='systems/age-of-sigmar-soulbound/asset/image/dice-{{dice}}.png'/>
         {{/each}}
