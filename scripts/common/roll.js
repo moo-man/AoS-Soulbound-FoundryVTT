@@ -31,7 +31,7 @@ export async function powerRoll(attribute, skill, power, dn) {
     if (power.type === "spell") {
         overcast = power.data.data.overcast;
 		resist = power.data.data.test;
-		if(result.success.length > 0) {
+		if(resist !== null && result.success.length > 0) {
 			resist = resist.replace("/:s/ig", ":" + result.success.length);
 		}
     } else {
