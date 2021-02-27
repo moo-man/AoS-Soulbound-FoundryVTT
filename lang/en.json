@@ -66,6 +66,7 @@
   "CHAT.TRAITS": "Traits",
   "CHAT.OVERCAST": "Overcast",
   "CHAT.EFFECT": "Effect",
+  "CHAT.RESIST": "Resist",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -152,7 +153,7 @@
   "POWER.DURATION": "Duration",
   "POWER.EFFECT": "Effect",
 
-  "RANGE.YOU": "You",
+  "RANGE.SPECIAL": "Special",
   "RANGE.SELF": "Self",
   "RANGE.CLOSE": "Close",
   "RANGE.SHORT": "Short",

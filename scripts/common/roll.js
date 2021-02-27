@@ -1,12 +1,12 @@
 export async function customRoll(pool, dn) {
     let result = _roll(pool, dn);
-    await _sendToChat(result, dn, 0, null, null, null, null);
+    await _sendToChat(result, dn, 0, null, null, null, null, null);
 }
 
 export async function commonRoll(attribute, skill, dn) {
     const numberOfDice = attribute.total + skill.total;
     let result = _roll(numberOfDice, dn);
-    await _sendToChat(result, dn, skill.focus, null, null, null, null);
+    await _sendToChat(result, dn, skill.focus, null, null, null, null, null);
 }
 
 export async function combatRoll(attribute, skill, combat, dn) {
@@ -19,20 +19,26 @@ export async function combatRoll(attribute, skill, combat, dn) {
     } else {
         damage = weapon.damage - combat.armour;
     }
-    await _sendToChat(result, dn, skill.focus, damage, weapon.traits, null, null);
+    await _sendToChat(result, dn, skill.focus, damage, weapon.traits, null, null, null);
 }
 
 export async function powerRoll(attribute, skill, power, dn) {
     const numberOfDice = attribute.total + skill.total;
     let result = _roll(numberOfDice, dn);
     let overcast;
-	let effect = power.data.data.effect
+	let effect = power.data.data.effect;
+	let resist;
     if (power.type === "spell") {
         overcast = power.data.data.overcast;
+		resist = power.data.data.test;
+		if(result.success.length > 0) {
+			resist = resist.replace("/:s/ig", ":" + result.success.length);
+		}
     } else {
-        overcast = null
+        overcast = null;
+		resist = null;
     }
-    await _sendToChat(result, dn, skill.focus, null, null, overcast, effect);
+    await _sendToChat(result, dn, skill.focus, null, null, overcast, effect, resist);
 }
 
 function _roll(numberOfDice, dn) {
@@ -52,7 +58,7 @@ function _roll(numberOfDice, dn) {
     return result;
 }
 
-async function _sendToChat(result, dn, focus, damage, traits, overcast, effect) {
+async function _sendToChat(result, dn, focus, damage, traits, overcast, effect, resist) {
     const dices = result.success.concat(result.failed);
     const data = {
         hasSucceed: result.success.length >= dn.complexity,
@@ -63,6 +69,7 @@ async function _sendToChat(result, dn, focus, damage, traits, overcast, effect) 
         dn: dn,
         focus: focus,
 		effect: effect,
+		resist: resist,
         damage: damage,
         traits: traits,
         overcast: overcast
