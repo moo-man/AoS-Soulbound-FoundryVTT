@@ -62,6 +62,6 @@
   "url": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT",
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/moo-man/AoS-Soulbound-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/archive/master.zip",
+  "download": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/releases/download/2.3.0/age-of-sigmar-soulbound.zip",
   "license": "LICENSE.txt"
 }
