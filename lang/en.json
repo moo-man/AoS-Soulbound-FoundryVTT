@@ -59,12 +59,16 @@
   "CATEGORY.MELEE": "Melee",
   "CATEGORY.RANGE": "Range",
 
-  "CHAT.SUCCEED": "Succeed with",
+  "CHAT.SUCCEED": "Succeeded with",
+  "CHAT.SUCCESS": "additional successes",
   "CHAT.FAILED": "Failed, missing",
   "CHAT.FOCUS": "Focus",
   "CHAT.DAMAGE": "Damage",
   "CHAT.TRAITS": "Traits",
   "CHAT.OVERCAST": "Overcast",
+  "CHAT.EFFECT": "Effect",
+  "CHAT.RESIST": "Test",
+  "CHAT.DURATION": "Duration",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -151,7 +155,7 @@
   "POWER.DURATION": "Duration",
   "POWER.EFFECT": "Effect",
 
-  "RANGE.YOU": "You",
+  "RANGE.SPECIAL": "Special",
   "RANGE.SELF": "Self",
   "RANGE.CLOSE": "Close",
   "RANGE.SHORT": "Short",
@@ -269,6 +273,7 @@
   "WEAPON.COST": "Cost",
 
   "WOUND.NAME": "Name",
-  "WOUND.DAMAGE": "Damage",
+  "WOUND.DAMAGE": "Wounds",
   "WOUND.DESCRIPTION": "Description"
+  
 }

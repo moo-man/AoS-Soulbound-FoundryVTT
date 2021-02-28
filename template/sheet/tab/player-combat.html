@@ -157,7 +157,11 @@
                         <div class="image-container">
                             <div class="image" style="background-image: url('{{item.img}}')"></div>
                         </div>
+						{{#if item.isSpell}}
                         <div class="roll-power">{{item.name}}</div>
+						{{else}}
+						<div class="show-power">{{item.name}}</div>
+						{{/if}}
                     </div>
                     {{#if item.isSpell}}
                     <div class="dn">{{item.data.dn}}</div>

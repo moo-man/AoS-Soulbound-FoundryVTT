@@ -6,7 +6,7 @@
 @font-face {
     font-family: "Alegreya Sans SC";
     src: url("../../asset/font/alegreya-sans-sc-bold.ttf");
-    font-weight: bold;
+	font-weight: bold;
 }
 
 :root {

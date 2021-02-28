@@ -1,12 +1,12 @@
 export async function customRoll(pool, dn) {
     let result = _roll(pool, dn);
-    await _sendToChat(result, dn, 0, null, null, null);
+    await _sendToChat(result, dn, 0, null, null);
 }
 
 export async function commonRoll(attribute, skill, dn) {
     const numberOfDice = attribute.total + skill.total;
     let result = _roll(numberOfDice, dn);
-    await _sendToChat(result, dn, skill.focus, null, null, null);
+    await _sendToChat(result, dn, skill.focus, null, null);
 }
 
 export async function combatRoll(attribute, skill, combat, dn) {
@@ -19,19 +19,26 @@ export async function combatRoll(attribute, skill, combat, dn) {
     } else {
         damage = weapon.damage - combat.armour;
     }
-    await _sendToChat(result, dn, skill.focus, damage, weapon.traits, null);
+    await _sendToChat(result, dn, skill.focus, damage, weapon.traits);
 }
 
 export async function powerRoll(attribute, skill, power, dn) {
     const numberOfDice = attribute.total + skill.total;
     let result = _roll(numberOfDice, dn);
-    let overcast;
+	let effect = power.data.data.effect;
+	let resist = null;
+	let overcast = null;
+	let duration = null;
     if (power.type === "spell") {
         overcast = power.data.data.overcast;
-    } else {
-        overcast = null
-    }
-    await _sendToChat(result, dn, skill.focus, null, null, overcast);
+		duration = power.data.data.duration;
+		resist = power.data.data.test;
+		let complexity = result.success.length - dn.complexity +1
+		if(resist !== null && complexity > 0) {
+			resist = resist.replace(/:s/ig, ":" + complexity);
+		}
+	}
+    await _sendSpellToChat(result, dn, skill.focus, duration, overcast, effect, resist);
 }
 
 function _roll(numberOfDice, dn) {
@@ -51,7 +58,36 @@ function _roll(numberOfDice, dn) {
     return result;
 }
 
-async function _sendToChat(result, dn, focus, damage, traits, overcast) {
+async function _sendSpellToChat(result, dn, focus, duration, overcast, effect, resist) {
+    const dices = result.success.concat(result.failed);
+    const data = {
+        hasSucceed: result.success.length >= dn.complexity,
+        success: result.success.length - dn.complexity, // show additional degrees instead of raw success
+        missing: dn.complexity - result.success.length,
+        failed: result.failed.length ,
+        dices: dices.sort(function (a, b) { return b - a; }),
+        dn: dn,
+        focus: focus,
+		effect: effect,
+		resist: resist,
+        duration: duration,
+        overcast: overcast
+    };
+    const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/spellRoll.html", data);
+    let chatData = {
+        user: game.user._id,
+        rollMode: game.settings.get("core", "rollMode"),
+        content: html,
+    };
+    if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
+        chatData.whisper = ChatMessage.getWhisperRecipients("GM");
+    } else if (chatData.rollMode === "selfroll") {
+        chatData.whisper = [game.user];
+    }
+    ChatMessage.create(chatData);
+}
+
+async function _sendToChat(result, dn, focus, damage, traits) {
     const dices = result.success.concat(result.failed);
     const data = {
         hasSucceed: result.success.length >= dn.complexity,
@@ -62,8 +98,7 @@ async function _sendToChat(result, dn, focus, damage, traits, overcast) {
         dn: dn,
         focus: focus,
         damage: damage,
-        traits: traits,
-        overcast: overcast
+        traits: traits
     };
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/roll.html", data);
     let chatData = {
