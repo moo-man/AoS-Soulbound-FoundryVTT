@@ -33,8 +33,9 @@ export async function powerRoll(attribute, skill, power, dn) {
         overcast = power.data.data.overcast;
 		duration = power.data.data.duration;
 		resist = power.data.data.test;
-		if(resist !== null && result.success.length > 0) {
-			resist = resist.replace(/:s/ig, ":" + result.success.length - dn.complexity + 1);
+		let complexity = result.success.length - dn.complexity +1
+		if(resist !== null && complexity > 0) {
+			resist = resist.replace(/:s/ig, ":" + complexity);
 		}
 	}
     await _sendSpellToChat(result, dn, skill.focus, duration, overcast, effect, resist);
