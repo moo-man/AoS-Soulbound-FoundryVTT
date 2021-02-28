@@ -2,7 +2,7 @@
     <div class="wrapper">
         <h3>{{dn.name}} DN {{dn.difficulty}}:{{dn.complexity}}</h3>
         {{#if hasSucceed}}
-        <h4 style="color: var(--color-succeed)">{{localize "CHAT.SUCCEED"}} <strong>{{success}}</strong></h4>
+        <h4 style="color: var(--color-succeed)">{{localize "CHAT.SUCCEED"}} <strong>{{success}}</strong> {{localize "CHAT.SUCCESS"}}</h4>
         {{else}}
         <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED"}} <strong>{{missing}}</strong></h4>
         {{/if}}

@@ -34,7 +34,7 @@ export async function powerRoll(attribute, skill, power, dn) {
 		duration = power.data.data.duration;
 		resist = power.data.data.test;
 		if(resist !== null && result.success.length > 0) {
-			resist = resist.replace(/:s/ig, ":" + result.success.length);
+			resist = resist.replace(/:s/ig, ":" + result.success.length - dn.complexity + 1);
 		}
 	}
     await _sendSpellToChat(result, dn, skill.focus, duration, overcast, effect, resist);
@@ -61,9 +61,9 @@ async function _sendSpellToChat(result, dn, focus, duration, overcast, effect, r
     const dices = result.success.concat(result.failed);
     const data = {
         hasSucceed: result.success.length >= dn.complexity,
-        success: result.success.length,
+        success: result.success.length - dn.complexity, // show additional degrees instead of raw success
         missing: dn.complexity - result.success.length,
-        failed: result.failed.length,
+        failed: result.failed.length ,
         dices: dices.sort(function (a, b) { return b - a; }),
         dn: dn,
         focus: focus,
