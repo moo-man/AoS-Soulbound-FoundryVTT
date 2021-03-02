@@ -144,7 +144,8 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeArmour(data, item) {
         if (item.data.type === "shield") {
-            data.data.combat.defense.total += item.data.benefit;
+            // Like below treat shield benefit as an step increase
+            data.data.combat.defense.total += (item.data.benefit * 2);
         } else {
             data.data.combat.armour.total += item.data.benefit;
         }
@@ -170,6 +171,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeSecondary(data) {
+        // melee, accuracy and defense bonus is doubled to represent a one step increase
         data.data.combat.melee.total += data.data.attributes.body.value + data.data.skills.weaponSkill.total + (data.data.combat.melee.bonus * 2);
         data.data.combat.accuracy.total += data.data.attributes.mind.value + data.data.skills.ballisticSkill.total + (data.data.combat.accuracy.bonus * 2);
         data.data.combat.defense.total += data.data.attributes.body.total + data.data.skills.reflexes.total + (data.data.combat.defense.bonus * 2);
