@@ -28,14 +28,18 @@ Hooks.once("init", () => {
         type: String,
         choices: {
             "default": "SETTING.INIT_DEFAULT",
-            "roll": "SETTING.INIT_ROLL"
+            "roll1d6": "SETTING.INIT_ROLL1d",
+            "roll2d6": "SETTING.INIT_ROLL2d"
         },
         onChange: rule => {
             switch (rule) {
                 case "default":
-                    CONFIG.Combat.initiative = { formula: "@combat.initiative.total", decimals: 0 };
+                    CONFIG.Combat.initiative = { formula: "1d0 + @combat.initiative.total", decimals: 0 };
                     break;
-                case "roll":
+                case "roll1d6":
+                    CONFIG.Combat.initiative = { formula: "1d6 + @combat.initiative.total", decimals: 0 };
+                    break;
+                case "roll2d6":
                     CONFIG.Combat.initiative = { formula: "2d6 + @combat.initiative.total", decimals: 0 };
                     break;
             }

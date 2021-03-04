@@ -49,21 +49,15 @@ function registerHandlebarsHelpers() {
         return text.replace(markup, "");
     });
     Handlebars.registerHelper("combatAbilities", function (value) {
-        if (value <= 2) {
-            return `${game.i18n.localize("ABILITIES.POOR")} (1)`;
-        } else if (value >= 3 && value <= 4) {
-            return `${game.i18n.localize("ABILITIES.AVERAGE")} (2)`;
-        } else if (value >= 5 && value <= 6) {
-            return `${game.i18n.localize("ABILITIES.GOOD")} (3)`;
-        } else if (value >= 7 && value <= 8) {
-            return `${game.i18n.localize("ABILITIES.GREAT")} (4)`;
-        } else if (value >= 9 && value <= 10) {
-            return `${game.i18n.localize("ABILITIES.SUPERB")} (5)`;
-        } else if (value >= 11 && value <= 12) {
-            return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (6)`;
-        } else {
-            return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (${value})`;
-        }
+      switch(value) {
+          case 1: return `${game.i18n.localize("ABILITIES.POOR")} (1)`; 
+          case 2: return `${game.i18n.localize("ABILITIES.AVERAGE")} (2)`;
+          case 3: return `${game.i18n.localize("ABILITIES.GOOD")} (3)`;
+          case 4: return `${game.i18n.localize("ABILITIES.GREAT")} (4)`;
+          case 5: return `${game.i18n.localize("ABILITIES.SUPERB")} (5)`;
+          case 6: return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (6)`;
+          default : return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (${value})`;
+      }
     });
     Handlebars.registerHelper("localizeState", function (type) {
         switch (type) {

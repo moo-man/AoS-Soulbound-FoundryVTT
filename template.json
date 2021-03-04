@@ -165,6 +165,7 @@
               "bonus": 0
             },
             "wounds": {
+              "value": 0,
               "bonus": 0
             }
           },
@@ -175,12 +176,15 @@
             "bonus": 0
           },
           "melee": {
+            "relative" : 0,
             "bonus": 0
           },
           "accuracy": {
+            "relative" : 0,
             "bonus": 0
           },
           "defense": {
+            "relative" : 0,
             "bonus": 0
           },
           "armour": {

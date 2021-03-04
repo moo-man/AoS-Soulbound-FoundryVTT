@@ -19,6 +19,10 @@ export async function combatRoll(attribute, skill, combat, dn) {
     } else {
         damage = weapon.damage - combat.armour;
     }
+    
+    if(damage < 0) {
+        damage = 0;
+    }
     await _sendToChat(result, dn, skill.focus, damage, weapon.traits);
 }
 

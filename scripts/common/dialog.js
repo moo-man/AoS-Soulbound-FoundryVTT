@@ -160,7 +160,7 @@ function _getCombatDn(combat) {
         combat.armour = 0;
         return "4:1";
     } else {
-        let targetDefense = target.actor.data.data.combat.defense.total;
+        let targetDefense = target.actor.data.data.combat.defense.relative;
         let difficulty;
         if (combat.weapon.category === "melee") {
             difficulty = 4 - (combat.melee - targetDefense);

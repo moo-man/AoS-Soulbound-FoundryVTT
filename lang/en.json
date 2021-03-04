@@ -168,7 +168,8 @@
   "SETTING.INIT_RULE": "Initiative Rules",
   "SETTING.INIT_HINT": "Configure which method is used to determine who acts first in combat.",
   "SETTING.INIT_DEFAULT": "Highest to Lowest Initative",
-  "SETTING.INIT_ROLL": "Roll 2d6 + Initiative, higher go first",
+  "SETTING.INIT_ROLL2d": "Roll 2d6 + Initiative, higher go first",
+  "SETTING.INIT_ROLL1d": "Roll 1d6 + Initiative, higher go first",
 
   "SKILL.ARCANA": "Arcana",
   "SKILL.ATHLETICS": "Athletics",
