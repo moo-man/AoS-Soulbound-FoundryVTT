@@ -31,6 +31,7 @@ export async function prepareCommonRoll(attributes, skills) {
     let data = {
         attributes: attributes,
         skills: skills,
+        bonusDice : 0 // some spells or miracles grant bonus dice 
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
     let dialog = new Dialog({
@@ -48,7 +49,8 @@ export async function prepareCommonRoll(attributes, skills) {
                     let skill = skills[skillName];
                     const dn = _getDn(`${game.i18n.localize(attribute.label)} (${game.i18n.localize(skill.label)})`, html.find("#dn")[0].value);
                     if (doubleTraining) skill.total = skill.total * 2;
-                    await commonRoll(attribute, skill, dn);
+                    let bonusDice = _getBonusDice(html);
+                    await commonRoll(attribute, skill, bonusDice, dn);
                 },
             },
             cancel: {
@@ -63,11 +65,62 @@ export async function prepareCommonRoll(attributes, skills) {
     dialog.render(true);
 }
 
+
+
 export async function prepareCombatRoll(attributes, skills, combat) {
+    const target = game.user.targets.values().next().value;
+    const userInputAllowed = target === undefined; // No additinal Input when target function is used
+    let targetDefense = 3; // good defense seems to be the most likely starting point
+    combat.armour = 0;
+    
+    if (!userInputAllowed) {
+        targetDefense = target.actor.data.data.combat.defense.relative;
+        combat.armour = target.actor.data.data.combat.armour.total;
+    } 
+    
     let data = {
         attributes: attributes,
         skills: skills,
-        dn: _getCombatDn(combat)
+        bonusDice : 0, // some spells or miracles grant bonus dice 
+        armour: {
+            value : combat.armour,
+            enabled :userInputAllowed
+        },
+        defense : {
+            values : [
+                {
+                    key : 1,
+                    selected : (targetDefense === 1),
+                    label : "ABILITIES.POOR"
+                },
+                {
+                    key : 2,
+                    selected : (targetDefense === 2),
+                    label : "ABILITIES.AVERAGE"
+                },
+                {
+                    key : 3,
+                    selected : (targetDefense === 3),
+                    label : "ABILITIES.GOOD"
+                },
+                {
+                    key : 4,
+                    selected : (targetDefense === 4),
+                    label : "ABILITIES.GREAT"
+                },
+                {
+                    key : 5,
+                    selected : (targetDefense === 5),
+                    label : "ABILITIES.SUPERB"
+                },
+                {
+                    key : 6,
+                    selected : (targetDefense === 6),
+                    label : "ABILITIES.EXTRAORDINARY"
+                }
+            ],
+            enabled :userInputAllowed
+        }
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
     let dialog = new Dialog({
@@ -83,9 +136,14 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     const doubleTraining = html.find("#double-training")[0].checked;
                     const attribute = attributes[attributeName];
                     let skill = skills[skillName];
-                    const dn = _getDn(combat.weapon.name, html.find("#dn")[0].value);
+                    if(userInputAllowed) {
+                        targetDefense = html.find("#defense")[0].value;
+                        combat.armour = html.find("#armour")[0].value;
+                    }
+                    const dn = _getDn(combat.weapon.name, _getCombatDn(combat, targetDefense));
                     if (doubleTraining) skill.total = skill.total * 2;
-                    await combatRoll(attribute, skill, combat, dn);
+                    const bonusDice = _getBonusDice(html)
+                    await combatRoll(attribute, skill, bonusDice , combat, dn);
                 },
             },
             cancel: {
@@ -101,18 +159,15 @@ export async function prepareCombatRoll(attributes, skills, combat) {
 }
 
 export async function preparePowerRoll(attributes, skills, power) {
-    let dn;
-    if (power.type === "spell") {
-        dn = power.data.data.dn;
-    } else {
-        dn = "4:1";
-    }
+    let  dn = power.data.data.dn;
+    
     let data = {
         attributes: attributes,
         skills: skills,
         dn: dn
     }
-    const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
+    
+    const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
     let dialog = new Dialog({
         title: power.data.name,
         content: html,
@@ -128,7 +183,8 @@ export async function preparePowerRoll(attributes, skills, power) {
                     let skill = skills[skillName];
                     const dn = _getDn(power.data.name, html.find("#dn")[0].value);
                     if (doubleTraining) skill.total = skill.total * 2;
-                    await powerRoll(attribute, skill, power, dn);
+                    const bonusDice = _getBonusDice(html)
+                    await powerRoll(attribute, skill, bonusDice, power, dn);
                 },
             },
             cancel: {
@@ -143,6 +199,11 @@ export async function preparePowerRoll(attributes, skills, power) {
     dialog.render(true);
 }
 
+function _getBonusDice(html) {
+    let bonusDice = html.find("#bonusDice")[0].value;
+    return parseInt(bonusDice, 10);
+}
+
 function _getDn(name, dn) {
     let regex = /([0-9]*)[:]*([0-9]*)/g;
     let spellDn = dn.toLowerCase().replace(/( )*/g, '');
@@ -154,22 +215,19 @@ function _getDn(name, dn) {
     }
 }
 
-function _getCombatDn(combat) {
-    const target = game.user.targets.values().next().value;
-    if (target === undefined) {
-        combat.armour = 0;
-        return "4:1";
+function _getCombatDn(combat, defense) {
+ 
+    let targetDefense = defense   
+        
+    let difficulty;
+    if (combat.weapon.category === "melee") {
+        difficulty = 4 - (combat.melee - targetDefense);
     } else {
-        let targetDefense = target.actor.data.data.combat.defense.relative;
-        let difficulty;
-        if (combat.weapon.category === "melee") {
-            difficulty = 4 - (combat.melee - targetDefense);
-        } else {
-            difficulty = 4 - (combat.accuracy - targetDefense);
-        }
-        if (difficulty > 6) difficulty = 6;
-        if (difficulty < 2) difficulty = 2;
-        combat.armour = target.actor.data.data.combat.armour.total;
-        return `${difficulty}:1`
+        difficulty = 4 - (combat.accuracy - targetDefense);
     }
+    if (difficulty > 6) difficulty = 6;
+    if (difficulty < 2) difficulty = 2;
+        
+    return `${difficulty}:1`
+    
 }

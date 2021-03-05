@@ -24,28 +24,8 @@
         </select>
     </div>
     <div class="wrapper">
-        <label>{{localize "DIALOG.DEFENSE"}}</label>
-        {{#if defense.enabled}}
-        <select id="defense">
-        {{else}}
-        <select id="defense" disabled>
-        {{/if}}
-            {{#each defense.values as | defense |}}
-                {{#if defense.selected}}
-                    <option value="{{defense.key}}" selected>{{localize defense.label}} {{defense.key}}</option>
-                {{else}}
-                    <option value="{{defense.key}}">{{localize defense.label}} {{defense.key}}</option>
-                {{/if}}
-            {{/each}}
-        </select>
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.ARMOUR"}}</label>
-        {{#if armour.enabled}}
-            <input id="armour" type="number" value="{{armour.value}}"/>
-        {{else}}
-            <input id="armour" type="number" value="{{armour.value}}" disabled/>
-        {{/if}}
+        <label>{{localize "DIALOG.DN"}}</label>
+        <input id="dn" type="text" value="{{dn}}" />
     </div>
     <div class="wrapper">
         <label>{{localize "DIALOG.BONUSDICE"}}</label>

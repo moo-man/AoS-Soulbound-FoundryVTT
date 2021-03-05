@@ -3,14 +3,14 @@ export async function customRoll(pool, dn) {
     await _sendToChat(result, dn, 0, null, null);
 }
 
-export async function commonRoll(attribute, skill, dn) {
-    const numberOfDice = attribute.total + skill.total;
+export async function commonRoll(attribute, skill, bonusDice, dn) {
+    const numberOfDice = attribute.total + skill.total + bonusDice;
     let result = _roll(numberOfDice, dn);
     await _sendToChat(result, dn, skill.focus, null, null);
 }
 
-export async function combatRoll(attribute, skill, combat, dn) {
-    const numberOfDice = attribute.total + skill.total;
+export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
+    const numberOfDice = attribute.total + skill.total + bonusDice;
     let result = _roll(numberOfDice, dn);
     let weapon = _getWeapon(combat.weapon);
     let damage;
@@ -26,8 +26,8 @@ export async function combatRoll(attribute, skill, combat, dn) {
     await _sendToChat(result, dn, skill.focus, damage, weapon.traits);
 }
 
-export async function powerRoll(attribute, skill, power, dn) {
-    const numberOfDice = attribute.total + skill.total;
+export async function powerRoll(attribute, skill, bonusDice, power, dn) {
+    const numberOfDice = attribute.total + skill.total + bonusDice;
     let result = _roll(numberOfDice, dn);
 	let effect = power.data.data.effect;
 	let resist = null;
