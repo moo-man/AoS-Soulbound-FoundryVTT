@@ -1,12 +1,12 @@
 export async function customRoll(pool, dn) {
     let result = _roll(pool, dn);
-    await _sendToChat(result, dn, 0, null, null);
+    await _sendToChat(result, dn, 0, null, null, false);
 }
 
 export async function commonRoll(attribute, skill, bonusDice, dn) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
     let result = _roll(numberOfDice, dn);
-    await _sendToChat(result, dn, skill.focus, null, null);
+    await _sendToChat(result, dn, skill.focus, null, null, false);
 }
 
 export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
@@ -23,7 +23,7 @@ export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
     if(damage < 0) {
         damage = 0;
     }
-    await _sendToChat(result, dn, skill.focus, damage, weapon.traits);
+    await _sendToChat(result, dn, skill.focus, damage, weapon.traits, true);
 }
 
 export async function powerRoll(attribute, skill, bonusDice, power, dn) {
@@ -37,7 +37,7 @@ export async function powerRoll(attribute, skill, bonusDice, power, dn) {
         overcast = power.data.data.overcast;
 		duration = power.data.data.duration;
 		resist = power.data.data.test;
-		let complexity = result.success.length - dn.complexity +1
+		let complexity = result.success.length - dn.complexity + 1 // complexity of spelltest is 1 + successes Core p.266 
 		if(resist !== null && complexity > 0) {
 			resist = resist.replace(/:s/ig, ":" + complexity);
 		}
@@ -91,11 +91,11 @@ async function _sendSpellToChat(result, dn, focus, duration, overcast, effect, r
     ChatMessage.create(chatData);
 }
 
-async function _sendToChat(result, dn, focus, damage, traits) {
+async function _sendToChat(result, dn, focus, damage, traits, isCombat) {
     const dices = result.success.concat(result.failed);
     const data = {
         hasSucceed: result.success.length >= dn.complexity,
-        success: result.success.length,
+        success: isCombat ? result.success.length : result.success.length - dn.complexity,
         missing: dn.complexity - result.success.length,
         failed: result.failed.length,
         dices: dices.sort(function (a, b) { return b - a; }),
