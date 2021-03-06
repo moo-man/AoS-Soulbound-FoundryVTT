@@ -212,7 +212,8 @@
         "distinguishingFeatures": "",
         "background": "",
         "faction": "",
-        "subfaction": ""
+        "subfaction": "",
+        "eyeType": ""
       },
       "experience": 0,
       "notes": ""
