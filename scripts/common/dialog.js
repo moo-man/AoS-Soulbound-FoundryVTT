@@ -164,7 +164,7 @@ export async function preparePowerRoll(attributes, skills, power) {
     let data = {
         attributes: attributes,
         skills: skills,
-        dn: dn
+        bonusDice : 0 // some spells or miracles grant bonus dice 
     }
     
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
