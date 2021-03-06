@@ -210,7 +210,9 @@
         "height": "",
         "weight": "",
         "distinguishingFeatures": "",
-        "background": ""
+        "background": "",
+        "faction": "",
+        "subfaction": ""
       },
       "experience": 0,
       "notes": ""
