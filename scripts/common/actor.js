@@ -7,6 +7,7 @@ export class AgeOfSigmarActor extends Actor {
             this._computeItems(this.data);
             this._computeAttack(this.data);
             this._computeSecondary(this.data);
+            this._computeRelativeCombatAbilities(this.data);
         } else if (this.data.type === "party") {
             this._computePartyItems(this.data);
         }
@@ -17,8 +18,11 @@ export class AgeOfSigmarActor extends Actor {
         data.data.attributes.mind.total = data.data.attributes.mind.value;
         data.data.attributes.soul.total = data.data.attributes.soul.value;
         data.data.combat.melee.total = 0;
+        data.data.combat.melee.relative = 0;
         data.data.combat.accuracy.total = 0;
+        data.data.combat.accuracy.relative = 0;
         data.data.combat.defense.total = 0;
+        data.data.combat.defense.relative = 0;
         data.data.combat.armour.total = 0;
         data.data.combat.health.toughness.max = 0;
         data.data.combat.health.wounds.value = 0;
@@ -31,6 +35,33 @@ export class AgeOfSigmarActor extends Actor {
             consumed: 0,
             capacity: 0,
             isUndercharge: false
+        }
+    }
+
+    _computeRelativeCombatAbilities(data) {
+        let combatStat = data.data.combat.melee.total
+        data.data.combat.melee.relative = this._getCombatLadderValue(combatStat);
+
+        combatStat = data.data.combat.accuracy.total
+        data.data.combat.accuracy.relative = this._getCombatLadderValue(combatStat);
+
+        combatStat = data.data.combat.defense.total
+        data.data.combat.defense.relative = this._getCombatLadderValue(combatStat);
+    }
+    
+    _getCombatLadderValue(combatStat) {
+        if(combatStat <= 2)
+            return 1;
+        else if(combatStat <= 4) {
+            return 2;
+        } else if(combatStat <= 6) {
+            return 3;
+        } else if(combatStat <= 8) {
+            return 4;
+        } else if(combatStat <= 10) {
+            return 5;
+        } else {
+            return 6;
         }
     }
 
@@ -128,23 +159,25 @@ export class AgeOfSigmarActor extends Actor {
         data.data.skills.weaponSkill.total += skills.weaponSkill;
     }
 
-    _computeCombat(data, combat) {
-        data.data.combat.mettle.total += combat.mettle;
-        data.data.combat.health.toughness.max += combat.health.toughness;
-        data.data.combat.health.wounds.max += combat.health.wounds;
+    _computeCombat(data, itemBonus) {
+        data.data.combat.mettle.total += itemBonus.mettle;
+        data.data.combat.health.toughness.max += itemBonus.health.toughness;
+        data.data.combat.health.wounds.max += itemBonus.health.wounds;
         data.data.combat.health.wounds.deadly = data.data.combat.health.wounds.value >= data.data.combat.health.wounds.max;
-        data.data.combat.initiative.total += combat.initiative;
-        data.data.combat.naturalAwareness.total += combat.naturalAwareness;
-        data.data.combat.melee.total += (combat.melee * 2);
-        data.data.combat.accuracy.total += (combat.accuracy * 2);
-        data.data.combat.defense.total += (combat.defense * 2);
-        data.data.combat.armour.total += combat.armour;
-        data.data.combat.damage += combat.damage;
+        data.data.combat.initiative.total += itemBonus.initiative;
+        data.data.combat.naturalAwareness.total += itemBonus.naturalAwareness;
+        data.data.combat.melee.total += (itemBonus.melee * 2);
+        data.data.combat.accuracy.total += (itemBonus.accuracy * 2);
+        data.data.combat.defense.total += (itemBonus.defense * 2);
+        data.data.combat.armour.total += itemBonus.armour;
+        data.data.combat.damage += itemBonus.damage;
     }
 
     _computeArmour(data, item) {
         if (item.data.type === "shield") {
-            data.data.combat.defense.total += item.data.benefit;
+            // Like below treat shield benefit as an step increase
+            data.data.combat.defense.total += (item.data.benefit * 2);
+            data.data.combat.defense.relative = this._getCombatLadderValue(data.data.combat.defense.total);
         } else {
             data.data.combat.armour.total += item.data.benefit;
         }
@@ -170,6 +203,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeSecondary(data) {
+        // melee, accuracy and defense bonus is doubled to represent a one step increase
         data.data.combat.melee.total += data.data.attributes.body.value + data.data.skills.weaponSkill.total + (data.data.combat.melee.bonus * 2);
         data.data.combat.accuracy.total += data.data.attributes.mind.value + data.data.skills.ballisticSkill.total + (data.data.combat.accuracy.bonus * 2);
         data.data.combat.defense.total += data.data.attributes.body.total + data.data.skills.reflexes.total + (data.data.combat.defense.bonus * 2);
