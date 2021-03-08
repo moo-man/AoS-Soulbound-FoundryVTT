@@ -28,19 +28,15 @@ Hooks.once("init", () => {
         type: String,
         choices: {
             "default": "SETTING.INIT_DEFAULT",
-            "roll": "SETTING.INIT_ROLL"
+            "roll1d6": "SETTING.INIT_ROLL1d",
+            "roll2d6": "SETTING.INIT_ROLL2d"
         },
         onChange: rule => {
-            switch (rule) {
-                case "default":
-                    CONFIG.Combat.initiative = { formula: "@combat.initiative.total", decimals: 0 };
-                    break;
-                case "roll":
-                    CONFIG.Combat.initiative = { formula: "2d6 + @combat.initiative.total", decimals: 0 };
-                    break;
-            }
+            _registerInitiative(rule);
         }
     });
+    _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
+    
     CONFIG.Actor.entityClass = AgeOfSigmarActor;
     CONFIG.Item.entityClass = AgeOfSigmarItem;
     CONFIG.fontFamilies.push("Alegreya Sans SC");
@@ -64,6 +60,20 @@ Hooks.once("init", () => {
     Items.registerSheet("age-of-sigmar-soulbound", WoundSheet, { types: ["wound"], makeDefault: true });
     initializeHandlebars();
 });
+
+function _registerInitiative(rule) {
+    switch (rule) {
+        case "default":
+            CONFIG.Combat.initiative = { formula: "@combat.initiative.total", decimals: 0 };
+            break;
+        case "roll1d6":
+            CONFIG.Combat.initiative = { formula: "1d6 + @combat.initiative.total", decimals: 0 };
+            break;
+        case "roll2d6":
+            CONFIG.Combat.initiative = { formula: "2d6 + @combat.initiative.total", decimals: 0 };
+            break;
+    }    
+}
 
 Hooks.on("preCreateActor", (createData) => {
     mergeObject(createData, {

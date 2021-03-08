@@ -152,8 +152,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _getCombat(weapon) {
         return {
-            melee: this.actor.data.data.combat.melee.total,
-            accuracy: this.actor.data.data.combat.accuracy.total,
+            melee: this.actor.data.data.combat.melee.relative,
+            accuracy: this.actor.data.data.combat.accuracy.relative,
             weapon: {
                 name: weapon.data.name,
                 category: weapon.data.data.category,

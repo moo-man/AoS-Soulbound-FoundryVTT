@@ -22,15 +22,15 @@
 }
 
 .age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper label {
-    width: 60px;
+    width: 70px;
 }
 
 .age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper input {
-    width: 73px;
+    width: 152px;
 }
 
 .age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper .age,
-.age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper .eyes,
+.age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper .eyeType,
 .age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper .hair,
 .age-of-sigmar-soulbound.sheet.actor .player .bio .physical .wrapper .height {
     display: flex;
@@ -39,6 +39,7 @@
     margin-right: 5px;
 }
 
+.age-of-sigmar-soulbound.sheet.actor .player .bio .physical .eyes,
 .age-of-sigmar-soulbound.sheet.actor .player .bio .physical .weight {
     display: flex;
     flex-direction: row;
