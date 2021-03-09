@@ -70,6 +70,7 @@
   "CHAT.EFFECT": "Effect",
   "CHAT.RESIST": "Test",
   "CHAT.DURATION": "Duration",
+  "CHAT.FOCUS_APPLIED" : " applied to highlighted dice",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
