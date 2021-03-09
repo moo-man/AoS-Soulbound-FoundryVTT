@@ -18,7 +18,11 @@
         {{/if}}
 		
         {{#each dices as |dice|}}
-            <img width='25px' height='25px' style='border:none;margin-right:2px;margin-top:2px' src='systems/age-of-sigmar-soulbound/asset/image/dice-{{dice}}.png'/>
+            {{#if dice.highlight}}
+                <img class="diceHighlight" src="systems/age-of-sigmar-soulbound/asset/image/dice-{{dice.value}}.png" />
+            {{else}}
+                <img class="dice" src="systems/age-of-sigmar-soulbound/asset/image/dice-{{dice.value}}.png" />
+            {{/if}}
         {{/each}}
     </div>
 </div>
