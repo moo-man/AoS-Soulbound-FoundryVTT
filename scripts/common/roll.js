@@ -1,38 +1,42 @@
 export async function customRoll(pool, dn) {
-    let result = _roll(pool, dn);
-    await _sendToChat(result, { result : result, highlights : []}, dn, 0, null, null, false);
+    let origRoll = _roll(pool, dn);
+    await _sendToChat(origRoll, _applyFocus(origRoll, dn, 0), dn, 0, null, null, false);
 }
 
 export async function commonRoll(attribute, skill, bonusDice, dn) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
-    let result = _roll(numberOfDice, dn);
-    let afterFocus = _applyFocus(result, dn, skill.focus);
+    let origRoll = _roll(numberOfDice, dn);
+    let result = _applyFocus(origRoll, dn, skill.focus);
 
-    await _sendToChat(result, afterFocus, dn, skill.focus, null, null, false);
+    await _sendToChat(origRoll, result, dn, skill.focus, null, null, false);
 }
 
 export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
-    let result = _roll(numberOfDice, dn);
-    let afterFocus = _applyFocus(result, dn, skill.focus);
+    let origRoll = _roll(numberOfDice, dn);
+    let result = _applyFocus(origRoll, dn, skill.focus);
     let weapon = _getWeapon(combat.weapon);
-    let damage;
+    let damage = {
+        total : 0,
+        armour: combat.armour 
+    }
     if (weapon.addSuccess) {
-        damage = weapon.damage + result.total - combat.armour;
+        damage.total = weapon.damage + result.total - combat.armour;
+
     } else {
-        damage = weapon.damage - combat.armour;
+        damage.total = weapon.damage - combat.armour;
     }
     
-    if(damage < 0) {
-        damage = 0;
+    if(damage.total < 0) {
+        damage.total = 0;
     }
-    await _sendToChat(result, afterFocus, dn, skill.focus, damage, weapon.traits, true);
+    await _sendToChat(origRoll, result, dn, skill.focus, damage, weapon.traits, true);
 }
 
 export async function powerRoll(attribute, skill, bonusDice, power, dn) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
-    let result = _roll(numberOfDice, dn);
-    let afterFocus = _applyFocus(result, dn, skill.focus);
+    let origRoll = _roll(numberOfDice, dn);
+    let result = _applyFocus(origRoll, dn, skill.focus);
 	let effect = power.data.data.effect;
 	let resist = null;
 	let overcast = null;
@@ -46,7 +50,7 @@ export async function powerRoll(attribute, skill, bonusDice, power, dn) {
 			resist = resist.replace(/:s/ig, ":" + complexity);
 		}
 	}
-    await _sendSpellToChat(result, afterFocus, dn, skill.focus, duration, overcast, effect, resist);
+    await _sendSpellToChat(origRoll, result, dn, skill.focus, duration, overcast, effect, resist);
 }
 
 function _roll(numberOfDice, dn) {
@@ -54,78 +58,61 @@ function _roll(numberOfDice, dn) {
     return roll.evaluate();
 }
 
-function _getDiceFromRoll(roll, toHighlight) {
-    let results = roll.terms.flatMap(term => term.results).map(die => die.result);
-    let dice = new Array(results.length);
-    for(var i=0; i < results.length; i++) {
-        dice[i] = { value : results[i], highlight : toHighlight.includes(i) };
-    }
-    return dice;
+function _getSortedDiceFromRoll(roll) {
+    return roll.terms
+                .flatMap(term => term.results)
+                .map(die => die.result)
+                .sort((a, b) => b.result - a.result);
 }
 
 function _applyFocus(roll, dn, focus) {
     let retVal = 
     {
-        result: roll,
-        highlights : []
+        total : roll.total,
+        dice : []
     }
-
-    if(focus === 0) {
-        return retVal;
-    }
-    let diceToHighlight = new Array();
-    let newTotal = roll.total;
-
-    //Rolls are immutable so get a DataObject to make changes to
-    let current = roll.toJSON();
-    for(let element of current.terms) {
-        //sort from highest to lowest to use focus efficently
-        let sorted = element.results.sort((a, b) => b.result - a.result);
-        for(var i = 0; i < sorted.length; i++) {
-            var die = sorted[i];
-            // ignore successes
-            if(die.result >= dn.difficulty) {
-                continue;
-            }
-            
-            while(focus > 0 && die.result < dn.difficulty) {
-                die.result++;
-                focus--;
-            }
-
-            // check if use of fokus gave us a new success and add it
-            if(die.result >= dn.difficulty) {
-                die.success = true;
-                die.count = 1;
-                newTotal++;
-            }
-
-            diceToHighlight.push(i);
-
-            if(focus === 0) {
-                break;
-            }
+    // Sorted to effiencently apply success
+    let sorted = _getSortedDiceFromRoll(roll);
+    let newTotal = roll.total;    
+    for(let i = 0; i < sorted.length; i++) {
+        let die = {
+            value : sorted[i],
+            highlight : false
+        }
+        // focus is 0 or result is successes only add dice for display purposes
+        if(die >= dn.difficulty || focus === 0) {
+            retVal.dice.push(die);
+            continue;
+        }
+        
+        //apply fokus reduce until zero
+        while(focus > 0 && die < dn.difficulty) {
+            die++;
+            focus--;
+        }
+        // check if use of fokus gave us a new success and add it to total
+        if(die >= dn.difficulty) {            
+            newTotal++;
         }        
-    }
-    current.total = newTotal;
+        // we added fokus so highlight the die and push it to the result array
+        die.highlight = true;
+        retVal.dice.push(die);
+    }            
 
-    retVal.result = Roll.fromData(current);
-    retVal.highlights = diceToHighlight;
+    retVal.result.total = newTotal;
     
     return retVal;
 }
 
-async function _sendSpellToChat(origRoll, afterFocus, dn, focus, duration, overcast, effect, resist) {
-    let result = afterFocus.result;
-    const dices = _getDiceFromRoll(result, afterFocus.highlights);
+async function _sendSpellToChat(origRoll, result, dn, focus, duration, overcast, effect, resist) {
     const render_data = {
         hasSucceed: result.total >= dn.complexity,
         success: result.total - dn.complexity, // show additional degrees instead of raw success
         missing: dn.complexity - result.total,
-        failed: dices.length - result.total,
-        dices: dices,
+        failed: result.dices.length - result.total,
+        dices: result.dices,
         dn: dn,
-        focus: focus + game.i18n.localize("CHAT.FOCUS_APPLIED"),
+        focus: `${focus} ${game.i18n.localize("CHAT.FOCUS_APPLIED")}`,
 		effect: effect,
 		resist: resist,
         duration: duration,
@@ -135,18 +122,16 @@ async function _sendSpellToChat(origRoll, afterFocus, dn, focus, duration, overc
 
 }
 
-async function _sendToChat(origRoll, afterFocus, dn, focus, damage, traits, isCombat) {
-    let result = afterFocus.result;
-    const dices = _getDiceFromRoll(result, afterFocus.highlights);    
+async function _sendToChat(origRoll, result, dn, focus, damage, traits, isCombat) { 
     const render_data = {
         hasSucceed: result.total >= dn.complexity,
         success: isCombat ? result.total : result.total - dn.complexity,
         missing: dn.complexity - result.total,
-        failed: dices.length - result.total,
-        dices: dices,
+        failed: result.dices.length - result.total,
+        dices: result.dices,
         dn: dn,
-        focus:  focus + game.i18n.localize("CHAT.FOCUS_APPLIED"),
-        damage: damage,
+        focus:  `${focus} ${game.i18n.localize("CHAT.FOCUS_APPLIED")}`,
+        damage: `${damage.total} ${game.i18n.localize("CHAT.ARMOUR_SUBTRACTED")} ${damage.armour}`,
         traits: traits
     };
     await _createChatMessage("systems/age-of-sigmar-soulbound/template/chat/roll.html", render_data, origRoll);

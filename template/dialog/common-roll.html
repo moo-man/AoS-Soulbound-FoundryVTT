@@ -25,14 +25,20 @@
     </div>
     <div class="wrapper">
         <label>{{localize "DIALOG.DN"}}</label>
-        <input id="dn" type="text" value="4:2" />
+        <input id="dn" type="text" value="4:1" />
     </div>
     <div class="wrapper">
         <label>{{localize "DIALOG.BONUSDICE"}}</label>
         <input id="bonusDice" type="number" value="{{bonusDice}}" />
     </div>
     <div class="wrapper">
-        <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
-        <input id="double-training" type="checkbox" value="active" />
+        {{#if hasTraining}}
+            <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
+            <input id="double-training" type="checkbox" value="active" />
+        {{/if}}
+        {{#if hasFocus}}
+            <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
+            <input id="double-focus" type="checkbox" value="active" />
+        {{/if}}
     </div>
 </div>
