@@ -62,7 +62,7 @@ function _getSortedDiceFromRoll(roll) {
     return roll.terms
                 .flatMap(term => term.results)
                 .map(die => die.result)
-                .sort((a, b) => b.result - a.result);
+                .sort((a, b) => b - a);
 }
 
 function _applyFocus(roll, dn, focus) {
@@ -80,18 +80,17 @@ function _applyFocus(roll, dn, focus) {
             highlight : false
         }
         // focus is 0 or result is successes only add dice for display purposes
-        if(die >= dn.difficulty || focus === 0) {
+        if(die.value >= dn.difficulty || focus === 0) {
             retVal.dice.push(die);
             continue;
-        }
-        
+        }        
         //apply fokus reduce until zero
-        while(focus > 0 && die < dn.difficulty) {
-            die++;
+        while(focus > 0 && die.value < dn.difficulty) {
+            die.value++;
             focus--;
         }
         // check if use of fokus gave us a new success and add it to total
-        if(die >= dn.difficulty) {            
+        if(die.value >= dn.difficulty) {            
             newTotal++;
         }        
         // we added fokus so highlight the die and push it to the result array
@@ -99,7 +98,7 @@ function _applyFocus(roll, dn, focus) {
         retVal.dice.push(die);
     }            
 
-    retVal.result.total = newTotal;
+    retVal.total = newTotal;
     
     return retVal;
 }
@@ -109,8 +108,8 @@ async function _sendSpellToChat(origRoll, result, dn, focus, duration, overcast,
         hasSucceed: result.total >= dn.complexity,
         success: result.total - dn.complexity, // show additional degrees instead of raw success
         missing: dn.complexity - result.total,
-        failed: result.dices.length - result.total,
-        dices: result.dices,
+        failed: result.dice.length - result.total,
+        dices: result.dice,
         dn: dn,
         focus: `${focus} ${game.i18n.localize("CHAT.FOCUS_APPLIED")}`,
 		effect: effect,
@@ -127,11 +126,11 @@ async function _sendToChat(origRoll, result, dn, focus, damage, traits, isCombat
         hasSucceed: result.total >= dn.complexity,
         success: isCombat ? result.total : result.total - dn.complexity,
         missing: dn.complexity - result.total,
-        failed: result.dices.length - result.total,
-        dices: result.dices,
+        failed: result.dice.length - result.total,
+        dices: result.dice,
         dn: dn,
         focus:  `${focus} ${game.i18n.localize("CHAT.FOCUS_APPLIED")}`,
-        damage: `${damage.total} ${game.i18n.localize("CHAT.ARMOUR_SUBTRACTED")} ${damage.armour}`,
+        damage: isCombat ? `${damage.total} ${game.i18n.localize("CHAT.ARMOUR_SUBTRACTED")} ${damage.armour}`: 0,
         traits: traits
     };
     await _createChatMessage("systems/age-of-sigmar-soulbound/template/chat/roll.html", render_data, origRoll);
