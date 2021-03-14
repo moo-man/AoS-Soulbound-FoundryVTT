@@ -71,7 +71,8 @@ function _applyFocus(roll, dn, focus) {
         total : roll.total,
         dice : []
     }
-    // Sorted to effiencently apply success
+    // Sorted to effiencently apply success not filtered since we would need 
+    // to make another function to highlight dice in chat 
     let sorted = _getSortedDiceFromRoll(roll);
     let newTotal = roll.total;    
     for(let i = 0; i < sorted.length; i++) {
@@ -84,12 +85,12 @@ function _applyFocus(roll, dn, focus) {
             retVal.dice.push(die);
             continue;
         }        
-        //apply fokus reduce until zero
+        //apply fokus reduce until zero or success
         while(focus > 0 && die.value < dn.difficulty) {
             die.value++;
             focus--;
         }
-        // check if use of fokus gave us a new success and add it to total
+        // check if use of fokus gave us a new success and add it to the total
         if(die.value >= dn.difficulty) {            
             newTotal++;
         }        
