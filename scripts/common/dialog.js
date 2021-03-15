@@ -45,10 +45,12 @@ export async function prepareCommonRoll(attributes, skills) {
                     const attributeName = html.find("#attribute")[0].value;
                     const skillName = html.find("#skill")[0].value;
                     const doubleTraining = html.find("#double-training")[0].checked;
+                    const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     let skill = skills[skillName];
                     const dn = _getDn(`${game.i18n.localize(attribute.label)} (${game.i18n.localize(skill.label)})`, html.find("#dn")[0].value);
                     if (doubleTraining) skill.total = skill.total * 2;
+                    if (doubleFocus) skill.focus = skill.focus * 2;
                     let bonusDice = _getBonusDice(html);
                     await commonRoll(attribute, skill, bonusDice, dn);
                 },
@@ -134,6 +136,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     const attributeName = html.find("#attribute")[0].value;
                     const skillName = html.find("#skill")[0].value;
                     const doubleTraining = html.find("#double-training")[0].checked;
+                    const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     let skill = skills[skillName];
                     if(userInputAllowed) {
@@ -142,6 +145,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     }
                     const dn = _getDn(combat.weapon.name, _getCombatDn(combat, targetDefense));
                     if (doubleTraining) skill.total = skill.total * 2;
+                    if (doubleFocus) skill.focus = skill.focus * 2;
                     const bonusDice = _getBonusDice(html)
                     await combatRoll(attribute, skill, bonusDice , combat, dn);
                 },
@@ -180,10 +184,12 @@ export async function preparePowerRoll(attributes, skills, power) {
                     const attributeName = html.find("#attribute")[0].value;
                     const skillName = html.find("#skill")[0].value;
                     const doubleTraining = html.find("#double-training")[0].checked;
+                    const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     let skill = skills[skillName];
                     const dn = _getDn(power.data.name, html.find("#dn")[0].value);
                     if (doubleTraining) skill.total = skill.total * 2;
+                    if (doubleFocus) skill.focus = skill.focus * 2;
                     const bonusDice = _getBonusDice(html)
                     await powerRoll(attribute, skill, bonusDice, power, dn);
                 },

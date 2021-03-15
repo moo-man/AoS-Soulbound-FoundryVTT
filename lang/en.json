@@ -70,7 +70,8 @@
   "CHAT.EFFECT": "Effect",
   "CHAT.RESIST": "Test",
   "CHAT.DURATION": "Duration",
-  "CHAT.FOCUS_APPLIED" : " applied to highlighted dice",
+  "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
+  "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -85,6 +86,7 @@
   "DIALOG.COMMON_ROLL": "Common Roll",
   "DIALOG.CUSTOM_ROLL": "Custom Roll",
   "DIALOG.DOUBLE_TRAINING": "Double Your Training",
+  "DIALOG.DOUBLE_FOCUS": "Double Your Focus",
   "DIALOG.DEFENSE": "Target Defense",
   "DIALOG.ARMOUR" : "Target Armour",
   "DIALOG.BONUSDICE" : "Bonus Dice",
