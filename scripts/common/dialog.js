@@ -71,11 +71,11 @@ export async function prepareCommonRoll(attributes, skills) {
 
 export async function prepareCombatRoll(attributes, skills, combat) {
     const target = game.user.targets.values().next().value;
-    const userInputAllowed = target === undefined; // No additinal Input when target function is used
+    const hasTarget = target !== undefined; // No additinal Input when target function is used
     let targetDefense = 3; // good defense seems to be the most likely starting point
     combat.armour = 0;
     
-    if (!userInputAllowed) {
+    if (hasTarget) {
         targetDefense = target.actor.data.data.combat.defense.relative;
         combat.armour = target.actor.data.data.combat.armour.total;
     } 
@@ -84,10 +84,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
         attributes: attributes,
         skills: skills,
         bonusDice : 0, // some spells or miracles grant bonus dice 
-        armour: {
-            value : combat.armour,
-            enabled :userInputAllowed
-        },
+        armour: combat.armour,
         defense : {
             values : [
                 {
@@ -120,8 +117,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     selected : (targetDefense === 6),
                     label : "ABILITIES.EXTRAORDINARY"
                 }
-            ],
-            enabled :userInputAllowed
+            ]
         }
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
@@ -139,10 +135,8 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     let skill = skills[skillName];
-                    if(userInputAllowed) {
-                        targetDefense = html.find("#defense")[0].value;
-                        combat.armour = html.find("#armour")[0].value;
-                    }
+                    targetDefense = html.find("#defense")[0].value;
+                    combat.armour = html.find("#armour")[0].value;
                     const dn = _getDn(combat.weapon.name, _getCombatDn(combat, targetDefense));
                     if (doubleTraining) skill.total = skill.total * 2;
                     if (doubleFocus) skill.focus = skill.focus * 2;
