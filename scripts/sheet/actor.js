@@ -87,7 +87,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _prepareRollSkill(event) {
         event.preventDefault();
         const skillName = $(event.currentTarget).data("skill");
-        const attributes = this._setSelectedAttribute(null)
+        const attribute = this.actor.data.data.skills[skillName].attribute
+        const attributes = this._setSelectedAttribute(attribute)
         const skills = this._setSelectedSkill(skillName)
         await prepareCommonRoll(attributes, skills);
     }
@@ -144,7 +145,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     _setSelectedSkill(skillName) {
         let skills = JSON.parse(JSON.stringify( this.actor.data.data.skills));
         for (let skill of Object.values(skills)) {
-            skills.selected = false;
+            skill.selected = false;
         }
         if (skillName) skills[skillName].selected = true;
         return skills

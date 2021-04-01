@@ -25,11 +25,7 @@
     </div>
     <div class="wrapper">
         <label>{{localize "DIALOG.DEFENSE"}}</label>
-        {{#if defense.enabled}}
         <select id="defense">
-        {{else}}
-        <select id="defense" disabled>
-        {{/if}}
             {{#each defense.values as | defense |}}
                 {{#if defense.selected}}
                     <option value="{{defense.key}}" selected>{{localize defense.label}} {{defense.key}}</option>
@@ -41,11 +37,7 @@
     </div>
     <div class="wrapper">
         <label>{{localize "DIALOG.ARMOUR"}}</label>
-        {{#if armour.enabled}}
-            <input id="armour" type="number" value="{{armour.value}}"/>
-        {{else}}
-            <input id="armour" type="number" value="{{armour.value}}" disabled/>
-        {{/if}}
+            <input id="armour" type="number" value="{{armour}}"/>
     </div>
     <div class="wrapper">
         <label>{{localize "DIALOG.BONUSDICE"}}</label>
@@ -54,5 +46,7 @@
     <div class="wrapper">
         <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
         <input id="double-training" type="checkbox" value="active" />
+        <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
+        <input id="double-focus" type="checkbox" value="active" />
     </div>
 </div>
