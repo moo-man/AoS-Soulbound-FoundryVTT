@@ -17,7 +17,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _getHeaderButtons() {
         let buttons = super._getHeaderButtons();
-        if (this.actor.owner) {
+        if (this.actor.isOwner) {
             buttons = [
                 {
                     label: game.i18n.localize("BUTTON.ROLL"),
@@ -33,7 +33,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     _onItemCreate(event) {
         event.preventDefault();
         let header = event.currentTarget;
-        let data = duplicate(header.dataset);
+        let data = foundry.utils.deepClone(header.dataset);
         data["name"] = `New ${data.type.capitalize()}`;
         this.actor.createEmbeddedEntity("OwnedItem", data, {renderSheet: true});
     }

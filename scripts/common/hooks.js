@@ -37,8 +37,8 @@ Hooks.once("init", () => {
     });
     _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
     
-    CONFIG.Actor.entityClass = AgeOfSigmarActor;
-    CONFIG.Item.entityClass = AgeOfSigmarItem;
+    CONFIG.Actor.documentClass = AgeOfSigmarActor;
+    CONFIG.Item.documentClass = AgeOfSigmarItem;
     CONFIG.fontFamilies.push("Alegreya Sans SC");
     CONFIG.roll = prepareCustomRoll;
     Actors.unregisterSheet("core", ActorSheet);
@@ -74,18 +74,3 @@ function _registerInitiative(rule) {
             break;
     }    
 }
-
-Hooks.on("preCreateActor", (createData) => {
-    mergeObject(createData, {
-        "token.bar1" :{ "attribute" : "combat.health.toughness" },
-        "token.bar2" :{ "attribute" : "combat.health.wounds" },
-        "token.displayName" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-        "token.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-        "token.disposition" : CONST.TOKEN_DISPOSITIONS.NEUTRAL,
-        "token.name" : createData.name
-    });
-    if (createData.type === "player") {
-        createData.token.vision = true;
-        createData.token.actorLink = true;
-    }
-});
