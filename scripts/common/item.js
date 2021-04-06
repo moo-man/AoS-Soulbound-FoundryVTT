@@ -7,22 +7,12 @@ export class AgeOfSigmarItem extends Item {
 
 
     async sendToChat() {
-        const item = foundry.utils.deepClone(this.data);
-        if (item.img.includes("/unknown")) {
-            item.img = null;
+        const item = new CONFIG.Item.documentClass(this.data._source);
+        if (item.data.img.includes("/unknown")) {
+            item.data.img = null;
         }
-        item.isGoal = item.type === "goal";
-        item.isConnection = item.type === "connection";
-        item.isWound = item.type === "wound";
-        item.isSpell = item.type === "spell";
-        item.isMiracle = item.type === "miracle";
-        item.isTalent = item.type === "talent";
-        item.isArmour = item.type === "armour";
-        item.isWeapon = item.type === "weapon";
-        item.isAethericDevice = item.type === "aethericDevice";
-        item.isRune = item.type === "rune";
-        item.isEquipment = item.type === "equipment";
-        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.html", item);
+
+        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.html", {item, data : item.data.data});
         const chatData = {
             user: game.user._id,
             rollMode: game.settings.get("core", "rollMode"),
