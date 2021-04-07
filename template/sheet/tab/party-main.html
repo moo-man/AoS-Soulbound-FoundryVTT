@@ -13,7 +13,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                         {{#if item.isShortGoal}}
-                            <div class="goal item" data-item-id="{{item._id}}">
+                            <div class="goal item" data-item-id="{{item.id}}">
                                 <div class="name">
                                     <div class="image-container">
                                         <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -47,7 +47,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isLongGoal}}
-                    <div class="goal item" data-item-id="{{item._id}}">
+                    <div class="goal item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -83,7 +83,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isAlly}}
-                    <div class="ally item" data-item-id="{{item._id}}">
+                    <div class="ally item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -117,7 +117,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isEnemy}}
-                    <div class="enemy item" data-item-id="{{item._id}}">
+                    <div class="enemy item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -153,7 +153,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isResource}}
-                    <div class="resource item" data-item-id="{{item._id}}">
+                    <div class="resource item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -187,7 +187,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isRumour}}
-                    <div class="rumour item" data-item-id="{{item._id}}">
+                    <div class="rumour item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -223,7 +223,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isFear}}
-                    <div class="fear item" data-item-id="{{item._id}}">
+                    <div class="fear item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -257,7 +257,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isThreat}}
-                    <div class="threat item" data-item-id="{{item._id}}">
+                    <div class="threat item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>

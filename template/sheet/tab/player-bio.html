@@ -53,7 +53,7 @@
             <div class="items">
                 {{#each actor.items as |item|}}
                     {{#if item.isGoal}}
-                        <div class="goal item" data-item-id="{{item._id}}">
+                        <div class="goal item" data-item-id="{{item.id}}">
                             <div class="name">
                                 <div class="image-container">
                                     <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -89,7 +89,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                         {{#if item.isConnection}}
-                            <div class="connection item" data-item-id="{{item._id}}">
+                            <div class="connection item" data-item-id="{{item.id}}">
                                 <div class="name">
                                     <div class="image-container">
                                         <div class="image" style="background-image: url('{{item.img}}')"></div>

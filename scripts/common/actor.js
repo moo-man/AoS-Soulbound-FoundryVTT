@@ -25,8 +25,6 @@ export class AgeOfSigmarActor extends Actor {
             this._computeAttack();
             this._computeSecondary();
             this._computeRelativeCombatAbilities();
-        } else if (this.data.type === "party") {
-            this._computePartyItems();
         }
     }
 
@@ -93,7 +91,7 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeItems() {
         this.itemTypes["wound"].forEach(i => {
-            this.data.data.combat.health.wounds.value += item.data.data.damage;
+            this.data.data.combat.health.wounds.value += i.data.data.damage;
         })
         this.items.filter(i => i.isActive).forEach(i => {
             this._computeGear(i)

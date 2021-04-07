@@ -14,7 +14,7 @@ export class AgeOfSigmarItem extends Item {
 
         const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.html", {item, data : item.data.data});
         const chatData = {
-            user: game.user._id,
+            user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
         };
@@ -30,7 +30,7 @@ export class AgeOfSigmarItem extends Item {
         // **************** GETTERS *******************
 
         /************** ITEMS *********************/
-        get isGoal() {return this.type === "talent"}
+        get isTalent() {return this.type === "talent"}
 
         get isGoal() {return this.type === "goal"}
     
@@ -72,7 +72,7 @@ export class AgeOfSigmarItem extends Item {
     
         get isAethericDevice() { return  this.type === "aethericDevice"}
     
-        get isAttack() { return  this.isWeapon || (item.isAethericDevice && item.data.damage)}
+        get isAttack() { return  this.isWeapon || (this.isAethericDevice && this.data.damage)}
     
         get isRune() { return  this.type === "rune"}
     

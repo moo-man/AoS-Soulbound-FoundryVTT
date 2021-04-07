@@ -45,7 +45,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                         {{#if item.isWeapon}}
-                            <div class="weapon item" data-item-id="{{item._id}}">
+                            <div class="weapon item" data-item-id="{{item.id}}">
                                 <div class="name">
                                     <div class="image-container">
                                         <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -83,7 +83,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isArmour}}
-                    <div class="armour item" data-item-id="{{item._id}}">
+                    <div class="armour item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -123,7 +123,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isEquipment}}
-                    <div class="equipment item" data-item-id="{{item._id}}">
+                    <div class="equipment item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -161,7 +161,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isAethericDevice}}
-                    <div class="aetheric-device item" data-item-id="{{item._id}}">
+                    <div class="aetheric-device item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
@@ -199,7 +199,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isRune}}
-                    <div class="rune item" data-item-id="{{item._id}}">
+                    <div class="rune item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>

@@ -1,6 +1,14 @@
 import { prepareCustomRoll, prepareCommonRoll, prepareCombatRoll, preparePowerRoll } from "../common/dialog.js";
 
 export class AgeOfSigmarActorSheet extends ActorSheet {
+
+    getData() {
+        const data = super.getData();
+        data.data = data.data.data; // project system data so that handlebars has the same name and value paths
+        return data;
+      }    
+
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-create").click(ev => this._onItemCreate(ev));
@@ -35,20 +43,20 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let header = event.currentTarget;
         let data = foundry.utils.deepClone(header.dataset);
         data["name"] = `New ${data.type.capitalize()}`;
-        this.actor.createEmbeddedEntity("OwnedItem", data, {renderSheet: true});
+        this.actor.createEmbeddedDocuments("Item", [data], {renderSheet: true});
     }
 
     _onItemEdit(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.getOwnedItem(div.data("itemId"));
+        const item = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
         item.sheet.render(true);
     }
 
     _onItemDelete(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        this.actor.deleteOwnedItem(div.data("itemId"));
+        this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
         div.slideUp(200, () => this.render(false));
     }
 
@@ -59,20 +67,20 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _onItemStateUpdate(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.getOwnedItem(div.data("itemId"));
+        const item = this.actor.getEmbeddedDocument("Item", (div.data("itemId")))
         let data;
         switch (item.data.data.state) {
             case "active":
-                data = { _id: item._id, "data.state": "equipped"};
+                data = { _id: item.id, "data.state": "equipped"};
                 break;
             case "equipped":
-                data = { _id: item._id, "data.state": "other"};
+                data = { _id: item.id, "data.state": "other"};
                 break;
             default:
-                data = { _id: item._id, "data.state": "active"};
+                data = { _id: item.id, "data.state": "active"};
                 break;
         }
-        await this.actor.updateOwnedItem(data);
+        await this.actor.updateEmbeddedDocuments("Item", [data]);
         this._render();
     }
 
@@ -96,7 +104,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _prepareRollWeapon(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const weapon = this.actor.getOwnedItem(div.data("itemId"));
+        const weapon = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
         let attributeName, skillName;
         if (weapon.data.data.category === "melee") {
             attributeName = "body";
@@ -114,7 +122,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _prepareRollPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const power = this.actor.getOwnedItem(div.data("itemId"));
+        const power = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
         let attributes, skills;
         if (power.data.type === "spell") {
             attributes = this._setSelectedAttribute("mind")
@@ -129,12 +137,12 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 	async _prepareShowPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const power = this.actor.getOwnedItem(div.data("itemId"));
+        const power = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
         await power.sendToChat()
     }
 
     _setSelectedAttribute(attributeName) {
-        let attributes = JSON.parse(JSON.stringify( this.actor.data.data.attributes));
+        let attributes = foundry.utils.deepClone(this.actor.data.data.attributes);
         for (let attribute of Object.values(attributes)) {
             attribute.selected = false;
         }
@@ -143,7 +151,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     }
 
     _setSelectedSkill(skillName) {
-        let skills = JSON.parse(JSON.stringify( this.actor.data.data.skills));
+        let skills = foundry.utils.deepClone(this.actor.data.data.skills);
         for (let skill of Object.values(skills)) {
             skill.selected = false;
         }

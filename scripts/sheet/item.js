@@ -21,7 +21,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     const data = super.getData();
     data.data = data.data.data; // project system data so that handlebars has the same name and value paths
     return data;
-}
+  }
 
   _onFocusIn(event) {
     $(event.currentTarget).select();

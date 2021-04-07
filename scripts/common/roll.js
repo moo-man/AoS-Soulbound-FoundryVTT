@@ -54,7 +54,7 @@ export async function powerRoll(attribute, skill, bonusDice, power, dn) {
 }
 
 function _roll(numberOfDice, dn) {
-    let roll = new Roll("@dp d6cs>=@difficulty", {dp: numberOfDice, difficulty: dn.difficulty});    
+    let roll = new Roll(`${numberOfDice}d6cs>=${dn.difficulty}`);    
     return roll.evaluate();
 }
 
@@ -140,8 +140,8 @@ async function _sendToChat(origRoll, result, dn, focus, damage, traits, isCombat
 async function _createChatMessage(templateFile, render_data, roll) {
     const html = await renderTemplate(templateFile, render_data);
     let chatData = {
-        user: game.user._id,
-        type: CHAT_MESSAGE_TYPES.ROLL,
+        user: game.user.id,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
         roll: roll,
         rollMode: game.settings.get("core", "rollMode"),
         content: html,

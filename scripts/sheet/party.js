@@ -26,12 +26,11 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         const data = super.getData();
         let ownedActorId;
         data.members = {};
-        for (let i = 0; i < (data.actor.flags.members || []).length; i++) {
-            ownedActorId = data.actor.flags.members[i];
+        for (let i = 0; i < (data.actor.data.flags.members || []).length; i++) {
+            ownedActorId = data.actor.data.flags.members[i];
             let actor = game.actors.get(ownedActorId);
             if (actor) data.members[ownedActorId] = actor;
         }
-        console.log(data);
         return data;
     }
 
