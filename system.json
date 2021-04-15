@@ -2,9 +2,9 @@
   "name": "age-of-sigmar-soulbound",
   "title": "Age of Sigmar : Soulbound",
   "description": "Perilous adventures in the mortal realms",
-  "version": "2.4.0",
-  "minimumCoreVersion": "0.7.5",
-  "compatibleCoreVersion": "0.7.9",
+  "version": "3.0.0",
+  "minimumCoreVersion": "0.8.2",
+  "compatibleCoreVersion": "0.8.2",
   "templateVersion": 2,
   "author": "Moo Man, Perfectro, Vendare",
   "scripts": [],
@@ -61,7 +61,7 @@
   "secondaryTokenAttribute": null,
   "url": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT",
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/moo-man/AoS-Soulbound-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/releases/download/2.4.0/age-of-sigmar-soulbound.zip",
+  "manifest": "https://raw.githubusercontent.com/moo-man/AoS-Soulbound-FoundryVTT/0.8-support/system.json",
+  "download": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/archive/refs/heads/0.8-support.zip",
   "license": "LICENSE.txt"
 }
