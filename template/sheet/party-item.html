@@ -20,12 +20,8 @@
             <div class="tab" data-group="primary" data-tab="description">
                 <div class="wrapper">
                     <div class="state">
-                        <label>{{localizeState item.type}}</label>
-                        {{#if data.state}}
-                            <input name="data.state" type="checkbox" value="active" checked/>
-                        {{else}}
-                            <input name="data.state" type="checkbox" value="active"/>
-                        {{/if}}
+                        <label>{{item.state}}</label>
+                            <input name="data.state" type="checkbox" value="active" {{checked data.state}}/>
                     </div>
                 </div>
                 <div class="description">

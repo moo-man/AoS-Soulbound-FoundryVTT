@@ -58,8 +58,26 @@ export class AgeOfSigmarActor extends Actor {
         this.data.data.combat.melee.relative = this._getCombatLadderValue("melee");
         this.data.data.combat.accuracy.relative = this._getCombatLadderValue("accuracy");
         this.data.data.combat.defense.relative = this._getCombatLadderValue("defense");
+
+        this.data.data.combat.melee.ability = this._getCombatAbility("melee")
+        this.data.data.combat.accuracy.ability = this._getCombatAbility("accuracy")
+        this.data.data.combat.defense.ability = this._getCombatAbility("defense")
     }
     
+    _getCombatAbility(combatStat)
+    {
+        let value = this.data.data.combat[combatStat].relative
+        switch(value) {
+            case 1: return `${game.i18n.localize("ABILITIES.POOR")} (1)`; 
+            case 2: return `${game.i18n.localize("ABILITIES.AVERAGE")} (2)`;
+            case 3: return `${game.i18n.localize("ABILITIES.GOOD")} (3)`;
+            case 4: return `${game.i18n.localize("ABILITIES.GREAT")} (4)`;
+            case 5: return `${game.i18n.localize("ABILITIES.SUPERB")} (5)`;
+            case 6: return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (6)`;
+            default : return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (${value})`;
+        }
+    }
+
     _getCombatLadderValue(combatStat) {
         let value = this.data.data.combat[combatStat].total
 

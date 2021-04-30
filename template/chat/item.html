@@ -1,6 +1,6 @@
 <div class="age-of-sigmar-soulbound chat item">
     <div class="wrapper">
-        <h3>{{name}}</h3>
+        <h3>{{item.name}}</h3>
         {{#if item.isGoal}}
         <h4>{{localize "ITEM.GOAL"}}</h4>
         {{/if}}
@@ -37,7 +37,7 @@
 
 
         {{#if item.img}}
-        <img src="{{item.img}}" title="{{name}}"/>
+        <img src="{{item.img}}" title="{{item.name}}"/>
         {{/if}}
 
         {{#if item.isGoal}}

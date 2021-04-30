@@ -3,7 +3,7 @@
   "title": "Age of Sigmar : Soulbound",
   "description": "Perilous adventures in the mortal realms",
   "version": "3.0.0",
-  "minimumCoreVersion": "0.8.2",
+  "minimumCoreVersion": "0.8.1",
   "compatibleCoreVersion": "0.8.2",
   "templateVersion": 2,
   "author": "Moo Man, Perfectro, Vendare",
