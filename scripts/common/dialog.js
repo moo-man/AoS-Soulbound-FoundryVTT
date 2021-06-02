@@ -76,8 +76,8 @@ export async function prepareCombatRoll(attributes, skills, combat) {
     combat.armour = 0;
     
     if (hasTarget) {
-        targetDefense = target.actor.data.data.combat.defense.relative;
-        combat.armour = target.actor.data.data.combat.armour.total;
+        targetDefense = target.actor.combat.defense.relative;
+        combat.armour = target.actor.combat.armour.total;
     } 
     
     let data = {

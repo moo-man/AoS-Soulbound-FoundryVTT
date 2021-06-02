@@ -40,10 +40,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _onItemCreate(event) {
         event.preventDefault();
-        let header = event.currentTarget;
-        let data = foundry.utils.deepClone(header.dataset);
-        data["name"] = `New ${data.type.capitalize()}`;
-        this.actor.createEmbeddedDocuments("Item", [data], {renderSheet: true});
+        let header = event.currentTarget.dataset
+        
+        let data = {
+             name : `New ${game.i18n.localize("ITEM.Type" + header.type.toLowerCase().capitalize())}`,
+             type : header.type
+        };
+        this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
 
     _onItemEdit(event) {
@@ -69,7 +72,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.getEmbeddedDocument("Item", (div.data("itemId")))
         let data;
-        switch (item.data.data.state) {
+        switch (item.state) {
             case "active":
                 data = { _id: item.id, "data.state": "equipped"};
                 break;
@@ -95,7 +98,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _prepareRollSkill(event) {
         event.preventDefault();
         const skillName = $(event.currentTarget).data("skill");
-        const attribute = this.actor.data.data.skills[skillName].attribute
+        const attribute = this.actor.skills[skillName].attribute
         const attributes = this._setSelectedAttribute(attribute)
         const skills = this._setSelectedSkill(skillName)
         await prepareCommonRoll(attributes, skills);
@@ -142,7 +145,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     }
 
     _setSelectedAttribute(attributeName) {
-        let attributes = foundry.utils.deepClone(this.actor.data.data.attributes);
+        let attributes = foundry.utils.deepClone(this.actor.attributes);
         for (let attribute of Object.values(attributes)) {
             attribute.selected = false;
         }
@@ -151,7 +154,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     }
 
     _setSelectedSkill(skillName) {
-        let skills = foundry.utils.deepClone(this.actor.data.data.skills);
+        let skills = foundry.utils.deepClone(this.actor.skills);
         for (let skill of Object.values(skills)) {
             skill.selected = false;
         }
@@ -161,8 +164,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _getCombat(weapon) {
         return {
-            melee: this.actor.data.data.combat.melee.relative,
-            accuracy: this.actor.data.data.combat.accuracy.relative,
+            melee: this.actor.combat.melee.relative,
+            accuracy: this.actor.combat.accuracy.relative,
             weapon: {
                 name: weapon.data.name,
                 category: weapon.data.data.category,

@@ -27,9 +27,8 @@ export class AgeOfSigmarItem extends Item {
     }
 
 
-    // **************** GETTERS *******************
-
-    get state() {
+    // @@@@@@ FORMATTED GETTERs @@@@@@
+    get State() {
         switch (this.type) {
             case "ally":
                 return game.i18n.localize("STATE.ALIVE");
@@ -48,52 +47,57 @@ export class AgeOfSigmarItem extends Item {
         }
     }
 
+    // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }
-
     get isGoal() { return this.type === "goal" }
-
     get isConnection() { return this.type === "connection" }
-
     get isWound() { return this.type === "wound" }
-
     get isSpell() { return this.type === "spell" }
-
     get isMiracle() { return this.type === "miracle" }
-
     get isPower() { return this.isSpell || this.isMiracle }
-
     /************** PARTY ITEMS *********************/
-    get isShortGoal() { return this.type === "goal" && this.data.data.type === "short" }
-
-    get isLongGoal() { return this.type === "goal" && this.data.data.type === "long" }
-
+    get isShortGoal() { return this.type === "goal" && this.goalType === "short" }
+    get isLongGoal() { return this.type === "goal" && this.goalType === "long" }
     get isAlly() { return this.type === "ally" }
-
     get isEnemy() { return this.type === "enemy" }
-
     get isResource() { return this.type === "resource" }
-
     get isRumour() { return this.type === "rumour" }
-
     get isFear() { return this.type === "fear" }
-
     get isThreat() { return this.type === "threat" }
-
-    get isActive() { return this.data.data.state === "active" }
-
+    get isActive() { return this.state === "active" }
     /************** GEAR *********************/
-    get isEquipped() { return this.data.data.state === "equipped" }
-
+    get isEquipped() { return this.state === "equipped" }
     get isArmour() { return this.type === "armour" }
-
     get isWeapon() { return this.type === "weapon" }
-
     get isAethericDevice() { return this.type === "aethericDevice" }
-
-    get isAttack() { return this.isWeapon || (this.isAethericDevice && this.data.damage) }
-
+    get isAttack() { return this.isWeapon || (this.isAethericDevice && this.damage) }
     get isRune() { return this.type === "rune" }
-
     get isEquipment() { return this.type === "equipment" }
+
+    // @@@@@@ DATA GETTERS @@@@@@
+    get bonus() {return this.data.data.bonus}
+    get description() {return this.data.data.description}
+    get cost() {return this.data.data.cost}
+    get availability() {return this.data.data.availability}
+    get power() {return this.data.data.power}
+    get requirements() {return this.data.data.requirements}
+    get crafting() {return this.data.data.crafting}
+    get damage() {return this.data.data.damage}
+    get traits() {return this.data.data.traits}
+    get state() {return this.data.data.state}
+    get goalType() {return this.data.data.type}
+    get benefit() {return this.data.data.benefit}
+    get completed() {return this.data.data.completed}
+    get target() {return this.data.data.target}
+    get range() {return this.data.data.range}
+    get duration() {return this.data.data.duration}
+    get effect() {return this.data.data.effect}
+    get god() {return this.data.data.god}
+    get dn() {return this.data.data.dn}
+    get test() {return this.data.data.test}
+    get overcast() {return this.data.data.overcast}
+    get lore() {return this.data.data.lore}
+    get requirement() {return this.data.data.requirement}
+    get category() {return this.data.data.category}
 }
