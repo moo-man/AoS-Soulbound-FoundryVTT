@@ -211,8 +211,8 @@ function _getDn(name, dn) {
     let regexMatch = regex.exec(spellDn);
     return {
         name: name,
-        difficulty: (+regexMatch[1]) ? +regexMatch[1] : 4,
-        complexity: (+regexMatch[2]) ? +regexMatch[2] : 1
+        difficulty: (+regexMatch[1]) ? +regexMatch[1] : 0,
+        complexity: (+regexMatch[2]) ? +regexMatch[2] : 0
     }
 }
 
