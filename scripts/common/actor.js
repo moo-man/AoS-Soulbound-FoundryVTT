@@ -181,7 +181,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeArmour(item) {
-        if (item.type === "shield") {
+        if (item.subtype === "shield") {
             // Like below treat shield benefit as an step increase
             this.combat.defense.total += (item.benefit * 2);
             this.combat.defense.relative = this._getCombatLadderValue("defense");

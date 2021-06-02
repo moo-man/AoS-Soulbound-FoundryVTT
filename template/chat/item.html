@@ -41,7 +41,7 @@
         {{/if}}
 
         {{#if item.isGoal}}
-        <p><strong>{{localize "GOAL.TYPE"}} [{{item.type}}]:</strong> {{item.goalType}}</p>
+        <p><strong>{{localize "GOAL.TYPE"}} [{{item.type}}]:</strong> {{item.subtype}}</p>
         <p><strong>{{localize "GOAL.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
@@ -80,7 +80,7 @@
         {{/if}}
 
         {{#if item.isArmour}}
-        <p><strong>{{localize "ARMOUR.TYPE"}}:</strong> {{item.type}}</p>
+        <p><strong>{{localize "ARMOUR.TYPE"}}:</strong> {{item.subtype}}</p>
         <p><strong>{{localize "ARMOUR.BENEFIT"}}:</strong> {{item.benefit}}</p>
         <p><strong>{{localize "ARMOUR.REQUIREMENTS"}}:</strong> {{item.requirements}}</p>
         <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{item.traits}}</p>

@@ -57,8 +57,8 @@ export class AgeOfSigmarItem extends Item {
     get isMiracle() { return this.type === "miracle" }
     get isPower() { return this.isSpell || this.isMiracle }
     /************** PARTY ITEMS *********************/
-    get isShortGoal() { return this.type === "goal" && this.goalType === "short" }
-    get isLongGoal() { return this.type === "goal" && this.goalType === "long" }
+    get isShortGoal() { return this.type === "goal" && this.subtype === "short" }
+    get isLongGoal() { return this.type === "goal" && this.subtype === "long" }
     get isAlly() { return this.type === "ally" }
     get isEnemy() { return this.type === "enemy" }
     get isResource() { return this.type === "resource" }
@@ -86,7 +86,7 @@ export class AgeOfSigmarItem extends Item {
     get damage() {return this.data.data.damage}
     get traits() {return this.data.data.traits}
     get state() {return this.data.data.state}
-    get goalType() {return this.data.data.type}
+    get subtype() {return this.data.data.type}
     get benefit() {return this.data.data.benefit}
     get completed() {return this.data.data.completed}
     get target() {return this.data.data.target}
