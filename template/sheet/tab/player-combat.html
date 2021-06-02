@@ -96,7 +96,7 @@
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        <div class="damage">{{item.data.damage}}</div>
+                        <div class="damage">{{item.damage}}</div>
                         <div class="button">
                             <a class="item-control item-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
                         </div>
@@ -128,10 +128,10 @@
                         </div>
                         <div class="roll-weapon">{{item.name}}</div>
                     </div>
-                    <div class="pool">{{item.data.pool}}</div>
-                    <div class="focus">{{item.data.focus}}</div>
-                    <div class="damage">{{item.data.damage}}</div>
-                    <div class="traits">{{item.data.traits}}</div>
+                    <div class="pool">{{item.pool}}</div>
+                    <div class="focus">{{item.focus}}</div>
+                    <div class="damage">{{item.damage}}</div>
+                    <div class="traits">{{item.traits}}</div>
                 </div>
                 {{/if}}
                 {{/if}}
@@ -164,13 +164,13 @@
 						{{/if}}
                     </div>
                     {{#if item.isSpell}}
-                    <div class="dn">{{item.data.dn}}</div>
+                    <div class="dn">{{item.dn}}</div>
                     {{else}}
-                    <div class="dn">{{item.data.cost}}</div>
+                    <div class="dn">{{item.cost}}</div>
                     {{/if}}
-                    <div class="target">{{item.data.target}}</div>
-                    <div class="range">{{item.data.range}}</div>
-                    <div class="duration">{{item.data.duration}}</div>
+                    <div class="target">{{item.target}}</div>
+                    <div class="range">{{item.range}}</div>
+                    <div class="duration">{{item.duration}}</div>
                 </div>
                 {{/if}}
                 {{/each}}

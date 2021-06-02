@@ -38,6 +38,7 @@
   "AETHERIC_DEVICE.REQUIREMENTS": "Requirements",
   "AETHERIC_DEVICE.COST": "Cost",
   "AETHERIC_DEVICE.AVAILABILITY": "Availability",
+  "AETHERIC_DEVICE.DESCRIPTION": "Description",
 
   "ARMOUR.NAME": "Name",
   "ARMOUR.DESCRIPTION": "Description",

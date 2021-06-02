@@ -52,7 +52,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     _onItemEdit(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const item = this.actor.items.get(div.data("itemId"));
         item.sheet.render(true);
     }
 
@@ -70,7 +70,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _onItemStateUpdate(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const item = this.actor.getEmbeddedDocument("Item", (div.data("itemId")))
+        const item = this.actor.items.get(div.data("itemId"));
         let data;
         switch (item.state) {
             case "active":
@@ -107,9 +107,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _prepareRollWeapon(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const weapon = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const weapon = this.actor.items.get(div.data("itemId"));
         let attributeName, skillName;
-        if (weapon.data.data.category === "melee") {
+        if (weapon.category === "melee") {
             attributeName = "body";
             skillName = "weaponSkill"
         } else {
@@ -125,7 +125,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _prepareRollPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const power = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const power = this.actor.items.get(div.data("itemId"));
         let attributes, skills;
         if (power.data.type === "spell") {
             attributes = this._setSelectedAttribute("mind")
@@ -140,7 +140,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 	async _prepareShowPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const power = this.actor.getEmbeddedDocument("Item", div.data("itemId"));
+        const power = this.actor.items.get(div.data("itemId"));
         await power.sendToChat()
     }
 
@@ -167,10 +167,10 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             melee: this.actor.combat.melee.relative,
             accuracy: this.actor.combat.accuracy.relative,
             weapon: {
-                name: weapon.data.name,
-                category: weapon.data.data.category,
-                damage: weapon.data.data.damage,
-                traits: weapon.data.data.traits
+                name: weapon.name,
+                category: weapon.category,
+                damage: weapon.damage,
+                traits: weapon.traits
             }
         };
     }

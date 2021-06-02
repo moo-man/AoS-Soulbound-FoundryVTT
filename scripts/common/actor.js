@@ -136,7 +136,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeItemSkills(item) {
-        let skills = item.this.bonus.skills
+        let skills = item.bonus.skills
     
         this.skills.arcana.total +=         skills.arcana;
         this.skills.athletics.total +=      skills.athletics;
@@ -165,7 +165,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeItemCombat(item) {
-        let combat = item.this.bonus.combat
+        let combat = item.bonus.combat
     
         this.combat.mettle.total +=           combat.mettle;
         this.combat.health.toughness.max +=   combat.health.toughness;
@@ -197,6 +197,7 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeAttack() {
 
+        //TODO Move this to item prepare data
         this.items.filter(i => i.isAttack).forEach(item => {
             if (item.category === "melee") {
                 item.pool = this.attributes.body.total + this.skills.weaponSkill.total;

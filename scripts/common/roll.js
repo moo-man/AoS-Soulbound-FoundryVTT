@@ -37,14 +37,14 @@ export async function powerRoll(attribute, skill, bonusDice, power, dn) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
-	let effect = power.data.data.effect;
+	let effect = power.effect;
 	let resist = null;
 	let overcast = null;
 	let duration = null;
     if (power.type === "spell") {
-        overcast = power.data.data.overcast;
-		duration = power.data.data.duration;
-		resist = power.data.data.test;
+        overcast = power.overcast;
+		duration = power.duration;
+		resist = power.test;
 		let complexity = result.total - dn.complexity + 1 // complexity of spelltest is 1 + successes Core p.266 
 		if(resist !== null && complexity > 0) {
 			resist = resist.replace(/:s/ig, ":" + complexity);

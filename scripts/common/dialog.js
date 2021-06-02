@@ -157,7 +157,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
 }
 
 export async function preparePowerRoll(attributes, skills, power) {
-    let  dn = power.data.data.dn;
+    let  dn = power.dn;
     
     let data = {
         attributes: attributes,
