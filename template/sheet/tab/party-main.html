@@ -20,10 +20,10 @@
                                     </div>
                                     <div class="item-edit">{{item.name}}</div>
                                 </div>
-                                {{#if data.completed}}
+                                {{#if item.completed}}
                                     <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
                                 {{else}}
-                                    <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
+                                    <a class="completed" title="{{localize 'GOAL.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
                                 {{/if}}
                                 <div class="button">
                                     <a class="item-control item-delete" title="Delete Goal"><i class="fas fa-trash"></i></a>
@@ -54,7 +54,7 @@
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if data.completed}}
+                        {{#if item.completed}}
                         <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                         <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
