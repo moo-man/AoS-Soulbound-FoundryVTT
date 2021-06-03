@@ -214,6 +214,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.total + (this.combat.melee.bonus * 2);
         this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.total + (this.combat.accuracy.bonus * 2);
         this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.total + (this.combat.defense.bonus * 2);
+        this.combat.armour.total +=            this.combat.armour.bonus;
         this.combat.health.toughness.max +=    this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
         this.combat.health.wounds.max +=       Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
         this.combat.health.wounds.deadly =     this.combat.health.wounds.value >= this.combat.health.wounds.max;
