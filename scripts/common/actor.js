@@ -203,7 +203,7 @@ export class AgeOfSigmarActor extends Actor {
                 item.pool = this.attributes.body.total + this.skills.weaponSkill.total;
                 item.focus = this.skills.weaponSkill.focus;
             } else {
-                item.pool = this.attributes.mind.total + this.skills.ballisticSkill.total;
+                item.pool = this.attributes.body.total + this.skills.ballisticSkill.total;
                 item.focus = this.skills.ballisticSkill.focus;
             }
         })
