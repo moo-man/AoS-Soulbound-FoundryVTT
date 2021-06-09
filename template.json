@@ -10,15 +10,15 @@
         "attributes": {
           "body": {
             "label": "ATTRIBUTE.BODY",
-            "value": 0
+            "value": 1
           },
           "mind": {
             "label": "ATTRIBUTE.MIND",
-            "value": 0
+            "value": 1
           },
           "soul": {
             "label": "ATTRIBUTE.SOUL",
-            "value": 0
+            "value": 1
           }
         }
       },

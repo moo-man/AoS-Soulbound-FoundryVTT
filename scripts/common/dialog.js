@@ -217,14 +217,11 @@ function _getDn(name, dn) {
 }
 
 function _getCombatDn(combat, defense) {
- 
-    let targetDefense = defense   
-        
     let difficulty;
     if (combat.weapon.category === "melee") {
-        difficulty = 4 - (combat.melee - targetDefense);
+        difficulty = 4 - (combat.melee - defense);
     } else {
-        difficulty = 4 - (combat.accuracy - targetDefense);
+        difficulty = 4 - (combat.accuracy - defense);
     }
     if (difficulty > 6) difficulty = 6;
     if (difficulty < 2) difficulty = 2;
