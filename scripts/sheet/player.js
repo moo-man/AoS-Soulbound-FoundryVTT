@@ -31,7 +31,7 @@ export class PlayerSheet extends AgeOfSigmarActorSheet {
 
     _getHeaderButtons() {
         let buttons = super._getHeaderButtons();
-        if (this.actor.owner) {
+        if (this.actor.isOwner) {
             buttons = [
             ].concat(buttons);
         }

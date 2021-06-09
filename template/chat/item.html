@@ -1,124 +1,124 @@
 <div class="age-of-sigmar-soulbound chat item">
     <div class="wrapper">
-        <h3>{{name}}</h3>
-        {{#if isGoal}}
+        <h3>{{item.name}}</h3>
+        {{#if item.isGoal}}
         <h4>{{localize "ITEM.GOAL"}}</h4>
         {{/if}}
-        {{#if isConnection}}
+        {{#if item.isConnection}}
         <h4>{{localize "ITEM.CONNECTION"}}</h4>
         {{/if}}
-        {{#if isWound}}
+        {{#if item.isWound}}
         <h4>{{localize "ITEM.WOUND"}}</h4>
         {{/if}}
-        {{#if isSpell}}
+        {{#if item.isSpell}}
         <h4>{{localize "ITEM.SPELL"}}</h4>
         {{/if}}
-        {{#if isMiracle}}
+        {{#if item.isMiracle}}
         <h4>{{localize "ITEM.MIRACLE"}}</h4>
         {{/if}}
-        {{#if isTalent}}
+        {{#if item.isTalent}}
         <h4>{{localize "ITEM.TALENT"}}</h4>
         {{/if}}
-        {{#if isArmour}}
+        {{#if item.isArmour}}
         <h4>{{localize "ITEM.ARMOUR"}}</h4>
         {{/if}}
-        {{#if isWeapon}}
+        {{#if item.isWeapon}}
         <h4>{{localize "ITEM.WEAPON"}}</h4>
         {{/if}}
-        {{#if isAethericDevice}}
+        {{#if item.isAethericDevice}}
         <h4>{{localize "ITEM.AETHERIC_DEVICE"}}</h4>
         {{/if}}
-        {{#if isRune}}
+        {{#if item.isRune}}
         <h4>{{localize "ITEM.RUNE"}}</h4>
         {{/if}}
-        {{#if isEquipment}}
+        {{#if item.isEquipment}}
         <h4>{{localize "ITEM.EQUIPMENT"}}</h4>
         {{/if}}
 
 
-        {{#if img}}
-        <img src="{{img}}" title="{{name}}"/>
+        {{#if item.img}}
+        <img src="{{item.img}}" title="{{item.name}}"/>
         {{/if}}
 
-        {{#if isGoal}}
-        <p><strong>{{localize "GOAL.TYPE"}} [{{data.type}}]:</strong> {{data.type}}</p>
-        <p><strong>{{localize "GOAL.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isGoal}}
+        <p><strong>{{localize "GOAL.TYPE"}} [{{item.type}}]:</strong> {{item.subtype}}</p>
+        <p><strong>{{localize "GOAL.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isConnection}}
-        <p><strong>{{localize "CONNECTION.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isConnection}}
+        <p><strong>{{localize "CONNECTION.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isWound}}
-        <p><strong>{{localize "WOUND.DAMAGE"}}:</strong> {{data.damage}}</p>
-        <p><strong>{{localize "WOUND.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isWound}}
+        <p><strong>{{localize "WOUND.DAMAGE"}}:</strong> {{item.damage}}</p>
+        <p><strong>{{localize "WOUND.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isSpell}}
-        <p><strong>{{localize "SPELL.LORE"}}:</strong> {{data.lore}}</p>
-        <p><strong>{{localize "SPELL.DN"}}:</strong> {{data.dn}}</p>
-        <p><strong>{{localize "SPELL.TARGET"}}:</strong> {{data.target}}</p>
-        <p><strong>{{localize "SPELL.RANGE"}}:</strong> {{data.range}}</p>
-        <p><strong>{{localize "SPELL.DURATION"}}:</strong> {{data.duration}}</p>
-        <p><strong>{{localize "SPELL.TEST"}}:</strong> {{data.test}}</p>
-        <p><strong>{{localize "SPELL.OVERCAST"}}:</strong> {{data.overcast}}</p>
-        <p><strong>{{localize "SPELL.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isSpell}}
+        <p><strong>{{localize "SPELL.LORE"}}:</strong> {{item.lore}}</p>
+        <p><strong>{{localize "SPELL.DN"}}:</strong> {{item.dn}}</p>
+        <p><strong>{{localize "SPELL.TARGET"}}:</strong> {{item.target}}</p>
+        <p><strong>{{localize "SPELL.RANGE"}}:</strong> {{item.range}}</p>
+        <p><strong>{{localize "SPELL.DURATION"}}:</strong> {{item.duration}}</p>
+        <p><strong>{{localize "SPELL.TEST"}}:</strong> {{item.test}}</p>
+        <p><strong>{{localize "SPELL.OVERCAST"}}:</strong> {{item.overcast}}</p>
+        <p><strong>{{localize "SPELL.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isMiracle}}
-        <p><strong>{{localize "MIRACLE.GOD"}}:</strong> {{data.god}}</p>
-        <p><strong>{{localize "MIRACLE.COST"}}:</strong> {{data.cost}}</p>
-        <p><strong>{{localize "MIRACLE.TARGET"}}:</strong> {{data.target}}</p>
-        <p><strong>{{localize "MIRACLE.RANGE"}}:</strong> {{data.range}}</p>
-        <p><strong>{{localize "MIRACLE.DURATION"}}:</strong> {{data.duration}}</p>
-        <p><strong>{{localize "MIRACLE.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isMiracle}}
+        <p><strong>{{localize "MIRACLE.GOD"}}:</strong> {{item.god}}</p>
+        <p><strong>{{localize "MIRACLE.COST"}}:</strong> {{item.cost}}</p>
+        <p><strong>{{localize "MIRACLE.TARGET"}}:</strong> {{item.target}}</p>
+        <p><strong>{{localize "MIRACLE.RANGE"}}:</strong> {{item.range}}</p>
+        <p><strong>{{localize "MIRACLE.DURATION"}}:</strong> {{item.duration}}</p>
+        <p><strong>{{localize "MIRACLE.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isTalent}}
-        <p><strong>{{localize "TALENT.REQUIREMENT"}}:</strong> {{data.requirement}}</p>
-        <p><strong>{{localize "TALENT.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isTalent}}
+        <p><strong>{{localize "TALENT.REQUIREMENT"}}:</strong> {{item.requirement}}</p>
+        <p><strong>{{localize "TALENT.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isArmour}}
-        <p><strong>{{localize "ARMOUR.TYPE"}}:</strong> {{data.type}}</p>
-        <p><strong>{{localize "ARMOUR.BENEFIT"}}:</strong> {{data.benefit}}</p>
-        <p><strong>{{localize "ARMOUR.REQUIREMENTS"}}:</strong> {{data.requirements}}</p>
-        <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{data.traits}}</p>
-        <p><strong>{{localize "ARMOUR.COST"}}:</strong> {{data.cost}}</p>
-        <p><strong>{{localize "ARMOUR.AVAILABILITY"}}:</strong> {{data.availability}}</p>
-        <p><strong>{{localize "ARMOUR.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isArmour}}
+        <p><strong>{{localize "ARMOUR.TYPE"}}:</strong> {{item.subtype}}</p>
+        <p><strong>{{localize "ARMOUR.BENEFIT"}}:</strong> {{item.benefit}}</p>
+        <p><strong>{{localize "ARMOUR.REQUIREMENTS"}}:</strong> {{item.requirements}}</p>
+        <p><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{item.traits}}</p>
+        <p><strong>{{localize "ARMOUR.COST"}}:</strong> {{item.cost}}</p>
+        <p><strong>{{localize "ARMOUR.AVAILABILITY"}}:</strong> {{item.availability}}</p>
+        <p><strong>{{localize "ARMOUR.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isWeapon}}
-        <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{data.category}}</p>
-        <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{data.damage}}</p>
-        <p><strong>{{localize "WEAPON.TRAITS"}}:</strong> {{data.traits}}</p>
-        <p><strong>{{localize "WEAPON.COST"}}:</strong> {{data.cost}}</p>
-        <p><strong>{{localize "WEAPON.AVAILABILITY"}}:</strong> {{data.availability}}</p>
-        <p><strong>{{localize "WEAPON.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isWeapon}}
+        <p><strong>{{localize "WEAPON.CATEGORY"}}:</strong> {{item.category}}</p>
+        <p><strong>{{localize "WEAPON.DAMAGE"}}:</strong> {{item.damage}}</p>
+        <p><strong>{{localize "WEAPON.TRAITS"}}:</strong> {{item.traits}}</p>
+        <p><strong>{{localize "WEAPON.COST"}}:</strong> {{item.cost}}</p>
+        <p><strong>{{localize "WEAPON.AVAILABILITY"}}:</strong> {{item.availability}}</p>
+        <p><strong>{{localize "WEAPON.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isAethericDevice}}
-        <p><strong>{{localize "AETHERIC_DEVICE.CATEGORY"}}:</strong> {{data.category}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.DAMAGE"}}:</strong> {{data.damage}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.TRAITS"}}:</strong> {{data.traits}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.POWER_CAPACITY"}}:</strong> {{data.power.capacity}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.POWER_CONSUMPTION"}}:</strong> {{data.power.consumption}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.CRAFTING"}}:</strong> {{data.crafting}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}:</strong> {{data.requirements}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.COST"}}:</strong> {{data.cost}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.AVAILABILITY"}}:</strong> {{data.availability}}</p>
-        <p><strong>{{localize "AETHERIC_DEVICE.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isAethericDevice}}
+        <p><strong>{{localize "AETHERIC_DEVICE.CATEGORY"}}:</strong> {{item.category}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.DAMAGE"}}:</strong> {{item.damage}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.TRAITS"}}:</strong> {{item.traits}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.POWER_CAPACITY"}}:</strong> {{item.power.capacity}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.POWER_CONSUMPTION"}}:</strong> {{item.power.consumption}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.CRAFTING"}}:</strong> {{item.crafting}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}:</strong> {{item.requirements}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.COST"}}:</strong> {{item.cost}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.AVAILABILITY"}}:</strong> {{item.availability}}</p>
+        <p><strong>{{localize "AETHERIC_DEVICE.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isRune}}
-        <p><strong>{{localize "RUNE.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isRune}}
+        <p><strong>{{localize "RUNE.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
 
-        {{#if isEquipment}}
-        <p><strong>{{localize "EQUIPMENT.COST"}}:</strong> {{data.cost}}</p>
-        <p><strong>{{localize "EQUIPMENT.AVAILABILITY"}}:</strong> {{data.availability}}</p>
-        <p><strong>{{localize "EQUIPMENT.DESCRIPTION"}}:</strong> {{removeMarkup data.description}}</p>
+        {{#if item.isEquipment}}
+        <p><strong>{{localize "EQUIPMENT.COST"}}:</strong> {{item.cost}}</p>
+        <p><strong>{{localize "EQUIPMENT.AVAILABILITY"}}:</strong> {{item.availability}}</p>
+        <p><strong>{{localize "EQUIPMENT.DESCRIPTION"}}:</strong> {{{item.description}}}</p>
         {{/if}}
     </div>
 </div>

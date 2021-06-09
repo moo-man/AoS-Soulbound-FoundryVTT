@@ -1,74 +1,104 @@
 export class AgeOfSigmarActor extends Actor {
+
+    async _preCreate(data, options, user) {
+
+        let initData = {
+            "token.bar1" :{ "attribute" : "combat.health.toughness" },
+            "token.bar2" :{ "attribute" : "combat.health.wounds" },
+            "token.displayName" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "token.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "token.disposition" : CONST.TOKEN_DISPOSITIONS.NEUTRAL,
+            "token.name" : data.name
+        }
+        if (data.type === "player") {
+            initData["token.vision"] = true;
+            initData["token.actorLink"] = true;
+        }
+        this.data.update(initData)
+    }
+
+
     prepareData() {
         super.prepareData();
-        if (this.data.type === "player" || this.data.type === "npc") {
-            this._initializeData(this.data);
-            this._computeSkillOrder(this.data);
-            this._computeItems(this.data);
-            this._computeAttack(this.data);
-            this._computeSecondary(this.data);
-            this._computeRelativeCombatAbilities(this.data);
-        } else if (this.data.type === "party") {
-            this._computePartyItems(this.data);
+        if (this.type === "player" || this.type === "npc") {
+            this._initializeData();
+            this._computeSkillOrder();
+            this._computeItems();
+            this._computeAttack();
+            this._computeSecondary();
+            this._computeRelativeCombatAbilities();
         }
     }
 
-    _initializeData(data) {
-        data.data.attributes.body.total = data.data.attributes.body.value;
-        data.data.attributes.mind.total = data.data.attributes.mind.value;
-        data.data.attributes.soul.total = data.data.attributes.soul.value;
-        data.data.combat.melee.total = 0;
-        data.data.combat.melee.relative = 0;
-        data.data.combat.accuracy.total = 0;
-        data.data.combat.accuracy.relative = 0;
-        data.data.combat.defense.total = 0;
-        data.data.combat.defense.relative = 0;
-        data.data.combat.armour.total = 0;
-        data.data.combat.health.toughness.max = 0;
-        data.data.combat.health.wounds.value = 0;
-        data.data.combat.health.wounds.max = 0;
-        data.data.combat.initiative.total = 0;
-        data.data.combat.naturalAwareness.total = 0;
-        data.data.combat.mettle.total = 0;
-        data.data.combat.damage = 0;
-        data.data.power = {
-            consumed: 0,
-            capacity: 0,
-            isUndercharge: false
-        }
+    _initializeData() {
+        this.attributes.body.total = this.attributes.body.value;
+        this.attributes.mind.total = this.attributes.mind.value;
+        this.attributes.soul.total = this.attributes.soul.value;
+        this.combat.melee.total = 0;
+        this.combat.melee.relative = 0;
+        this.combat.accuracy.total = 0;
+        this.combat.accuracy.relative = 0;
+        this.combat.defense.total = 0;
+        this.combat.defense.relative = 0;
+        this.combat.armour.total = 0;
+        this.combat.health.toughness.max = 0;
+        this.combat.health.wounds.value = 0;
+        this.combat.health.wounds.max = 0;
+        this.combat.initiative.total = 0;
+        this.combat.naturalAwareness.total = 0;
+        this.combat.mettle.total = 0;
+        this.combat.damage = 0;
+        this.power.consumed = 0,
+        this.power.capacity = 0,
+        this.power.isUndercharge = false
     }
 
-    _computeRelativeCombatAbilities(data) {
-        let combatStat = data.data.combat.melee.total
-        data.data.combat.melee.relative = this._getCombatLadderValue(combatStat);
+    _computeRelativeCombatAbilities() {
+        this.combat.melee.relative = this._getCombatLadderValue("melee");
+        this.combat.accuracy.relative = this._getCombatLadderValue("accuracy");
+        this.combat.defense.relative = this._getCombatLadderValue("defense");
 
-        combatStat = data.data.combat.accuracy.total
-        data.data.combat.accuracy.relative = this._getCombatLadderValue(combatStat);
-
-        combatStat = data.data.combat.defense.total
-        data.data.combat.defense.relative = this._getCombatLadderValue(combatStat);
+        this.combat.melee.ability = this._getCombatAbility("melee")
+        this.combat.accuracy.ability = this._getCombatAbility("accuracy")
+        this.combat.defense.ability = this._getCombatAbility("defense")
     }
     
+    _getCombatAbility(combatStat)
+    {
+        let value = this.combat[combatStat].relative
+        switch(value) {
+            case 1: return `${game.i18n.localize("ABILITIES.POOR")} (1)`; 
+            case 2: return `${game.i18n.localize("ABILITIES.AVERAGE")} (2)`;
+            case 3: return `${game.i18n.localize("ABILITIES.GOOD")} (3)`;
+            case 4: return `${game.i18n.localize("ABILITIES.GREAT")} (4)`;
+            case 5: return `${game.i18n.localize("ABILITIES.SUPERB")} (5)`;
+            case 6: return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (6)`;
+            default : return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (${value})`;
+        }
+    }
+
     _getCombatLadderValue(combatStat) {
-        if(combatStat <= 2)
+        let value = this.combat[combatStat].total
+
+        if(value <= 2)
             return 1;
-        else if(combatStat <= 4) {
+        else if(value <= 4) {
             return 2;
-        } else if(combatStat <= 6) {
+        } else if(value <= 6) {
             return 3;
-        } else if(combatStat <= 8) {
+        } else if(value <= 8) {
             return 4;
-        } else if(combatStat <= 10) {
+        } else if(value <= 10) {
             return 5;
         } else {
             return 6;
         }
     }
 
-    _computeSkillOrder(data) {
-        let middle = Object.values(data.data.skills).length / 2;
+    _computeSkillOrder() {
+        let middle = Object.values(this.skills).length / 2;
         let i = 0;
-        for (let skill of Object.values(data.data.skills)) {
+        for (let skill of Object.values(this.skills)) {
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
             skill.total = skill.training;
@@ -76,143 +106,133 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
-    _computeItems(data) {
-        for (let item of Object.values(data.items)) {
-            item.isGoal = item.type === "goal";
-            item.isConnection = item.type === "connection";
-            item.isWound = item.type === "wound";
-            if (item.isWound) this._computeWounds(data, item);
-            item.isSpell = item.type === "spell";
-            item.isMiracle = item.type === "miracle";
-            item.isPower = item.isSpell || item.isMiracle;
-            item.isTalent = item.type === "talent";
-            if (item.data.state) this._computeGear(data, item);
-        }
+    _computeItems() {
+        let types = this.itemTypes;
+        types["wound"].forEach(i => {
+            this.combat.health.wounds.value += i.damage;
+        })
+        this.items.filter(i => i.isActive).forEach(i => {
+            this._computeGear(i)
+        })
     }
+    
+    _computeGear(item) {
 
-    _computePartyItems(data) {
-        for (let item of Object.values(data.items)) {
-            item.isShortGoal = item.type === "goal" && item.data.type === "short";
-            item.isLongGoal = item.type === "goal"  && item.data.type === "long";
-            item.isAlly = item.type === "ally";
-            item.isEnemy = item.type === "enemy";
-            item.isResource = item.type === "resource";
-            item.isRumour = item.type === "rumour";
-            item.isFear = item.type === "fear";
-            item.isThreat = item.type === "threat";
-            item.isActive = item.data.state === "active";
-        }
-    }
-
-    _computeWounds(data, item) {
-        data.data.combat.health.wounds.value += item.data.damage;
-    }
-
-    _computeGear(data, item) {
-        item.isActive = item.data.state === "active";
-        item.isEquipped = item.data.state === "equipped";
-        item.isArmour = item.type === "armour";
-        item.isWeapon = item.type === "weapon";
-        item.isAethericDevice = item.type === "aethericDevice";
-        item.isAttack = item.isWeapon || (item.isAethericDevice && item.data.damage);
-        item.isRune = item.type === "rune";
-        item.isEquipment = item.type === "equipment";
         if (item.isActive) {
-            this._computeAttributes(data, item.data.bonus.attributes);
-            this._computeSkills(data, item.data.bonus.skills);
-            this._computeCombat(data, item.data.bonus.combat);
-            if (item.isArmour) this._computeArmour(data, item);
-            if (item.isAethericDevice) this._computeAethericDevice(data, item);
+            this._computeItemAttributes(item);
+            this._computeItemSkills(item);
+            this._computeItemCombat(item);
+            if (item.isArmour) this._computeArmour(item);
+            if (item.isAethericDevice) this._computeAethericDevice(item);
         }
     }
 
-    _computeAttributes(data, attributes) {
-        data.data.attributes.body.total += attributes.body;
-        data.data.attributes.mind.total += attributes.mind;
-        data.data.attributes.soul.total += attributes.soul;
+    _computeItemAttributes(item) {
+        let attributes = item.bonus.attributes
+    
+        this.attributes.body.total += attributes.body;
+        this.attributes.mind.total += attributes.mind;
+        this.attributes.soul.total += attributes.soul;
     }
 
-    _computeSkills(data, skills) {
-        data.data.skills.arcana.total += skills.arcana;
-        data.data.skills.athletics.total += skills.athletics;
-        data.data.skills.awareness.total += skills.awareness;
-        data.data.skills.ballisticSkill.total += skills.ballisticSkill;
-        data.data.skills.beastHandling.total += skills.beastHandling;
-        data.data.skills.channelling.total += skills.channelling;
-        data.data.skills.crafting.total += skills.crafting;
-        data.data.skills.determination.total += skills.determination;
-        data.data.skills.devotion.total += skills.devotion;
-        data.data.skills.dexterity.total += skills.dexterity;
-        data.data.skills.entertain.total += skills.entertain;
-        data.data.skills.fortitude.total += skills.fortitude;
-        data.data.skills.guile.total += skills.guile;
-        data.data.skills.intimidation.total += skills.intimidation;
-        data.data.skills.intuition.total += skills.intuition;
-        data.data.skills.lore.total += skills.lore;
-        data.data.skills.medicine.total += skills.medicine;
-        data.data.skills.might.total += skills.might;
-        data.data.skills.nature.total += skills.nature;
-        data.data.skills.reflexes.total += skills.reflexes;
-        data.data.skills.stealth.total += skills.stealth;
-        data.data.skills.survival.total += skills.survival;
-        data.data.skills.theology.total += skills.theology;
-        data.data.skills.weaponSkill.total += skills.weaponSkill;
+    _computeItemSkills(item) {
+        let skills = item.bonus.skills
+    
+        this.skills.arcana.total +=         skills.arcana;
+        this.skills.athletics.total +=      skills.athletics;
+        this.skills.awareness.total +=      skills.awareness;
+        this.skills.ballisticSkill.total += skills.ballisticSkill;
+        this.skills.beastHandling.total +=  skills.beastHandling;
+        this.skills.channelling.total +=    skills.channelling;
+        this.skills.crafting.total +=       skills.crafting;
+        this.skills.determination.total +=  skills.determination;
+        this.skills.devotion.total +=       skills.devotion;
+        this.skills.dexterity.total +=      skills.dexterity;
+        this.skills.entertain.total +=      skills.entertain;
+        this.skills.fortitude.total +=      skills.fortitude;
+        this.skills.guile.total +=          skills.guile;
+        this.skills.intimidation.total +=   skills.intimidation;
+        this.skills.intuition.total +=      skills.intuition;
+        this.skills.lore.total +=           skills.lore;
+        this.skills.medicine.total +=       skills.medicine;
+        this.skills.might.total +=          skills.might;
+        this.skills.nature.total +=         skills.nature;
+        this.skills.reflexes.total +=       skills.reflexes;
+        this.skills.stealth.total +=        skills.stealth;
+        this.skills.survival.total +=       skills.survival;
+        this.skills.theology.total +=       skills.theology;
+        this.skills.weaponSkill.total +=    skills.weaponSkill;
     }
 
-    _computeCombat(data, itemBonus) {
-        data.data.combat.mettle.total += itemBonus.mettle;
-        data.data.combat.health.toughness.max += itemBonus.health.toughness;
-        data.data.combat.health.wounds.max += itemBonus.health.wounds;
-        data.data.combat.health.wounds.deadly = data.data.combat.health.wounds.value >= data.data.combat.health.wounds.max;
-        data.data.combat.initiative.total += itemBonus.initiative;
-        data.data.combat.naturalAwareness.total += itemBonus.naturalAwareness;
-        data.data.combat.melee.total += (itemBonus.melee * 2);
-        data.data.combat.accuracy.total += (itemBonus.accuracy * 2);
-        data.data.combat.defense.total += (itemBonus.defense * 2);
-        data.data.combat.armour.total += itemBonus.armour;
-        data.data.combat.damage += itemBonus.damage;
+    _computeItemCombat(item) {
+        let combat = item.bonus.combat
+    
+        this.combat.mettle.total +=           combat.mettle;
+        this.combat.health.toughness.max +=   combat.health.toughness;
+        this.combat.health.wounds.max +=      combat.health.wounds;
+        this.combat.health.wounds.deadly =    this.combat.health.wounds.value >= this.combat.health.wounds.max;
+        this.combat.initiative.total +=       combat.initiative;
+        this.combat.naturalAwareness.total += combat.naturalAwareness;
+        this.combat.melee.total +=            (combat.melee * 2);
+        this.combat.accuracy.total +=         (combat.accuracy * 2);
+        this.combat.defense.total +=          (combat.defense * 2);
+        this.combat.armour.total +=           combat.armour;
+        this.combat.damage +=                 combat.damage;
     }
 
-    _computeArmour(data, item) {
-        if (item.data.type === "shield") {
+    _computeArmour(item) {
+        if (item.subtype === "shield") {
             // Like below treat shield benefit as an step increase
-            data.data.combat.defense.total += (item.data.benefit * 2);
-            data.data.combat.defense.relative = this._getCombatLadderValue(data.data.combat.defense.total);
+            this.combat.defense.total += (item.benefit * 2);
+            this.combat.defense.relative = this._getCombatLadderValue("defense");
         } else {
-            data.data.combat.armour.total += item.data.benefit;
+            this.combat.armour.total += item.benefit;
         }
     }
 
-    _computeAethericDevice(data, item) {
-        data.data.power.consumed += item.data.power.consumption;
-        data.data.power.capacity += item.data.power.capacity;
+    _computeAethericDevice(item) {
+        this.power.consumed += item.power.consumption;
+        this.power.capacity += item.power.capacity;
     }
 
-    _computeAttack(data) {
-        for (let item of Object.values(data.items)) {
-            if (item.isAttack) {
-                if (item.data.category === "melee") {
-                    item.data.pool = data.data.attributes.body.total + data.data.skills.weaponSkill.total;
-                    item.data.focus = data.data.skills.weaponSkill.focus;
-                } else {
-                    item.data.pool = data.data.attributes.mind.total + data.data.skills.ballisticSkill.total;
-                    item.data.focus = data.data.skills.ballisticSkill.focus;
-                }
+    _computeAttack() {
+
+        //TODO Move this to item prepare data
+        this.items.filter(i => i.isAttack).forEach(item => {
+            if (item.category === "melee") {
+                item.pool = this.attributes.body.total + this.skills.weaponSkill.total;
+                item.focus = this.skills.weaponSkill.focus;
+            } else {
+                item.pool = this.attributes.body.total + this.skills.ballisticSkill.total;
+                item.focus = this.skills.ballisticSkill.focus;
             }
-        }
+        })
     }
 
-    _computeSecondary(data) {
+    _computeSecondary() {
         // melee, accuracy and defense bonus is doubled to represent a one step increase
-        data.data.combat.melee.total += data.data.attributes.body.value + data.data.skills.weaponSkill.total + (data.data.combat.melee.bonus * 2);
-        data.data.combat.accuracy.total += data.data.attributes.mind.value + data.data.skills.ballisticSkill.total + (data.data.combat.accuracy.bonus * 2);
-        data.data.combat.defense.total += data.data.attributes.body.total + data.data.skills.reflexes.total + (data.data.combat.defense.bonus * 2);
-        data.data.combat.health.toughness.max += data.data.attributes.body.total + data.data.attributes.mind.total + data.data.attributes.soul.total + data.data.combat.health.toughness.bonus;
-        data.data.combat.health.wounds.max += Math.ceil((data.data.attributes.body.total + data.data.attributes.mind.total + data.data.attributes.soul.total) / 2) + data.data.combat.health.wounds.bonus;
-        data.data.combat.health.wounds.deadly = data.data.combat.health.wounds.value >= data.data.combat.health.wounds.max;
-        data.data.combat.initiative.total += data.data.attributes.mind.total + data.data.skills.awareness.total + data.data.skills.reflexes.total + data.data.combat.initiative.bonus;
-        data.data.combat.naturalAwareness.total += Math.ceil((data.data.attributes.mind.total + data.data.skills.awareness.total) / 2) + data.data.combat.naturalAwareness.bonus;
-        data.data.combat.mettle.total += Math.ceil(data.data.attributes.soul.total / 2) + data.data.combat.mettle.bonus;
-        data.data.power.isUndercharge = data.data.power.consumed > data.data.power.capacity;
+        this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.total + (this.combat.melee.bonus * 2);
+        this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.total + (this.combat.accuracy.bonus * 2);
+        this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.total + (this.combat.defense.bonus * 2);
+        this.combat.armour.total +=            this.combat.armour.bonus;
+        this.combat.health.toughness.max +=    this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+        this.combat.health.wounds.max +=       Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
+        this.combat.health.wounds.deadly =     this.combat.health.wounds.value >= this.combat.health.wounds.max;
+        this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.total + this.skills.reflexes.total + this.combat.initiative.bonus;
+        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.total) / 2) + this.combat.naturalAwareness.bonus;
+        this.combat.mettle.total +=            Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
+        this.power.isUndercharge =             this.power.consumed > this.power.capacity;
     }
+
+    // @@@@@@ DATA GETTERS @@@@@@
+    get attributes() {return this.data.data.attributes}
+    get skills() {return this.data.data.skills}
+    get combat() {return this.data.data.combat}
+    get currencies() {return this.data.data.currencies}
+    get bio() {return this.data.data.bio}
+    get experience() {return this.data.data.experience}
+    get notes() {return this.data.data.notes}
+    get soulfire() {return this.data.data.soulfire}
+    get doom() {return this.data.data.doom}
+    get power() {return this.data.data.power}
 }

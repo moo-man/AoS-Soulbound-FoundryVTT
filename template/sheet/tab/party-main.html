@@ -13,17 +13,17 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                         {{#if item.isShortGoal}}
-                            <div class="goal item" data-item-id="{{item._id}}">
+                            <div class="goal item" data-item-id="{{item.id}}">
                                 <div class="name">
                                     <div class="image-container">
                                         <div class="image" style="background-image: url('{{item.img}}')"></div>
                                     </div>
                                     <div class="item-edit">{{item.name}}</div>
                                 </div>
-                                {{#if data.completed}}
+                                {{#if item.completed}}
                                     <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
                                 {{else}}
-                                    <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
+                                    <a class="completed" title="{{localize 'GOAL.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
                                 {{/if}}
                                 <div class="button">
                                     <a class="item-control item-delete" title="Delete Goal"><i class="fas fa-trash"></i></a>
@@ -47,17 +47,17 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isLongGoal}}
-                    <div class="goal item" data-item-id="{{item._id}}">
+                    <div class="goal item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if data.completed}}
+                        {{#if item.completed}}
                         <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
-                        <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
+                        <a class="completed" title="{{localize 'GOAL.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
                         {{/if}}
                         <div class="button">
                             <a class="item-control item-delete" title="Delete Goal"><i class="fas fa-trash"></i></a>
@@ -83,14 +83,14 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isAlly}}
-                    <div class="ally item" data-item-id="{{item._id}}">
+                    <div class="ally item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if item.data.state}}
+                        {{#if item.state}}
                             <a class="completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                             <a class="completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-bolt"></i></a>
@@ -117,14 +117,14 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isEnemy}}
-                    <div class="enemy item" data-item-id="{{item._id}}">
+                    <div class="enemy item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if item.data.state}}
+                        {{#if item.state}}
                         <a class="completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                         <a class="completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-bolt"></i></a>
@@ -153,14 +153,14 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isResource}}
-                    <div class="resource item" data-item-id="{{item._id}}">
+                    <div class="resource item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if item.data.state}}
+                        {{#if item.state}}
                         <a class="completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                         <a class="completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-bolt"></i></a>
@@ -187,14 +187,14 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isRumour}}
-                    <div class="rumour item" data-item-id="{{item._id}}">
+                    <div class="rumour item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if item.data.state}}
+                        {{#if item.state}}
                         <a class="completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                         <a class="completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-bolt"></i></a>
@@ -223,14 +223,14 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isFear}}
-                    <div class="fear item" data-item-id="{{item._id}}">
+                    <div class="fear item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if item.data.state}}
+                        {{#if item.state}}
                         <a class="completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                         <a class="completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-bolt"></i></a>
@@ -257,14 +257,14 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                     {{#if item.isThreat}}
-                    <div class="threat item" data-item-id="{{item._id}}">
+                    <div class="threat item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
                                 <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
                             <div class="item-edit">{{item.name}}</div>
                         </div>
-                        {{#if item.data.state}}
+                        {{#if item.state}}
                         <a class="completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-bolt"></i></a>
                         {{else}}
                         <a class="completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-bolt"></i></a>

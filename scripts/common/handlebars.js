@@ -48,33 +48,4 @@ function registerHandlebarsHelpers() {
         const markup = /<(.*?)>/gi;
         return text.replace(markup, "");
     });
-    Handlebars.registerHelper("combatAbilities", function (value) {
-      switch(value) {
-          case 1: return `${game.i18n.localize("ABILITIES.POOR")} (1)`; 
-          case 2: return `${game.i18n.localize("ABILITIES.AVERAGE")} (2)`;
-          case 3: return `${game.i18n.localize("ABILITIES.GOOD")} (3)`;
-          case 4: return `${game.i18n.localize("ABILITIES.GREAT")} (4)`;
-          case 5: return `${game.i18n.localize("ABILITIES.SUPERB")} (5)`;
-          case 6: return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (6)`;
-          default : return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (${value})`;
-      }
-    });
-    Handlebars.registerHelper("localizeState", function (type) {
-        switch (type) {
-            case "ally":
-                return game.i18n.localize("STATE.ALIVE");
-            case "enemy":
-                return game.i18n.localize("STATE.ALIVE");
-            case "resource":
-                return game.i18n.localize("STATE.ACTIVE");
-            case "rumour":
-                return game.i18n.localize("STATE.ACTIVE");
-            case "fear":
-                return game.i18n.localize("STATE.ACTIVE");
-            case "threat":
-                return game.i18n.localize("STATE.ACTIVE");
-            default:
-                return game.i18n.localize("HEADER.STATE");
-        }
-    });
 }

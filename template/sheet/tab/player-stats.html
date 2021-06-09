@@ -59,14 +59,14 @@
             <div class="items">
                 {{#each actor.items as |item|}}
                     {{#if item.isTalent}}
-                        <div class="talent item" data-item-id="{{item._id}}">
+                        <div class="talent item" data-item-id="{{item.id}}">
                             <div class="name">
                                 <div class="image-container">
                                     <div class="image" style="background-image: url('{{item.img}}')"></div>
                                 </div>
                                 <div class="item-edit">{{item.name}}</div>
                             </div>
-                            <div class="effect">{{item.data.effect}}</div>
+                            <div class="effect">{{item.effect}}</div>
                         </div>
                     {{/if}}
                 {{/each}}

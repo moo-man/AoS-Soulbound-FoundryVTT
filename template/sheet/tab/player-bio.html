@@ -53,15 +53,15 @@
             <div class="items">
                 {{#each actor.items as |item|}}
                     {{#if item.isGoal}}
-                        <div class="goal item" data-item-id="{{item._id}}">
+                        <div class="goal item" data-item-id="{{item.id}}">
                             <div class="name">
                                 <div class="image-container">
                                     <div class="image" style="background-image: url('{{item.img}}')"></div>
                                 </div>
                                 <div class="item-edit">{{item.name}}</div>
                             </div>
-                            <div class="type">{{item.data.type}}</div>
-                            {{#if item.data.completed}}
+                            <div class="type">{{item.subtype}}</div>
+                            {{#if item.completed}}
                                 <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
                             {{else}}
                                 <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
@@ -89,7 +89,7 @@
                 <div class="items">
                     {{#each actor.items as |item|}}
                         {{#if item.isConnection}}
-                            <div class="connection item" data-item-id="{{item._id}}">
+                            <div class="connection item" data-item-id="{{item.id}}">
                                 <div class="name">
                                     <div class="image-container">
                                         <div class="image" style="background-image: url('{{item.img}}')"></div>

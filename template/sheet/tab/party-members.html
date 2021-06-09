@@ -10,15 +10,15 @@
             </div>
             <div class="items">
                 {{#each members as |item|}}
-                <div class="member item" data-item-id="{{item._id}}">
+                <div class="member item" data-item-id="{{item.id}}">
                     <div class="name">
                         <div class="image-container">
                             <div class="image" style="background-image: url('{{item.img}}')"></div>
                         </div>
                         <div class="item-edit">{{item.name}}</div>
                     </div>
-                    <div class="archetype">{{item.data.data.bio.archetype}}</div>
-                    <div class="species">{{item.data.data.bio.species}}</div>
+                    <div class="archetype">{{item.bio.archetype}}</div>
+                    <div class="species">{{item.bio.species}}</div>
                     <div class="button">
                         <a class="item-control member-delete" title="Delete Member"><i class="fas fa-trash"></i></a>
                     </div>

@@ -37,14 +37,14 @@ export async function powerRoll(attribute, skill, bonusDice, power, dn) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
-	let effect = power.data.data.effect;
+	let effect = power.effect;
 	let resist = null;
 	let overcast = null;
 	let duration = null;
     if (power.type === "spell") {
-        overcast = power.data.data.overcast;
-		duration = power.data.data.duration;
-		resist = power.data.data.test;
+        overcast = power.overcast;
+		duration = power.duration;
+		resist = power.test;
 		let complexity = result.total - dn.complexity + 1 // complexity of spelltest is 1 + successes Core p.266 
 		if(resist !== null && complexity > 0) {
 			resist = resist.replace(/:s/ig, ":" + complexity);
@@ -54,7 +54,7 @@ export async function powerRoll(attribute, skill, bonusDice, power, dn) {
 }
 
 function _roll(numberOfDice, dn) {
-    let roll = new Roll("@dp d6cs>=@difficulty", {dp: numberOfDice, difficulty: dn.difficulty});    
+    let roll = new Roll(`${numberOfDice}d6cs>=${dn.difficulty}`);    
     return roll.evaluate();
 }
 
@@ -140,8 +140,8 @@ async function _sendToChat(origRoll, result, dn, focus, damage, traits, isCombat
 async function _createChatMessage(templateFile, render_data, roll) {
     const html = await renderTemplate(templateFile, render_data);
     let chatData = {
-        user: game.user._id,
-        type: CHAT_MESSAGE_TYPES.ROLL,
+        user: game.user.id,
+        type: CONST.CHAT_MESSAGE_TYPES.ROLL,
         roll: roll,
         rollMode: game.settings.get("core", "rollMode"),
         content: html,
