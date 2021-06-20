@@ -245,7 +245,7 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? this.update(updates) : this;
 
-        // Doing this here because foundry throughs an error if wounds are added before the update
+        // Doing this here because foundry throws an error if wounds are added before the update
         if(remaining < 0) {          
             if(this.combat.health.wounds.max > 0) {
                 this.addWound(remaining);
@@ -283,13 +283,12 @@ export class AgeOfSigmarActor extends Actor {
             value = this.combat.health.wounds.max - this.combat.health.wounds.value
         }
 
-        let items = await this.createEmbeddedDocuments("Item", [{            
+        await this.createEmbeddedDocuments("Item", [{            
             name: woundName, 
             type: "wound", 
-            img: imgPath,        
+            img: imgPath,
+            "data.damage": value     
         }]);
-        // Needs to be updated here because at creation template fields are inaccessible
-        await items[0].update({"data.damage": value });  
     }
 
     // @@@@@@ DATA GETTERS @@@@@@
