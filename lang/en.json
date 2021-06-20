@@ -95,6 +95,7 @@
   "CHAT.DURATION": "Duration",
   "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
+  "CHAT.APPLY_DAMAGE" : "apply damage to target",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -305,6 +306,9 @@
 
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Wounds",
-  "WOUND.DESCRIPTION": "Description"
+  "WOUND.DESCRIPTION": "Description",
+  "WOUND.LIGHT": "Light Wound",
+  "WOUND.SERIOUS": "Serious Wound",
+  "WOUND.DEADLY": "Deadly Wound"
   
 }

@@ -224,6 +224,74 @@ export class AgeOfSigmarActor extends Actor {
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
     }
 
+    /**
+     * applies Damage to the actor
+     * @param {int} damages 
+     */
+    async applyDamage(damage) {
+        let remaining = this.combat.health.toughness.value - damage;
+        // We have to add wounds to the actor once toughness drops below zero
+        if(remaining < 0) {          
+            if(this.combat.health.wounds.max > 0) {
+                this.addWound(remaining);
+            }
+            remaining = 0;
+        }
+
+         // Update the Actor
+         const updates = {
+            "data.combat.health.toughness.value": remaining
+        };
+
+        // Delegate damage application to a hook
+        const allowed = Hooks.call("modifyTokenAttribute", {
+            attribute: "combat.health.toughness.value",
+            value: this.combat.health.toughness.value,
+            isDelta: false,
+            isBar: true
+        }, updates);
+
+        return allowed !== false ? this.update(updates) : this;
+    }
+
+    /**
+     * creates and adds a wound based on how far the actors health has gone below zero
+     * @param {int} remaining 
+     */
+    async addWound(remaining) {
+        let woundName;
+        let value;
+        let imgPath;
+
+        if(remaining === -1) {
+            woundName = game.i18n.localize("WOUND.LIGHT");
+            imgPath = "icons/skills/wounds/blood-spurt-spray-red.webp" 
+            value = 1;
+        } else if (remaining > -4) {
+            woundName = game.i18n.localize("WOUND.SERIOUS");
+            imgPath = "icons/skills/wounds/injury-triple-slash-bleed.webp"
+            value = 2;            
+        } else {
+            woundName = game.i18n.localize("WOUND.DEADLY");
+            imgPath = "icons/skills/wounds/injury-pain-body-orange.webp"
+            value = 3; 
+        }
+
+        //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
+        let comp = this.combat.health.wounds.value + value;
+        if(comp > this.combat.health.wounds.max) {
+            value = this.combat.health.wounds.max - this.combat.health.wounds.value
+        }
+
+        let item = await Item.create({
+            name: woundName, 
+            type: "wound", 
+            img: imgPath,
+        });
+        await item.update({"data.damage": value });
+        this.createEmbeddedDocuments("Item", [item.data]);      
+    }
+
     // @@@@@@ DATA GETTERS @@@@@@
     get attributes() {return this.data.data.attributes}
     get skills() {return this.data.data.skills}
