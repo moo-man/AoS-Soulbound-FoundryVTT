@@ -230,17 +230,9 @@ export class AgeOfSigmarActor extends Actor {
      */
     async applyDamage(damage) {
         let remaining = this.combat.health.toughness.value - damage;
-        // We have to add wounds to the actor once toughness drops below zero
-        if(remaining < 0) {          
-            if(this.combat.health.wounds.max > 0) {
-                this.addWound(remaining);
-            }
-            remaining = 0;
-        }
-
          // Update the Actor
          const updates = {
-            "data.combat.health.toughness.value": remaining
+            "data.combat.health.toughness.value": remaining >= 0 ? remaining : 0
         };
 
         // Delegate damage application to a hook
@@ -251,7 +243,15 @@ export class AgeOfSigmarActor extends Actor {
             isBar: true
         }, updates);
 
-        return allowed !== false ? this.update(updates) : this;
+        let ret = allowed !== false ? this.update(updates) : this;
+
+        // Doing this here because foundry throughs an error if wounds are added before the update
+        if(remaining < 0) {          
+            if(this.combat.health.wounds.max > 0) {
+                this.addWound(remaining);
+            }
+        }
+        return ret;
     }
 
     /**
