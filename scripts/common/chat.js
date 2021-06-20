@@ -29,7 +29,7 @@ function applyChatCardDamage(message) {
 
     let targets = Array.from(game.user.targets);
     let el = message.find('.damage-value');
-    let regex = /\d/;
+    let regex = /\d+/;
     let damage = parseInt($(el[0]).text().match(regex));
     // apply to any selected actors
     return Promise.all(targets.map(t => {

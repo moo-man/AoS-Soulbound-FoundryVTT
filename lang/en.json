@@ -306,8 +306,7 @@
 
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Wounds",
-  "WOUND.DESCRIPTION": "Description",
-  "WOUND.LIGHT": "Light Wound",
+  "WOUND.LIGHT": "Minor Wound",
   "WOUND.SERIOUS": "Serious Wound",
   "WOUND.DEADLY": "Deadly Wound"
   

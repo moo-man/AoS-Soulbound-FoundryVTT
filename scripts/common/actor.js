@@ -283,13 +283,13 @@ export class AgeOfSigmarActor extends Actor {
             value = this.combat.health.wounds.max - this.combat.health.wounds.value
         }
 
-        let item = await Item.create({
+        let items = await this.createEmbeddedDocuments("Item", [{            
             name: woundName, 
             type: "wound", 
-            img: imgPath,
-        });
-        await item.update({"data.damage": value });
-        this.createEmbeddedDocuments("Item", [item.data]);      
+            img: imgPath,        
+        }]);
+        // Needs to be updated here because at creation template fields are inaccessible
+        await items[0].update({"data.damage": value });  
     }
 
     // @@@@@@ DATA GETTERS @@@@@@
