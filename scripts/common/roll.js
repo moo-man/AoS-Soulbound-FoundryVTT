@@ -71,7 +71,7 @@ function _applyFocus(roll, dn, focus) {
         total : roll.total,
         dice : []
     }
-    // Sorted to effiencently apply success not filtered since we would need 
+    // Sorted to effiencently apply focus not filtered since we would need 
     // to make another function to highlight dice in chat 
     let sorted = _getSortedDiceFromRoll(roll);
     let newTotal = roll.total;    

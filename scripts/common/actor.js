@@ -246,10 +246,8 @@ export class AgeOfSigmarActor extends Actor {
         let ret = allowed !== false ? this.update(updates) : this;
 
         // Doing this here because foundry throws an error if wounds are added before the update
-        if(remaining < 0) {          
-            if(this.combat.health.wounds.max > 0) {
-                this.addWound(remaining);
-            }
+        if(remaining < 0 && this.combat.health.wounds.max > 0) {          
+            this.addWound(remaining);
         }
         return ret;
     }
@@ -278,8 +276,7 @@ export class AgeOfSigmarActor extends Actor {
         }
 
         //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
-        let comp = this.combat.health.wounds.value + value;
-        if(comp > this.combat.health.wounds.max) {
+        if((this.combat.health.wounds.value + value) > this.combat.health.wounds.max) {
             value = this.combat.health.wounds.max - this.combat.health.wounds.value
         }
 
