@@ -211,20 +211,17 @@ function _getDn(name, dn) {
     let regexMatch = regex.exec(spellDn);
     return {
         name: name,
-        difficulty: (+regexMatch[1]) ? +regexMatch[1] : 4,
-        complexity: (+regexMatch[2]) ? +regexMatch[2] : 1
+        difficulty: (+regexMatch[1]) ? +regexMatch[1] : 0,
+        complexity: (+regexMatch[2]) ? +regexMatch[2] : 0
     }
 }
 
 function _getCombatDn(combat, defense) {
- 
-    let targetDefense = defense   
-        
     let difficulty;
     if (combat.weapon.category === "melee") {
-        difficulty = 4 - (combat.melee - targetDefense);
+        difficulty = 4 - (combat.melee - defense);
     } else {
-        difficulty = 4 - (combat.accuracy - targetDefense);
+        difficulty = 4 - (combat.accuracy - defense);
     }
     if (difficulty > 6) difficulty = 6;
     if (difficulty < 2) difficulty = 2;

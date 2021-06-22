@@ -18,6 +18,8 @@ import { AethericDeviceSheet } from "../sheet/aetheric-device.js";
 import { initializeHandlebars } from "./handlebars.js";
 import { prepareCustomRoll } from "./dialog.js";
 
+import * as chat from "./chat.js";
+
 Hooks.once("init", () => {
     game.settings.register("age-of-sigmar-soulbound", "initiativeRule", {
         name: "SETTING.INIT_RULE",
@@ -60,6 +62,11 @@ Hooks.once("init", () => {
     Items.registerSheet("age-of-sigmar-soulbound", WoundSheet, { types: ["wound"], makeDefault: true });
     initializeHandlebars();
 });
+
+Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
+
+
+/** Helpers  */
 
 function _registerInitiative(rule) {
     switch (rule) {

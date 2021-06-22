@@ -224,6 +224,73 @@ export class AgeOfSigmarActor extends Actor {
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
     }
 
+    /**
+     * applies Damage to the actor
+     * @param {int} damages 
+     */
+    async applyDamage(damage) {
+        let remaining = this.combat.health.toughness.value - damage;
+         // Update the Actor
+         const updates = {
+            "data.combat.health.toughness.value": remaining >= 0 ? remaining : 0
+        };
+
+        // Delegate damage application to a hook
+        const allowed = Hooks.call("modifyTokenAttribute", {
+            attribute: "combat.health.toughness.value",
+            value: this.combat.health.toughness.value,
+            isDelta: false,
+            isBar: true
+        }, updates);
+
+        let ret = allowed !== false ? this.update(updates) : this;
+
+        let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.data.token.name});
+        ui.notifications.notify(note);
+
+        // Doing this here because foundry throws an error if wounds are added before the update
+        if(remaining < 0 && this.combat.health.wounds.max > 0) {          
+            this.addWound(remaining);
+        }
+        return ret;
+    }
+
+    /**
+     * creates and adds a wound based on how far the actors health has gone below zero
+     * @param {int} remaining 
+     */
+    async addWound(remaining) {
+        let woundName;
+        let value;
+        let imgPath;
+
+        if(remaining === -1) {
+            woundName = game.i18n.localize("WOUND.LIGHT");
+            imgPath = "icons/skills/wounds/blood-spurt-spray-red.webp" 
+            value = 1;
+        } else if (remaining > -4) {
+            woundName = game.i18n.localize("WOUND.SERIOUS");
+            imgPath = "icons/skills/wounds/injury-triple-slash-bleed.webp"
+            value = 2;            
+        } else {
+            woundName = game.i18n.localize("WOUND.DEADLY");
+            imgPath = "icons/skills/wounds/injury-pain-body-orange.webp"
+            value = 3; 
+        }
+
+        //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
+        if((this.combat.health.wounds.value + value) > this.combat.health.wounds.max) {
+            value = this.combat.health.wounds.max - this.combat.health.wounds.value
+        }
+
+        await this.createEmbeddedDocuments("Item", [{            
+            name: woundName, 
+            type: "wound", 
+            img: imgPath,
+            "data.damage": value     
+        }]);
+    }
+
     // @@@@@@ DATA GETTERS @@@@@@
     get attributes() {return this.data.data.attributes}
     get skills() {return this.data.data.skills}
