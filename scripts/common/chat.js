@@ -8,7 +8,7 @@
 export const addChatMessageContextOptions = function (html, options) {
     let canApply = li => {
         const message = game.messages.get(li.data("messageId"));
-        return message.isRoll && message.isContentVisible && game.user.targets.size;
+        return message.isRoll && message.isContentVisible && canvas.tokens?.controlled.length;
     };
     options.push(
         {
@@ -26,13 +26,11 @@ export const addChatMessageContextOptions = function (html, options) {
  * @return {Promise}
  */
 function applyChatCardDamage(message) {    
-
-    let targets = Array.from(game.user.targets);
     let el = message.find('.damage-value');
     let regex = /\d+/;
     let damage = parseInt($(el[0]).text().match(regex));
     // apply to any selected actors
-    return Promise.all(targets.map(t => {
+    return Promise.all(canvas.tokens.controlled.map(t => {
         const a = t.actor;
         return a.applyDamage(damage);
     }));

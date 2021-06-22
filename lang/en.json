@@ -95,7 +95,7 @@
   "CHAT.DURATION": "Duration",
   "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
-  "CHAT.APPLY_DAMAGE" : "apply damage to target",
+  "CHAT.APPLY_DAMAGE" : "Apply Damage to Target",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",

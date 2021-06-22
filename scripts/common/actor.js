@@ -245,6 +245,9 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? this.update(updates) : this;
 
+        let note = game.i18n.localize("NOTIFICATION.APPLY_DAMAGE").replace("{0}", damage).replace("{1}", this.data.token.name);
+        ui.notifications.notify(note);
+
         // Doing this here because foundry throws an error if wounds are added before the update
         if(remaining < 0 && this.combat.health.wounds.max > 0) {          
             this.addWound(remaining);
