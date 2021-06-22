@@ -97,7 +97,7 @@
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
   "CHAT.APPLY_DAMAGE" : "Apply Damage to Target",
 
-  "NOTIFICATION.APPLY_DAMAGE": "{0} Damage applied to {1}",
+  "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
