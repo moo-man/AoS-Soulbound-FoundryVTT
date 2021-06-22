@@ -245,6 +245,7 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? this.update(updates) : this;
 
+        // WHY DOES String.Format NOT EXIST IN JAVASCRIPT
         let note = game.i18n.localize("NOTIFICATION.APPLY_DAMAGE").replace("{0}", damage).replace("{1}", this.data.token.name);
         ui.notifications.notify(note);
 
