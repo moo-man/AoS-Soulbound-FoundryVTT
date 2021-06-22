@@ -8,7 +8,10 @@
 export const addChatMessageContextOptions = function (html, options) {
     let canApply = li => {
         const message = game.messages.get(li.data("messageId"));
-        return message.isRoll && message.isContentVisible && canvas.tokens?.controlled.length;
+        return message.isRoll
+            && message.isContentVisible //can be seen
+            && canvas.tokens?.controlled.length //has something selected
+            && message.find('.damage-value').length; //is damage roll
     };
     options.push(
         {
