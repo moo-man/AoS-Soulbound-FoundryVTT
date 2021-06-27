@@ -96,6 +96,7 @@
   "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
   "CHAT.APPLY_DAMAGE" : "Apply Damage to Target",
+  "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage to Target",
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
 
