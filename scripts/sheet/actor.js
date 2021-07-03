@@ -166,6 +166,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return {
             melee: this.actor.combat.melee.relative,
             accuracy: this.actor.combat.accuracy.relative,
+            swarmDice: this.actor.type === "npc" && this.actor.bio.type === 0 ? this.actor.combat.health.toughness.value : 0, 
             weapon: {
                 name: weapon.name,
                 category: weapon.category,

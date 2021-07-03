@@ -18,7 +18,7 @@ export const addChatMessageContextOptions = function (html, options) {
             name: game.i18n.localize("CHAT.APPLY_DAMAGE"),
             icon: '<i class="fas fa-user-minus"></i>',
             condition: canApply,
-            callback: li => applyChatCardDamage(li, 1);
+            callback: li => applyChatCardDamage(li, 1)
         }
     );
 	options.push(
@@ -26,7 +26,7 @@ export const addChatMessageContextOptions = function (html, options) {
             name: game.i18n.localize("CHAT.APPLY_DOUBLE_DAMAGE"),
             icon: '<i class="fas fa-user-minus"></i>',
             condition: canApply,
-            callback: li => applyChatCardDamage(li, 2);
+            callback: li => applyChatCardDamage(li, 2)
 		}
 	);
     return options;

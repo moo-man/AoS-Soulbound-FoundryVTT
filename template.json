@@ -5,6 +5,7 @@
       "npc",
       "party"
     ],
+    
     "templates": {
       "attributes": {
         "attributes": {
@@ -259,8 +260,8 @@
         "power"
       ],
       "bio": {
-        "size": "",
-        "type": "",
+        "size": 2,
+        "type": 1,
         "faction": "",
         "subfaction": "",
         "role": ""

@@ -16,6 +16,15 @@
         {{#if traits}}
         <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{traits}}</p>
         {{/if}}
+        
+        {{#if traitEffects.length}}
+        <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAIT_EFFECTS"}} :</strong></p><ul>
+            {{#each traitEffects as |effect|}}
+            <li>{{ effect }}</li>
+            {{/each}}
+        </ul>
+
+        {{/if}}
 		
         {{#each dices as |dice|}}
             {{#if dice.highlight}}

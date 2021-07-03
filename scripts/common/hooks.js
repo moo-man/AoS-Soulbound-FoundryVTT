@@ -28,6 +28,7 @@ Hooks.once("init", () => {
         config: true,
         default: "default",
         type: String,
+        restricted: true,
         choices: {
             "default": "SETTING.INIT_DEFAULT",
             "roll1d6": "SETTING.INIT_ROLL1d",
@@ -37,6 +38,17 @@ Hooks.once("init", () => {
             _registerInitiative(rule);
         }
     });
+
+    game.settings.register("age-of-sigmar-soulbound", "sizeTokens", {
+        name: "SETTING.SIZE_TOKENS_RULE",
+        hint: "SETTING.SIZE_TOKENS_HINT",
+        scope: "world",
+        config: true,
+        default: true,
+        type: Boolean,
+        restricted: true
+    });
+
     _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
     
     CONFIG.Actor.documentClass = AgeOfSigmarActor;

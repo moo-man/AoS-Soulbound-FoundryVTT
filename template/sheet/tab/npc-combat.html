@@ -59,7 +59,11 @@
                     <label>{{localize "HEADER.TOUGHNESS"}}</label>
                     <input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" />
                     <input name="data.combat.health.toughness.bonus" type="number" value="{{data.combat.health.toughness.bonus}}" data-dtype="Number" />
-                    <input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled />
+                    {{#unless data.bio.type}}
+                        <input name="data.combat.health.toughness.max" type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" />
+                    {{else}}
+                        <input name="data.combat.health.toughness.max" type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled />
+                    {{/unless}}
                 </div>
                 <div class="mettle">
                     <label>{{localize "HEADER.METTLE"}}</label>
