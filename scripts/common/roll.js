@@ -24,24 +24,38 @@ export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
         traitEffects : [] 
     }
 
+    let effect = null;
+
     if(traits.includes(game.i18n.localize("TRAIT.INEFFECTIVE"))) {
-        damage.traitEffects.push(game.i18n.localize("TRAIT.INEFFECTIVE_EFFECT"));
+        effect = _createTraitEffect();
+        effect.isPlain = true;
+        effect.text = game.i18n.localize("TRAIT.INEFFECTIVE_EFFECT");
+        damage.traitEffects.push(effect);
         damage.armour *= 2;
     }
 
     if(damage.armour > 0 && traits.includes(game.i18n.localize("TRAIT.PENETRATING"))) {
-        damage.traitEffects.push(game.i18n.localize("TRAIT.PENETRATING_EFFECT"));
+        effect = _createTraitEffect();
+        effect.isPlain = true;
+        effect.text = game.i18n.localize("TRAIT.PENETRATING_EFFECT");
+        damage.traitEffects.push(effect);
         damage.armour -= 1;        
     }
 
     //On these two we may want to get more 6s if possible after we can't get more successes and have focus left over
     //No idea how to implement that yet may need to refactor _applyFocus a lot for that.
     if(traits.includes(game.i18n.localize("TRAIT.CLEAVE"))) {
-        damage.traitEffects.push(game.i18n.format("TRAIT.CLEAVE_EFFECT", {triggers : result.triggers}));
+        effect = _createTraitEffect();
+        effect.isCleave = true;
+        effect.text = game.i18n.format("TRAIT.CLEAVE_EFFECT", {triggers : result.triggers});
+        damage.traitEffects.push(effect);
     }
 
     if(traits.includes(game.i18n.localize("TRAIT.REND"))) {
-        damage.traitEffects.push(game.i18n.format("TRAIT.REND_EFFECT", {triggers : result.triggers}));
+        effect = _createTraitEffect();
+        effect.isRend = true,
+        effect.text = game.i18n.format("TRAIT.REND_EFFECT", {triggers : result.triggers});
+        damage.traitEffects.push(effect);
     }
 
     if (weapon.addSuccess) {
@@ -178,6 +192,15 @@ async function _createChatMessage(templateFile, render_data, roll) {
         chatData.whisper = [game.user];
     }
     ChatMessage.create(chatData);
+}
+
+function _createTraitEffect() {
+    return {
+        isRend: false,
+        isCleave: false,
+        isPlain: false,
+        text:  ""
+    };
 }
 
 function _getWeapon(weapon) {

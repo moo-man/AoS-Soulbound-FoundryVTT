@@ -108,10 +108,13 @@
   "CHAT.DURATION": "Duration",
   "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
-  "CHAT.APPLY_DAMAGE" : "Apply Damage to Target",
-  "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage to Target",
+  "CHAT.APPLY_DAMAGE" : "Apply Damage",
+  "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage",
+  "CHAT.APPLY_CLEAVE_DAMAGE" : "Apply Cleave Damage",
+  "CHAT.APPLY_REND_DAMAGE" : "Apply Rend to Armour",
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
+  "NOTIFICATION.APPLY_REND": "{damage} Points of nonmagical Armour reduced on {name}",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -310,6 +313,7 @@
   "TITLE.FEARS": "FEARS",
   "TITLE.THREATS": "THREATS",
 
+  "TRAIT.MAGICAL": "magical",
   "TRAIT.PENETRATING" : "penetrating",
   "TRAIT.PENETRATING_EFFECT" : "Penetrating : 1 Point of Armour ignored",
   "TRAIT.INEFFECTIVE" : "ineffective",

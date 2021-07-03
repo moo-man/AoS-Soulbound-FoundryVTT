@@ -347,6 +347,35 @@ export class AgeOfSigmarActor extends Actor {
         }]);
     }
 
+    async applyRend(damage) {
+
+        let armours = this.items.filter(i => i.isArmour 
+                                          && i.isActive //Only Armour that is worn
+                                          && i.subtype !== "shield" // That isn't a shield
+                                          && i.benefit !== 0 // not already at zero
+                                          && !i.traits.toLowerCase().includes(game.i18n.localize("TRAIT.MAGICAL"))); // Only nonmagical
+        
+        if(armours.length === 0) return;
+        
+        let sub = damage
+        for(let am of armours) {            
+            let val = am.benefit - sub;
+            sub -= am.benefit;
+
+            
+            if(val >= 0) {
+                await am.update({"data.benefit": val});
+            } else {
+                await am.update({"data.benefit": 0}); 
+            }
+            
+            if(sub === 0) break;            
+        }
+        
+        let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.data.token.name});
+        ui.notifications.notify(note);
+    }
+
     // @@@@@@ DATA GETTERS @@@@@@
     get attributes() {return this.data.data.attributes}
     get skills() {return this.data.data.skills}

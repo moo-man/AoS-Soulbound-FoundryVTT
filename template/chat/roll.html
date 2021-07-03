@@ -20,10 +20,18 @@
         {{#if traitEffects.length}}
         <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAIT_EFFECTS"}} :</strong></p><ul>
             {{#each traitEffects as |effect|}}
-            <li>{{ effect }}</li>
+                {{#if effect.isRend}}
+                    <li><span class="rend-value">{{effect.text}}</span></li>
+                {{/if}}
+                {{#if effect.isCleave}}
+                    <li><span class="cleave-value">{{effect.text}}</span></li>
+                {{/if}}
+                {{#if effect.isPlain}}
+                    <li>{{effect.text}}</li>
+                {{/if}}
+                
             {{/each}}
         </ul>
-
         {{/if}}
 		
         {{#each dices as |dice|}}
