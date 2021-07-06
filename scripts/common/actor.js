@@ -267,7 +267,7 @@ export class AgeOfSigmarActor extends Actor {
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
         if(flags.autoCalcToughness) {
-            this.combat.health.toughness.max += this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+            this.combat.health.toughness.max = this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
         }
         
         if(flags.autoCalcWounds) {
