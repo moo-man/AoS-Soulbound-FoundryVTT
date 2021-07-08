@@ -215,7 +215,8 @@
           "armour": {
             "bonus": 0
           },
-          "speed": "normal"
+          "speed": "normal",
+          "flight": "none"
         }
       },
       "power": {

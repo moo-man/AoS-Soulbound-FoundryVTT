@@ -39,8 +39,7 @@ export class AgeOfSigmarActor extends Actor {
 
                 if(game.settings.get("age-of-sigmar-soulbound", "sizeTokens")) {
                     this._sizeToken(flags.isSwarm);
-                }
-                
+                }                
             }
 
             this._initializeData(flags.isSwarm);
