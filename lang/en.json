@@ -120,6 +120,7 @@
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
   "NOTIFICATION.APPLY_REND": "{damage} Points of nonmagical Armour reduced on {name}",
+  "NOTIFICATION.MACRO_ITEM_NOT_FOUND": "Couldn't find the Item. You may not have a Token selected or the Actor doesn't posses the item",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
