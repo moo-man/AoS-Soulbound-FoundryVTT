@@ -26,6 +26,9 @@ export default class AOS_MacroUtil {
         if(item.isSpell) {
             return AOS_MacroUtil.createSpellRoll(actor, item);
         }
+        if(item.isMiracle) {
+            return AOS_MacroUtil.createMiracleRoll(actor, item);
+        }
     
         item.sendToChat();
         return;    
@@ -50,5 +53,11 @@ export default class AOS_MacroUtil {
         const attributes = actor.sheet._setSelectedAttribute("mind")
         const skills = actor.sheet._setSelectedSkill("channelling")
         return preparePowerRoll(attributes, skills, spell);
+    }
+
+    static createMiracleRoll(actor, miracle) {
+        const attributes = actor.sheet._setSelectedAttribute("soul")
+        const skills = actor.sheet._setSelectedSkill("devotion")
+        return preparePowerRoll(attributes, skills, miracle);
     }
 }
