@@ -20,6 +20,7 @@ import { prepareCustomRoll } from "./dialog.js";
 import AOS_MacroUtil from "./macro.js"
 
 import * as chat from "./chat.js";
+import Migration from "./migrations.js";
 
 Hooks.once("init", () => {
     game.settings.register("age-of-sigmar-soulbound", "initiativeRule", {
@@ -40,14 +41,11 @@ Hooks.once("init", () => {
         }
     });
 
-    game.settings.register("age-of-sigmar-soulbound", "sizeTokens", {
-        name: "SETTING.SIZE_TOKENS_RULE",
-        hint: "SETTING.SIZE_TOKENS_HINT",
+    game.settings.register("age-of-sigmar-soulbound", "systemMigrationVersion", {
         scope: "world",
-        config: true,
-        default: true,
-        type: Boolean,
-        restricted: true
+        config: false,
+        default: "",
+        type: String
     });
 
     game.macro = AOS_MacroUtil;
@@ -119,3 +117,7 @@ function _registerInitiative(rule) {
             break;
     }    
 }
+
+Hooks.on("ready", () => {
+    Migration.checkMigration()
+})

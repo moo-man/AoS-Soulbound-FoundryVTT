@@ -1,0 +1,35 @@
+<form autocomplete="off">
+    <div class="form-group">
+        <label>{{localize "CONFIGURE.AUTO_CALC_TOUGHNESS"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="flags.age-of-sigmar-soulbound.autoCalcToughness" {{checked object.data.flags.age-of-sigmar-soulbound.autoCalcToughness}}>            
+        </div>
+        <p class="notes">{{localize "CONFIGURE.AUTO_CALC_TOUGHNESS_HINT"}}</p>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "CONFIGURE.AUTO_CALC_WOUNDS"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="flags.age-of-sigmar-soulbound.autoCalcWounds" {{checked object.data.flags.age-of-sigmar-soulbound.autoCalcWounds}}>            
+        </div>
+        <p class="notes">{{localize "CONFIGURE.AUTO_CALC_WOUNDS_HINT"}}</p>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "CONFIGURE.AUTO_CALC_METTLE"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="flags.age-of-sigmar-soulbound.autoCalcMettle" {{checked object.data.flags.age-of-sigmar-soulbound.autoCalcMettle}}>            
+        </div>
+        <p class="notes">{{localize "CONFIGURE.AUTO_CALC_METTLE_HINT"}}</p>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "CONFIGURE.AUTO_CALC_TOKEN"}}</label>
+        <div class="form-fields">
+            <input type="checkbox" name="flags.age-of-sigmar-soulbound.autoCalcTokenSize" {{checked object.data.flags.age-of-sigmar-soulbound.autoCalcTokenSize}}>            
+        </div>
+        <p class="notes">{{localize "CONFIGURE.AUTO_CALC_TOKEN_HINT"}}</p>
+    </div>
+
+    <button type="submit">{{localize "Submit"}}</button>
+</form>

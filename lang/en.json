@@ -227,8 +227,6 @@
   "SETTING.INIT_DEFAULT": "Highest to Lowest Initative",
   "SETTING.INIT_ROLL2d": "Roll 2d6 + Initiative, higher go first",
   "SETTING.INIT_ROLL1d": "Roll 1d6 + Initiative, higher go first",
-  "SETTING.SIZE_TOKENS_RULE": "Automatically set npc tokens size",
-  "SETTING.SIZE_TOKENS_HINT": "Tokens are automatically sized depending on the selection in the size field on the npc sheet. Does not resize swarms and tokens on the canvas",
 
   "SKILL.ARCANA": "Arcana",
   "SKILL.ATHLETICS": "Athletics",
@@ -346,6 +344,16 @@
   "WOUND.DAMAGE": "Wounds",
   "WOUND.LIGHT": "Minor Wound",
   "WOUND.SERIOUS": "Serious Wound",
-  "WOUND.DEADLY": "Deadly Wound"
+  "WOUND.DEADLY": "Deadly Wound",
+
+  "CONFIGURE.LABEL" : "Configure",
+  "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",
+  "CONFIGURE.AUTO_CALC_TOUGHNESS_HINT": "Automatically calculate toughness maximum based on actor attributes",
+  "CONFIGURE.AUTO_CALC_WOUNDS": "Automatically Calculate Wounds",
+  "CONFIGURE.AUTO_CALC_WOUNDS_HINT": "Automatically calculate wound maximum based on actor attribtutes",
+  "CONFIGURE.AUTO_CALC_METTLE": "Automatically Calculate Mettle",
+  "CONFIGURE.AUTO_CALC_METTLE_HINT": "Automatically calculate mettle based on actor attributes",
+  "CONFIGURE.AUTO_CALC_TOKEN": "Automatically set token sizes",
+  "CONFIGURE.AUTO_CALC_TOKEN_HINT": "Tokens are automatically sized depending on the selection in the size field on the npc sheet. Does not resize swarms and tokens on the canvas"
   
 }
