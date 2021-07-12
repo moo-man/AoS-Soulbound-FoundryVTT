@@ -18,6 +18,15 @@ export class AgeOfSigmarActor extends Actor {
     }
 
 
+    _preUpdate(updateData, options, user) {
+        if (hasProperty(updateData, "data.bio.type"))
+        {
+            setProperty(updateData, "flags.age-of-sigmar-soulbound.autoCalcToughness", updateData.data.bio.type > 1)
+            setProperty(updateData, "flags.age-of-sigmar-soulbound.autoCalcMettle", updateData.data.bio.type > 2)
+            setProperty(updateData, "flags.age-of-sigmar-soulbound.autoCalcWounds", updateData.data.bio.type > 3)
+        }
+    }
+
     prepareData() {
         super.prepareData();
 
