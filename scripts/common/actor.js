@@ -22,18 +22,6 @@ export class AgeOfSigmarActor extends Actor {
         super.prepareData();
 
         if (this.type === "player" || this.type === "npc") {
-
-            if(this.type === "npc") {
-                // flags.autoCalcToughness = this.bio.type > 1;
-                // flags.autoCalcMettle = this.bio.type > 2;
-                // flags.autoCalcWounds = this.bio.type > 3;
-                // flags.isSwarm = this.bio.type === 0;
-
-                // if(game.settings.get("age-of-sigmar-soulbound", "sizeTokens")) {
-                //     this._sizeToken();
-                // }                
-            }
-
             this._initializeData();
             this._computeSkillOrder();
             this._computeItems();
@@ -54,7 +42,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defense.total = 0;
         this.combat.defense.relative = 0;
         this.combat.armour.total = 0;
-        if(this.isSwarm && this.configuration.autoCalcTokenSize) { // Swarms Max Toughness is user set if we initialize it here it's reset
+        if(this.isSwarm && this.configuration.autoCalcToughness) { // Swarms Max Toughness is user set if we initialize it here it's reset
             this.combat.health.toughness.max = 1;
         }
         this.combat.health.wounds.value = 0;
