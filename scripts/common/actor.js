@@ -14,6 +14,9 @@ export class AgeOfSigmarActor extends Actor {
             initData["token.vision"] = true;
             initData["token.actorLink"] = true;
         }
+        else if (data.type === "npc") {
+            initData["flags.age-of-sigmar-soulbound.autoCalcTokenSize"] = true
+        }
         this.data.update(initData)
     }
 
@@ -28,6 +31,8 @@ export class AgeOfSigmarActor extends Actor {
             this._computeSecondary();
             this._computeRelativeCombatAbilities();
         }
+        if (this.type==="npc")
+            this._sizeToken()
     }
 
     _initializeData() {
@@ -203,17 +208,17 @@ export class AgeOfSigmarActor extends Actor {
         let size = this.bio.size; 
 
         if(size <= 2) {
-            this.data.token.width = 1;
-            this.data.token.height = 1;
+            this.data.update({"token.height" : 1});
+            this.data.update({"token.width" : 1});
         } else if(size === 3) {
-            this.data.token.width = 2;
-            this.data.token.height = 2;
+            this.data.update({"token.height" : 2});
+            this.data.update({"token.width" : 2});
         } else if(size === 4) {
-            this.data.token.width = 3;
-            this.data.token.height = 3;
+            this.data.update({"token.height" : 3});
+            this.data.update({"token.width" : 3});
         } else if(size === 5) {
-            this.data.token.width = 4;
-            this.data.token.height = 4;
+            this.data.update({"token.height" : 4});
+            this.data.update({"token.width" : 4});
         }
     }
 

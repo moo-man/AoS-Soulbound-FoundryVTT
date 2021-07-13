@@ -1,12 +1,12 @@
 export default class Migration {
 
     static async checkMigration() {
-        // let needsMigrationVersion = "3.1.0"
-        // let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
+        let needsMigrationVersion = "3.1.0"
+        let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
 
-        // if (!systemMigrationVersion || !foundry.utils.isNewerVersion(systemMigrationVersion, needsMigrationVersion)) {
-        //     this.migrateWorld()
-        // }
+        if (!systemMigrationVersion || !foundry.utils.isNewerVersion(systemMigrationVersion, needsMigrationVersion)) {
+            this.migrateWorld()
+        }
         game.settings.set("age-of-sigmar-soulbound", "systemMigrationVersion", game.system.data.version)
     }
 
@@ -30,11 +30,8 @@ export default class Migration {
 
     static async migrateActor(actor) {
         let updateData = {}
-        if (!actor.flags["age-of-sigmar-soulbound"]) {
+        if (actor.type == "npc" && !actor.flags["age-of-sigmar-soulbound"]) {
             updateData = {
-                "flags.autoCalcToughness": true,
-                "flags.autoCalcMettle": true,
-                "flags.autoCalcWounds": true,
                 "flags.autoCalcTokenSize": true
             }
         }
