@@ -17,16 +17,6 @@ export class AgeOfSigmarActor extends Actor {
         this.data.update(initData)
     }
 
-
-    _preUpdate(updateData, options, user) {
-        if (hasProperty(updateData, "data.bio.type"))
-        {
-            setProperty(updateData, "flags.age-of-sigmar-soulbound.autoCalcToughness", updateData.data.bio.type > 1)
-            setProperty(updateData, "flags.age-of-sigmar-soulbound.autoCalcMettle", updateData.data.bio.type > 2)
-            setProperty(updateData, "flags.age-of-sigmar-soulbound.autoCalcWounds", updateData.data.bio.type > 3)
-        }
-    }
-
     prepareData() {
         super.prepareData();
 
@@ -51,7 +41,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defense.total = 0;
         this.combat.defense.relative = 0;
         this.combat.armour.total = 0;
-        if(this.isSwarm && this.configuration.autoCalcToughness) { // Swarms Max Toughness is user set if we initialize it here it's reset
+        if(this.isSwarm) { // Swarms Max Toughness is user set if we initialize it here it's reset
             this.combat.health.toughness.max = 1;
         }
         this.combat.health.wounds.value = 0;
@@ -208,7 +198,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _sizeToken() {
-        if(this.isSwarm || !this.configuration.autoCalcTokenSize) return; //Swarms are variable let the GM decide Size
+        if(this.isSwarm || !this.autoCalc.tokenSize) return; //Swarms are variable let the GM decide Size
 
         let size = this.bio.size; 
 
@@ -254,16 +244,16 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.total) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
-        if(this.configuration.autoCalcToughness) {
+        if(this.autoCalc.toughness) {
             this.combat.health.toughness.max = this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
         }
         
-        if(this.configuration.autoCalcWounds) {
+        if(this.autoCalc.wounds) {
             this.combat.health.wounds.max += Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
             this.combat.health.wounds.deadly = this.combat.health.wounds.value >= this.combat.health.wounds.max;
         }
 
-        if(this.configuration.autoCalcMettle) {
+        if(this.autoCalc.mettle) {
             this.combat.mettle.total += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
         }
     }
@@ -365,12 +355,12 @@ export class AgeOfSigmarActor extends Actor {
     }
 
 
-    get configuration() {
+    get autoCalc() {
         return {
-            autoCalcToughness : this.getFlag("age-of-sigmar-soulbound", "autoCalcToughness") || true,
-            autoCalcMettle : this.getFlag("age-of-sigmar-soulbound", "autoCalcMettle") || true,
-            autoCalcWounds : this.getFlag("age-of-sigmar-soulbound", "autoCalcWounds") || true,
-            autoCalcTokenSize : this.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize") || true
+            toughness : this.type == "player" || this.bio.type > 1,
+            mettle :  this.type == "player" || this.bio.type > 2,
+            wounds :  this.type == "player" || this.bio.type > 3,
+            tokenSize : !this.isSwarm && this.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
         }
     }
 
