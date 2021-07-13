@@ -17,8 +17,10 @@ import { WoundSheet } from "../sheet/wound.js";
 import { AethericDeviceSheet } from "../sheet/aetheric-device.js";
 import { initializeHandlebars } from "./handlebars.js";
 import { prepareCustomRoll } from "./dialog.js";
+import AOS_MacroUtil from "./macro.js"
 
 import * as chat from "./chat.js";
+import Migration from "./migrations.js";
 
 Hooks.once("init", () => {
     game.settings.register("age-of-sigmar-soulbound", "initiativeRule", {
@@ -28,6 +30,7 @@ Hooks.once("init", () => {
         config: true,
         default: "default",
         type: String,
+        restricted: true,
         choices: {
             "default": "SETTING.INIT_DEFAULT",
             "roll1d6": "SETTING.INIT_ROLL1d",
@@ -37,6 +40,16 @@ Hooks.once("init", () => {
             _registerInitiative(rule);
         }
     });
+
+    game.settings.register("age-of-sigmar-soulbound", "systemMigrationVersion", {
+        scope: "world",
+        config: false,
+        default: "",
+        type: String
+    });
+
+    game.macro = AOS_MacroUtil;
+
     _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
     
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -65,6 +78,29 @@ Hooks.once("init", () => {
 
 Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
 
+  /**
+   * Create a macro when dropping an entity on the hotbar
+   * Item      - open roll dialog for item
+   */
+Hooks.on("hotbarDrop", async (bar, data, slot) => {
+    // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
+    if (data.type == "Item") {
+      let item = data.data
+      let command = `game.macro.rollItemMacro("${item.name}", "${item.type}");`;
+      let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
+      if (!macro) {
+        macro = await Macro.create({
+          name: item.name,
+          type: "script",
+          img: item.img,
+          command: command
+        }, { displaySheet: false })
+      }
+      game.user.assignHotbarMacro(macro, slot);
+    } else {
+        return;
+    }
+});
 
 /** Helpers  */
 
@@ -81,3 +117,7 @@ function _registerInitiative(rule) {
             break;
     }    
 }
+
+Hooks.on("ready", () => {
+    Migration.checkMigration()
+})

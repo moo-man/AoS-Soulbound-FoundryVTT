@@ -18,11 +18,28 @@
                 <div class="wrapper-row">
                     <div class="size">
                         <label>{{localize "BIO.SIZE"}}</label>
-                        <input name="data.bio.size" type="text" value="{{data.bio.size}}" />
+                        <select name="data.bio.size" data-dtype="Number">
+                            {{#select data.bio.size}}
+                                <option value="0">{{localize "ACTOR.NPC_SIZE_TINY"}}</option>
+                                <option value="1">{{localize "ACTOR.NPC_SIZE_SMALL"}}</option>
+                                <option value="2">{{localize "ACTOR.NPC_SIZE_MEDIUM"}}</option>
+                                <option value="3">{{localize "ACTOR.NPC_SIZE_LARGE"}}</option>
+                                <option value="4">{{localize "ACTOR.NPC_SIZE_ENOURMOUS"}}</option>
+                                <option value="5">{{localize "ACTOR.NPC_SIZE_MONSTROUS"}}</option>
+                            {{/select}}
+                        </select>
                     </div>
                     <div class="type">
                         <label>{{localize "BIO.TYPE"}}</label>
-                        <input name="data.bio.type" type="text" value="{{data.bio.type}}"  />
+                        <select name="data.bio.type" data-dtype="Number">
+                            {{#select data.bio.type}}
+                                <option value="0">{{localize "ACTOR.NPC_SWARM"}}</option>
+                                <option value="1">{{localize "ACTOR.NPC_MINION"}}</option>
+                                <option value="2">{{localize "ACTOR.NPC_WARRIOR"}}</option>
+                                <option value="3">{{localize "ACTOR.NPC_CHAMPION"}}</option>
+                                <option value="4">{{localize "ACTOR.NPC_CHOSEN"}}</option>
+                            {{/select}}
+                        </select>
                     </div>
                 </div>
                 <div class="wrapper-row">

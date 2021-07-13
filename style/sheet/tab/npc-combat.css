@@ -84,7 +84,7 @@
 }
 
 .age-of-sigmar-soulbound.sheet.actor .npc .combat .resources .item-list .items {
-    height: 88px;
+    height: 118px;
 }
 
 .age-of-sigmar-soulbound.sheet.actor .npc .combat .resources .item-list .item-header .fas {
@@ -172,7 +172,7 @@
     flex-grow: 0
 }
 
-.age-of-sigmar-soulbound.sheet.actor .npc .combat .abilities .wrapper .speed input {
+.age-of-sigmar-soulbound.sheet.actor .npc .combat .abilities .wrapper .speed select {
     flex-basis: 60%;
 }
 

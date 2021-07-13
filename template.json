@@ -5,6 +5,7 @@
       "npc",
       "party"
     ],
+    
     "templates": {
       "attributes": {
         "attributes": {
@@ -214,7 +215,8 @@
           "armour": {
             "bonus": 0
           },
-          "speed": ""
+          "speed": "normal",
+          "flight": "none"
         }
       },
       "power": {
@@ -259,8 +261,8 @@
         "power"
       ],
       "bio": {
-        "size": "",
-        "type": "",
+        "size": 2,
+        "type": 1,
         "faction": "",
         "subfaction": "",
         "role": ""
