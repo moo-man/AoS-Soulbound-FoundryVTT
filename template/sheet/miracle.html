@@ -43,11 +43,9 @@
                         <label>{{localize "MIRACLE.RANGE"}}</label>
                         <select name="data.range">
                             {{#select data.range}}
-                                <option value="self">{{localize "RANGE.SELF"}}</option>
-                                <option value="close">{{localize "RANGE.CLOSE"}}</option>
-                                <option value="short">{{localize "RANGE.SHORT"}}</option>
-                                <option value="medium">{{localize "RANGE.MEDIUM"}}</option>
-                                <option value="long">{{localize "RANGE.LONG"}}</option>
+                            {{#each (config "range") as |range r|}}
+                                <option value="{{r}}">{{range}}</option>
+                            {{/each}}
                             {{/select}}
                         </select>
                     </div>

@@ -1,4 +1,4 @@
-import { AgeOfSigmarActorSheet } from "./actor.js";
+import { AgeOfSigmarActorSheet } from "./actor-sheet.js";
 
 export class NpcSheet extends AgeOfSigmarActorSheet {
 

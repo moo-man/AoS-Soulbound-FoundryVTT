@@ -1,12 +1,12 @@
-import { AgeOfSigmarItemSheet } from "./item.js";
+import { AgeOfSigmarItemSheet } from "./item-sheet.js";
 
-export class MiracleSheet extends AgeOfSigmarItemSheet {
+export class GoalSheet extends AgeOfSigmarItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "item"],
-            template: "systems/age-of-sigmar-soulbound/template/sheet/miracle.html",
+            template: "systems/age-of-sigmar-soulbound/template/sheet/goal.html",
             width: 500,
-            height: 454,
+            height: 446,
             resizable: false,
             tabs: [
                 {

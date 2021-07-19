@@ -41,23 +41,21 @@
                 <div class="speed">
 					<label>{{localize "HEADER.SPEED"}}</label>						
 					<select name="data.combat.speed" >
-						{{#select data.combat.speed}}
-						<option value="none">{{localize "ACTOR.SPEED_NONE"}}</option>
-						<option value="slow">{{localize "ACTOR.SPEED_SLOW"}}</option>
-						<option value="normal">{{localize "ACTOR.SPEED_NORMAL"}}</option>
-						<option value="fast">{{localize "ACTOR.SPEED_FAST"}}</option>
-						{{/select}}
+                        {{#select data.combat.speed}}
+                        {{#each (config "speed") as |speed s|}}
+                            <option value="{{s}}">{{speed}}</option>
+                        {{/each}}
+                        {{/select}}
 					</select>                        
 				</div>
 				<div class="speed">
 					<label>{{localize "HEADER.FLIGHT"}}</label>
 					<select name="data.combat.flight" >
-						{{#select data.combat.flight}}
-						<option value="none">{{localize "ACTOR.SPEED_NONE"}}</option>
-						<option value="slow">{{localize "ACTOR.SPEED_SLOW"}}</option>
-						<option value="normal">{{localize "ACTOR.SPEED_NORMAL"}}</option>
-						<option value="fast">{{localize "ACTOR.SPEED_FAST"}}</option>
-						{{/select}}
+                        {{#select data.combat.flight}}
+                        {{#each (config "speed") as |speed s|}}
+                            <option value="{{s}}">{{speed}}</option>
+                        {{/each}}
+                        {{/select}}
 					</select>
 				</div>
 			</div>

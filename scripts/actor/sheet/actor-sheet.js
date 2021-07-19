@@ -1,5 +1,5 @@
-import { prepareCustomRoll, prepareCommonRoll, prepareCombatRoll, preparePowerRoll } from "../common/dialog.js";
-import ActorConfigure from "../apps/actor-configure.js";
+import { prepareCustomRoll, prepareCommonRoll, prepareCombatRoll, preparePowerRoll } from "../../system/dialog.js";
+import ActorConfigure from "../../apps/actor-configure.js";
 
 export class AgeOfSigmarActorSheet extends ActorSheet {
 

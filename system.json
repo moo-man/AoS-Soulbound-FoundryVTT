@@ -9,7 +9,7 @@
   "author": "Moo Man, Perfectro, Vendare",
   "scripts": [],
   "esmodules": [
-    "scripts/common/hooks.js"
+    "age-of-sigmar.js"
   ],
   "styles": [
     "style/common/variable.css",
