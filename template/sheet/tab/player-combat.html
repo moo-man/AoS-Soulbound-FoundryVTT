@@ -96,7 +96,7 @@
             </div>
             <div class="item-list">
                 <div class="item-header">
-                    <b class="name">{{localize "WOUND.NAME"}}</b>
+                    <b class="name">{{localize "WOUND.TYPE"}}</b>
                     <b class="damage">{{localize "WOUND.DAMAGE"}}</b>
                     <div class="button">
                         <a class="item-create" title="Add Wound" data-type="wound"><i class="fas fa-plus"></i></a>
@@ -108,9 +108,16 @@
                     <div class="wound item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
-                                <div class="image" style="background-image: url('{{item.img}}')"></div>
+                                <div class="image item-edit" style="background-image: url('{{item.img}}')"></div>
                             </div>
-                            <div class="item-edit">{{item.name}}</div>
+                            <select class="item-property" data-target="data.woundType">
+                                {{#select item.data.data.woundType}}
+                                <option value=""></option>
+                                {{#each (config "woundType") as |type t|}}
+                                    <option value="{{t}}">{{type}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
                         </div>
                         <div class="damage">{{item.damage}}</div>
                         <div class="button">

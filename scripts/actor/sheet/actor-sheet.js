@@ -15,6 +15,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".item-create").click(ev => this._onItemCreate(ev));
         html.find(".item-edit").click(ev => this._onItemEdit(ev));
         html.find(".item-delete").click(ev => this._onItemDelete(ev));
+        html.find(".item-property").click(ev => this._onChangeItemProperty(ev));
         html.find("input").focusin(ev => this._onFocusIn(ev));
         html.find(".item-state").click(async ev => await this._onItemStateUpdate(ev));
         html.find(".roll-attribute").click(async ev => await this._prepareRollAttribute(ev));
@@ -68,6 +69,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
         div.slideUp(200, () => this.render(false));
+    }
+
+    _onChangeItemProperty(event) {
+        const itemId = $(event.currentTarget).parents(".item").data("itemId");
+        const target = $(event.currentTarget).data("target")
+        let item = this.actor.items.get(itemId)
+        return item.update({[target] : event.target.value})
     }
 
     _onFocusIn(event) {

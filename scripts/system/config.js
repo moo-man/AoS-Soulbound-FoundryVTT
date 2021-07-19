@@ -46,4 +46,10 @@ AOS.speed = {
     "fast" : "ACTOR.SPEED_FAST"
 }
 
+AOS.woundType = {
+    "minor" : "WOUND.LIGHT",
+    "serious" : "WOUND.SERIOUS",
+    "deadly" : "WOUND.DEADLY"
+}
+
 export default AOS
