@@ -114,8 +114,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeItems() {
-        let types = this.itemTypes;
-        types["wound"].forEach(i => {
+        this.combat.wounds.forEach(i => {
             this.combat.health.wounds.value += i.damage;
         })
         this.items.filter(i => i.isActive).forEach(i => {
@@ -282,14 +281,14 @@ export class AgeOfSigmarActor extends Actor {
             isBar: true
         }, updates);
 
-        let ret = allowed !== false ? this.update(updates) : this;
+        let ret = allowed !== false ? await this.update(updates) : this;
 
         let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.data.token.name});
         ui.notifications.notify(note);
 
         // Doing this here because foundry throws an error if wounds are added before the update
         if(remaining < 0 && this.combat.health.wounds.max > 0) {          
-            this.addWound(remaining);
+            this.computeNewWound(remaining);
         }
         return ret;
     }
@@ -298,36 +297,42 @@ export class AgeOfSigmarActor extends Actor {
      * creates and adds a wound based on how far the actors health has gone below zero
      * @param {int} remaining 
      */
-    async addWound(remaining) {
-        let woundName;
-        let value;
-        let imgPath;
+    async computeNewWound(remaining) {
+
+        if (remaining >= 0)
+            return
+
+        let type;
+        let damage;
 
         if(remaining === -1) {
-            woundName = game.i18n.localize("WOUND.LIGHT");
-            imgPath = "icons/skills/wounds/blood-spurt-spray-red.webp" 
-            value = 1;
+            type = "minor"
+            damage = 1;
         } else if (remaining > -4) {
-            woundName = game.i18n.localize("WOUND.SERIOUS");
-            imgPath = "icons/skills/wounds/injury-triple-slash-bleed.webp"
-            value = 2;            
+            type = "serious"
+            damage = 2;            
         } else {
-            woundName = game.i18n.localize("WOUND.DEADLY");
-            imgPath = "icons/skills/wounds/injury-pain-body-orange.webp"
-            value = 3; 
+            type = "deadly"
+            damage = 3; 
         }
 
         //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
-        if((this.combat.health.wounds.value + value) > this.combat.health.wounds.max) {
-            value = this.combat.health.wounds.max - this.combat.health.wounds.value
+        if((this.combat.health.wounds.value + damage) > this.combat.health.wounds.max) {
+            damage = this.combat.health.wounds.max - this.combat.health.wounds.value
         }
 
-        await this.createEmbeddedDocuments("Item", [{            
-            name: woundName, 
-            type: "wound", 
-            img: imgPath,
-            "data.damage": value     
-        }]);
+        return this.addWound(type, damage)
+    }
+
+    // Add new wound according to the given type, 'minor' 'serious' or 'deadly'
+    addWound(type = "", damage = 0)
+    {
+        if (isNaN(damage) && type)
+            damage = game.aos.config.woundDamage[type] || 0
+        
+        let wounds = duplicate(this.combat.wounds)
+        wounds.unshift({type, damage})
+        return this.update({"data.combat.wounds" : wounds})
     }
 
     async applyRend(damage) {

@@ -87,4 +87,12 @@ export default function registerHooks() {
             }
         }
     })
+
+    Hooks.on("preCreateItem", (data, options, user) => {
+        if (data.type == "wound")
+        {
+            ui.notifications.warn("The Wound Type item is deprecated")
+            return false
+        }
+    })
 }

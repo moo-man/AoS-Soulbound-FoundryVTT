@@ -52,4 +52,10 @@ AOS.woundType = {
     "deadly" : "WOUND.DEADLY"
 }
 
+AOS.woundDamage = {
+    "minor" : 1,
+    "serious" : 2,
+    "deadly" : 3
+}
+
 export default AOS

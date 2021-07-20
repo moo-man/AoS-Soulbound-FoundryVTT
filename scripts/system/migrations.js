@@ -17,8 +17,9 @@ export default class Migration {
         for (let actor of game.actors.contents) {
             try {
                 console.log(`Migrating Actor ${actor.name}`)
-                let updateData = this.migrateActor(actor.data)
+                let updateData = await this.migrateActor(actor.data)
                 await actor.update(updateData)
+                await this.cleanActorData(actor)
             }
             catch (e) {
                 console.error(`Failed migration for Actor ${actor.name}: ${e.message}`)
@@ -35,6 +36,35 @@ export default class Migration {
                 "flags.autoCalcTokenSize": true
             }
         }
+        let wounds = actor.items.filter(i => i.type == "wound")
+        let newWounds = wounds.map(i => {
+            let woundType = i.data.data.woundType
+            if (!woundType)
+            {
+                switch (i.data.data.damage)
+                {
+                case 1 : 
+                    woundType = "minor";
+                    break;
+                case 2 : 
+                    woundType = "serious";
+                    break;
+                case 3 :
+                    woundType = "deadly";
+                    break;
+                }
+            }
+            return {
+                type : woundType,
+                damage : i.data.data.damage
+            }
+        })
+        setProperty(updateData, "data.combat.wounds", newWounds)
         return updateData
+    }
+
+    static async cleanActorData(actor)
+    {
+        await actor.deleteEmbeddedDocuments("Item", actor.items.filter(i => i.type == "wound").map(i => i.id))
     }
 }

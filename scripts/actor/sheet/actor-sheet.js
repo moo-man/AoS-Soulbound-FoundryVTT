@@ -6,23 +6,43 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.data = data.data.data; // project system data so that handlebars has the same name and value paths
+        this._addWoundImages(data)
         return data;
-      }    
+      }
 
+    _addWoundImages(sheetData)
+    {
+        sheetData.data.combat.wounds.map(i => {
+            switch (i.type) {
+                case "minor": i.img = "icons/skills/wounds/blood-spurt-spray-red.webp"
+                    break;
+                case "serious": i.img = "icons/skills/wounds/injury-triple-slash-bleed.webp"
+                    break;
+                case "deadly": i.img = "icons/skills/wounds/injury-pain-body-orange.webp"
+                    break;
+                default: i.img = "icons/skills/wounds/blood-spurt-spray-red.webp"
+                    break;
+            }
+            return i
+        })
+    }
 
     activateListeners(html) {
         super.activateListeners(html);
-        html.find(".item-create").click(ev => this._onItemCreate(ev));
-        html.find(".item-edit").click(ev => this._onItemEdit(ev));
-        html.find(".item-delete").click(ev => this._onItemDelete(ev));
-        html.find(".item-property").click(ev => this._onChangeItemProperty(ev));
-        html.find("input").focusin(ev => this._onFocusIn(ev));
-        html.find(".item-state").click(async ev => await this._onItemStateUpdate(ev));
-        html.find(".roll-attribute").click(async ev => await this._prepareRollAttribute(ev));
-        html.find(".roll-skill").click(async ev => await this._prepareRollSkill(ev));
-        html.find(".roll-weapon").click(async ev => await this._prepareRollWeapon(ev));
-        html.find(".roll-power").click(async ev => await this._prepareRollPower(ev));
-		html.find(".show-power").click(async ev => await this._prepareShowPower(ev));
+        html.find(".item-create").click(this._onItemCreate.bind(this));
+        html.find(".item-edit").click(this._onItemEdit.bind(this));
+        html.find(".item-delete").click(this._onItemDelete.bind(this));
+        html.find(".item-property").click(this._onChangeItemProperty.bind(this));
+        html.find("input").focusin(this._onFocusIn.bind(this));
+        html.find(".item-state").click(this._onItemStateUpdate.bind(this));
+        html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
+        html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
+        html.find(".roll-weapon").click(this._prepareRollWeapon.bind(this));
+        html.find(".roll-power").click(this._prepareRollPower.bind(this));
+        html.find(".show-power").click(this._prepareShowPower.bind(this));
+        html.find(".wound-create").click(this._onWoundCreate.bind(this));
+        html.find(".wound-delete").click(this._onWoundDelete.bind(this));
+        html.find(".wound-edit").change(this._onWoundEdit.bind(this));
     }
 
     _getHeaderButtons() {
@@ -82,7 +102,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         $(event.currentTarget).select();
     }
 
-    async _onItemStateUpdate(event) {
+    _onItemStateUpdate(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
@@ -98,28 +118,27 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                 data = { _id: item.id, "data.state": "active"};
                 break;
         }
-        await this.actor.updateEmbeddedDocuments("Item", [data]);
-        this._render();
+        return this.actor.updateEmbeddedDocuments("Item", [data]);
     }
 
-    async _prepareRollAttribute(event) {
+    _prepareRollAttribute(event) {
         event.preventDefault();
         const attributeName = $(event.currentTarget).data("attribute");
         const attributes = this._setSelectedAttribute(attributeName)
         const skills = this._setSelectedSkill(null)
-        await prepareCommonRoll(attributes, skills);
+        return prepareCommonRoll(attributes, skills);
     }
 
-    async _prepareRollSkill(event) {
+    _prepareRollSkill(event) {
         event.preventDefault();
         const skillName = $(event.currentTarget).data("skill");
         const attribute = this.actor.skills[skillName].attribute
         const attributes = this._setSelectedAttribute(attribute)
         const skills = this._setSelectedSkill(skillName)
-        await prepareCommonRoll(attributes, skills);
+        return prepareCommonRoll(attributes, skills);
     }
 
-    async _prepareRollWeapon(event) {
+    _prepareRollWeapon(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const weapon = this.actor.items.get(div.data("itemId"));
@@ -134,10 +153,10 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const attributes = this._setSelectedAttribute(attributeName)
         const skills = this._setSelectedSkill(skillName)
         const combat = this._getCombat(weapon);
-        await prepareCombatRoll(attributes, skills, combat);
+        return prepareCombatRoll(attributes, skills, combat);
     }
 
-    async _prepareRollPower(event) {
+    _prepareRollPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const power = this.actor.items.get(div.data("itemId"));
@@ -149,14 +168,14 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             attributes = this._setSelectedAttribute("soul")
             skills = this._setSelectedSkill("devotion")
         }
-        await preparePowerRoll(attributes, skills, power);
+        return preparePowerRoll(attributes, skills, power);
     }
 	
-	async _prepareShowPower(event) {
+	_prepareShowPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const power = this.actor.items.get(div.data("itemId"));
-        await power.sendToChat()
+        power.sendToChat()
     }
 
     _setSelectedAttribute(attributeName) {
@@ -189,5 +208,24 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                 traits: weapon.traits
             }
         };
+    }
+
+    _onWoundCreate(ev) { return this.actor.addWound("", 0) }
+
+    _onWoundDelete(ev)
+    {
+        let wounds = duplicate(this.actor.combat.wounds)
+        let index = $(ev.currentTarget).parents(".item").data("index")
+        wounds.splice(index, 1)
+        return this.actor.update({"data.combat.wounds" : wounds})
+    }
+
+    _onWoundEdit(ev)
+    {
+        let wounds = duplicate(this.actor.combat.wounds)
+        let index = $(ev.currentTarget).parents(".item").data("index")
+        wounds[index].type = ev.target.value
+        wounds[index].damage = game.aos.config.woundDamage[ev.target.value] || 0
+        return this.actor.update({"data.combat.wounds" : wounds})
     }
 }

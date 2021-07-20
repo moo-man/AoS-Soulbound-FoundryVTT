@@ -1,9 +1,8 @@
 export class AgeOfSigmarItem extends Item {
 
     async _preUpdate(updateData, options, user) {
-        super._preUpdate(updateData, options, user)
-
-
+        await super._preUpdate(updateData, options, user)
+        
         // TODO Remove when wound item type is deprecated
         if (this.type == "wound" && hasProperty(updateData, "data.woundType")) {
             switch (updateData.data.woundType) {

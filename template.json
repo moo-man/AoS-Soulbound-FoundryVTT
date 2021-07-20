@@ -216,7 +216,8 @@
             "bonus": 0
           },
           "speed": "normal",
-          "flight": "none"
+          "flight": "none",
+          "wounds" : []
         }
       },
       "power": {

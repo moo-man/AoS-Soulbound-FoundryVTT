@@ -19,6 +19,7 @@ import { initializeHandlebars } from "./scripts/system/handlebars.js";
 import { prepareCustomRoll } from "./scripts/system/dialog.js";
 import hooks from "./scripts/system/hooks.js"
 import AOS from "./scripts/system/config.js"
+import Migration from "./scripts/system/migrations.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -44,7 +45,10 @@ Hooks.once("init", () => {
     Items.registerSheet("age-of-sigmar-soulbound", WoundSheet, { types: ["wound"], makeDefault: true });
     initializeHandlebars();
 
-    game.aos = {config : AOS};
+    game.aos = {
+        config : AOS,
+        migration : Migration
+    };
 
 });
 
