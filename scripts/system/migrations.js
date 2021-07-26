@@ -27,6 +27,20 @@ export default class Migration {
 
         }
 
+        for (let item of game.items.contents) {
+            try {
+                if (item.type == "wound")
+                {
+                   await item.delete()
+                    console.log(`Deleting Item ${item.name}`)
+                }
+            }
+            catch (e) {
+                console.error(`Failed migration for Item ${item.name}: ${e.message}`)
+            }
+
+        }
+
     }
 
     static async migrateActor(actor) {
