@@ -107,21 +107,26 @@
                     </div>
                 </div>
                 <div class="items">
-                    {{#each actor.items as |item|}}
-                    {{#if item.isWound}}
-                    <div class="wound item" data-item-id="{{item.id}}">
+                    {{#each data.combat.wounds as |wound w|}}
+                    <div class="wound item" data-index="{{w}}">
                         <div class="name">
                             <div class="image-container">
-                                <div class="image" style="background-image: url('{{item.img}}')"></div>
+                                <div class="image" style="background-image: url('{{wound.img}}')"></div>
                             </div>
-                            <div class="item-edit">{{item.name}}</div>
+                            <select class="wound-edit">
+                                {{#select wound.type}}
+                                <option value=""></option>
+                                {{#each (config "woundType") as |type t|}}
+                                    <option value="{{t}}">{{type}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
                         </div>
-                        <div class="damage">{{item.damage}}</div>
+                        <div class="damage">{{wound.damage}}</div>
                         <div class="button">
-                            <a class="item-control item-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
+                            <a class="item-control wound-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
-                    {{/if}}
                     {{/each}}
                 </div>
             </div>

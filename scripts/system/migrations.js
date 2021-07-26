@@ -1,7 +1,7 @@
 export default class Migration {
 
     static async checkMigration() {
-        let needsMigrationVersion = "3.0.0"
+        let needsMigrationVersion = "3.1.0"
         let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
 
         if (!systemMigrationVersion || !foundry.utils.isNewerVersion(systemMigrationVersion, needsMigrationVersion)) {
