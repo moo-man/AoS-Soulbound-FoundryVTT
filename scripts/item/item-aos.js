@@ -1,10 +1,32 @@
 export class AgeOfSigmarItem extends Item {
 
-    prepareData() {
-        super.prepareData()
-
+    async _preUpdate(updateData, options, user) {
+        await super._preUpdate(updateData, options, user)
+        
+        // TODO Remove when wound item type is deprecated
+        if (this.type == "wound" && hasProperty(updateData, "data.woundType")) {
+            switch (updateData.data.woundType) {
+                case "minor":
+                    updateData.name = "Minor Wound";
+                    updateData.data.damage = 1
+                    break;
+                case "serious":
+                    updateData.name = "Serious Wound";
+                    updateData.data.damage = 2
+                    break;
+                case "deadly":
+                    updateData.name = "Deadly Wound";
+                    updateData.data.damage = 3
+                    break;
+                default: 
+                    updateData.data.damage = 0;
+            }
+        }
     }
 
+    prepareData() {
+        super.prepareData()
+    }
 
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source);
@@ -76,28 +98,28 @@ export class AgeOfSigmarItem extends Item {
     get isEquipment() { return this.type === "equipment" }
 
     // @@@@@@ DATA GETTERS @@@@@@
-    get bonus() {return this.data.data.bonus}
-    get description() {return this.data.data.description}
-    get cost() {return this.data.data.cost}
-    get availability() {return this.data.data.availability}
-    get power() {return this.data.data.power}
-    get requirements() {return this.data.data.requirements}
-    get crafting() {return this.data.data.crafting}
-    get damage() {return this.data.data.damage}
-    get traits() {return this.data.data.traits}
-    get state() {return this.data.data.state}
-    get subtype() {return this.data.data.type}
-    get benefit() {return this.data.data.benefit}
-    get completed() {return this.data.data.completed}
-    get target() {return this.data.data.target}
-    get range() {return this.data.data.range}
-    get duration() {return this.data.data.duration}
-    get effect() {return this.data.data.effect}
-    get god() {return this.data.data.god}
-    get dn() {return this.data.data.dn}
-    get test() {return this.data.data.test}
-    get overcast() {return this.data.data.overcast}
-    get lore() {return this.data.data.lore}
-    get requirement() {return this.data.data.requirement}
-    get category() {return this.data.data.category}
+    get bonus() { return this.data.data.bonus }
+    get description() { return this.data.data.description }
+    get cost() { return this.data.data.cost }
+    get availability() { return this.data.data.availability }
+    get power() { return this.data.data.power }
+    get requirements() { return this.data.data.requirements }
+    get crafting() { return this.data.data.crafting }
+    get damage() { return this.data.data.damage }
+    get traits() { return this.data.data.traits }
+    get state() { return this.data.data.state }
+    get subtype() { return this.data.data.type }
+    get benefit() { return this.data.data.benefit }
+    get completed() { return this.data.data.completed }
+    get target() { return this.data.data.target }
+    get range() { return this.data.data.range }
+    get duration() { return this.data.data.duration }
+    get effect() { return this.data.data.effect }
+    get god() { return this.data.data.god }
+    get dn() { return this.data.data.dn }
+    get test() { return this.data.data.test }
+    get overcast() { return this.data.data.overcast }
+    get lore() { return this.data.data.lore }
+    get requirement() { return this.data.data.requirement }
+    get category() { return this.data.data.category }
 }

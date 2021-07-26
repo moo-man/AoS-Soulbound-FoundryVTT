@@ -2,6 +2,23 @@
   "ACTOR.TypePlayer": "Player",
   "ACTOR.TypeNpc": "NPC",
   "ACTOR.TypeParty": "Party",
+  "ACTOR.NPC_SWARM" : "Swarm",
+  "ACTOR.NPC_MINION" : "Minion",
+  "ACTOR.NPC_WARRIOR" : "Warrior",
+  "ACTOR.NPC_CHOSEN" : "Chosen",
+  "ACTOR.NPC_CHAMPION" : "Champion",
+
+  "ACTOR.NPC_SIZE_TINY" : "Tiny",
+  "ACTOR.NPC_SIZE_SMALL" : "Small",
+  "ACTOR.NPC_SIZE_MEDIUM" : "Medium",
+  "ACTOR.NPC_SIZE_LARGE" : "Large",
+  "ACTOR.NPC_SIZE_ENOURMOUS" : "Enormous",
+  "ACTOR.NPC_SIZE_MONSTROUS" : "Monstrous",
+
+  "ACTOR.SPEED_NONE" : "None",
+  "ACTOR.SPEED_SLOW" : "Slow",
+  "ACTOR.SPEED_NORMAL" : "Normal",
+  "ACTOR.SPEED_FAST" : "Fast",
 
   "ITEM.TypeAethericdevice" : "Aetheric Device",
   "ITEM.TypeAlly" : "Ally",
@@ -89,15 +106,21 @@
   "CHAT.FOCUS": "Focus",
   "CHAT.DAMAGE": "Damage",
   "CHAT.TRAITS": "Traits",
+  "CHAT.TRAIT_EFFECTS" : "Trait Effects",
   "CHAT.OVERCAST": "Overcast",
   "CHAT.EFFECT": "Effect",
   "CHAT.RESIST": "Test",
   "CHAT.DURATION": "Duration",
   "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
-  "CHAT.APPLY_DAMAGE" : "Apply Damage to Target",
+  "CHAT.APPLY_DAMAGE" : "Apply Damage",
+  "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage",
+  "CHAT.APPLY_CLEAVE_DAMAGE" : "Apply Cleave Damage",
+  "CHAT.APPLY_REND_DAMAGE" : "Apply Rend to Armour",
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
+  "NOTIFICATION.APPLY_REND": "{damage} Points of nonmagical Armour reduced on {name}",
+  "NOTIFICATION.MACRO_ITEM_NOT_FOUND": "Couldn't find the Item. You may not have a Token selected or the Actor doesn't posses the item",
 
   "CONNECTION.NAME": "Name",
   "CONNECTION.DESCRIPTION": "Description",
@@ -152,6 +175,7 @@
   "HEADER.CAPACITY": "Capacity",
   "HEADER.CONSUMED": "Consumed",
   "HEADER.SPEED": "Speed",
+  "HEADER.FLIGHT": "Flight Speed",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",
@@ -294,6 +318,16 @@
   "TITLE.FEARS": "FEARS",
   "TITLE.THREATS": "THREATS",
 
+  "TRAIT.MAGICAL": "magical",
+  "TRAIT.PENETRATING" : "penetrating",
+  "TRAIT.PENETRATING_EFFECT" : "Penetrating : 1 Point of Armour ignored",
+  "TRAIT.INEFFECTIVE" : "ineffective",
+  "TRAIT.INEFFECTIVE_EFFECT" : "Ineffective : Targets Armour doubled",
+  "TRAIT.CLEAVE" : "cleave",
+  "TRAIT.CLEAVE_EFFECT" : "Cleave: {triggers} Damage to enemies in close range", 
+  "TRAIT.REND" : "rend",
+  "TRAIT.REND_EFFECT" : "Rend : Target looses {triggers} Points of nonmagical armour",
+
   "TYPE.LIGHT": "Light",
   "TYPE.MEDIUM": "Medium",
   "TYPE.HEAVY": "Heavy",
@@ -308,8 +342,19 @@
 
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Wounds",
+  "WOUND.TYPE" : "Wound Type",
   "WOUND.LIGHT": "Minor Wound",
   "WOUND.SERIOUS": "Serious Wound",
-  "WOUND.DEADLY": "Deadly Wound"
+  "WOUND.DEADLY": "Deadly Wound",
+
+  "CONFIGURE.LABEL" : "Configure",
+  "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",
+  "CONFIGURE.AUTO_CALC_TOUGHNESS_HINT": "Automatically calculate toughness maximum based on actor attributes",
+  "CONFIGURE.AUTO_CALC_WOUNDS": "Automatically Calculate Wounds",
+  "CONFIGURE.AUTO_CALC_WOUNDS_HINT": "Automatically calculate wound maximum based on actor attribtutes",
+  "CONFIGURE.AUTO_CALC_METTLE": "Automatically Calculate Mettle",
+  "CONFIGURE.AUTO_CALC_METTLE_HINT": "Automatically calculate mettle based on actor attributes",
+  "CONFIGURE.AUTO_CALC_TOKEN": "Automatically set token sizes",
+  "CONFIGURE.AUTO_CALC_TOKEN_HINT": "Tokens are automatically sized depending on the selection in the size field on the npc sheet. Does not resize swarms and tokens on the canvas"
   
 }

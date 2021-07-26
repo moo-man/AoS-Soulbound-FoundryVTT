@@ -1,4 +1,4 @@
-import { AgeOfSigmarItemSheet } from "./item.js";
+import { AgeOfSigmarItemSheet } from "./item-sheet.js";
 
 export class ConnectionSheet extends AgeOfSigmarItemSheet {
     static get defaultOptions() {

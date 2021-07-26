@@ -23,6 +23,15 @@
                         <label>{{localize "WOUND.DAMAGE"}}</label>
                         <input name="data.damage" type="number" value="{{data.damage}}" data-dtype="Number"/>
                     </div>
+                    <label>{{localize "WOUND.TYPE"}}</label>
+                    <select name="data.woundType">
+                        {{#select data.woundType}}
+                        <option value=""></option>
+                        {{#each (config "woundType") as |type t|}}
+                            <option value="{{t}}">{{type}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
                 </div>
                 <div class="description">
                     <h1>{{localize "TITLE.DESCRIPTION"}}</h1>

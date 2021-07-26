@@ -14,12 +14,15 @@ export class AgeOfSigmarActor extends Actor {
             initData["token.vision"] = true;
             initData["token.actorLink"] = true;
         }
+        else if (data.type === "npc") {
+            initData["flags.age-of-sigmar-soulbound.autoCalcTokenSize"] = true
+        }
         this.data.update(initData)
     }
 
-
     prepareData() {
         super.prepareData();
+
         if (this.type === "player" || this.type === "npc") {
             this._initializeData();
             this._computeSkillOrder();
@@ -28,6 +31,8 @@ export class AgeOfSigmarActor extends Actor {
             this._computeSecondary();
             this._computeRelativeCombatAbilities();
         }
+        if (this.type==="npc")
+            this._sizeToken()
     }
 
     _initializeData() {
@@ -41,7 +46,9 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defense.total = 0;
         this.combat.defense.relative = 0;
         this.combat.armour.total = 0;
-        this.combat.health.toughness.max = 0;
+        if(this.isSwarm) { // Swarms Max Toughness is user set if we initialize it here it's reset
+            this.combat.health.toughness.max = 1;
+        }
         this.combat.health.wounds.value = 0;
         this.combat.health.wounds.max = 0;
         this.combat.initiative.total = 0;
@@ -107,8 +114,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeItems() {
-        let types = this.itemTypes;
-        types["wound"].forEach(i => {
+        this.combat.wounds.forEach(i => {
             this.combat.health.wounds.value += i.damage;
         })
         this.items.filter(i => i.isActive).forEach(i => {
@@ -195,6 +201,26 @@ export class AgeOfSigmarActor extends Actor {
         this.power.capacity += item.power.capacity;
     }
 
+    _sizeToken() {
+        if(this.isSwarm || !this.autoCalc.tokenSize) return; //Swarms are variable let the GM decide Size
+
+        let size = this.bio.size; 
+
+        if(size <= 2) {
+            this.data.update({"token.height" : 1});
+            this.data.update({"token.width" : 1});
+        } else if(size === 3) {
+            this.data.update({"token.height" : 2});
+            this.data.update({"token.width" : 2});
+        } else if(size === 4) {
+            this.data.update({"token.height" : 3});
+            this.data.update({"token.width" : 3});
+        } else if(size === 5) {
+            this.data.update({"token.height" : 4});
+            this.data.update({"token.width" : 4});
+        }
+    }
+
     _computeAttack() {
 
         //TODO Move this to item prepare data
@@ -206,6 +232,9 @@ export class AgeOfSigmarActor extends Actor {
                 item.pool = this.attributes.body.total + this.skills.ballisticSkill.total;
                 item.focus = this.skills.ballisticSkill.focus;
             }
+            if(this.isSwarm) {
+                item.pool += this.combat.health.toughness.value;
+            }
         })
     }
 
@@ -214,14 +243,23 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.total + (this.combat.melee.bonus * 2);
         this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.total + (this.combat.accuracy.bonus * 2);
         this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.total + (this.combat.defense.bonus * 2);
-        this.combat.armour.total +=            this.combat.armour.bonus;
-        this.combat.health.toughness.max +=    this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
-        this.combat.health.wounds.max +=       Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
-        this.combat.health.wounds.deadly =     this.combat.health.wounds.value >= this.combat.health.wounds.max;
+        this.combat.armour.total +=            this.combat.armour.bonus;        
         this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.total + this.skills.reflexes.total + this.combat.initiative.bonus;
-        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.total) / 2) + this.combat.naturalAwareness.bonus;
-        this.combat.mettle.total +=            Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
+        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.total) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
+        
+        if(this.autoCalc.toughness) {
+            this.combat.health.toughness.max = this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+        }
+        
+        if(this.autoCalc.wounds) {
+            this.combat.health.wounds.max += Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
+            this.combat.health.wounds.deadly = this.combat.health.wounds.value >= this.combat.health.wounds.max;
+        }
+
+        if(this.autoCalc.mettle) {
+            this.combat.mettle.total += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
+        }
     }
 
     /**
@@ -243,14 +281,14 @@ export class AgeOfSigmarActor extends Actor {
             isBar: true
         }, updates);
 
-        let ret = allowed !== false ? this.update(updates) : this;
+        let ret = allowed !== false ? await this.update(updates) : this;
 
         let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.data.token.name});
         ui.notifications.notify(note);
 
         // Doing this here because foundry throws an error if wounds are added before the update
         if(remaining < 0 && this.combat.health.wounds.max > 0) {          
-            this.addWound(remaining);
+            this.computeNewWound(remaining);
         }
         return ret;
     }
@@ -259,37 +297,85 @@ export class AgeOfSigmarActor extends Actor {
      * creates and adds a wound based on how far the actors health has gone below zero
      * @param {int} remaining 
      */
-    async addWound(remaining) {
-        let woundName;
-        let value;
-        let imgPath;
+    async computeNewWound(remaining) {
+
+        if (remaining >= 0)
+            return
+
+        let type;
+        let damage;
 
         if(remaining === -1) {
-            woundName = game.i18n.localize("WOUND.LIGHT");
-            imgPath = "icons/skills/wounds/blood-spurt-spray-red.webp" 
-            value = 1;
+            type = "minor"
+            damage = 1;
         } else if (remaining > -4) {
-            woundName = game.i18n.localize("WOUND.SERIOUS");
-            imgPath = "icons/skills/wounds/injury-triple-slash-bleed.webp"
-            value = 2;            
+            type = "serious"
+            damage = 2;            
         } else {
-            woundName = game.i18n.localize("WOUND.DEADLY");
-            imgPath = "icons/skills/wounds/injury-pain-body-orange.webp"
-            value = 3; 
+            type = "deadly"
+            damage = 3; 
         }
 
         //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
-        if((this.combat.health.wounds.value + value) > this.combat.health.wounds.max) {
-            value = this.combat.health.wounds.max - this.combat.health.wounds.value
+        if((this.combat.health.wounds.value + damage) > this.combat.health.wounds.max) {
+            damage = this.combat.health.wounds.max - this.combat.health.wounds.value
         }
 
-        await this.createEmbeddedDocuments("Item", [{            
-            name: woundName, 
-            type: "wound", 
-            img: imgPath,
-            "data.damage": value     
-        }]);
+        return this.addWound(type, damage)
     }
+
+    // Add new wound according to the given type, 'minor' 'serious' or 'deadly'
+    addWound(type = "", damage = 0)
+    {
+        if (isNaN(damage) && type)
+            damage = game.aos.config.woundDamage[type] || 0
+        
+        let wounds = duplicate(this.combat.wounds)
+        wounds.unshift({type, damage})
+        return this.update({"data.combat.wounds" : wounds})
+    }
+
+    async applyRend(damage) {
+
+        let armours = this.items.filter(i => i.isArmour 
+                                          && i.isActive //Only Armour that is worn
+                                          && i.subtype !== "shield" // That isn't a shield
+                                          && i.benefit !== 0 // not already at zero
+                                          && !i.traits.toLowerCase().includes(game.i18n.localize("TRAIT.MAGICAL"))); // Only nonmagical
+        
+        if(armours.length === 0) return;
+        
+        let sub = damage
+        for(let am of armours) {            
+            let val = am.benefit - sub;
+            sub -= am.benefit;
+
+            
+            if(val >= 0) {
+                await am.update({"data.benefit": val});
+            } else {
+                await am.update({"data.benefit": 0}); 
+            }
+            
+            if(sub === 0) break;            
+        }
+        
+        let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.data.token.name});
+        ui.notifications.notify(note);
+    }
+
+
+    get autoCalc() {
+        return {
+            toughness : this.type == "player" || this.bio.type > 1,
+            mettle :  this.type == "player" || this.bio.type > 2,
+            wounds :  this.type == "player" || this.bio.type > 3,
+            tokenSize : !this.isSwarm && this.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
+        }
+    }
+
+    // @@@@@ BOOLEAN GETTERS @@@@@
+    get isSwarm() {return this.bio.type === 0}
 
     // @@@@@@ DATA GETTERS @@@@@@
     get attributes() {return this.data.data.attributes}

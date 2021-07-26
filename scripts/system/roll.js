@@ -12,19 +12,57 @@ export async function commonRoll(attribute, skill, bonusDice, dn) {
 }
 
 export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
-    const numberOfDice = attribute.total + skill.total + bonusDice;
+    const numberOfDice = attribute.total + skill.total + bonusDice + combat.swarmDice;
+    let weapon = _getWeapon(combat.weapon);
+    let traits = weapon.traits.toLowerCase();
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
-    let weapon = _getWeapon(combat.weapon);
+    
     let damage = {
         total : 0,
-        armour: combat.armour 
+        armour: combat.armour,
+        traitEffects : [] 
     }
+
+    let effect = null;
+
+    if(traits.includes(game.i18n.localize("TRAIT.INEFFECTIVE"))) {
+        effect = _createTraitEffect();
+        effect.isPlain = true;
+        effect.text = game.i18n.localize("TRAIT.INEFFECTIVE_EFFECT");
+        damage.traitEffects.push(effect);
+        damage.armour *= 2;
+    }
+
+    if(damage.armour > 0 && traits.includes(game.i18n.localize("TRAIT.PENETRATING"))) {
+        effect = _createTraitEffect();
+        effect.isPlain = true;
+        effect.text = game.i18n.localize("TRAIT.PENETRATING_EFFECT");
+        damage.traitEffects.push(effect);
+        damage.armour -= 1;        
+    }
+
+    //On these two we may want to get more 6s if possible after we can't get more successes and have focus left over
+    //No idea how to implement that yet may need to refactor _applyFocus a lot for that.
+    if(traits.includes(game.i18n.localize("TRAIT.CLEAVE"))) {
+        effect = _createTraitEffect();
+        effect.isCleave = true;
+        effect.text = game.i18n.format("TRAIT.CLEAVE_EFFECT", {triggers : result.triggers});
+        damage.traitEffects.push(effect);
+    }
+
+    if(traits.includes(game.i18n.localize("TRAIT.REND"))) {
+        effect = _createTraitEffect();
+        effect.isRend = true,
+        effect.text = game.i18n.format("TRAIT.REND_EFFECT", {triggers : result.triggers});
+        damage.traitEffects.push(effect);
+    }
+
     if (weapon.addSuccess) {
-        damage.total = weapon.damage + result.total - combat.armour;
+        damage.total = weapon.damage + result.total - damage.armour;
 
     } else {
-        damage.total = weapon.damage - combat.armour;
+        damage.total = weapon.damage - damage.armour;
     }
     
     if(damage.total < 0) {
@@ -69,9 +107,10 @@ function _applyFocus(roll, dn, focus) {
     let retVal = 
     {
         total : roll.total,
+        triggers : 0,
         dice : []
     }
-    // Sorted to effiencently apply focus not filtered since we would need 
+    // Sorted to efficiently apply focus not filtered since we would need 
     // to make another function to highlight dice in chat 
     let sorted = _getSortedDiceFromRoll(roll);
     let newTotal = roll.total;    
@@ -98,7 +137,7 @@ function _applyFocus(roll, dn, focus) {
         die.highlight = true;
         retVal.dice.push(die);
     }            
-
+    retVal.triggers = retVal.dice.filter(die => die.value === 6).length
     retVal.total = newTotal;
     
     return retVal;
@@ -132,7 +171,8 @@ async function _sendToChat(origRoll, result, dn, focus, damage, traits, isCombat
         dn: dn,
         focus:  `${focus} ${game.i18n.localize("CHAT.FOCUS_APPLIED")}`,
         damage: isCombat ? `${damage.total} ${game.i18n.localize("CHAT.ARMOUR_SUBTRACTED")} ${damage.armour}`: 0,
-        traits: traits
+        traits: traits,
+        traitEffects: damage !== null ? damage.traitEffects : null
     };
     await _createChatMessage("systems/age-of-sigmar-soulbound/template/chat/roll.html", render_data, origRoll);
 }
@@ -152,6 +192,15 @@ async function _createChatMessage(templateFile, render_data, roll) {
         chatData.whisper = [game.user];
     }
     ChatMessage.create(chatData);
+}
+
+function _createTraitEffect() {
+    return {
+        isRend: false,
+        isCleave: false,
+        isPlain: false,
+        text:  ""
+    };
 }
 
 function _getWeapon(weapon) {

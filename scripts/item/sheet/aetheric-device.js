@@ -1,12 +1,12 @@
-import { AgeOfSigmarItemSheet } from "./item.js";
+import { AgeOfSigmarItemSheet } from "./item-sheet.js";
 
-export class WoundSheet extends AgeOfSigmarItemSheet {
+export class AethericDeviceSheet extends AgeOfSigmarItemSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "item"],
-            template: "systems/age-of-sigmar-soulbound/template/sheet/wound.html",
+            template: "systems/age-of-sigmar-soulbound/template/sheet/aetheric-device.html",
             width: 500,
-            height: 446,
+            height: 562,
             resizable: false,
             tabs: [
                 {

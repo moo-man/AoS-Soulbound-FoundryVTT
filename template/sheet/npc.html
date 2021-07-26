@@ -18,11 +18,23 @@
                 <div class="wrapper-row">
                     <div class="size">
                         <label>{{localize "BIO.SIZE"}}</label>
-                        <input name="data.bio.size" type="text" value="{{data.bio.size}}" />
+                        <select name="data.bio.size" data-dtype="Number">
+                            {{#select data.bio.size}}
+                            {{#each (config "actorSize") as |size s|}}
+                                <option value="{{s}}">{{size}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
                     <div class="type">
                         <label>{{localize "BIO.TYPE"}}</label>
-                        <input name="data.bio.type" type="text" value="{{data.bio.type}}"  />
+                        <select name="data.bio.type" data-dtype="Number">
+                            {{#select data.bio.type}}
+                            {{#each (config "npcType") as |type t|}}
+                                <option value="{{t}}">{{type}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
                     </div>
                 </div>
                 <div class="wrapper-row">

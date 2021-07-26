@@ -32,10 +32,9 @@
                         <label>{{localize "ARMOUR.TYPE"}}</label>
                         <select name="data.type">
                             {{#select data.type}}
-                                <option value="light">{{localize "TYPE.LIGHT"}}</option>
-                                <option value="medium">{{localize "TYPE.MEDIUM"}}</option>
-                                <option value="heavy">{{localize "TYPE.HEAVY"}}</option>
-                                <option value="shield">{{localize "TYPE.SHIELD"}}</option>
+                            {{#each (config "armourType") as |type t|}}
+                                <option value="{{t}}">{{type}}</option>
+                            {{/each}}
                             {{/select}}
                         </select>
                     </div>
@@ -59,10 +58,9 @@
                         <label>{{localize "ARMOUR.AVAILABILITY"}}</label>
                         <select name="data.availability">
                             {{#select data.availability}}
-                                <option value="common">{{localize "AVAILABILITY.COMMON"}}</option>
-                                <option value="rare">{{localize "AVAILABILITY.RARE"}}</option>
-                                <option value="exotic">{{localize "AVAILABILITY.EXOTIC"}}</option>
-                                <option value="special">{{localize "AVAILABILITY.SPECIAL"}}</option>
+                            {{#each (config "availability") as |availability a|}}
+                                <option value="{{a}}">{{availability}}</option>
+                            {{/each}}
                             {{/select}}
                         </select>
                     </div>

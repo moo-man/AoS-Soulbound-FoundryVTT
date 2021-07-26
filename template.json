@@ -5,6 +5,7 @@
       "npc",
       "party"
     ],
+    
     "templates": {
       "attributes": {
         "attributes": {
@@ -214,7 +215,9 @@
           "armour": {
             "bonus": 0
           },
-          "speed": ""
+          "speed": "normal",
+          "flight": "none",
+          "wounds" : []
         }
       },
       "power": {
@@ -259,8 +262,8 @@
         "power"
       ],
       "bio": {
-        "size": "",
-        "type": "",
+        "size": 2,
+        "type": 1,
         "faction": "",
         "subfaction": "",
         "role": ""
@@ -464,7 +467,8 @@
     },
     "wound": {
       "description": "",
-      "damage": 0
+      "damage": 0,
+      "woundType" : ""
     }
   }
 }
