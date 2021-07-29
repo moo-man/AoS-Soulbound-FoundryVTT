@@ -25,7 +25,7 @@ export class AgeOfSigmarActor extends Actor {
 
         if (this.type === "player" || this.type === "npc") {
             this._initializeData();
-            this._computeSkillOrder();
+            this._computeSkillTotals();
             this._computeItems();
             this._computeAttack();
             this._computeSecondary();
@@ -46,7 +46,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defense.total = 0;
         this.combat.defense.relative = 0;
         this.combat.armour.total = 0;
-        if(this.isSwarm) { // Swarms Max Toughness is user set if we initialize it here it's reset
+        if(!this.isSwarm) { // Swarms Max Toughness is user set if we initialize it here it's reset
             this.combat.health.toughness.max = 1;
         }
         this.combat.health.wounds.value = 0;
@@ -102,14 +102,9 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
-    _computeSkillOrder() {
-        let middle = Object.values(this.skills).length / 2;
-        let i = 0;
+    _computeSkillTotals() {
         for (let skill of Object.values(this.skills)) {
-            skill.isLeft = i < middle;
-            skill.isRight = i >= middle;
             skill.total = skill.training;
-            i++;
         }
     }
 
@@ -207,17 +202,17 @@ export class AgeOfSigmarActor extends Actor {
         let size = this.bio.size; 
 
         if(size <= 2) {
-            this.data.update({"token.height" : 1});
-            this.data.update({"token.width" : 1});
+            this.data.token.update({"height" : 1});
+            this.data.token.update({"width" : 1});
         } else if(size === 3) {
-            this.data.update({"token.height" : 2});
-            this.data.update({"token.width" : 2});
+            this.data.token.update({"height" : 2});
+            this.data.token.update({"width" : 2});
         } else if(size === 4) {
-            this.data.update({"token.height" : 3});
-            this.data.update({"token.width" : 3});
+            this.data.token.update({"height" : 3});
+            this.data.token.update({"width" : 3});
         } else if(size === 5) {
-            this.data.update({"token.height" : 4});
-            this.data.update({"token.width" : 4});
+            this.data.token.update({"height" : 4});
+            this.data.token.update({"width" : 4});
         }
     }
 

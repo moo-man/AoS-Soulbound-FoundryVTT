@@ -6,7 +6,12 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.data = data.data.data; // project system data so that handlebars has the same name and value paths
-        this._addWoundImages(data)
+
+        if (this.actor.type != "party")
+        {
+            this._addWoundImages(data)
+            this._orderSkills(data)
+        }
         return data;
       }
 
@@ -25,6 +30,18 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             }
             return i
         })
+    }
+
+    _orderSkills(sheetData)
+    {
+        let middle = Object.values(sheetData.data.skills).length / 2;
+        let i = 0;
+        for (let skill of Object.values(sheetData.data.skills)) {
+            skill.isLeft = i < middle;
+            skill.isRight = i >= middle;
+            skill.total = skill.training;
+            i++;
+        }
     }
 
     activateListeners(html) {
