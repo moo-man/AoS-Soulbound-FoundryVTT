@@ -39,7 +39,6 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         for (let skill of Object.values(sheetData.data.skills)) {
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
-            skill.total = skill.training;
             i++;
         }
     }

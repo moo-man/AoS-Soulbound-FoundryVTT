@@ -25,8 +25,8 @@ export class AgeOfSigmarActor extends Actor {
 
         if (this.type === "player" || this.type === "npc") {
             this._initializeData();
-            this._computeSkillTotals();
             this._computeItems();
+            this._computeSkillTotals();
             this._computeAttack();
             this._computeSecondary();
             this._computeRelativeCombatAbilities();
@@ -104,7 +104,14 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeSkillTotals() {
         for (let skill of Object.values(this.skills)) {
-            skill.total = skill.training;
+            let attributeMod;
+            switch(skill.attribute) {
+                case "body" : attributeMod = this.attributes.body.total; break;
+                case "mind" : attributeMod = this.attributes.mind.total; break;
+                case "soul" : attributeMod = this.attributes.soul.total; break;
+                default: attributeMod = 0;
+            }
+            skill.total = skill.training + attributeMod;
         }
     }
 
