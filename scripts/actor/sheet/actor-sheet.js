@@ -6,8 +6,12 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.data = data.data.data; // project system data so that handlebars has the same name and value paths
-        this._addWoundImages(data)
-        this._orderSkills(data)
+
+        if (this.actor.type != "party")
+        {
+            this._addWoundImages(data)
+            this._orderSkills(data)
+        }
         return data;
       }
 
