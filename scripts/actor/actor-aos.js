@@ -25,8 +25,8 @@ export class AgeOfSigmarActor extends Actor {
 
         if (this.type === "player" || this.type === "npc") {
             this._initializeData();
-            this._computeItems();
             this._computeSkillTotals();
+            this._computeItems();
             this._computeAttack();
             this._computeSecondary();
             this._computeRelativeCombatAbilities();
