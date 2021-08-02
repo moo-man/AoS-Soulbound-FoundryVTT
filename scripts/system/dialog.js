@@ -118,6 +118,40 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     label : "ABILITIES.EXTRAORDINARY"
                 }
             ]
+        },
+        combat : {
+            values : [
+                {
+                    key : 1,
+                    selected : (combat[combat.weapon.category] === 1),
+                    label : "ABILITIES.POOR"
+                },
+                {
+                    key : 2,
+                    selected : (combat[combat.weapon.category] === 2),
+                    label : "ABILITIES.AVERAGE"
+                },
+                {
+                    key : 3,
+                    selected : (combat[combat.weapon.category] === 3),
+                    label : "ABILITIES.GOOD"
+                },
+                {
+                    key : 4,
+                    selected : (combat[combat.weapon.category] === 4),
+                    label : "ABILITIES.GREAT"
+                },
+                {
+                    key : 5,
+                    selected : (combat[combat.weapon.category] === 5),
+                    label : "ABILITIES.SUPERB"
+                },
+                {
+                    key : 6,
+                    selected : (combat[combat.weapon.category] === 6),
+                    label : "ABILITIES.EXTRAORDINARY"
+                }
+            ]
         }
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
@@ -131,12 +165,14 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                 callback: async (html) => {
                     const attributeName = html.find("#attribute")[0].value;
                     const skillName = html.find("#skill")[0].value;
+                    const rating = html.find("#rating")[0].value;
                     const doubleTraining = html.find("#double-training")[0].checked;
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     let skill = skills[skillName];
                     targetDefense = html.find("#defense")[0].value;
                     combat.armour = html.find("#armour")[0].value;
+                    combat.rating = parseInt(rating)
                     const dn = _getDn(combat.weapon.name, _getCombatDn(combat, targetDefense));
                     if (doubleTraining) skill.total = skill.total * 2;
                     if (doubleFocus) skill.focus = skill.focus * 2;
@@ -218,11 +254,11 @@ function _getDn(name, dn) {
 
 function _getCombatDn(combat, defense) {
     let difficulty;
-    if (combat.weapon.category === "melee") {
-        difficulty = 4 - (combat.melee - defense);
-    } else {
-        difficulty = 4 - (combat.accuracy - defense);
-    }
+    if (Number.isNumeric(combat.rating))
+        difficulty = 4 - (combat.rating - defense)
+    else 
+        difficulty = 4 - (combat[combat.weapon.category]  - defense)
+        
     if (difficulty > 6) difficulty = 6;
     if (difficulty < 2) difficulty = 2;
         

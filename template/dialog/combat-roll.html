@@ -24,6 +24,18 @@
         </select>
     </div>
     <div class="wrapper">
+        <label>{{localize "Attacker Rating"}}</label>
+        <select id="rating">
+            {{#each combat.values as | combat |}}
+                {{#if combat.selected}}
+                    <option value="{{combat.key}}" selected>{{localize combat.label}} {{combat.key}}</option>
+                {{else}}
+                    <option value="{{combat.key}}">{{localize combat.label}} {{combat.key}}</option>
+                {{/if}}
+            {{/each}}
+        </select>
+    </div>
+    <div class="wrapper">
         <label>{{localize "DIALOG.DEFENSE"}}</label>
         <select id="defense">
             {{#each defense.values as | defense |}}
