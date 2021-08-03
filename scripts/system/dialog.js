@@ -73,6 +73,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
     const target = game.user.targets.values().next().value;
     const hasTarget = target !== undefined; // No additinal Input when target function is used
     let targetDefense = 3; // good defense seems to be the most likely starting point
+    let attackRating = combat.weapon.category === "melee" ? combat.melee : combat.accuracy
     combat.armour = 0;
     
     if (hasTarget) {
@@ -84,75 +85,46 @@ export async function prepareCombatRoll(attributes, skills, combat) {
         attributes: attributes,
         skills: skills,
         bonusDice : 0, // some spells or miracles grant bonus dice 
-        armour: combat.armour,
-        defense : {
-            values : [
+        armour: combat.armour,        
+        rating: {
+            values: [
                 {
                     key : 1,
-                    selected : (targetDefense === 1),
+                    isDefence : (targetDefense === 1),
+                    isAttack : (attackRating === 1),
                     label : "ABILITIES.POOR"
                 },
                 {
                     key : 2,
-                    selected : (targetDefense === 2),
+                    isDefence : (targetDefense === 2),
+                    isAttack : (attackRating === 2),
                     label : "ABILITIES.AVERAGE"
                 },
                 {
                     key : 3,
-                    selected : (targetDefense === 3),
+                    isDefence : (targetDefense === 3),
+                    isAttack : (attackRating === 3),
                     label : "ABILITIES.GOOD"
                 },
                 {
                     key : 4,
-                    selected : (targetDefense === 4),
+                    isDefence : (targetDefense === 4),
+                    isAttack : (attackRating === 4),
                     label : "ABILITIES.GREAT"
                 },
                 {
                     key : 5,
-                    selected : (targetDefense === 5),
+                    isDefence : (targetDefense === 5),
+                    isAttack : (attackRating === 5),
                     label : "ABILITIES.SUPERB"
                 },
                 {
                     key : 6,
-                    selected : (targetDefense === 6),
+                    isDefence : (targetDefense === 6),
+                    isAttack : (attackRating === 6),
                     label : "ABILITIES.EXTRAORDINARY"
-                }
-            ]
-        },
-        combat : {
-            values : [
-                {
-                    key : 1,
-                    selected : (combat[combat.weapon.category] === 1),
-                    label : "ABILITIES.POOR"
-                },
-                {
-                    key : 2,
-                    selected : (combat[combat.weapon.category] === 2),
-                    label : "ABILITIES.AVERAGE"
-                },
-                {
-                    key : 3,
-                    selected : (combat[combat.weapon.category] === 3),
-                    label : "ABILITIES.GOOD"
-                },
-                {
-                    key : 4,
-                    selected : (combat[combat.weapon.category] === 4),
-                    label : "ABILITIES.GREAT"
-                },
-                {
-                    key : 5,
-                    selected : (combat[combat.weapon.category] === 5),
-                    label : "ABILITIES.SUPERB"
-                },
-                {
-                    key : 6,
-                    selected : (combat[combat.weapon.category] === 6),
-                    label : "ABILITIES.EXTRAORDINARY"
-                }
-            ]
-        }
+                }]
+            }        
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
     let dialog = new Dialog({
@@ -165,15 +137,14 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                 callback: async (html) => {
                     const attributeName = html.find("#attribute")[0].value;
                     const skillName = html.find("#skill")[0].value;
-                    const rating = html.find("#rating")[0].value;
                     const doubleTraining = html.find("#double-training")[0].checked;
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
-                    let skill = skills[skillName];
+                    const rating = html.find("#attack")[0].value;
+                    let skill = skills[skillName];                    
                     targetDefense = html.find("#defense")[0].value;
                     combat.armour = html.find("#armour")[0].value;
-                    combat.rating = parseInt(rating)
-                    const dn = _getDn(combat.weapon.name, _getCombatDn(combat, targetDefense));
+                    const dn = _getDn(combat.weapon.name, _getCombatDn(rating, targetDefense));
                     if (doubleTraining) skill.total = skill.total * 2;
                     if (doubleFocus) skill.focus = skill.focus * 2;
                     const bonusDice = _getBonusDice(html)
@@ -252,16 +223,9 @@ function _getDn(name, dn) {
     }
 }
 
-function _getCombatDn(combat, defense) {
-    let difficulty;
-    if (Number.isNumeric(combat.rating))
-        difficulty = 4 - (combat.rating - defense)
-    else 
-        difficulty = 4 - (combat[combat.weapon.category]  - defense)
-        
-    if (difficulty > 6) difficulty = 6;
-    if (difficulty < 2) difficulty = 2;
-        
+function _getCombatDn(rating, defense) {
+    let difficulty = 4 - (rating - defense);
+    difficulty = Math.clamped(difficulty, 2, 6)
     return `${difficulty}:1`
     
 }
