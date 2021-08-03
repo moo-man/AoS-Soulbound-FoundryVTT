@@ -35,29 +35,15 @@ export default class AOS_MacroUtil {
     }
 
     static createWeaponDialog(actor, weapon) {
-        let attributeName, skillName;
-        if (weapon.category === "melee") {
-            attributeName = "body";
-            skillName = "weaponSkill"
-        } else {
-            attributeName = "body";
-            skillName = "ballisticSkill"
-        }
-        const attributes = actor.sheet._setSelectedAttribute(attributeName)
-        const skills = actor.sheet._setSelectedSkill(skillName)
         const combat = actor.sheet._getCombat(weapon);
-        return prepareCombatRoll(attributes, skills, combat);
+        return prepareCombatRoll(actor.attributes, actor.skills, combat);
     }
 
     static createSpellRoll(actor, spell) {
-        const attributes = actor.sheet._setSelectedAttribute("mind")
-        const skills = actor.sheet._setSelectedSkill("channelling")
-        return preparePowerRoll(attributes, skills, spell);
+        return preparePowerRoll("channelling", actor.attributes, actor.skills, spell);
     }
 
     static createMiracleRoll(actor, miracle) {
-        const attributes = actor.sheet._setSelectedAttribute("soul")
-        const skills = actor.sheet._setSelectedSkill("devotion")
-        return preparePowerRoll(attributes, skills, miracle);
+        return preparePowerRoll("devotion", actor.attributes, actor.skills, miracle);
     }
 }

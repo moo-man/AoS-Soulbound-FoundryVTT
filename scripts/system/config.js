@@ -58,4 +58,13 @@ AOS.woundDamage = {
     "deadly" : 3
 }
 
+AOS.ratings = {
+    1 : "ABILITIES.POOR_NUM",
+    2 : "ABILITIES.AVERAGE_NUM",
+    3 : "ABILITIES.GOOD_NUM",
+    4 : "ABILITIES.GREAT_NUM",
+    5 : "ABILITIES.SUPERB_NUM",
+    6 : "ABILITIES.EXTRAORDINARY_NUM"
+}
+
 export default AOS

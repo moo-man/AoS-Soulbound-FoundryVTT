@@ -27,10 +27,13 @@ export async function prepareCustomRoll() {
     dialog.render(true);
 }
 
-export async function prepareCommonRoll(attributes, skills) {
+                                    // Dislike the funky order here, TODO convert first argument into object?
+export async function prepareCommonRoll(skillKey, attributes, skills, attributeKey = null) {
     let data = {
-        attributes: attributes,
-        skills: skills,
+        attributes,
+        skills,
+        skillKey,
+        attributeKey : skillKey ? skills[skillKey].attribute : attributeKey,
         bonusDice : 0 // some spells or miracles grant bonus dice 
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
@@ -85,46 +88,9 @@ export async function prepareCombatRoll(attributes, skills, combat) {
         attributes: attributes,
         skills: skills,
         bonusDice : 0, // some spells or miracles grant bonus dice 
-        armour: combat.armour,        
-        rating: {
-            values: [
-                {
-                    key : 1,
-                    isDefence : (targetDefense === 1),
-                    isAttack : (attackRating === 1),
-                    label : "ABILITIES.POOR"
-                },
-                {
-                    key : 2,
-                    isDefence : (targetDefense === 2),
-                    isAttack : (attackRating === 2),
-                    label : "ABILITIES.AVERAGE"
-                },
-                {
-                    key : 3,
-                    isDefence : (targetDefense === 3),
-                    isAttack : (attackRating === 3),
-                    label : "ABILITIES.GOOD"
-                },
-                {
-                    key : 4,
-                    isDefence : (targetDefense === 4),
-                    isAttack : (attackRating === 4),
-                    label : "ABILITIES.GREAT"
-                },
-                {
-                    key : 5,
-                    isDefence : (targetDefense === 5),
-                    isAttack : (attackRating === 5),
-                    label : "ABILITIES.SUPERB"
-                },
-                {
-                    key : 6,
-                    isDefence : (targetDefense === 6),
-                    isAttack : (attackRating === 6),
-                    label : "ABILITIES.EXTRAORDINARY"
-                }]
-            }        
+        combat,
+        targetDefense,
+        attackRating
     }
     const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
     let dialog = new Dialog({
@@ -163,12 +129,14 @@ export async function prepareCombatRoll(attributes, skills, combat) {
     dialog.render(true);
 }
 
-export async function preparePowerRoll(attributes, skills, power) {
+export async function preparePowerRoll(skillKey, attributes, skills, power) {
     let  dn = power.dn;
     
     let data = {
         attributes: attributes,
         skills: skills,
+        skillKey,
+        attributeKey : skills[skillKey].attribute,
         dn: dn,
         bonusDice : 0 // some spells or miracles grant bonus dice 
     }

@@ -45,6 +45,13 @@
   "ABILITIES.SUPERB": "Superb",
   "ABILITIES.EXTRAORDINARY": "Extraordinary",
 
+  "ABILITIES.POOR_NUM": "Poor (1)",
+  "ABILITIES.AVERAGE_NUM": "Average (2)",
+  "ABILITIES.GOOD_NUM": "Good (3)",
+  "ABILITIES.GREAT_NUM": "Great (4)",
+  "ABILITIES.SUPERB_NUM": "Superb (5)",
+  "ABILITIES.EXTRAORDINARY_NUM": "Extraordinary (6)",
+
   "AETHERIC_DEVICE.NAME": "Name",
   "AETHERIC_DEVICE.CATEGORY": "Category",
   "AETHERIC_DEVICE.DAMAGE": "Damage",
