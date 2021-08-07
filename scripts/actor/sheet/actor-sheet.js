@@ -140,51 +140,29 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     _prepareRollAttribute(event) {
         event.preventDefault();
         const attributeName = $(event.currentTarget).data("attribute");
-        const attributes = this._setSelectedAttribute(attributeName)
-        const skills = this._setSelectedSkill(null)
-        return prepareCommonRoll(attributes, skills);
+        return prepareCommonRoll(null, this.actor.attributes, this.actor.skills, attributeName);
     }
 
     _prepareRollSkill(event) {
         event.preventDefault();
-        const skillName = $(event.currentTarget).data("skill");
-        const attribute = this.actor.skills[skillName].attribute
-        const attributes = this._setSelectedAttribute(attribute)
-        const skills = this._setSelectedSkill(skillName)
-        return prepareCommonRoll(attributes, skills);
+        const skill = $(event.currentTarget).data("skill");
+        return prepareCommonRoll(skill, this.actor.attributes, this.actor.skills);
     }
 
     _prepareRollWeapon(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const weapon = this.actor.items.get(div.data("itemId"));
-        let attributeName, skillName;
-        if (weapon.category === "melee") {
-            attributeName = "body";
-            skillName = "weaponSkill"
-        } else {
-            attributeName = "body";
-            skillName = "ballisticSkill"
-        }
-        const attributes = this._setSelectedAttribute(attributeName)
-        const skills = this._setSelectedSkill(skillName)
         const combat = this._getCombat(weapon);
-        return prepareCombatRoll(attributes, skills, combat);
+        return prepareCombatRoll(this.actor.attributes, this.actor.skills, combat);
     }
 
     _prepareRollPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const power = this.actor.items.get(div.data("itemId"));
-        let attributes, skills;
-        if (power.data.type === "spell") {
-            attributes = this._setSelectedAttribute("mind")
-            skills = this._setSelectedSkill("channelling")
-        } else {
-            attributes = this._setSelectedAttribute("soul")
-            skills = this._setSelectedSkill("devotion")
-        }
-        return preparePowerRoll(attributes, skills, power);
+        let skill = power.data.type === "spell" ? "channelling" : "devotion"
+        return preparePowerRoll(skill, this.actor.attributes, this.actor.skills, power);
     }
 	
 	_prepareShowPower(event) {
@@ -194,28 +172,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         power.sendToChat()
     }
 
-    _setSelectedAttribute(attributeName) {
-        let attributes = foundry.utils.deepClone(this.actor.attributes);
-        for (let attribute of Object.values(attributes)) {
-            attribute.selected = false;
-        }
-        if (attributeName) attributes[attributeName].selected = true;
-        return attributes
-    }
-
-    _setSelectedSkill(skillName) {
-        let skills = foundry.utils.deepClone(this.actor.skills);
-        for (let skill of Object.values(skills)) {
-            skill.selected = false;
-        }
-        if (skillName) skills[skillName].selected = true;
-        return skills
-    }
-
+    // TODO Maybe remove this too
     _getCombat(weapon) {
         return {
             melee: this.actor.combat.melee.relative,
             accuracy: this.actor.combat.accuracy.relative,
+            attribute: "body" ,
+            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
             swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
             weapon: {
                 name: weapon.name,
@@ -223,6 +186,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                 damage: weapon.damage,
                 traits: weapon.traits
             }
+            
         };
     }
 

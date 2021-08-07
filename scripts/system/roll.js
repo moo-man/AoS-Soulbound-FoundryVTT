@@ -10,7 +10,6 @@ export async function commonRoll(attribute, skill, bonusDice, dn) {
 
     await _sendToChat(origRoll, result, dn, skill.focus, null, null, false);
 }
-
 export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
     const numberOfDice = attribute.total + skill.training + bonusDice + combat.swarmDice;
     let weapon = _getWeapon(combat.weapon);
