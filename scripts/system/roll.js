@@ -4,7 +4,7 @@ export async function customRoll(pool, dn) {
 }
 
 export async function commonRoll(attribute, skill, bonusDice, dn) {
-    const numberOfDice = attribute.total + skill.total + bonusDice;
+    const numberOfDice = attribute.total + skill.training + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
 
@@ -12,7 +12,7 @@ export async function commonRoll(attribute, skill, bonusDice, dn) {
 }
 
 export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
-    const numberOfDice = attribute.total + skill.total + bonusDice + combat.swarmDice;
+    const numberOfDice = attribute.total + skill.training + bonusDice + combat.swarmDice;
     let weapon = _getWeapon(combat.weapon);
     let traits = weapon.traits.toLowerCase();
     let origRoll = _roll(numberOfDice, dn);
@@ -72,7 +72,7 @@ export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
 }
 
 export async function powerRoll(attribute, skill, bonusDice, power, dn) {
-    const numberOfDice = attribute.total + skill.total + bonusDice;
+    const numberOfDice = attribute.total + skill.training + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
 	let effect = power.effect;
