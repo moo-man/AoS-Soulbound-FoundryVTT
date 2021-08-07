@@ -46,9 +46,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defense.total = 0;
         this.combat.defense.relative = 0;
         this.combat.armour.total = 0;
-        if(!this.isSwarm) { // Swarms Max Toughness is user set if we initialize it here it's reset
-            this.combat.health.toughness.max = 1;
-        }
+        this.combat.health.toughness.max = 0;        
         this.combat.health.wounds.value = 0;
         this.combat.health.wounds.max = 0;
         this.combat.initiative.total = 0;
@@ -112,6 +110,7 @@ export class AgeOfSigmarActor extends Actor {
                 default: attributeMod = 0;
             }
             skill.total = skill.training + attributeMod;
+            skill.roll  = skill.training;
         }
     }
 
@@ -143,33 +142,16 @@ export class AgeOfSigmarActor extends Actor {
         this.attributes.soul.total += attributes.soul;
     }
 
+    /**
+     * Add Bonus from Items to Total for Display to roll for acutally rolling the dice
+     * @param {*} item 
+     */
     _computeItemSkills(item) {
-        let skills = item.bonus.skills
-    
-        this.skills.arcana.total +=         skills.arcana;
-        this.skills.athletics.total +=      skills.athletics;
-        this.skills.awareness.total +=      skills.awareness;
-        this.skills.ballisticSkill.total += skills.ballisticSkill;
-        this.skills.beastHandling.total +=  skills.beastHandling;
-        this.skills.channelling.total +=    skills.channelling;
-        this.skills.crafting.total +=       skills.crafting;
-        this.skills.determination.total +=  skills.determination;
-        this.skills.devotion.total +=       skills.devotion;
-        this.skills.dexterity.total +=      skills.dexterity;
-        this.skills.entertain.total +=      skills.entertain;
-        this.skills.fortitude.total +=      skills.fortitude;
-        this.skills.guile.total +=          skills.guile;
-        this.skills.intimidation.total +=   skills.intimidation;
-        this.skills.intuition.total +=      skills.intuition;
-        this.skills.lore.total +=           skills.lore;
-        this.skills.medicine.total +=       skills.medicine;
-        this.skills.might.total +=          skills.might;
-        this.skills.nature.total +=         skills.nature;
-        this.skills.reflexes.total +=       skills.reflexes;
-        this.skills.stealth.total +=        skills.stealth;
-        this.skills.survival.total +=       skills.survival;
-        this.skills.theology.total +=       skills.theology;
-        this.skills.weaponSkill.total +=    skills.weaponSkill;
+        let skills = item.bonus.skills;
+        for(let skill of Object.keys(skills)) {
+            this.skills[skill].roll  += skills[skill];
+            this.skills[skill].total += skills[skill];
+        }
     }
 
     _computeItemCombat(item) {
@@ -242,8 +224,8 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeSecondary() {
         // melee, accuracy and defense bonus is doubled to represent a one step increase
-        this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
-        this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
+        this.combat.melee.total +=             this.attributes.body.total + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
+        this.combat.accuracy.total +=          this.attributes.mind.total + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
         this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
         this.combat.armour.total +=            this.combat.armour.bonus;        
         this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
@@ -251,7 +233,9 @@ export class AgeOfSigmarActor extends Actor {
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
         if(this.autoCalc.toughness) {
-            this.combat.health.toughness.max = this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+            this.combat.health.toughness.max += this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+        } else if(!this.isSwarm) {
+            this.combat.health.toughness.max = 1;
         }
         
         if(this.autoCalc.wounds) {
