@@ -228,10 +228,10 @@ export class AgeOfSigmarActor extends Actor {
         //TODO Move this to item prepare data
         this.items.filter(i => i.isAttack).forEach(item => {
             if (item.category === "melee") {
-                item.pool = this.attributes.body.total + this.skills.weaponSkill.total;
+                item.pool = this.skills.weaponSkill.total;
                 item.focus = this.skills.weaponSkill.focus;
             } else {
-                item.pool = this.attributes.body.total + this.skills.ballisticSkill.total;
+                item.pool = this.skills.ballisticSkill.total;
                 item.focus = this.skills.ballisticSkill.focus;
             }
             if(this.isSwarm) {
