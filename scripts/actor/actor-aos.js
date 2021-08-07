@@ -242,12 +242,12 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeSecondary() {
         // melee, accuracy and defense bonus is doubled to represent a one step increase
-        this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.total + (this.combat.melee.bonus * 2);
-        this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.total + (this.combat.accuracy.bonus * 2);
-        this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.total + (this.combat.defense.bonus * 2);
+        this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
+        this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
+        this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
         this.combat.armour.total +=            this.combat.armour.bonus;        
-        this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.total + this.skills.reflexes.total + this.combat.initiative.bonus;
-        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.total) / 2) + this.combat.naturalAwareness.bonus;        
+        this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
+        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.training + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
         if(this.autoCalc.toughness) {
