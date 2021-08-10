@@ -47,12 +47,13 @@ export async function prepareCommonRoll(attributes, skills) {
                     const doubleTraining = html.find("#double-training")[0].checked;
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
+                    const allocation = html.find("#allocation")[0].value;
                     let skill = skills[skillName];
                     const dn = _getDn(`${game.i18n.localize(attribute.label)} (${game.i18n.localize(skill.label)})`, html.find("#dn")[0].value);
                     if (doubleTraining) skill.total = skill.total * 2;
                     if (doubleFocus) skill.focus = skill.focus * 2;
                     let bonusDice = _getBonusDice(html);
-                    await commonRoll(attribute, skill, bonusDice, dn);
+                    await commonRoll(attribute, skill, bonusDice, dn, allocation);
                 },
             },
             cancel: {
@@ -134,6 +135,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     const doubleTraining = html.find("#double-training")[0].checked;
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
+                    const allocation = html.find("#allocation")[0].value;
                     let skill = skills[skillName];
                     targetDefense = html.find("#defense")[0].value;
                     combat.armour = html.find("#armour")[0].value;
@@ -141,7 +143,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     if (doubleTraining) skill.total = skill.total * 2;
                     if (doubleFocus) skill.focus = skill.focus * 2;
                     const bonusDice = _getBonusDice(html)
-                    await combatRoll(attribute, skill, bonusDice , combat, dn);
+                    await combatRoll(attribute, skill, bonusDice , combat, dn, allocation);
                 },
             },
             cancel: {
@@ -180,12 +182,13 @@ export async function preparePowerRoll(attributes, skills, power) {
                     const doubleTraining = html.find("#double-training")[0].checked;
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
+                    const allocation = html.find("#allocation")[0].value;
                     let skill = skills[skillName];
                     const dn = _getDn(power.data.name, html.find("#dn")[0].value);
                     if (doubleTraining) skill.total = skill.total * 2;
                     if (doubleFocus) skill.focus = skill.focus * 2;
                     const bonusDice = _getBonusDice(html)
-                    await powerRoll(attribute, skill, bonusDice, power, dn);
+                    await powerRoll(attribute, skill, bonusDice, power, dn, allocation);
                 },
             },
             cancel: {

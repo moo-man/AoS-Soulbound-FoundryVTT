@@ -1,6 +1,8 @@
-<div class="notes">
-    <div class="wrapper">
+<div class="content-box" style="flex-grow:1">
+    <div class="content-header">
         <h1>{{localize "TITLE.NOTES"}}</h1>
+    </div>
+    <div class="content-wrapper" style="display:flex; flex-grow:1;">
         {{editor content=data.notes target="data.notes" button=true owner=owner editable=editable}}
     </div>
 </div>

@@ -3,20 +3,20 @@ export async function customRoll(pool, dn) {
     await _sendToChat(origRoll, _applyFocus(origRoll, dn, 0), dn, 0, null, null, false);
 }
 
-export async function commonRoll(attribute, skill, bonusDice, dn) {
+export async function commonRoll(attribute, skill, bonusDice, dn, allocation) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
-    let result = _applyFocus(origRoll, dn, skill.focus);
+    let result = _applyFocus(origRoll, dn, skill.focus, allocation);
 
     await _sendToChat(origRoll, result, dn, skill.focus, null, null, false);
 }
 
-export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
+export async function combatRoll(attribute, skill, bonusDice, combat, dn, allocation) {
     const numberOfDice = attribute.total + skill.total + bonusDice + combat.swarmDice;
     let weapon = _getWeapon(combat.weapon);
     let traits = weapon.traits.toLowerCase();
     let origRoll = _roll(numberOfDice, dn);
-    let result = _applyFocus(origRoll, dn, skill.focus);
+    let result = _applyFocus(origRoll, dn, skill.focus, allocation);
     
     let damage = {
         total : 0,
@@ -71,10 +71,10 @@ export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
     await _sendToChat(origRoll, result, dn, skill.focus, damage, weapon.traits, true);
 }
 
-export async function powerRoll(attribute, skill, bonusDice, power, dn) {
+export async function powerRoll(attribute, skill, bonusDice, power, dn, allocation) {
     const numberOfDice = attribute.total + skill.total + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
-    let result = _applyFocus(origRoll, dn, skill.focus);
+    let result = _applyFocus(origRoll, dn, skill.focus, allocation);
 	let effect = power.effect;
 	let resist = null;
 	let overcast = null;
@@ -103,24 +103,140 @@ function _getSortedDiceFromRoll(roll) {
                 .sort((a, b) => b - a);
 }
 
-function _applyFocus(roll, dn, focus) {
+function _applyFocus(roll, dn, focus, mode) {
     let retVal = 
     {
         total : roll.total,
-        triggers : 0,
         dice : []
     }
-    // Sorted to efficiently apply focus not filtered since we would need 
+    // Sorted to effiencently apply success not filtered since we would need 
     // to make another function to highlight dice in chat 
     let sorted = _getSortedDiceFromRoll(roll);
-    let newTotal = roll.total;    
+    let newTotal = roll.total;
+    let triggered = false; 
+    let f = focus;
     for(let i = 0; i < sorted.length; i++) {
         let die = {
             value : sorted[i],
-            highlight : false
+            highlight : false,
+            success: false
         }
+
+        if (mode == "success") {
+            if (die.value >= dn.difficulty) {
+                die.success = true;
+            }
+            else {
+                if (f >= dn.difficulty - die.value) {
+                    f -= (dn.difficulty - die.value);
+                    die.value += (dn.difficulty - die.value);
+                    die.success = true;
+                    newTotal++;
+                    die.highlight = true;
+                }
+            }
+            retVal.dice.push(die);
+            continue;
+        }
+
+        if (mode == "sixes") {
+            if (die.value >= dn.difficulty) {
+                die.success = true;
+                console.log("was successful, checking for sixes now");
+            }
+            if (die.value < 6) {
+                console.log(die.value + " is smaller than six");
+                if (f >= dn.difficulty - die.value && die.success == false) {
+                    console.log(f + " still have focus to push to DN");
+                    f -= (dn.difficulty - die.value);
+                    die.value += (dn.difficulty - die.value);
+                    if (die.success == false) {
+                        console.log("pushed to DN, focus remaining: " + f);
+                        die.success = true;
+                        newTotal++;
+                    }   
+                    die.highlight = true;
+                }
+                if (f >= 6 - die.value) {
+                    console.log(f + " still have focus to push to 6");
+                    f -= (6 - die.value);
+                    die.value += (6 - die.value);
+                    die.highlight = true;
+                    console.log("promoted to 6, focus remaining: " + f)
+                }
+            }
+            retVal.dice.push(die);
+            continue;
+        }
+
+        if (mode == "trigger") {
+            if (die.value >= dn.difficulty) {
+                die.success = true;
+                console.log("was successful, triggered: " + die.value);
+                if (die.value >= 6) {
+                    triggered = true;
+                    console.log("ding!");
+                }
+                console.log("triggered: " + triggered);
+            }
+            if (triggered == false) {
+                console.log("wasn't triggered so check for sixes");
+                if (die.value < 6) {
+                    console.log(die.value +" is smaller than six");
+                    if (f >= dn.difficulty - die.value && die.success == false) {
+                        console.log(f + " still have focus to push to DN");
+                        f -= (dn.difficulty - die.value);
+                        die.value += (dn.difficulty - die.value);
+                        if (die.success == false) {
+                            console.log("pushed to DN, focus remaining: " + f);
+                            die.success = true;
+                            newTotal++;
+                        }   
+                        die.highlight = true;
+                    }
+                    if (f >= 6 - die.value) {
+                        console.log(f + " still have focus to push to 6");
+                        f -= (6 - die.value);
+                        die.value += (6 - die.value);
+                        die.highlight = true;
+                        console.log("promoted to 6, focus remaining: " + f);
+                    }
+                }
+            }
+            else {
+                console.log("has already been triggered so just go for DN")
+                if (f >= dn.difficulty - die.value && die.success == false) {
+                    console.log(f +" focus remain, push to DN");
+                    f -= (dn.difficulty - die.value);
+                    die.value += (dn.difficulty - die.value);
+                    if (die.success == false) {
+                        die.success = true;
+                        newTotal++;
+                    }
+                    die.highlight = true;
+                }
+            }
+            retVal.dice.push(die);
+            continue;
+        }
+
+        if (mode == "manual") {
+            if (die.value >= dn.difficulty) {
+                die.success = true;
+                newTotal++;
+            }
+            retVal.dice.push(die);
+            continue;
+        }
+
+        /* ===== The Original Code =====
         // focus is 0 or result is successes only add dice for display purposes
         if(die.value >= dn.difficulty || focus === 0) {
+            //need to know if this was actually a success for the visuals
+            if(die.value >= dn.difficulty)
+            {
+                die.success = true;
+            }
             retVal.dice.push(die);
             continue;
         }        
@@ -132,16 +248,19 @@ function _applyFocus(roll, dn, focus) {
         // check if use of fokus gave us a new success and add it to the total
         if(die.value >= dn.difficulty) {            
             newTotal++;
+            die.success = true;
         }        
         // we added fokus so highlight the die and push it to the result array
         die.highlight = true;
         retVal.dice.push(die);
+        */
     }            
-    retVal.triggers = retVal.dice.filter(die => die.value === 6).length
+
     retVal.total = newTotal;
     
     return retVal;
 }
+
 
 async function _sendSpellToChat(origRoll, result, dn, focus, duration, overcast, effect, resist) {
     const render_data = {

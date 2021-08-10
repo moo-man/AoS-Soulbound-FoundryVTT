@@ -1,0 +1,120 @@
+#chat-controls {
+    color:darkslategrey;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100vh;
+    width: 340px;
+    margin: 0px;
+    padding: 0px;
+    background: url(../../asset/image/background.jpg) repeat;
+    background-position-y: 45px;
+    border-radius: 0px;
+    box-shadow: 0 0 0px #000;
+    border:none;
+  }
+
+#sidebar-tabs {
+    background-image: url(../../asset/image/header-background.png);
+    background-size: cover;
+    border: 2px solid #7c6c42;
+}
+
+#scenes-popout .directory-list .directory-item .entity-name a,
+#sidebar #scenes .directory-list .directory-item .entity-name a {
+    background: #000000d4;
+    border-radius: 2px;
+    border: 3px double #564d3a;
+    padding: 10px;
+    box-shadow: 0 0 5px #000000 inset;
+    font-family: var(--actor-input-font-family);
+    font-size: 18px;
+    font-weight: var(--actor-input-font-weight);
+    position: relative;
+    top: -2px;
+}
+
+#chat-log .message {
+    padding: 0px 0px 2px 0px;
+    margin: 6px 8px;
+    border-radius: 0px;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 500;
+    border:none;
+    background: none;
+}
+  
+#chat-log .message .message-header {
+    padding: 2px;
+    line-height: normal;
+    vertical-align: middle;
+    font-size: 14px;
+    color: darkslategrey;
+    font-weight: 500;
+    min-height: 20px;
+}
+
+#chat-log .message .message-header .message-sender {
+      flex: 3;
+      margin: 0px;
+      color: darkslategrey;
+      text-shadow: 0px 0px 1px #00000087;
+      vertical-align: middle;
+      position: relative;
+      height: 100%;
+      /* background: var(--debug-background-color-green); */
+}
+
+#chat-log .message .message-header .message-sender.with-image {
+    top: 12px;
+}
+    
+#chat-log .message .message-header .message-metadata {
+    text-align: right;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: 500;
+    color: darkslategrey;
+    text-shadow: 0px 0px 1px #00000087;
+}
+
+#chat-log .message .message-header .message-metadata .message-delete {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    font-size: 13px;
+    color: darkslategrey;
+    text-shadow: none;
+}
+
+#chat-log .message .message-content {
+    border-top: none;
+    user-select: all;
+}
+
+.directory-item .entity-name{
+    color: darkslategrey;
+    font-family: Quadrant-Regular;
+    text-transform: uppercase;
+    text-shadow: 1px 1px whitesmoke;
+}
+
+.profile .item-profile img{
+    border: 2px solid #7c6c42;
+    width:72px;
+    height:72px;
+    border-radius: 50%;
+    background-color: black;
+    box-shadow: none;
+}
+
+.directory-item .entity .item{
+    border-left: 5px solid black;
+}
