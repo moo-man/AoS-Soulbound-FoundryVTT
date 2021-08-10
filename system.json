@@ -15,7 +15,8 @@
     "style/common/variable.css",
     "style/common/sheet.css",
     "style/common/override.css",
-    "style/dialog/dialog.css",
+    "style/common/system.css",
+    "style/sheet/tab/item-bonus.css",
     "style/chat/chat.css"
   ],
   "packs": [],
