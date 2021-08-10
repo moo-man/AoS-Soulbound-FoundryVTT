@@ -39,26 +39,10 @@
                     <input type="number" value="{{data.combat.armour.total}}" data-dtype="Number" disabled />
                 </div>
                 <div class="speed">
-					<label>{{localize "HEADER.SPEED"}}</label>						
-					<select name="data.combat.speed" >
-                        {{#select data.combat.speed}}
-                        {{#each (config "speed") as |speed s|}}
-                            <option value="{{s}}">{{speed}}</option>
-                        {{/each}}
-                        {{/select}}
-					</select>                        
-				</div>
-				<div class="speed">
-					<label>{{localize "HEADER.FLIGHT"}}</label>
-					<select name="data.combat.flight" >
-                        {{#select data.combat.flight}}
-                        {{#each (config "speed") as |speed s|}}
-                            <option value="{{s}}">{{speed}}</option>
-                        {{/each}}
-                        {{/select}}
-					</select>
-				</div>
-			</div>
+                    <label>{{localize "HEADER.SPEED"}}</label>
+                    <input name="data.combat.speed" type="text" value="{{data.combat.speed}}" />
+                </div>
+            </div>
         </div>
     </div>
     <div class="wrapper-right">
@@ -75,11 +59,7 @@
                     <label>{{localize "HEADER.TOUGHNESS"}}</label>
                     <input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" />
                     <input name="data.combat.health.toughness.bonus" type="number" value="{{data.combat.health.toughness.bonus}}" data-dtype="Number" />
-                    {{#unless data.bio.type}}
-                        <input name="data.combat.health.toughness.max" type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" />
-                    {{else}}
-                        <input name="data.combat.health.toughness.max" type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled />
-                    {{/unless}}
+                    <input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled />
                 </div>
                 <div class="mettle">
                     <label>{{localize "HEADER.METTLE"}}</label>
@@ -103,30 +83,25 @@
                     <b class="name">{{localize "WOUND.NAME"}}</b>
                     <b class="damage">{{localize "WOUND.DAMAGE"}}</b>
                     <div class="button">
-                        <a class="wound-create" title="Add Wound"><i class="fas fa-plus"></i></a>
+                        <a class="item-create" title="Add Wound" data-type="wound"><i class="fas fa-plus"></i></a>
                     </div>
                 </div>
                 <div class="items">
-                    {{#each data.combat.wounds as |wound w|}}
-                    <div class="wound item" data-index="{{w}}">
+                    {{#each actor.items as |item|}}
+                    {{#if item.isWound}}
+                    <div class="wound item" data-item-id="{{item.id}}">
                         <div class="name">
                             <div class="image-container">
-                                <div class="image" style="background-image: url('{{wound.img}}')"></div>
+                                <div class="image" style="background-image: url('{{item.img}}')"></div>
                             </div>
-                            <select class="wound-edit">
-                                {{#select wound.type}}
-                                <option value=""></option>
-                                {{#each (config "woundType") as |type t|}}
-                                    <option value="{{t}}">{{type}}</option>
-                                {{/each}}
-                                {{/select}}
-                            </select>
+                            <div class="item-edit">{{item.name}}</div>
                         </div>
-                        <div class="damage">{{wound.damage}}</div>
+                        <div class="damage">{{item.damage}}</div>
                         <div class="button">
-                            <a class="item-control wound-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
+                            <a class="item-control item-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
+                    {{/if}}
                     {{/each}}
                 </div>
             </div>

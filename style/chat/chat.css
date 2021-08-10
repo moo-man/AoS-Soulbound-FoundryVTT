@@ -3,7 +3,6 @@
     font-family: var(--font-text);
     font-size: 13x;
     line-height: 17px;
-    padding: 8px;
 }
 
 .age-of-sigmar-soulbound.chat strong {
@@ -12,45 +11,88 @@
     font-size: 13px;
 }
 
+.age-of-sigmar-soulbound.chat h2 {
+    align-items: center;
+    font-family: var(--font-text);
+    padding: 4px;
+    text-decoration: none;
+    border:none;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 4px;
+    text-align: left;
+}
+
 .age-of-sigmar-soulbound.chat h3 {
     font-family: var(--font-text);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    margin: 0 0 8px;
-    text-align: center;
+    padding: 2px;
 }
 
 .age-of-sigmar-soulbound.chat h4 {
     font-family: var(--font-text);
     font-size: 14px;
     font-weight: bold;
-    margin: 0 0 8px;
-    text-align: center;
-    border-bottom: 1px solid var(--color-border);
+    margin: 2px;
 }
 
 .age-of-sigmar-soulbound.chat h3 + h4 {
-    margin-top: -8px;
+    margin-top: -4px;
 }
 
-.age-of-sigmar-soulbound.chat img.dice {
-	border: 2px solid #c2913500;
-	width: 35px;
-	height: 37px;
-	margin: -1px 0px;
+.age-of-sigmar-soulbound.chat .diceContainer {
+	display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    padding: 4px;
+    border-bottom: 2px solid #7c6c42;
+    border-right: 2px solid #7c6c42;
 }
 
-.age-of-sigmar-soulbound.chat img.diceHighlight {
-	border: 2px solid #c29135;
-	width: 37px;
-	height: 37px;
-	margin: -1px 0px;
+.age-of-sigmar-soulbound.chat .dice {
+    flex:none;
+	width: 36px;
+	height: 36px;
+	margin: 2px 2px;
+    background-color: darkblue;
+    border-radius: 4px;
+}
+
+.age-of-sigmar-soulbound.chat .diceHighlight {
+	flex:none;
+    width: 36px;
+	height: 36px;
+	margin: 2px 2px;
+    background-color: goldenrod;
+    border-radius: 4px;
+}
+.age-of-sigmar-soulbound.chat .diceFailed {
+	flex:none;
+    width: 36px;
+	height: 36px;
+	margin: 2px 2px;
+    background-color: darkgray;
+    border-radius: 4px;
+}
+
+.age-of-sigmar-soulbound.chat .diceLabel {
+	padding: 8px 0 2px 0;
+    font-family: var(--font-text);
+    color: whitesmoke;
+    font-size: 24px;
+    text-align: center;
 }
 
 .age-of-sigmar-soulbound.chat img {
 	border:none;
+    margin: 2px;
 }
 
 .age-of-sigmar-soulbound.chat p {
-    margin: 0 0 4px;
+    margin: 0 0 4px 4px;
 }

@@ -5,6 +5,187 @@
     box-shadow: none;
 }
 
+.age-of-sigmar-soulbound h1 {
+    font-family: Quadrant-Regular;
+    font-size: 14pt;
+    font-weight: normal;
+    border:none;
+    margin: 0;
+    padding: 2px 4px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.age-of-sigmar-soulbound h2 {
+    color:whitesmoke;
+}
+
+.age-of-sigmar-soulbound h3 {
+    font-family: Quadrant-Regular;
+    font-size: 10pt;
+    font-weight: normal;
+    margin: 0;
+    padding: 0px 4px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.age-of-sigmar-soulbound h4 {
+    color: whitesmoke;
+}
+
+.age-of-sigmar-soulbound.sheet .editor{
+    height: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet .tox{
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    align-items: stretch;
+    min-height: 550px;
+}
+
+.age-of-sigmar-soulbound.sheet .tox-edit-area{
+    padding: 0px 7px;
+}
+
+.age-of-sigmar-soulbound.sheet .editor-content{
+    padding: 0px 7px;
+}
+
 .window-app .window-content {
     background: url(../../asset/image/background.jpg) repeat;
+}
+
+.age-of-sigmar-soulbound.dialog {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    flex-basis: 100%;
+    justify-content: stretch;
+    justify-items: stretch;
+}
+
+.dialog {
+    justify-content: stretch;
+}
+
+.content-box{
+    display: flex;
+    flex-direction: column;
+    background: url(../../asset/image/input.jpg) repeat;
+    border-left: 2px solid #7c6c42;
+}
+
+.fill{
+    height:100%;
+}
+
+.content-row{
+    display:flex;
+    flex-direction: row;
+    border-bottom: 2px solid #7c6c42;
+    flex-grow:1;
+    align-items:stretch;
+}
+
+.content-column{
+    display:flex;
+    flex-direction: column;
+    border-right: 2px solid #7c6c42;
+    flex-grow: 1;
+}
+
+.content-rowElement{
+    display:flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    padding: 4px;
+    border-bottom: 2px solid #7c6c42;
+    border-right: 2px solid #7c6c42;
+}
+
+.content-header{
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    color: var(--color-text);
+    font-family: var(--font-text);
+    color: whitesmoke;
+    border-bottom: 2px solid #7c6c42;
+    background-image: url('../../asset/image/header-background.png');
+    background-size: cover;
+    border-right: 2px solid #7c6c42;
+    border-top: 2px solid #7c6c42;
+}
+
+.content-wrapper{
+    display:flex;
+    flex-direction: column;
+    align-content:stretch;
+    align-items: stretch;
+    border-right: 2px solid #7c6c42;
+    border-bottom: 2px solid #7c6c42;
+    flex-grow:1;
+}
+
+.content-label-centered{
+    text-align: center;
+    flex-grow: 1;
+    font-family: Quadrant-Regular;
+    font-size: 10pt;
+    font-weight: normal;
+    text-transform: capitalize;
+}
+
+.segment-vertical{
+    display:flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 2px 2px;
+}
+
+.segment-horizontal{
+    display:flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.entry-vertical{
+    display:flex;
+    flex-direction: column;
+    flex-grow:1;
+    border-right: 2px solid #7c6c42;
+    justify-content: center;
+}
+
+.entry-horizontal{
+    display:flex;
+    flex-direction: row;
+    flex-grow: 1;
+    align-items: center;
+    border-right: 2px solid #7c6c42;
+    padding: 2px;
+}
+
+.dialog-value {
+    display:flex;
+    flex-direction: row;
+    flex-grow:1;
+    justify-content: center;
+    text-align: center;
+    border:none;
+}
+
+.dialog input{
+    border:none;
+}
+
+.dialog select{
+    border:none;
 }

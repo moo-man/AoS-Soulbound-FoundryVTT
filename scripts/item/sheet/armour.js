@@ -5,8 +5,8 @@ export class ArmourSheet extends AgeOfSigmarItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "item"],
             template: "systems/age-of-sigmar-soulbound/template/sheet/armour.html",
-            width: 500,
-            height: 454,
+            width: 420,
+            height: 830,
             resizable: false,
             tabs: [
                 {

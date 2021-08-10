@@ -5,8 +5,8 @@ export class WeaponSheet extends AgeOfSigmarItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "item"],
             template: "systems/age-of-sigmar-soulbound/template/sheet/weapon.html",
-            width: 500,
-            height: 420,
+            width: 420,
+            height: 830,
             resizable: false,
             tabs: [
                 {

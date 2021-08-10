@@ -1,45 +1,50 @@
 <div class="age-of-sigmar-soulbound chat roll">
-    <div class="wrapper">
-        <h3>{{dn.name}} DN {{dn.difficulty}}:{{dn.complexity}}</h3>
-        {{#if hasSucceed}}
-        <h4 style="color: var(--color-succeed)">{{localize "CHAT.SUCCEED"}} <strong>{{success}}</strong> {{localize "CHAT.SUCCESS"}}</h4>
-        {{else}}
-        <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED"}} <strong>{{missing}}</strong></h4>
-        {{/if}}
-
-        {{#if focus}}
-        <p style="margin-top: 5px"><strong>{{localize "CHAT.FOCUS"}} :</strong> {{focus}}</p>
-        {{/if}}
-        {{#if damage}}
-        <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong><span class="damage-value">{{damage}}</span></p>
-        {{/if}}
-        {{#if traits}}
-        <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{traits}}</p>
-        {{/if}}
-        
-        {{#if traitEffects.length}}
-        <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAIT_EFFECTS"}} :</strong></p><ul>
-            {{#each traitEffects as |effect|}}
-                {{#if effect.isRend}}
-                    <li><span class="rend-value">{{effect.text}}</span></li>
+    <div class="content-box">
+        <div class="content-header">
+            <h2>DN {{dn.difficulty}}:{{dn.complexity}} {{dn.name}} Test</h2>
+        </div>
+        <div class="diceContainer">
+            {{#each dices as |dice|}}
+                {{#if dice.highlight}}
+                    <div class="diceHighlight">
+                        <div class="diceLabel">
+                            {{dice.value}}
+                        </div>
+                    </div>
+                {{else}}
+                    {{#if dice.success}}
+                        <div class="dice">
+                            <div class="diceLabel">
+                                {{dice.value}}
+                            </div>
+                        </div>
+                    {{else}}
+                    <div class="diceFailed">
+                        <div class="diceLabel">
+                            {{dice.value}}
+                        </div>
+                    </div>
+                    {{/if}}
                 {{/if}}
-                {{#if effect.isCleave}}
-                    <li><span class="cleave-value">{{effect.text}}</span></li>
-                {{/if}}
-                {{#if effect.isPlain}}
-                    <li>{{effect.text}}</li>
-                {{/if}}
-                
             {{/each}}
-        </ul>
-        {{/if}}
-		
-        {{#each dices as |dice|}}
-            {{#if dice.highlight}}
-                <img class="diceHighlight" src="systems/age-of-sigmar-soulbound/asset/image/dice-{{dice.value}}.png" />
+        </div>
+        <div class="content-rowElement">
+            {{#if hasSucceed}}
+                <h4 style="color: var(--color-succeed)">{{localize "CHAT.SUCCEED"}} <strong>{{success}}</strong> {{localize "CHAT.SUCCESS"}}</h4>
             {{else}}
-                <img class="dice" src="systems/age-of-sigmar-soulbound/asset/image/dice-{{dice.value}}.png" />
+                <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED"}} <strong>{{missing}}</strong></h4>
             {{/if}}
-        {{/each}}
+        </div>
+        <div class="content-wrapper">
+            {{#if focus}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.FOCUS"}} :</strong> {{focus}}</p>
+            {{/if}}
+            {{#if damage}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{damage}}</p>
+            {{/if}}
+            {{#if traits}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{traits}}</p>
+            {{/if}}
+        </div>
     </div>
 </div>

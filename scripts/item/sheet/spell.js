@@ -5,8 +5,8 @@ export class SpellSheet extends AgeOfSigmarItemSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "item"],
             template: "systems/age-of-sigmar-soulbound/template/sheet/spell.html",
-            width: 500,
-            height: 526,
+            width: 420,
+            height: 830,
             resizable: false,
             tabs: [
                 {

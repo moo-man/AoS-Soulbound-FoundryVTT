@@ -1,42 +1,65 @@
 <div class="age-of-sigmar-soulbound dialog">
-    <div class="wrapper">
-        <label>{{localize "DIALOG.ATTRIBUTE"}}</label>
-        <select id="attribute">
-            {{#each attributes as |attribute key|}}
-                {{#if attribute.selected}}
-                    <option value="{{key}}" selected>{{localize attribute.label}}</option>
-                {{else}}
-                    <option value="{{key}}">{{localize attribute.label}}</option>
-                {{/if}}
-            {{/each}}
-        </select>
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.SKILL"}}</label>
-        <select id="skill">
-            {{#each skills as |skill key|}}
-                {{#if skill.selected}}
-                    <option value="{{key}}" selected>{{localize skill.label}}</option>
-                {{else}}
-                    <option value="{{key}}">{{localize skill.label}}</option>
-                {{/if}}
-            {{/each}}
-        </select>
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.DN"}}</label>
-        <input id="dn" type="text" value="4:1" />
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.BONUSDICE"}}</label>
-        <input id="bonusDice" type="number" value="{{bonusDice}}" />
-    </div>
-    <div class="wrapper">
-        <div class="wrapper">
-            <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
-            <input id="double-training" type="checkbox" value="active" />
-            <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
-            <input id="double-focus" type="checkbox" value="active" />
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.COMMON_ROLL"}}</h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical" style="width:100px;">
+                <h3>{{localize "DIALOG.DN"}}</h3>
+                <input id="dn" type="text" value="4:1" />
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
+                <select id="attribute">
+                    {{#each attributes as |attribute key|}}
+                        {{#if attribute.selected}}
+                            <option value="{{key}}" selected>{{localize attribute.label}}</option>
+                        {{else}}
+                            <option value="{{key}}">{{localize attribute.label}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.SKILL"}}</h3>
+                <select id="skill">
+                    {{#each skills as |skill key|}}
+                        {{#if skill.selected}}
+                            <option value="{{key}}" selected>{{localize skill.label}}</option>
+                        {{else}}
+                            <option value="{{key}}">{{localize skill.label}}</option>
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.FOCUSALLOCATION"}}</h3>
+                <select id="allocation">
+                    <option value="manual">{{localize "DIALOG.MANUAL"}}</option>
+                    <option value="success" selected>{{localize "DIALOG.SUCCESSES"}}</option>
+                    <option value="sixes">{{localize "DIALOG.SIXES"}}</option>
+                    <option value="trigger">{{localize "DIALOG.TRIGGER"}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DOUBLE_TRAINING"}}</h3>
+                <input id="double-training" type="checkbox" value="active" />
+            </div>
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DOUBLE_FOCUS"}}</h3>
+                <input id="double-focus" type="checkbox" value="active" />    
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
+                <div class="sheet-table-valueMain"><input id="bonusDice" type="number" value="{{bonusDice}}" /></div>
+            </div>
         </div>
     </div>
+    <hr>
 </div>
