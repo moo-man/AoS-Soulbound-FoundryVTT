@@ -4,15 +4,14 @@ export async function customRoll(pool, dn) {
 }
 
 export async function commonRoll(attribute, skill, bonusDice, dn) {
-    const numberOfDice = attribute.total + skill.total + bonusDice;
+    const numberOfDice = attribute.total + skill.roll + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
 
     await _sendToChat(origRoll, result, dn, skill.focus, null, null, false);
 }
 export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
-
-    const numberOfDice = attribute.total + skill.total + bonusDice + combat.swarmDice;
+    const numberOfDice = attribute.total + skill.roll + bonusDice + combat.swarmDice;
     let weapon = _getWeapon(combat.weapon);
     let traits = weapon.traits.toLowerCase();
     let origRoll = _roll(numberOfDice, dn);
@@ -60,7 +59,6 @@ export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
 
     if (weapon.addSuccess) {
         damage.total = weapon.damage + result.total - damage.armour;
-
     } else {
         damage.total = weapon.damage - damage.armour;
     }
@@ -72,7 +70,7 @@ export async function combatRoll(attribute, skill, bonusDice, combat, dn) {
 }
 
 export async function powerRoll(attribute, skill, bonusDice, power, dn) {
-    const numberOfDice = attribute.total + skill.total + bonusDice;
+    const numberOfDice = attribute.total + skill.roll + bonusDice;
     let origRoll = _roll(numberOfDice, dn);
     let result = _applyFocus(origRoll, dn, skill.focus);
 	let effect = power.effect;
