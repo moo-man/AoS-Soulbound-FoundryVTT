@@ -153,7 +153,8 @@
   "EQUIPMENT.AVAILABILITY": "Availability",
   "EQUIPMENT.DESCRIPTION": "Description",
 
-  "EXPERIENCE": "Experience",
+  "EXPERIENCE.EXPERIENCE": "Experience",
+  "EXPERIENCE.XP": "XP",
 
   "GOAL.NAME": "Name",
   "GOAL.DESCRIPTION": "Description",
