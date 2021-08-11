@@ -1,92 +1,75 @@
-<div class="power">
-    <div class="talents">
+<div class="content-box">
+    <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.TALENTS"}}</h1>
-        <div class="item-list">
-            <div class="item-header">
-                <b class="name">{{localize "TALENT.NAME"}}</b>
-                <b class="effect">{{localize "TALENT.EFFECT"}}</b>
-                <div class="button">
-                    <a class="item-create" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="items">
-                {{#each actor.items as |item|}}
-                    {{#if item.isTalent}}
-                        <div class="talent item" data-item-id="{{item.id}}">
-                        <div class="name">
-                            <div class="image-container">
-                                <div class="image" style="background-image: url('{{item.img}}')"></div>
-                            </div>
-                            <div class="item-edit">{{item.name}}</div>
-                        </div>
-                        <div class="effect">{{item.effect}}</div>
+        <div class="button">
+            <a class="item-create" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        {{#each actor.items as |item|}}
+            {{#if item.isTalent}}
+                <div class="talent item table-element-vertical" data-item-id="{{item.id}}">
+                    <div class="table-element-row">
+                        <div class="item-edit table-label bold">{{item.name}}</div>
                         <div class="button">
                             <a class="item-control item-delete" title="Delete Talent"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
-                    {{/if}}
-                {{/each}}
-            </div>
-        </div>
+                    <div class="table-element-row">{{item.effect}}</div>
+                </div>
+            {{/if}}
+        {{/each}}
     </div>
-    <div class="spells">
+</div>
+<hr>
+<div class="content-box">
+    <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.SPELLS"}}</h1>
-        <div class="item-list">
-            <div class="item-header">
-                <b class="name">{{localize "SPELL.NAME"}}</b>
-                <b class="effect">{{localize "SPELL.EFFECT"}}</b>
-                <div class="button">
-                    <a class="item-create" title="Add Spell" data-type="spell"><i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="items">
-                {{#each actor.items as |item|}}
-                    {{#if item.isSpell}}
-                        <div class="spell item" data-item-id="{{item.id}}">
-                            <div class="name">
-                                <div class="image-container">
-                                    <div class="image" style="background-image: url('{{item.img}}')"></div>
-                                </div>
-                                <div class="item-edit">{{item.name}}</div>
-                            </div>
-                            <div class="effect">{{item.effect}}</div>
-                            <div class="button">
-                                <a class="item-control item-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
-                            </div>
-                        </div>
-                    {{/if}}
-                {{/each}}
-            </div>
+        <div class="button">
+            <a class="item-create" title="Add Spell" data-type="spell"><i class="fas fa-plus"></i></a>
         </div>
     </div>
-    <div class="miracles">
-        <h1>{{localize "TITLE.MIRACLES"}}</h1>
-        <div class="item-list">
-            <div class="item-header">
-                <b class="name">{{localize "MIRACLE.NAME"}}</b>
-                <b class="effect">{{localize "MIRACLE.EFFECT"}}</b>
-                <div class="button">
-                    <a class="item-create" title="Add Miracle" data-type="miracle"><i class="fas fa-plus"></i></a>
-                </div>
-            </div>
-            <div class="items">
-                {{#each actor.items as |item|}}
-                    {{#if item.isMiracle}}
-                        <div class="miracle item" data-item-id="{{item.id}}">
-                            <div class="name">
-                                <div class="image-container">
-                                    <div class="image" style="background-image: url('{{item.img}}')"></div>
-                                </div>
-                                <div class="item-edit">{{item.name}}</div>
-                            </div>
-                            <div class="effect">{{item.effect}}</div>
-                            <div class="button">
-                                <a class="item-control item-delete" title="Delete Miracle"><i class="fas fa-trash"></i></a>
-                            </div>
+    <div class="content-wrapper">
+        {{#each actor.items as |item|}}
+            {{#if item.isSpell}}
+                <div class="spell item table-element-vertical" data-item-id="{{item.id}}">
+                    <div class="table-element-row">
+                        <div class="item-edit table-label bold">{{item.name}}</div>
+                        <div class="button">
+                            <a class="item-control item-delete" title="Delete Spell"><i class="fas fa-trash"></i></a>
                         </div>
-                    {{/if}}
-                {{/each}}
-            </div>
+                    </div>
+                    <div class="table-element-row">
+                        <div class="effect">{{item.effect}}</div>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+<hr>
+<div class="content-box">
+    <div class="content-header" style="padding:0px 4px 0px 24px;">
+        <h1>{{localize "TITLE.MIRACLES"}}</h1>
+        <div class="button">
+            <a class="item-create" title="Add Miracle" data-type="miracle"><i class="fas fa-plus"></i></a>
         </div>
+    </div>
+    <div class="content-wrapper">
+        {{#each actor.items as |item|}}
+            {{#if item.isMiracle}}
+                <div class="miracle item table-element-vertical" data-item-id="{{item.id}}">
+                    <div class="table-element-row">
+                        <div class="item-edit">{{item.name}}</div>
+                        <div class="button">
+                            <a class="item-control item-delete" title="Delete Miracle"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                    <div class="table-element-row">
+                        <div class="effect">{{item.effect}}</div>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
     </div>
 </div>

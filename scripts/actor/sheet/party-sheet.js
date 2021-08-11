@@ -8,8 +8,8 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "actor"],
             template: "systems/age-of-sigmar-soulbound/template/sheet/party.html",
-            width: 700,
-            height: 1000,
+            width: 420,
+            height: 830,
             resizable: false,
             tabs: [
                 {

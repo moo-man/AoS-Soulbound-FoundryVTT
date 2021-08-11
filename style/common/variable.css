@@ -9,13 +9,18 @@
 	font-weight: bold;
 }
 
+@font-face {
+    font-family: "Quadrant-Regular";
+    src: url("../../asset/font/Quadrat-Regular.otf");
+}
+
 :root {
     --color-title: black;
     --color-text: black;
     --color-border: #675914;
     --color-active: #003367;
-    --color-header: white;
-    --color-succeed: #203816;
+    --color-header: whitesmoke;
+    --color-succeed: darkgreen;
     --color-deadly: #680B0B;
     --font-text: "Alegreya Sans SC", sans-serif;
 }

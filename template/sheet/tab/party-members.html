@@ -1,34 +1,121 @@
-<div class="members">
-    <div class="wrapper">
+<div class="content-box">
+    <div class="content-header">
         <h1>{{localize "TITLE.MEMBERS"}}</h1>
-        <div class="item-list">
-            <div class="item-header">
-                <b class="name">{{localize "MEMBER.NAME"}}</b>
-                <b class="archetype">{{localize "MEMBER.ARCHETYPE"}}</b>
-                <b class="species">{{localize "MEMBER.SPECIES"}}</b>
-                <div class="button"></div>
-            </div>
-            <div class="items">
-                {{#each members as |item|}}
-                <div class="member item" data-item-id="{{item.id}}">
-                    <div class="name">
-                        <div class="image-container">
-                            <div class="image" style="background-image: url('{{item.img}}')"></div>
+    </div>
+    <div class="content-wrapper">
+        {{#each members as |item|}}
+            <div class="member item table-element-vertical" data-item-id="{{item.id}}">
+                <div class="table-element-row">
+                    <div class="item-edit bold">{{item.name}}</div>
+                    <div class="segment-horizontal" style="justify-content: flex-end;">
+                        {{item.bio.species}} - {{item.bio.archetype}}
+                        <div class="button" style="padding:0px 0px 0px 4px">
+                            <a class="item-control member-delete" title="Delete Member"><i class="fas fa-trash"></i></a>
                         </div>
-                        <div class="item-edit">{{item.name}}</div>
                     </div>
-                    <div class="archetype">{{item.bio.archetype}}</div>
-                    <div class="species">{{item.bio.species}}</div>
-                    <div class="button">
-                        <a class="item-control member-delete" title="Delete Member"><i class="fas fa-trash"></i></a>
-                    </div>
+                    
                 </div>
-                {{/each}}
+            </div>
+        {{/each}}
+    </div>
+</div>
+<hr>
+<div style="display:flex; flex-direction:row; justify-content:space-between;">
+    <div class="content-box" style="width:48%">
+        <div class="content-header" style="padding:0px 4px 0px 24px;">
+            <h1>{{localize "TITLE.ALLIES"}}</h1>
+            <div class="button">
+                <a class="item-create" title="Add Ally" data-type="ally"><i class="fas fa-plus"></i></a>
             </div>
         </div>
+        <div class="content-wrapper">
+            {{#each actor.items as |item|}}
+                {{#if item.isAlly}}
+                    <div class="ally item table-element-vertical" data-item-id="{{item.id}}">
+                        <div class="table-element-row">
+                            <div class="segment-horizontal">
+                                {{#if item.state}}
+                                    <a class="completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
+                                {{else}}
+                                    <a class="completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
+                                {{/if}}
+                                <div class="item-edit" style="padding:0px 0px 0px 4px;">{{item.name}}</div>
+                            </div>
+                            <div class="button">
+                                <a class="item-control item-delete" title="Delete Ally"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
     </div>
-    <div class="wrapper">
+    <div class="content-box"style="width:48%">
+        <div class="content-header" style="padding:0px 4px 0px 24px;">
+            <h1>{{localize "TITLE.ENEMIES"}}</h1>
+            <div class="button">
+                <a class="item-create" title="Add Enemy" data-type="enemy"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="content-wrapper">
+            {{#each actor.items as |item|}}
+                {{#if item.isEnemy}}
+                    <div class="enemy item table-element-vertical" data-item-id="{{item.id}}">
+                        <div class="table-element-row">
+                            <div class="segment-horizontal">
+                                {{#if item.state}}
+                                    <a class="completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-sun"></i></a>
+                                {{else}}
+                                    <a class="completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-skull"></i></a>
+                                {{/if}}        
+                                <div class="item-edit" style="padding:0px 0px 0px 4px;">{{item.name}}</div>
+                            </div>
+                            <div class="button">
+                                <a class="item-control item-delete" title="Delete Enemy"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
+            {{/each}}
+        </div>
+    </div>
+</div>
+<hr>
+<div class="content-box">
+    <div class="content-header" style="padding:0px 4px 0px 24px">
+        <h1>{{localize "TITLE.RESOURCES"}}</h1>
+        <div class="button">
+            <a class="item-create" title="Add Resource" data-type="resource"><i class="fas fa-plus"></i></a>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        {{#each actor.items as |item|}}
+            {{#if item.isResource}}
+                <div class="resource item table-element-vertical" data-item-id="{{item.id}}">
+                    <div class="table-element-row">
+                        <div class="segment-horizontal">
+                            {{#if item.state}}
+                                <a class="completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-sun"></i></a>
+                            {{else}}
+                                <a class="completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-skull"></i></a>
+                            {{/if}}        
+                            <div class="item-edit" style="padding:0px 0px 0px 4px;">{{item.name}}</div>
+                        </div>
+                        <div class="button">
+                            <a class="item-control item-delete" title="Delete Resource"><i class="fas fa-trash"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/if}}
+        {{/each}}
+    </div>
+</div>
+<hr>
+<div class="content-box">
+    <div class="content-header">
         <h1>{{localize "TITLE.NOTES"}}</h1>
+    </div>
+    <div class="content-wrapper" style="min-height: 120px;">
         {{editor content=data.notes target="data.notes" button=true owner=owner editable=editable}}
     </div>
 </div>
