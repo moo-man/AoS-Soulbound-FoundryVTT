@@ -51,10 +51,10 @@ export async function prepareCommonRoll(skillKey, attributes, skills, attributeK
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     const allocation = html.find("#allocation")[0].value;
-                    let skill = skills[skillName];
+                    let skill = foundry.utils.deepClone(skills[skillName]); // we don't actually want to change the skill just use it.
                     const dn = _getDn(`${game.i18n.localize(attribute.label)} (${game.i18n.localize(skill.label)})`, html.find("#dn")[0].value);
-                    if (doubleTraining) skill.total = skill.total * 2;
-                    if (doubleFocus) skill.focus = skill.focus * 2;
+                    if (doubleTraining) skill.roll *= 2;
+                    if (doubleFocus) skill.focus *= 2;
                     let bonusDice = _getBonusDice(html);
                     await commonRoll(attribute, skill, bonusDice, dn, allocation);
                 },
@@ -109,7 +109,7 @@ export async function prepareCombatRoll(attributes, skills, combat) {
                     const attribute = attributes[attributeName];
                     const rating = html.find("#attack")[0].value;
                     const allocation = html.find("#allocation")[0].value;
-                    let skill = skills[skillName];
+                    let skill = foundry.utils.deepClone(skills[skillName]);                    
                     targetDefense = html.find("#defense")[0].value;
                     combat.armour = html.find("#armour")[0].value;
                     const dn = _getDn(combat.weapon.name, _getCombatDn(rating, targetDefense));
@@ -158,10 +158,10 @@ export async function preparePowerRoll(skillKey, attributes, skills, power) {
                     const doubleFocus = html.find("#double-focus")[0].checked;
                     const attribute = attributes[attributeName];
                     const allocation = html.find("#allocation")[0].value;
-                    let skill = skills[skillName];
+                    let skill = foundry.utils.deepClone(skills[skillName]);
                     const dn = _getDn(power.data.name, html.find("#dn")[0].value);
-                    if (doubleTraining) skill.total = skill.total * 2;
-                    if (doubleFocus) skill.focus = skill.focus * 2;
+                    if (doubleTraining) skill.roll *= 2;
+                    if (doubleFocus) skill.focus *= 2;
                     const bonusDice = _getBonusDice(html)
                     await powerRoll(attribute, skill, bonusDice, power, dn, allocation);
                 },
