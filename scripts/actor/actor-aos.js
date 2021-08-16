@@ -51,7 +51,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.health.wounds.max = 0;
         this.combat.initiative.total = 0;
         this.combat.naturalAwareness.total = 0;
-        this.combat.mettle.total = 0;
+        this.combat.mettle.max = 0;
         this.combat.damage = 0;
         this.power.consumed = 0,
         this.power.capacity = 0,
@@ -157,7 +157,7 @@ export class AgeOfSigmarActor extends Actor {
     _computeItemCombat(item) {
         let combat = item.bonus.combat
     
-        this.combat.mettle.total +=           combat.mettle;
+        this.combat.mettle.max +=             combat.mettle;
         this.combat.health.toughness.max +=   combat.health.toughness;
         this.combat.health.wounds.max +=      combat.health.wounds;
         this.combat.health.wounds.deadly =    this.combat.health.wounds.value >= this.combat.health.wounds.max;
@@ -229,7 +229,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
         this.combat.armour.total +=            this.combat.armour.bonus;        
         this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
-        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.training + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
+        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
         if(this.autoCalc.toughness) {
@@ -244,7 +244,7 @@ export class AgeOfSigmarActor extends Actor {
         }
 
         if(this.autoCalc.mettle) {
-            this.combat.mettle.total += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
+            this.combat.mettle.max += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
         }
     }
 
