@@ -66,13 +66,6 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         if (this.actor.isOwner) {
             buttons = [
                 {
-                    label: "BUTTON.ROLL",
-                    class: "custom-roll",
-                    icon: "fas fa-dice",
-                    onclick: async (ev) => await prepareCustomRoll()
-                },
-                {
-                    label: "CONFIGURE.LABEL",
                     class: "configure",
                     icon: "fas fa-wrench",
                     onclick: async (ev) => new ActorConfigure(this.actor).render(true)

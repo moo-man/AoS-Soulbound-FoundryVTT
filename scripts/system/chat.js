@@ -15,16 +15,16 @@ export const addChatMessageContextOptions = function (html, options) {
     };
     options.push(
         {
-            name: game.i18n.localize("CHAT.APPLY_DAMAGE"),
-            icon: '<i class="fas fa-user-minus"/>',
+            name: "CHAT.APPLY_DAMAGE",
+            icon: '<i class="fas fa-user-minus"></i>',
             condition: canApply,
             callback: li => applyChatCardDamage(li, 1)
         }
     );
 	options.push(
 		{
-            name: game.i18n.localize("CHAT.APPLY_DOUBLE_DAMAGE"),
-            icon: '<i class="fas fa-user-minus"/>',
+            name: "CHAT.APPLY_DOUBLE_DAMAGE",
+            icon: '<i class="fas fa-user-minus"></i>',
             condition: canApply,
             callback: li => applyChatCardDamage(li, 2)
 		}
@@ -39,8 +39,8 @@ export const addChatMessageContextOptions = function (html, options) {
     };
     options.push(
         {
-            name: game.i18n.localize("CHAT.APPLY_CLEAVE_DAMAGE"),
-            icon: '<i class="fas fa-user-minus"/>',
+            name: "CHAT.APPLY_CLEAVE_DAMAGE",
+            icon: '<i class="fas fa-user-minus"></i>',
             condition: canApply,
             callback: li => applyCleaveDamage(li)
         }
@@ -55,8 +55,8 @@ export const addChatMessageContextOptions = function (html, options) {
     };
     options.push(
         {
-            name: game.i18n.localize("CHAT.APPLY_REND_DAMAGE"),
-            icon: '<i class="fas fa-user-minus"/>',
+            name: "CHAT.APPLY_REND_DAMAGE",
+            icon: '<i class="fas fa-user-minus"></i>',
             condition: canApply,
             callback: li => applyRend(li)
         }

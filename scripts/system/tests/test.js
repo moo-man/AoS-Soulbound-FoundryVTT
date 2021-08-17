@@ -10,7 +10,6 @@ export default class Test {
                 dn : data.dn,
                 allocation: data.allocation,
                 itemId : data.itemId,
-                // TODO apply doubles
                 doubleTraining : data.doubleTraining || false,
                 doubleFocus : data.doubleFocus || false
             },
@@ -40,12 +39,11 @@ export default class Test {
     _computeResult()
     {
         let result = this._applyFocus();
-        result.hasSucceed = result.total >= this.testData.dn.complexity,
-        result.success = result.total - this.testData.dn.complexity,
-        result.missing = this.testData.dn.complexity - result.total,
-        result.failed = result.dice.length - result.total,
-        result.dn = this.testData.dn,
-        result.focus =  this.testData.doubleFocus ? this.skill.focus * 2 : this.skill.focus;
+        result.hasSucceed = result.total >= this.testData.dn.complexity
+        result.success = result.total - this.testData.dn.complexity
+        result.missing = this.testData.dn.complexity - result.total
+        result.failed = result.dice.length - result.total
+        result.dn = this.testData.dn
         return result
     }
 
@@ -53,14 +51,18 @@ export default class Test {
         let retVal = 
         {
             total : this.roll.total,
-            dice : []
+            triggers : 0,
+            dice : [],
+            focus : this.skill?.focus || 0
         }
+        retVal.focus = this.testData.doubleFocus ? retVal.focus * 2 : retVal.focus
+        
         // Sorted to effiencently apply success not filtered since we would need 
         // to make another function to highlight dice in chat 
         let sorted = Test._getSortedDiceFromRoll(this.roll);
         let newTotal = this.roll.total;
         let triggered = false; 
-        let f = this.testData.doubleFocus ? this.skill.focus * 2 : this.skill.focus;
+        let f = retVal.focus
         let dn = this.testData.dn
 
         for(let i = 0; i < sorted.length; i++) {
@@ -99,7 +101,7 @@ export default class Test {
                         f -= (dn.difficulty - die.value);
                         die.value += (dn.difficulty - die.value);
                         if (die.success == false) {
-                             // pushed to DN, focus remaining: " + f
+                             // pushed to DN, 
                             die.success = true;
                             newTotal++;
                         }   
@@ -110,7 +112,7 @@ export default class Test {
                         f -= (6 - die.value);
                         die.value += (6 - die.value);
                         die.highlight = true;
-                         // promoted to 6, focus remaining: " + f
+                         // promoted to 6
                     }
                 }
                 retVal.dice.push(die);
@@ -135,7 +137,7 @@ export default class Test {
                             f -= (dn.difficulty - die.value);
                             die.value += (dn.difficulty - die.value);
                             if (die.success == false) {
-                                 // pushed to DN, focus remaining: " + f
+                                 // pushed to DN
                                 die.success = true;
                                 newTotal++;
                             }   
@@ -146,7 +148,7 @@ export default class Test {
                             f -= (6 - die.value);
                             die.value += (6 - die.value);
                             die.highlight = true;
-                             // promoted to 6, focus remaining: " + f
+                             // promoted to 6
                         }
                     }
                 }
@@ -176,12 +178,11 @@ export default class Test {
                 continue;
             }
         }            
-    
+        retVal.triggers = retVal.dice.filter(die => die.value === 6).length
         retVal.total = newTotal;
         
         return retVal;
     }
-
 
     async sendToChat()
     {
@@ -237,7 +238,10 @@ export default class Test {
 
     get numberOfDice()
     {
-        return this.attribute.total +  this.testData.bonusDice + (this.testData.doubleTraining ? this.skill.roll * 2 : this.skill.roll)
+        let num = this.attribute.total +  this.testData.bonusDice
+        if (this.skill)
+            num += (this.testData.doubleTraining ? this.skill.roll * 2 : this.skill.roll)
+        return num
     }
 
 

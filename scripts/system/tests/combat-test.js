@@ -100,13 +100,4 @@ export default class CombatTest extends Test {
         return this.item
     }
 
-    get hasRend() {
-
-    }
-
-    get hasCleave(){
-
-    }
-
-
 }

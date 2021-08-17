@@ -1,31 +1,3 @@
-
-export async function prepareCustomRoll() {
-    const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/custom-roll.html", {});
-    let dialog = new Dialog({
-        title: game.i18n.localize("DIALOG.CUSTOM_ROLL"),
-        content: html,
-        buttons: {
-            roll: {
-                icon: '<i class="fas fa-check"></i>',
-                label: game.i18n.localize("BUTTON.ROLL"),
-                callback: async (html) => {
-                    const pool = html.find("#pool")[0].value;
-                    const dn = _getDn(game.i18n.localize("DIALOG.CUSTOM_ROLL"), html.find("#dn")[0].value);
-                    await customRoll(pool, dn);
-                },
-            },
-            cancel: {
-                icon: '<i class="fas fa-times"></i>',
-                label: game.i18n.localize("BUTTON.CANCEL"),
-                callback: () => { },
-            },
-        },
-        default: "roll",
-        close: () => { },
-    });
-    dialog.render(true);
-}
-
 // Dislike the funky order here, TODO convert first argument into object?
 export async function prepareCommonRoll(skillKey, attributes, skills, attributeKey = null) {
     return new Promise(async (resolve, reject) => {
@@ -46,7 +18,7 @@ export async function prepareCommonRoll(skillKey, attributes, skills, attributeK
                     label: game.i18n.localize("BUTTON.ROLL"),
                     callback: async (html) => {
                         let data = extractDialogData(html)
-                        data.dn = _getDn(`${game.aos.config.attributes[data.attribute]} (${game.aos.config.skills[data.skill]})`, html.find("#dn")[0].value);
+                        data.dn = _getDn(`${game.aos.config.attributes[data.attribute]} ${data.skill ? "(" + game.aos.config.skills[data.skill] + ")" : ""}`, html.find("#dn")[0].value);
                         resolve(data);
                     },
                 },
