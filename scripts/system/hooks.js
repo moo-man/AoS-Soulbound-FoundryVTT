@@ -80,6 +80,11 @@ export default function registerHooks() {
     Hooks.on("ready", () => {
         Migration.checkMigration()
 
+        CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
+            let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
+            return game.aos.rollClass.Test.recreate(rollData)
+        }
+
         for (let key in game.aos.config) {
             for (let prop in game.aos.config[key]) {
                 if (typeof game.aos.config[key][prop] == "string")

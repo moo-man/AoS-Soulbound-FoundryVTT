@@ -1,5 +1,39 @@
 let AOS = {}
 
+
+AOS.attributes = {
+    body :  "ATTRIBUTE.BODY",
+    mind :  "ATTRIBUTE.MIND",
+    soul :  "ATTRIBUTE.SOUL"
+  }
+
+AOS.skills = {
+    arcana : "SKILL.ARCANA",
+    athletics : "SKILL.ATHLETICS",
+    awareness : "SKILL.AWARENESS",
+    ballisticSkill : "SKILL.BALLISTIC_SKILL",
+    beastHandling : "SKILL.BEAST_HANDLING",
+    channelling : "SKILL.CHANNELLING",
+    crafting : "SKILL.CRAFTING",
+    determination : "SKILL.DETERMINATION",
+    devotion : "SKILL.DEVOTION",
+    dexterity : "SKILL.DEXTERITY",
+    entertain : "SKILL.ENTERTAIN",
+    fortitude : "SKILL.FORTITUDE",
+    guile : "SKILL.GUILE",
+    intimidation : "SKILL.INTIMIDATION",
+    intuition : "SKILL.INTUITION",
+    lore : "SKILL.LORE",
+    medicine : "SKILL.MEDICINE",
+    might : "SKILL.MIGHT",
+    nature : "SKILL.NATURE",
+    reflexes : "SKILL.REFLEXES",
+    stealth : "SKILL.STEALTH",
+    survival : "SKILL.SURVIVAL",
+    theology : "SKILL.THEOLOGY",
+    weaponSkill : "SKILL.WEAPON_SKILL"
+}
+
 AOS.availability = {
     "common" : "AVAILABILITY.COMMON",
     "rare" : "AVAILABILITY.RARE",

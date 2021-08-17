@@ -1,50 +1,90 @@
 <div class="age-of-sigmar-soulbound chat roll">
+    {{log this}}
     <div class="content-box">
         <div class="content-header">
-            <h2>DN {{dn.difficulty}}:{{dn.complexity}} {{dn.name}} Test</h2>
+            <h2>DN {{testData.dn.difficulty}}:{{testData.dn.complexity}} {{testData.dn.name}} Test</h2>
         </div>
         <div class="diceContainer">
-            {{#each dices as |dice|}}
-                {{#if dice.highlight}}
-                    <div class="diceHighlight">
-                        <div class="diceLabel">
-                            {{dice.value}}
-                        </div>
-                    </div>
-                {{else}}
-                    {{#if dice.success}}
-                        <div class="dice">
-                            <div class="diceLabel">
-                                {{dice.value}}
-                            </div>
-                        </div>
-                    {{else}}
-                    <div class="diceFailed">
-                        <div class="diceLabel">
-                            {{dice.value}}
-                        </div>
-                    </div>
-                    {{/if}}
-                {{/if}}
+            {{#each result.dice as |dice|}}
+            {{#if dice.highlight}}
+            <div class="diceHighlight">
+                <div class="diceLabel">
+                    {{dice.value}}
+                </div>
+            </div>
+            {{else}}
+            {{#if dice.success}}
+            <div class="dice">
+                <div class="diceLabel">
+                    {{dice.value}}
+                </div>
+            </div>
+            {{else}}
+            <div class="diceFailed">
+                <div class="diceLabel">
+                    {{dice.value}}
+                </div>
+            </div>
+            {{/if}}
+            {{/if}}
             {{/each}}
         </div>
         <div class="content-rowElement">
-            {{#if hasSucceed}}
-                <h4 style="color: var(--color-succeed)">{{localize "CHAT.SUCCEED"}} <strong>{{success}}</strong> {{localize "CHAT.SUCCESS"}}</h4>
+            {{#if result.hasSucceed}}
+            <h4 style="color: var(--color-succeed)">{{localize "CHAT.SUCCEED"}} <strong>{{result.success}}</strong>
+                {{localize "CHAT.SUCCESS"}}</h4>
             {{else}}
-                <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED"}} <strong>{{missing}}</strong></h4>
+            <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED"}} <strong>{{result.missing}}</strong></h4>
             {{/if}}
         </div>
         <div class="content-wrapper">
-            {{#if focus}}
-            <p style="margin-top: 5px"><strong>{{localize "CHAT.FOCUS"}} :</strong> {{focus}}</p>
+            {{#if result.focus}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.FOCUS"}} :</strong> {{result.focus}}
+                {{localize "CHAT.FOCUS_APPLIED"}}</p>
             {{/if}}
-            {{#if damage}}
-            <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{damage}}</p>
+
+            {{#if result.damage}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{result.damage.total}}</p>
             {{/if}}
-            {{#if traits}}
-            <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{traits}}</p>
+
+            {{#if result.traits}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{result.traits}}</p>
+            {{/if}}
+
+            {{#if result.effect}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.EFFECT"}} :</strong> {{result.effect}}</p>
+            {{/if}}
+
+            {{#if result.duration}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration}}</p>
+            {{/if}}
+
+            {{#if result.resist}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.RESIST"}} :</strong> {{result.resist}}</p>
+            {{/if}}
+
+            {{#if result.overcast}}
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.OVERCAST"}} :</strong> {{result.overcast}}</p>
             {{/if}}
         </div>
+        {{#if result.damage.traitEffects.length}}
+        <div class="content-wrapper">
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAIT_EFFECTS"}} :</strong></p>
+            <ul>
+                {{#each result.damage.traitEffects as |effect|}}
+                {{#if effect.isRend}}
+                <li><span class="rend-value">{{effect.text}}</span></li>
+                {{/if}}
+                {{#if effect.isCleave}}
+                <li><span class="cleave-value">{{effect.text}}</span></li>
+                {{/if}}
+                {{#if effect.isPlain}}
+                <li>{{effect.text}}</li>
+                {{/if}}
+
+                {{/each}}
+            </ul>
+        </div>
+        {{/if}}
     </div>
 </div>

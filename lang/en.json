@@ -335,7 +335,7 @@
   "TRAIT.CLEAVE" : "cleave",
   "TRAIT.CLEAVE_EFFECT" : "Cleave: {triggers} Damage to enemies in close range", 
   "TRAIT.REND" : "rend",
-  "TRAIT.REND_EFFECT" : "Rend : Target looses {triggers} Points of nonmagical armour",
+  "TRAIT.REND_EFFECT" : "Rend : Target loses {triggers} Points of nonmagical armour",
 
   "TYPE.LIGHT": "Light",
   "TYPE.MEDIUM": "Medium",

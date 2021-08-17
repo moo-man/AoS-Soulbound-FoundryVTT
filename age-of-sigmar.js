@@ -20,6 +20,10 @@ import { prepareCustomRoll } from "./scripts/system/dialog.js";
 import hooks from "./scripts/system/hooks.js"
 import AOS from "./scripts/system/config.js"
 import Migration from "./scripts/system/migrations.js";
+import AOSUtility from "./scripts/system/utility.js";
+import Test from "./scripts/system/tests/test.js";
+import CombatTest from "./scripts/system/tests/combat-test.js";
+import PowerTest from "./scripts/system/tests/power-test.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -47,7 +51,13 @@ Hooks.once("init", () => {
 
     game.aos = {
         config : AOS,
-        migration : Migration
+        migration : Migration,
+        utility : AOSUtility,
+        rollClass : {
+            Test,
+            CombatTest,
+            PowerTest
+        }
     };
 
 });

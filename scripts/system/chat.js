@@ -11,7 +11,7 @@ export const addChatMessageContextOptions = function (html, options) {
         return message.isRoll
             && message.isContentVisible //can be seen
             && canvas.tokens?.controlled.length //has something selected
-            && li.find('.damage-value').length; //is damage roll
+            && message.getTest().result.damage; //is damage roll
     };
     options.push(
         {
@@ -69,8 +69,9 @@ export const addChatMessageContextOptions = function (html, options) {
  * @param {HTMLElement} messsage    The chat entry which contains the roll data
  * @return {Promise}
  */
-function applyChatCardDamage(message, multiplier) {
-    let damage = extractChatCardNumber(message, ".damage-value");
+function applyChatCardDamage(li, multiplier) {
+    const message = game.messages.get(li.data("messageId"));
+    let damage = message.getTest().result.damage.total
 	damage *= multiplier;
     // apply to any selected actors
     return Promise.all(canvas.tokens.controlled.map(t => {

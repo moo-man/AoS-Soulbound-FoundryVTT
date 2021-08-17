@@ -137,32 +137,48 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return this.actor.updateEmbeddedDocuments("Item", [data]);
     }
 
-    _prepareRollAttribute(event) {
+    async _prepareRollAttribute(event) {
         event.preventDefault();
         const attributeName = $(event.currentTarget).data("attribute");
-        return prepareCommonRoll(null, this.actor.attributes, this.actor.skills, attributeName);
+        let rollData = await prepareCommonRoll(null, this.actor.attributes, this.actor.skills, attributeName);
+        rollData.speaker = this.actor.speakerData
+        let test = new game.aos.rollClass.Test(rollData)
+        await test.rollTest()
+        test.sendToChat()
     }
 
-    _prepareRollSkill(event) {
+    async _prepareRollSkill(event) {
         event.preventDefault();
         const skill = $(event.currentTarget).data("skill");
-        return prepareCommonRoll(skill, this.actor.attributes, this.actor.skills);
+        let rollData = await prepareCommonRoll(skill, this.actor.attributes, this.actor.skills);
+        rollData.speaker = this.actor.speakerData
+        let test = new game.aos.rollClass.Test(rollData)
+        await test.rollTest()
+        test.sendToChat()
     }
 
-    _prepareRollWeapon(event) {
+    async _prepareRollWeapon(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const weapon = this.actor.items.get(div.data("itemId"));
         const combat = this._getCombat(weapon);
-        return prepareCombatRoll(this.actor.attributes, this.actor.skills, combat);
+        let rollData = await prepareCombatRoll(weapon, this.actor.attributes, this.actor.skills, combat);
+        rollData.speaker = this.actor.speakerData
+        let test = new game.aos.rollClass.CombatTest(rollData)
+        await test.rollTest()
+        test.sendToChat()
     }
 
-    _prepareRollPower(event) {
+    async _prepareRollPower(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const power = this.actor.items.get(div.data("itemId"));
         let skill = power.data.type === "spell" ? "channelling" : "devotion"
-        return preparePowerRoll(skill, this.actor.attributes, this.actor.skills, power);
+        let rollData = await preparePowerRoll(power, skill, this.actor.attributes, this.actor.skills);
+        rollData.speaker = this.actor.speakerData
+        let test = new game.aos.rollClass.PowerTest(rollData)
+        await test.rollTest()
+        test.sendToChat()
     }
 	
 	_prepareShowPower(event) {

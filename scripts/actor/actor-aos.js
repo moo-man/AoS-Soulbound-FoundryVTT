@@ -360,6 +360,22 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
+    get speakerData() {
+        if (this.isToken)
+        {
+            return {
+                token : this.token.id,
+                scene : this.token.parent.id
+            }
+        }
+        else
+        {
+            return {
+                actor : this.id
+            }
+        }
+    }
+
     // @@@@@ BOOLEAN GETTERS @@@@@
     get isSwarm() {return this.bio.type === 0}
 
