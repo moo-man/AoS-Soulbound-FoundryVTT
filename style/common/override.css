@@ -1,3 +1,20 @@
+a:hover {
+    text-shadow: 0 0 8px goldenrod
+}
+
+.tabs .item.active {
+        text-shadow: 0 0 10px goldenrod
+}
+
+select:focus {
+    box-shadow: 0 0 5px goldenrod
+}
+
+#sidebar-tabs > .item.active {
+    border:1px solid goldenrod;
+    box-shadow: 0 0 6px inset goldenrod;
+}
+
 .age-of-sigmar-soulbound.sheet.actor .window-content .fas:hover,
 .age-of-sigmar-soulbound.sheet.actor .window-content .button:hover,
 .age-of-sigmar-soulbound.sheet.actor .window-content .item-control:hover {

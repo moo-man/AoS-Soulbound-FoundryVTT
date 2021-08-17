@@ -16,7 +16,6 @@ import { WeaponSheet } from "./scripts/item/sheet/weapon.js";
 import { WoundSheet } from "./scripts/item/sheet/wound.js";
 import { AethericDeviceSheet } from "./scripts/item/sheet/aetheric-device.js";
 import { initializeHandlebars } from "./scripts/system/handlebars.js";
-import { prepareCustomRoll } from "./scripts/system/dialog.js";
 import hooks from "./scripts/system/hooks.js"
 import AOS from "./scripts/system/config.js"
 import Migration from "./scripts/system/migrations.js";
@@ -29,7 +28,6 @@ Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
     CONFIG.Item.documentClass = AgeOfSigmarItem;
     CONFIG.fontFamilies.push("Alegreya Sans SC");
-    CONFIG.roll = prepareCustomRoll;
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
     Actors.registerSheet("age-of-sigmar-soulbound", NpcSheet, { types: ["npc"], makeDefault: true });

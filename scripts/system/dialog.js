@@ -40,16 +40,16 @@ export async function prepareCommonRoll(skillKey, attributes, skills, attributeK
 
 export async function prepareCombatRoll(weapon, attributes, skills, combat) {
     return new Promise(async (resolve, reject) => {
-        const target = game.user.targets.values().next().value;
+        let target = game.user.targets.values().next().value;
         const hasTarget = target !== undefined; // No additinal Input when target function is used
         let targetDefense = 3; // good defense seems to be the most likely starting point
         let attackRating = combat.weapon.category === "melee" ? combat.melee : combat.accuracy
         combat.armour = 0;
 
         if (hasTarget) {
-            let target = target.actor
-            targetDefense = actor.combat.defense.relative;
-            combat.armour = actor.combat.armour.total;
+            target = target.actor
+            targetDefense = target.combat.defense.relative;
+            combat.armour = target.combat.armour.total;
         }
 
         let data = {

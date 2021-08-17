@@ -6,13 +6,10 @@ export class NpcSheet extends AgeOfSigmarActorSheet {
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "actor"],
             template: "systems/age-of-sigmar-soulbound/template/sheet/npc.html",
-            width: 420,
-            height: 830,
-            resizable: false,
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
-                    contentSelector: ".sheet-body",
+                    contentSelector: ".sheet-content",
                     initial: "main",
                 },
             ]

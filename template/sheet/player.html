@@ -8,13 +8,13 @@
         </div>
         <div class="sheet-subHeader">
             <div class="subheader-content">
-                <input name="data.bio.archetype" type="text" value="{{data.bio.archetype}}" placeholder="{{localize "BIO.ARCHETYPE"}}" style="width:160px;"/>
+                <div class="entry-horizontal">
+                    <input name="data.bio.archetype" type="text" value="{{data.bio.archetype}}" placeholder="{{localize 'BIO.ARCHETYPE'}}" />
+                    <input name="data.bio.species" type="text" value="{{data.bio.species}}" placeholder="{{localize 'BIO.SPECIES'}}" />
+                </div>
             </div>
-            <div class="entry-horizontal">
-                <input name="data.bio.species" type="text" value="{{data.bio.species}}" placeholder="{{localize "BIO.SPECIES"}}" style="width:100px"/>
-            </div>
-            <div class="subheader-content">
-                <input name="data.experience" type="number" value="{{data.experience}}" data-dtype="Number" style="width:30px"/> {{localize "EXPERIENCE.XP"}}
+            <div class="subheader-content xp-header">
+                <input name="data.experience" type="number" value="{{data.experience}}" data-dtype="Number" /> {{localize "EXPERIENCE.XP"}}
             </div>
         </div>
         <hr>

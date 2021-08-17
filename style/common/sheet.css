@@ -2,6 +2,11 @@
 ** Actor
  */
 
+ .age-of-sigmar-soulbound.sheet.actor form{
+     height: 100%
+}
+
+
 .age-of-sigmar-soulbound.sheet.actor .window-content {
     background: url(../../asset/image/background.jpg) repeat;
     overflow:hidden;
@@ -10,7 +15,7 @@
 .age-of-sigmar-soulbound.sheet .sheet-body {
     display:flex;
     flex-direction: column;
-    height:784px;
+    height:100%;
 }
 
 .sheet-content {
@@ -72,9 +77,29 @@
     justify-content: space-between;
 }
 
+.sheet-subHeader > *{
+    margin: 0px 5px
+}
+
 .subheader-content{
+    display: flex;
     flex-direction: row;
+    flex: 1;
     padding: 0px 2px;
+    align-items: center;
+}
+.subheader-content > *{
+    flex: 1;
+}
+
+.sheet-subHeader select {
+    border: none;
+    height: 100%;
+}
+
+
+.subheader-content.xp-header {
+    flex: 0 0 50px
 }
 
 .age-of-sigmar-soulbound.sheet .avatar {
