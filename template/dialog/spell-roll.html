@@ -11,7 +11,7 @@
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
                 <select id="attribute">
-                    {{#select combat.attribute}}
+                    {{#select attributeKey}}
                     {{#each attributes as |attribute key|}}
                     <option value="{{key}}">{{localize attribute.label}}</option>
                     {{/each}}
@@ -21,7 +21,7 @@
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.SKILL"}}</h3>
                 <select id="skill">
-                    {{#select combat.skill}}
+                    {{#select skillKey}}
                     {{#each skills as |skill key|}}
                     <option value="{{key}}">{{localize skill.label}}</option>
                     {{/each}}
