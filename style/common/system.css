@@ -2,6 +2,7 @@
     color:darkslategrey;
 }
 
+.sidebar-popout,
 #sidebar {
     display: flex;
     flex-direction: column;
@@ -18,11 +19,22 @@
     border-radius: 0px;
     box-shadow: 0 0 0px #000;
     border:none;
+    color: black;
   }
+
+  .sidebar-popout li.folder.collapsed > .folder-header h3 {
+    color: black;
+}
+
+.sidebar-popout {
+    height: unset
+}
+
 
 #sidebar-tabs {
     background-image: url(../../asset/image/header-background.png);
     background-size: cover;
+    color: white
 }
 
 #scenes-popout .directory-list .directory-item .entity-name a,
@@ -37,6 +49,7 @@
     font-weight: var(--actor-input-font-weight);
     position: relative;
     top: -2px;
+    color: #CCC
 }
 
 #chat-log .message {
