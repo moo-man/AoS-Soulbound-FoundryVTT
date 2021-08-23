@@ -10,9 +10,23 @@ select:focus {
     box-shadow: 0 0 5px goldenrod
 }
 
+#sidebar-tabs {
+    flex: 0 0 32px;
+    box-sizing: border-box;
+    margin: 0 0 5px;
+    border-bottom: 1px solid goldenrod;
+    box-shadow: 0 0 10px gold;
+}
+
+
 #sidebar-tabs > .item.active {
     border:1px solid goldenrod;
     box-shadow: 0 0 6px inset goldenrod;
+}
+
+::-webkit-scrollbar-thumb {
+    background: darkgoldenrod;
+    border: 1px solid goldenrod;
 }
 
 .age-of-sigmar-soulbound.sheet.actor .window-content .fas:hover,

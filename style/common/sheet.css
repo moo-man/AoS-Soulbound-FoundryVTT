@@ -140,6 +140,11 @@
     text-align: center;
 }
 
+.sheet-table-value.speed {
+    width: unset;
+    margin-left: -25px;
+}
+
 .sheet-table-valueMain {
     display:flex;
     flex-direction: row;
@@ -218,3 +223,23 @@
 .age-of-sigmar-soulbound.sheet .state{
     padding: 0px 4px;
 }
+
+.age-of-sigmar-soulbound.sheet .content-column.combat-misc .segment-horizontal {
+    flex-grow: unset;
+    margin: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet .content-row.wounds-row {
+    max-height: 115px;
+}
+
+.age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list {
+    overflow-y: auto
+} 
+
+.age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list .table-element {
+    flex-grow: unset
+} 
+
+
+

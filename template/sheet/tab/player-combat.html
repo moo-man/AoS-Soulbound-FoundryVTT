@@ -51,24 +51,36 @@
             <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="data.combat.mettle.bonus" type="number" value="{{data.combat.mettle.bonus}}" data-dtype="Number" /></div></div>
         </div>
     </div>
-    <div class="content-row">
-        <div class="content-column">
+    <div class="content-row wounds-row">
+        <div class="content-column combat-misc">
             <div class="segment-horizontal">
                 <h3>{{localize "HEADER.INITIATIVE"}}</h3>
-                <div class="sheet-table-value"><input name="data.combat.initiative.bonus" type="number" value="{{data.combat.initiative.bonus}}" data-dtype="Number" /></div>
-                <div class="sheet-table-value"><input type="number" value="{{data.combat.initiative.total}}" data-dtype="Number" disabled /></div>
+                <div class="sheet-table-value"><input name="data.combat.initiative.bonus" type="number"
+                        value="{{data.combat.initiative.bonus}}" data-dtype="Number" /></div>
+                <div class="sheet-table-value"><input type="number" value="{{data.combat.initiative.total}}"
+                        data-dtype="Number" disabled /></div>
             </div>
             <div class="segment-horizontal">
                 <h3>{{localize "HEADER.NATURAL_AWARENESS"}}</h3>
-                <div class="sheet-table-value"><input name="data.combat.naturalAwareness.bonus" type="number" value="{{data.combat.naturalAwareness.bonus}}" data-dtype="Number" /></div>
-                <div class="sheet-table-value"><input type="number" value="{{data.combat.naturalAwareness.total}}" data-dtype="Number" disabled /></div>
+                <div class="sheet-table-value"><input name="data.combat.naturalAwareness.bonus" type="number"
+                        value="{{data.combat.naturalAwareness.bonus}}" data-dtype="Number" /></div>
+                <div class="sheet-table-value"><input type="number" value="{{data.combat.naturalAwareness.total}}"
+                        data-dtype="Number" disabled /></div>
             </div>
             <div class="segment-horizontal">
                 <h3>{{localize "HEADER.SPEED"}}</h3>
-                <input name="data.combat.speed" type="text" value="{{data.combat.speed}}" />
+                <div class="sheet-table-value speed">
+                    <select name="data.combat.speed">
+                        {{#select data.combat.speed}}
+                        {{#each (config "speed") as |speed s|}}
+                        <option value="{{s}}">{{speed}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
             </div>
         </div>
-        <div class="content-column">
+        <div class="content-column wounds-column">
             <div class="header-element">
                 <b class="name">{{localize "WOUND.TYPE"}}</b>
                 <b class="damage">{{localize "WOUND.DAMAGE"}}</b>
@@ -76,7 +88,7 @@
                     <a class="wound-create" title="Add Wound"><i class="fas fa-plus"></i></a>
                 </div>
             </div>
-            <div class="segment-vertical">
+            <div class="segment-vertical wounds-list">
                 {{#each data.combat.wounds as |wound w|}}
                 <div class="table-element wound item" data-index="{{w}}">
                     <div class="name">
@@ -87,7 +99,7 @@
                             {{#select wound.type}}
                             <option value=""></option>
                             {{#each (config "woundType") as |type t|}}
-                                <option value="{{t}}">{{type}}</option>
+                            <option value="{{t}}">{{type}}</option>
                             {{/each}}
                             {{/select}}
                         </select>
