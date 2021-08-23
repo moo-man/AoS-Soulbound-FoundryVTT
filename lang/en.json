@@ -92,7 +92,7 @@
   "BIO.HEIGHT": "Height",
   "BIO.WEIGHT": "Weight",
   "BIO.DISTINGUISHING_FEATURES": "Distinguishing Features",
-  "BIO.BACKGROUND": "Background",
+  "BIO.BACKGROUND": "BACKGROUND",
   "BIO.SIZE": "Size",
   "BIO.TYPE": "Type",
   "BIO.FACTION": "Faction",
@@ -140,6 +140,9 @@
   "DIALOG.SKILL": "Skill",
   "DIALOG.DN": "DN",
   "DIALOG.COMMON_ROLL": "Common Roll",
+  "DIALOG.SPELL_ROLL": "Spell Roll",
+  "DIALOG.COMBAT_ROLL": "Combat Roll",
+  "DIALOG.OPPONENT": "Opponent",
   "DIALOG.CUSTOM_ROLL": "Custom Roll",
   "DIALOG.DOUBLE_TRAINING": "Double Your Training",
   "DIALOG.DOUBLE_FOCUS": "Double Your Focus",
@@ -147,7 +150,14 @@
   "DIALOG.DEFENSE": "Target Defense",
   "DIALOG.ARMOUR" : "Target Armour",
   "DIALOG.BONUSDICE" : "Bonus Dice",
-  
+  "DIALOG.FOCUSALLOCATION" : "Focus Allocation",
+  "DIALOG.MANUAL" : "Manual",
+  "DIALOG.SUCCESSES" : "Successes",
+  "DIALOG.SIXES" : "Sixes",
+  "DIALOG.TRIGGER" : "Triggers",
+    
+
+
   "EQUIPMENT.NAME": "Name",
   "EQUIPMENT.COST": "Cost",
   "EQUIPMENT.AVAILABILITY": "Availability",
@@ -215,6 +225,7 @@
   "PARTY.DOOM": "Doom",
 
   "POWER.NAME": "Name",
+  "POWER.DN": "DN",
   "POWER.DN_COST": "DN / Cost",
   "POWER.TARGET": "Target",
   "POWER.RANGE": "Range",

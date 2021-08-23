@@ -154,6 +154,11 @@ select:focus {
     border-top: 2px solid #7c6c42;
 }
 
+.dialog .content-header{
+    text-transform: uppercase;
+}
+
+
 .content-wrapper{
     display:flex;
     flex-direction: column;
