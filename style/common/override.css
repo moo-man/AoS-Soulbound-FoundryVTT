@@ -50,8 +50,13 @@ input[type="time"]:focus {
     border: 1px solid goldenrod;
 }
 
+#playlists .global-control .playlist-header,
 li.folder.collapsed > .folder-header {
     background: none
+}
+
+#playlists .sound-control {
+    color: black;
 }
 
 li.folder > .folder-header h3 {
