@@ -60,7 +60,7 @@
 <div class="content-box">
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.GOALS"}}</h1>
-        <div class="button">
+        <div class="item-controls button">
             <a class="item-create" title="Add Goal" data-type="goal"><i class="fas fa-plus"></i></a>
         </div>
     </div>
@@ -68,19 +68,22 @@
         {{#each actor.items as |item|}}
             {{#if item.isGoal}}
                 <div class="goal item table-element" data-item-id="{{item.id}}">
-                    <div class="name">
+                    <div class="item-name">
                         <div class="image-container">
                             <div class="image" style="background-image: url('{{item.img}}')"></div>
                         </div>
                         <div class="item-edit">{{item.name}}</div>
                     </div>
-                    <div class="type">{{item.subtype}}</div>
-                    {{#if item.completed}}
-                        <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
-                    {{else}}
-                        <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
-                    {{/if}}
-                    <div class="button">
+                    <div class="item-property type">{{item.subtype}}</div>
+                    <div class="item-property">
+                        {{#if item.completed}}
+                            <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="fas fa-bolt"></i></a>
+                        {{else}}
+                            <a class="completed" title="{{localize 'GEAR.IN_PROGRESS'}}"><i class="fas fa-bolt"></i></a>
+                        {{/if}}
+                    </div>
+     
+                    <div class="item-controls button">
                         <a class="item-control item-delete" title="Delete Goal"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>
@@ -100,13 +103,13 @@
         {{#each actor.items as |item|}}
             {{#if item.isConnection}}
                 <div class="connection item table-element" data-item-id="{{item.id}}">
-                    <div class="name">
+                    <div class="item-name">
                         <div class="image-container">
                             <div class="image" style="background-image: url('{{item.img}}')"></div>
                         </div>
                         <div class="item-edit">{{item.name}}</div>
                     </div>
-                    <div class="button">
+                    <div class="item-controls button">
                         <a class="item-control item-delete" title="Delete Connection"><i class="fas fa-trash"></i></a>
                     </div>
                 </div>

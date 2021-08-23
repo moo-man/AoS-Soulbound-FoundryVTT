@@ -51,21 +51,21 @@
             {{#if item.isWeapon}}
                 <div class="weapon item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
-                        <div class="item-edit table-label bold">{{item.name}}</div>
-                        <div class="table-label">
+                        <div class="item-name item-edit bold">{{item.name}}</div>
+                        <div class="item-property long">
                             {{item.damage}} {{localize "WEAPON.DAMAGE"}}
-                            <div class="state">
-                                {{#if item.isActive}}
-                                    <a class="item-state" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-tshirt"></i></a>
-                                {{else if item.isEquipped}}
-                                    <a class="item-state" title="{{localize 'STATE.EQUIPPED'}}"><i class="fas fa-suitcase"></i></a>
-                                {{else}}
-                                    <a class="item-state" title="{{localize 'STATE.OTHER'}}"><i class="fas fa-warehouse"></i></a>
-                                {{/if}}
-                            </div>
-                            <div class="button">
-                                <a class="item-control item-delete" title="Delete Weapon"><i class="fas fa-trash"></i></a>
-                            </div>
+                        </div>
+                        <div class="item-property small state">
+                            {{#if item.isActive}}
+                                <a class="item-state" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-tshirt"></i></a>
+                            {{else if item.isEquipped}}
+                                <a class="item-state" title="{{localize 'STATE.EQUIPPED'}}"><i class="fas fa-suitcase"></i></a>
+                            {{else}}
+                                <a class="item-state" title="{{localize 'STATE.OTHER'}}"><i class="fas fa-warehouse"></i></a>
+                            {{/if}}
+                        </div>
+                        <div class="item-controls button">
+                            <a class="item-control item-delete" title="Delete Weapon"><i class="fas fa-trash"></i></a>
                         </div>
                     </div>
                     <div class="table-element-row">
@@ -89,10 +89,11 @@
             {{#if item.isArmour}}
                 <div class="armour item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
-                        <div class="item-edit table-label bold">{{item.name}}</div>
-                        <div class="table-label">
-                            {{item.benefit}} {{localize "ITEM.TypeArmour"}}
-                            <div class="state">
+                        <div class="item-name item-edit bold">{{item.name}}</div>
+                            <div class="item-property">
+                                {{item.benefit}} {{localize "ITEM.TypeArmour"}}
+                            </div>
+                            <div class="item-property small state">
                                 {{#if item.isActive}}
                                     <a class="item-state" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-tshirt"></i></a>
                                 {{else if item.isEquipped}}
@@ -101,12 +102,11 @@
                                     <a class="item-state" title="{{localize 'STATE.OTHER'}}"><i class="fas fa-warehouse"></i></a>
                                 {{/if}}
                             </div>
-                            <div class="button">
+                            <div class="item-controls button">
                                 <a class="item-control item-delete" title="Delete Armour"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                     </div>
-                </div>
             {{/if}}
         {{/each}}
     </div>
@@ -124,9 +124,8 @@
             {{#if item.isEquipment}}
                 <div class="equipment item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
-                        <div class="item-edit table-label bold">{{item.name}}</div>
-                        <div class="table-label">
-                            <div class="state">
+                        <div class="item-name item-edit bold">{{item.name}}</div>
+                            <div class="item-property small state">
                                 {{#if item.isActive}}
                                 <a class="item-state" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-tshirt"></i></a>
                                 {{else if item.isEquipped}}
@@ -135,11 +134,10 @@
                                 <a class="item-state" title="{{localize 'STATE.OTHER'}}"><i class="fas fa-warehouse"></i></a>
                                 {{/if}}
                             </div>
-                            <div class="button">
+                            <div class="item-controls button">
                                 <a class="item-control item-delete" title="Delete Equipment"><i class="fas fa-trash"></i></a>
                             </div>  
                         </div> 
-                    </div>
                 </div>
             {{/if}}
         {{/each}}
@@ -158,10 +156,11 @@
             {{#if item.isAethericDevice}}
                 <div class="aetheric-device item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
-                        <div class="item-edit table-label bold">{{item.name}}</div>
-                        <div class="table-label">
-                            -{{item.power.consumption}} / +{{item.power.capacity}}
-                            <div class="state">
+                        <div class="item-name item-edit bold">{{item.name}}</div>
+                            <div class="item-property">
+                                -{{item.power.consumption}} / +{{item.power.capacity}}
+                            </div>
+                            <div class="item-property small state">
                                 {{#if item.isActive}}
                                     <a class="item-state" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-tshirt"></i></a>
                                 {{else if item.isEquipped}}
@@ -181,7 +180,6 @@
                 </div>
             {{/if}}
         {{/each}}
-    </div> 
 </div>
 <hr>
 <div class="content-box">
@@ -196,9 +194,8 @@
             {{#if item.isRune}}
                 <div class="rune item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
-                        <div class="item-edit table-label bold">{{item.name}}</div>
-                        <div class="table-label">
-                            <div class="state">
+                        <div class="item-name item-edit bold">{{item.name}}</div>
+                            <div class="item-property small state">
                                 {{#if item.isActive}}
                                     <a class="item-state" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-tshirt"></i></a>
                                 {{else if item.isEquipped}}
@@ -207,7 +204,7 @@
                                     <a class="item-state" title="{{localize 'STATE.OTHER'}}"><i class="fas fa-warehouse"></i></a>
                                 {{/if}}
                             </div>
-                            <div class="button">
+                            <div class="item-controls button">
                                 <a class="item-control item-delete" title="Delete Rune"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
