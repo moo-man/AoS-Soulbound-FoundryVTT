@@ -98,6 +98,16 @@ li.folder > .folder-header .create-folder,
 
 }
 
+
+#compendium h3 {
+    color: var(--color-text);
+    font-family: var(--font-text);
+    color: whitesmoke;
+    border: 2px solid #7c6c42;
+    background-image: url('../../asset/image/header-background.png');
+    background-size: cover;
+}
+
 .age-of-sigmar-soulbound.sheet.actor .window-content .fas:hover,
 .age-of-sigmar-soulbound.sheet.actor .window-content .button:hover,
 .age-of-sigmar-soulbound.sheet.actor .window-content .item-control:hover {

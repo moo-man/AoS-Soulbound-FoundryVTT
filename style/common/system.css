@@ -22,12 +22,12 @@
     color: black;
   }
 
-  .sidebar-popout li.folder.collapsed > .folder-header h3 {
-    color: black;
-}
-
 .sidebar-popout {
     height: unset
+}
+
+.sidebar-popout .sidebar-tab{
+    color: black
 }
 
 
