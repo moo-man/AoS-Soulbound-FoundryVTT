@@ -69,6 +69,26 @@ export class AgeOfSigmarItem extends Item {
         }
     }
 
+    get Traits () {
+        return Object.values(this.traitList).map(i => i.display)
+    }
+
+    get traitList () {
+        let traits = {}
+        this.data.data.traits.forEach(i => {
+            traits[i.name] = {
+                name : i.name,
+                display : game.aos.config.traits[i.name]
+            }
+            if (game.aos.config.traitsWithValue.includes(i.name))
+            {
+                traits[i.name].rating = i.value;
+                traits[i.name].display += ` (${i.value})`
+            }
+        })
+        return traits
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }

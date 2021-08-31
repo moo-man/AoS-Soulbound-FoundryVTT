@@ -101,4 +101,32 @@ AOS.ratings = {
     6 : "ABILITIES.EXTRAORDINARY_NUM"
 }
 
+
+AOS.traits = {
+    aetheric : "Aetheric",
+    blast : "Blast",
+    cleave : "Cleave",
+    close : "Close",
+    crushing : "Crushing",
+    defensive : "Defensive",
+    ineffective : "Ineffective",
+    loud : "Loud",
+    magical : "Magical",
+    penetrating : "Penetrating",
+    piercing : "Piercing",
+    range : "Range",
+    reach : "Reach",
+    reload : "Reload",
+    rend : "Rend",
+    restraining : "Restraining",
+    sigmarite : "Sigmarite",
+    slashing : "Slashing",
+    spread : "Spread",
+    subtle : "Subtle",
+    thrown : "Thrown",
+    twohanded : "Two-Handed"
+}
+
+AOS.traitsWithValue = ["range", "thrown"]
+
 export default AOS

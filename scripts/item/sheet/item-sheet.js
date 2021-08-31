@@ -1,3 +1,5 @@
+import ItemTraits from "../../apps/item-traits.js";
+
 export class AgeOfSigmarItemSheet extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
@@ -25,5 +27,13 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
   _onFocusIn(event) {
     $(event.currentTarget).select();
+  }
+
+  activateListeners(html)
+  {
+    super.activateListeners(html)
+    html.find(".item-traits").click(ev => {
+      new ItemTraits(this.item).render(true)
+    })
   }
 }

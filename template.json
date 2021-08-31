@@ -364,7 +364,7 @@
       "requirements": "",
       "crafting": "",
       "damage": "",
-      "traits": "",
+      "traits": [],
       "state": "other"
     },
     "ally": {
@@ -381,7 +381,7 @@
       "availability": "common",
       "requirements": "",
       "benefit": 0,
-      "traits": "",
+      "traits": [],
       "state": "other"
     },
     "connection": {
@@ -462,7 +462,7 @@
       "damage": "",
       "availability": "common",
       "cost": "-",
-      "traits": "",
+      "traits": [],
       "state": "other"
     },
     "wound": {
