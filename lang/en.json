@@ -195,6 +195,9 @@
   "HEADER.CONSUMED": "Consumed",
   "HEADER.SPEED": "Speed",
   "HEADER.FLIGHT": "Flight Speed",
+  "HEADER.FOOT_SPEED" : "Foot",
+  "HEADER.FLY_SPEED" : "Fly",
+  "HEADER.SWIM_SPEED" : "Swim",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",

@@ -376,6 +376,22 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
+
+    get Speed() {
+        let speed = this.combat.speeds
+        let display = []
+        display.push(`${game.aos.config.speed[speed.foot]}`)
+
+        if (speed.flight != "none")
+            display.push(`${game.i18n.localize("HEADER.FLY_SPEED")} (${game.aos.config.speed[speed.flight]})`)
+
+        if (speed.swim != "none")
+            display.push(`${game.i18n.localize("HEADER.SWIM_SPEED")} (${game.aos.config.speed[speed.swim]})`)
+
+        return display.join(", ")
+        
+    }
+
     // @@@@@ BOOLEAN GETTERS @@@@@
     get isSwarm() {return this.bio.type === 0}
 

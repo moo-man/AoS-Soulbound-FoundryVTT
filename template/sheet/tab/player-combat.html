@@ -68,15 +68,9 @@
                         data-dtype="Number" disabled /></div>
             </div>
             <div class="segment-horizontal">
-                <h3>{{localize "HEADER.SPEED"}}</h3>
+                <h3><a class="speed-config">{{localize "HEADER.SPEED"}}</a></h3>
                 <div class="sheet-table-value speed">
-                    <select name="data.combat.speed">
-                        {{#select data.combat.speed}}
-                        {{#each (config "speed") as |speed s|}}
-                        <option value="{{s}}">{{speed}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
+                    {{actor.Speed}}
                 </div>
             </div>
         </div>

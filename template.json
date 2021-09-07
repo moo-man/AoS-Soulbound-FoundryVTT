@@ -215,6 +215,11 @@
           "armour": {
             "bonus": 0
           },
+          "speeds": {
+            "foot" : "normal",
+            "flight" : "none",
+            "swim" : "none"
+          },
           "speed": "normal",
           "flight": "none",
           "wounds" : []

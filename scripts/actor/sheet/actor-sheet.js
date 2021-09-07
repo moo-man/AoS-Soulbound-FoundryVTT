@@ -1,5 +1,6 @@
 import { prepareCommonRoll, prepareCombatRoll, preparePowerRoll } from "../../system/dialog.js";
 import ActorConfigure from "../../apps/actor-configure.js";
+import SpeedConfig from "../../apps/speed-config.js";
 
 export class AgeOfSigmarActorSheet extends ActorSheet {
 
@@ -59,6 +60,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".wound-create").click(this._onWoundCreate.bind(this));
         html.find(".wound-delete").click(this._onWoundDelete.bind(this));
         html.find(".wound-edit").change(this._onWoundEdit.bind(this));
+        html.find(".speed-config").click(this._onSpeedConfigClick.bind(this));
     }
 
     _getHeaderButtons() {
@@ -216,5 +218,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         wounds[index].type = ev.target.value
         wounds[index].damage = game.aos.config.woundDamage[ev.target.value] || 0
         return this.actor.update({"data.combat.wounds" : wounds})
+    }
+    
+    _onSpeedConfigClick(ev) {
+        new SpeedConfig(this.actor).render(true)
     }
 }

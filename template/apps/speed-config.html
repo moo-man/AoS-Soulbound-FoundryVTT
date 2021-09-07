@@ -1,0 +1,33 @@
+<form>
+    <div class="form-group">
+      <label>{{localize "HEADER.FOOT_SPEED"}}</label>
+      <select name="data.combat.speeds.foot">
+        {{#select object.combat.speeds.foot}}
+        {{#each (config "speed") as |speed s|}}
+        <option value="{{s}}">{{speed}}</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>{{localize "HEADER.FLY_SPEED"}}</label>
+      <select name="data.combat.speeds.flight">
+        {{#select object.combat.speeds.flight}}
+        {{#each (config "speed") as |speed s|}}
+        <option value="{{s}}">{{speed}}</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label>{{localize "HEADER.SWIM_SPEED"}}</label>
+      <select name="data.combat.speeds.swim">
+        {{#select object.combat.speeds.swim}}
+        {{#each (config "speed") as |speed s|}}
+        <option value="{{s}}">{{speed}}</option>
+        {{/each}}
+        {{/select}}
+      </select>
+    </div>
+  <button type="submit">Update</button>
+</form>

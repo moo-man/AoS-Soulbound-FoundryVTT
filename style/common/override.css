@@ -140,6 +140,10 @@ li.folder > .folder-header .create-folder,
     text-align: center;
 }
 
+.age-of-sigmar-soulbound .combat-misc h3 {
+    text-align: left;
+}
+
 .age-of-sigmar-soulbound h4 {
     color: whitesmoke;
 }

@@ -141,8 +141,8 @@
 }
 
 .sheet-table-value.speed {
-    width: unset;
-    margin-left: -25px;
+    flex: 1;
+    text-align: right
 }
 
 .sheet-table-valueMain {
