@@ -154,6 +154,15 @@
     font-size: large;
 }
 
+.sheet-table-valueMain.armour {
+    width: 100%;
+    justify-content: center;
+}
+
+.sheet-table-valueMain.armour > input{
+    width: 40px;
+}
+
 .header-element{
     display:flex;
     flex-direction: row;
