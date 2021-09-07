@@ -35,6 +35,7 @@ AOS.skills = {
 }
 
 AOS.availability = {
+    "" : "-",
     "common" : "AVAILABILITY.COMMON",
     "rare" : "AVAILABILITY.RARE",
     "exotic" : "AVAILABILITY.EXOTIC",
@@ -124,7 +125,7 @@ AOS.traits = {
     spread : "Spread",
     subtle : "Subtle",
     thrown : "Thrown",
-    twohanded : "Two-Handed"
+    twohanded : "Two-handed"
 }
 
 AOS.traitsWithValue = ["range", "thrown"]

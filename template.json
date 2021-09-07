@@ -356,7 +356,7 @@
       ],
       "description": "",
       "cost": "",
-      "availability": "common",
+      "availability": "",
       "power": {
         "consumption": 0,
         "capacity": 0
@@ -378,7 +378,7 @@
       "description": "",
       "type": "light",
       "cost": "",
-      "availability": "common",
+      "availability": "",
       "requirements": "",
       "benefit": 0,
       "traits": [],
@@ -393,7 +393,7 @@
       ],
       "description": "",
       "cost": "",
-      "availability": "common",
+      "availability": "",
       "state": "other"
     },
     "enemy": {
@@ -460,7 +460,7 @@
       "description": "",
       "category": "melee",
       "damage": "",
-      "availability": "common",
+      "availability": "",
       "cost": "-",
       "traits": [],
       "state": "other"
