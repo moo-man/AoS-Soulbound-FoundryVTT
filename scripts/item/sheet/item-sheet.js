@@ -35,5 +35,22 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     html.find(".item-traits").click(ev => {
       new ItemTraits(this.item).render(true)
     })
+
+    html.find(".effect-create").click(ev => {
+      if (this.item.isOwned)
+        ui.notifications.error("Effects can only be added to world items or actors directly")
+
+      this.object.createEmbeddedDocuments("ActiveEffect", [{ label: "New Effect", icon: "icons/svg/aura.svg" }])
+    })
+
+    html.find(".effect-edit").click(ev => {
+      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      this.object.effects.get(id).sheet.render(true)
+    })
+
+    html.find(".effect-delete").click(ev => {
+      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
+    })
   }
 }

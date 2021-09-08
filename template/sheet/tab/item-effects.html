@@ -1,0 +1,24 @@
+<div class="effects">
+  <div class="content-box">
+    <div class="content-header">
+      <h1>{{localize "HEADER.EFFECTS"}}</h1>
+      <div class="item-controls">
+        <a class="effect-create button" title="Create Effect" data-type="temporary"><i class="fas fa-plus"></i></a>
+      </div>
+    </div>
+    <div class="content-wrapper">
+      {{#each item.effects as |effect|}}
+      <div class="item table-element-vertical" data-item-id="{{effect.id}}">
+        <div class="table-element-row">
+          <img class="item-property item-image" src="{{effect.data.icon}}"></img>
+          <a class="item-property item-name effect-edit">{{effect.data.label}}</a>
+
+          <div class="item-controls">
+            <a class="item-control effect-delete" title="Delete Effect"><i class="fas fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

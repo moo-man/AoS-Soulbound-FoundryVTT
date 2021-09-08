@@ -34,7 +34,7 @@ function preloadHandlebarsTemplates() {
         "systems/age-of-sigmar-soulbound/template/sheet/talent.html",
         "systems/age-of-sigmar-soulbound/template/sheet/weapon.html",
         "systems/age-of-sigmar-soulbound/template/sheet/wound.html",
-        "systems/age-of-sigmar-soulbound/template/sheet/tab/item-bonus.html",
+        "systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html",
         "systems/age-of-sigmar-soulbound/template/dialog/common-roll.html",
         "systems/age-of-sigmar-soulbound/template/dialog/custom-roll.html",
         "systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html",
