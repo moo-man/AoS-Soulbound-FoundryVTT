@@ -21,10 +21,11 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     prepareData() {
+
         super.prepareData();
+        this._initializeData();
 
         if (this.type === "player" || this.type === "npc") {
-            this._initializeData();
             this._computeSkillTotals();
             this._computeItems();
             this._computeAttack();
@@ -109,7 +110,7 @@ export class AgeOfSigmarActor extends Actor {
                 case "soul" : attributeMod = this.attributes.soul.total; break;
                 default: attributeMod = 0;
             }
-            skill.total = skill.training + attributeMod;
+            skill.total = skill.training + attributeMod + skill.bonus;
             skill.roll  = skill.training;
         }
     }
@@ -350,6 +351,9 @@ export class AgeOfSigmarActor extends Actor {
         ui.notifications.notify(note);
     }
 
+    getItemTypes(type) {
+        return (this.itemCategories || this.itemTypes)[type]
+    }
 
     get autoCalc() {
         return {

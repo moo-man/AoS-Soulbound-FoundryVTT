@@ -65,6 +65,16 @@
     color:whitesmoke;
 }
 
+.active-effect-sheet .sheet-header{
+    background-image: unset;
+    margin: unset;
+}
+
+.active-effect-sheet .sheet-header  img{
+    border: none;
+    border-right: 2px solid #7c6c42;
+}
+
  .sheet-subHeader {
     display: flex;
     flex-direction: row;
@@ -141,7 +151,7 @@
 }
 
 .sheet-table-value.speed {
-    flex: 1;
+    flex: 3;
     text-align: right
 }
 
@@ -255,20 +265,33 @@
 /****** ITEM LISTS ******/
 
 
-.age-of-sigmar-soulbound.sheet .item .item-name{
+.age-of-sigmar-soulbound.sheet .item .item-property.item-name{
     flex: 1
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-controls{
-
+.age-of-sigmar-soulbound.sheet .item .item-property.item-image{
+    flex: 0 0 35px;
+    height: 35px;
+    width: 35px;
 }
 
+.age-of-sigmar-soulbound.sheet .item .item-controls{
+    display:flex;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet .item .item-controls > *{
+    margin: 5px;
+}
 
 .age-of-sigmar-soulbound.sheet .item .item-property{
     flex: 0 0 60px;
     text-align: center;
 }
 
+.age-of-sigmar-soulbound.sheet .item .item-property.flex{
+    flex: 1
+}
 
 .age-of-sigmar-soulbound.sheet .item .item-property.small{
     flex: 0 0 30px;
@@ -279,3 +302,7 @@
     flex: 0 0 150px;
 }
 
+.age-of-sigmar-soulbound.sheet .effects .item .item-property {
+    display:flex;
+    align-items: center;
+}

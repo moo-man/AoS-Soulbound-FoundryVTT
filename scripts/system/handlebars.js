@@ -12,6 +12,7 @@ function preloadHandlebarsTemplates() {
         "systems/age-of-sigmar-soulbound/template/sheet/tab/player-gear.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/player-bio.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/player-notes.html",
+        "systems/age-of-sigmar-soulbound/template/sheet/tab/actor-effects.html",
         "systems/age-of-sigmar-soulbound/template/sheet/npc.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/npc-stats.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/npc-combat.html",

@@ -7,6 +7,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.data = data.data.data; // project system data so that handlebars has the same name and value paths
+        this.constructEffectLists(data)
+        this.constructItemLists(data)
 
         if (this.actor.type != "party")
         {
@@ -44,12 +46,114 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         }
     }
 
+    constructItemLists(sheetData) 
+    {
+        let items = {}
+        items.equipped = {}
+
+        items.aethericDevices = this.actor.getItemTypes("aethericDevice")
+        items.allies = this.actor.getItemTypes("ally")
+        items.armour = this.actor.getItemTypes("armour")
+        items.connections = this.actor.getItemTypes("connection")
+        items.equipment = this.actor.getItemTypes("equipment")
+        items.enemies = this.actor.getItemTypes("enemy")
+        items.fears = this.actor.getItemTypes("fear")
+        items.goals = this.actor.getItemTypes("goal")
+        items.miracles = this.actor.getItemTypes("miracle")
+        items.resources = this.actor.getItemTypes("resource")
+        items.rumours = this.actor.getItemTypes("rumour")
+        items.runes = this.actor.getItemTypes("rune")
+        items.spells = this.actor.getItemTypes("spell")
+        items.talents = this.actor.getItemTypes("talent")
+        items.threats = this.actor.getItemTypes("threat")
+        items.weapons = this.actor.getItemTypes("weapon")
+
+        items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.state == "active")
+        items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.state == "active")
+
+        sheetData.items = items;
+
+       // this.constructInventory(sheetData)
+    }
+
+    constructInventory(sheetData)
+    {
+        sheetData.inventory = {
+            weapons : {
+                header : "HEADER.WEAPON",
+                items : this.actor.getItemTypes("weapon"),
+                equippable : true,
+                quantity : true,
+                type : "weapon"
+            },
+            armour : {
+                header : "HEADER.ARMOUR",
+                items : this.actor.getItemTypes("armour"),
+                equippable : true,
+                quantity : true,
+                type : "armour"
+            },
+            gear : {
+                header : "HEADER.GEAR",
+                items : this.actor.getItemTypes("gear"),
+                equippable : false,
+                quantity : true,
+                type : "gear"
+            },
+            ammo : {
+                header : "HEADER.AMMO",
+                items : this.actor.getItemTypes("ammo"),
+                equippable : false,
+                quantity : true,
+                type : "ammo"
+            },
+            weaponUpgrades : {
+                header : "HEADER.WEAPON_UPGRADE",
+                items : this.actor.getItemTypes("weaponUpgrade"),
+                equippable : false,
+                quantity : false,
+                type : "weaponUpgrade"
+            },
+            augmentics : {
+                header : "HEADER.AUGMENTIC",
+                items : this.actor.getItemTypes("augmentic"),
+                equippable : false,
+                quantity : false,
+                type : "augmentic"
+            }
+        }
+    }
+
+    
+    constructEffectLists(sheetData) 
+    {
+        let effects = {}
+
+        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled)
+        effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled)
+        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled)
+
+        sheetData.effects = effects;
+    }
+
+    _getSubmitData(updateData = {}) {
+        this.actor.overrides = {}
+        let data = super._getSubmitData(updateData);
+        data = diffObject(flattenObject(this.actor.toObject(false)), data)
+        return data
+      }
+    
+
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
-        html.find(".item-property").click(this._onChangeItemProperty.bind(this));
+        //html.find(".item-property").click(this._onChangeItemProperty.bind(this));
+        html.find(".effect-create").click(this._onEffectCreate.bind(this));  
+        html.find(".effect-edit").click(this._onEffectEdit.bind(this));  
+        html.find(".effect-delete").click(this._onEffectDelete.bind(this));  
+        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".item-state").click(this._onItemStateUpdate.bind(this));
         html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
@@ -75,6 +179,10 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             ].concat(buttons);
         }
         return buttons;
+    }
+
+    _onFocusIn(event) {
+        $(event.currentTarget).select();
     }
 
     _onItemCreate(event) {
@@ -109,8 +217,33 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return item.update({[target] : event.target.value})
     }
 
-    _onFocusIn(event) {
-        $(event.currentTarget).select();
+    _onEffectCreate(ev) {
+        let type = ev.currentTarget.attributes["data-type"].value
+        let effectData = { label: "New Effect" , icon: "icons/svg/aura.svg"}
+        if (type == "temporary") {
+          effectData["duration.rounds"] = 1;
+        }
+        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
+      }
+
+    _onEffectEdit(ev)
+    {
+        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        this.object.effects.get(id).sheet.render(true)
+    }
+
+    _onEffectDelete(ev)
+    {
+        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
+    }
+
+    _onEffectToggle(ev)
+    {
+        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let effect = this.object.effects.get(id)
+
+        effect.update({"disabled" : !effect.data.disabled})
     }
 
     _onItemStateUpdate(event) {
