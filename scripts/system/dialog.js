@@ -5,7 +5,7 @@ export async function prepareCommonRoll(skillKey, attributes, skills, attributeK
             attributes,
             skills,
             skillKey,
-            attributeKey: skillKey ? skills[skillKey].attribute : attributeKey,
+            attributeKey: skillKey ? game.aos.config.skillAttributes[skillKey] : attributeKey,
             bonusDice: 0 // some spells or miracles grant bonus dice 
         }
         const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);

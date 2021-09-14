@@ -34,6 +34,33 @@ AOS.skills = {
     weaponSkill : "SKILL.WEAPON_SKILL"
 }
 
+AOS.skillAttributes = {
+    arcana : "mind",
+    athletics : "body",
+    awareness : "mind",
+    ballisticSkill : "body",
+    beastHandling : "soul",
+    channelling : "mind",
+    crafting : "mind",
+    determination : "soul",
+    devotion : "soul",
+    dexterity : "body",
+    entertain : "soul",
+    fortitude : "body",
+    guile : "mind",
+    intimidation : "soul",
+    intuition : "mind",
+    lore : "mind",
+    medicine : "mind",
+    might : "body",
+    nature : "mind",
+    reflexes : "body",
+    stealth : "body",
+    survival : "mind",
+    theology : "mind",
+    weaponSkill : "body"
+}
+
 AOS.availability = {
     "" : "-",
     "common" : "AVAILABILITY.COMMON",
