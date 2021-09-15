@@ -2,16 +2,15 @@
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.SHORT_GOALS"}}</h1>
         <div class="button">
-            <a class="item-create" title="Add Goal" data-type="goal"><i class="fas fa-plus"></i></a>
+            <a class="item-create" title="Add Goal" data-type="partyItem" data-category="shortGoal"><i class="fas fa-plus"></i></a>
         </div>
     </div>
     <div class="content-wrapper">
-        {{#each actor.items as |item|}}
-            {{#if item.isShortGoal}}
+        {{#each party.shortGoals as |item|}}
                 <div class="goal item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
                         <div class="segment-horizontal">
-                            {{#if item.completed}}
+                            {{#if item.state}}
                                 <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="far fa-check-circle"></i></a>
                             {{else}}
                                 <a class="completed" title="{{localize 'GOAL.IN_PROGRESS'}}"><i class="far fa-circle"></i></a>
@@ -23,7 +22,6 @@
                         </div>
                     </div>
                 </div>
-            {{/if}}
         {{/each}}
     </div>
 </div>
@@ -32,16 +30,15 @@
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.LONG_GOALS"}}</h1>
         <div class="button">
-            <a class="item-create" title="Add Goal" data-type="goal"><i class="fas fa-plus"></i></a>
+            <a class="item-create" title="Add Goal" data-type="partyItem" data-category="longGoal"><i class="fas fa-plus"></i></a>
         </div>
     </div>
     <div class="content-wrapper">
-        {{#each actor.items as |item|}}
-            {{#if item.isLongGoal}}
+        {{#each party.longGoals as |item|}}
                 <div class="goal item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
                         <div class="segment-horizontal">
-                            {{#if item.completed}}
+                            {{#if item.state}}
                                 <a class="completed active" title="{{localize 'GOAL.COMPLETED'}}"><i class="far fa-check-circle"></i></a>
                             {{else}}
                                 <a class="completed" title="{{localize 'GOAL.IN_PROGRESS'}}"><i class="far fa-circle"></i></a>
@@ -53,7 +50,6 @@
                         </div>
                     </div>
                 </div>
-            {{/if}}
         {{/each}}
     </div>
 </div>
@@ -62,12 +58,11 @@
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.RUMOURS"}}</h1>
         <div class="button">
-            <a class="item-create" title="Add Rumour" data-type="rumour"><i class="fas fa-plus"></i></a>
+            <a class="item-create" title="Add Rumour" data-type="partyItem" data-category="rumour"><i class="fas fa-plus"></i></a>
         </div>
     </div>
     <div class="content-wrapper">
-        {{#each actor.items as |item|}}
-            {{#if item.isRumour}}
+        {{#each party.rumours as |item|}}
                 <div class="rumour item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
                         {{#if item.state}}
@@ -80,7 +75,6 @@
                         </div>
                     </div>
                 </div>
-            {{/if}}
         {{/each}}
     </div>
 </div>
@@ -89,12 +83,11 @@
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.FEARS"}}</h1>
         <div class="button">
-            <a class="item-create" title="Add Fear" data-type="fear"><i class="fas fa-plus"></i></a>
+            <a class="item-create" title="Add Fear" data-type="partyItem" data-category="fear"><i class="fas fa-plus"></i></a>
         </div>
     </div>
     <div class="content-wrapper">
-        {{#each actor.items as |item|}}
-            {{#if item.isFear}}
+        {{#each party.fears as |item|}}
                 <div class="fear item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
                         {{#if item.state}}
@@ -107,7 +100,6 @@
                         </div>
                     </div>
                 </div>
-            {{/if}}
         {{/each}}
     </div>
 </div>
@@ -116,12 +108,11 @@
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.THREATS"}}</h1>
         <div class="button">
-            <a class="item-create" title="Add Threat" data-type="threat"><i class="fas fa-plus"></i></a>
+            <a class="item-create" title="Add Threat" data-type="partyItem" data-category="threat"><i class="fas fa-plus"></i></a>
         </div>
     </div>
     <div class="content-wrapper">
-        {{#each actor.items as |item|}}
-            {{#if item.isThreat}}
+        {{#each party.threats as |item|}}
                 <div class="threat item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
                         {{#if item.state}}
@@ -134,7 +125,6 @@
                         </div>
                     </div>
                 </div>
-            {{/if}}
         {{/each}}
     </div>
 </div>

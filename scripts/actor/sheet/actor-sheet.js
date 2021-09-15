@@ -67,6 +67,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         items.talents = this.actor.getItemTypes("talent")
         items.threats = this.actor.getItemTypes("threat")
         items.weapons = this.actor.getItemTypes("weapon")
+        items.partyItems = this.actor.getItemTypes("partyItem")
 
         items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.state == "active")
         items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.state == "active")
@@ -193,6 +194,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
              name : `New ${game.i18n.localize(CONFIG.Item.typeLabels[header.type])}`,
              type : header.type
         };
+        if (header.category)
+            data["data.category"] = header.category
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
 

@@ -283,6 +283,7 @@ li.folder > .folder-header .create-folder,
     flex-grow:1;
     border-right: 2px solid #7c6c42;
     justify-content: center;
+    align-items: center;
 }
 
 .entry-horizontal{

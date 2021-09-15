@@ -129,6 +129,27 @@ AOS.ratings = {
     6 : "ABILITIES.EXTRAORDINARY_NUM"
 }
 
+AOS.partyItemCategories = {
+    longGoal : "PARTY.LONG_TERM_GOAL",
+    shortGoal : "PARTY.SHORT_TERM_GOAL",
+    ally : "PARTY.ALLY",
+    enemy : "PARTY.ENEMY",
+    resource : "PARTY.RESOURCE",
+    rumour : "PARTY.RUMOUR",
+    fear : "PARTY.FEAR",
+    threat : "PARTY.THREAT",
+}
+AOS.partyItemCategoryLabels = {
+    longGoal : "PARTY.COMPLETED",
+    shortGoal : "PARTY.COMPLETED",
+    ally : "PARTY.ALIVE",
+    enemy : "PARTY.ALIVE",
+    resource : "PARTY.ACTIVE",
+    rumour : "PARTY.ACTIVE",
+    fear : "PARTY.ACTIVE",
+    threat : "PARTY.ACTIVE",
+}
+
 
 AOS.traits = {
     aetheric : "Aetheric",

@@ -7,7 +7,7 @@
             <h1><input name="name" type="text" value="{{item.name}}"/></h1>
         </div>
         <div class="sheet-subHeader">
-            <h3>{{localize "ITEM.TALENT"}}</h3>  
+            <h3>{{localize "ITEM.PARTY"}}</h3>  
         </div>
         <hr>
         <hr>
@@ -18,12 +18,23 @@
                 </div>
                 <div class="content-row">
                     <div class="entry-vertical">
-                        <h3>{{localize "TALENT.REQUIREMENT"}}</h3>
-                        <input title="{{data.requirement}}" name="data.requirement" type="text" value="{{data.requirement}}"/>
+                        <h3>{{localize (configLookup "partyItemCategoryLabels" data.category)}}</h3>
+                        <input name="data.state" type="checkbox" value="active" {{checked data.state}}/>
+                    </div>
+                    <div class="entry-vertical">
+                        <h3>{{localize "PARTY.CATEGORY"}}</h3>
+                        <select name="data.category">
+                        {{#select data.category}}
+                        {{#each (config "partyItemCategories") as |category c|}}
+                        <option value="{{c}}">{{category}}</option>
+                        {{/each}}
+                        {{/select}}
+                        </select>
                     </div>
                 </div>
             </div>
-            <hr>
+        <hr>
+        <div class="sheet-content">
             <div class="content-box fill">
                 <div class="content-header">
                     <h1>{{localize "TITLE.DESCRIPTION"}}</h1>

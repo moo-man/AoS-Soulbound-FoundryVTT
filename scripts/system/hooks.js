@@ -94,10 +94,50 @@ export default function registerHooks() {
     })
 
     Hooks.on("preCreateItem", (data, options, user) => {
-        if (data.type == "wound")
+        if (data.type == "wound" 
+         || data.type == "ally" 
+         || data.type == "connection" 
+         || data.type == "enemy" 
+         || data.type == "fear" 
+         || data.type == "goal" 
+         || data.type == "resource" 
+         || data.type == "rumour" 
+         || data.type == "threat")
         {
-            ui.notifications.warn("The Wound Type item is deprecated")
+            if (data.type == "wound")
+                ui.notifications.warn("The Wound Type item is deprecated")
+            else
+                ui.notifications.warn("This item type is deprecated. Use the Party Item type instead")
             return false
         }
     })
+
+
+    Hooks.on("renderDialog", (dialog, html) => {
+        Array.from(html.find("#entity-create option")).forEach(i => {
+            if (i.value == "wound" || i.value == "ally" || i.value == "connection" || i.value == "enemy" || i.value == "fear" || i.value == "goal" || i.value == "resource" || i.value == "rumour" || i.value == "threat")
+            {
+                i.remove()
+            }
+        })
+    })
+
+      /**
+   * Add right click option to actors to add all basic skills
+   */
+  Hooks.on("getActorDirectoryEntryContext", async (html, options) => {
+    options.push(
+      {
+        
+        name: game.i18n.localize("ACTOR.ImportStatBlock"),
+        condition: game.user.isGM,
+        icon: '<i class="fa fa-download"></i>',
+        callback: target => {
+          const actor = game.actors.get(target.attr('data-entity-id'));
+          if (game.system.data.name == "age-of-sigmar-soulbound")
+          new StatBlockParser(actor).render(true)
+        }
+      })
+  })
+
 }

@@ -37,6 +37,7 @@
   "ITEM.TypeThreat" : "Threat",
   "ITEM.TypeWeapon" : "Weapon",
   "ITEM.TypeWound" : "Wound",
+  "ITEM.TypePartyitem" : "Party Item",
 
   "ABILITIES.POOR": "Poor",
   "ABILITIES.AVERAGE": "Average",
@@ -106,6 +107,23 @@
 
   "CATEGORY.MELEE": "Melee",
   "CATEGORY.RANGE": "Range",
+
+  "PARTY.CATEGORY" : "Category",
+
+  "PARTY.LONG_TERM_GOAL" : "Long-Term Goal",
+  "PARTY.SHORT_TERM_GOAL" : "Short-Term Goal",
+  "PARTY.ALLY" : "Ally",
+  "PARTY.ENEMY" : "Enemy",
+  "PARTY.RESOURCE" : "Resource",
+  "PARTY.RUMOUR" : "Rumour",
+  "PARTY.FEAR" : "Fear",
+  "PARTY.THREAT" : "Threat",
+
+  "PARTY.COMPLETED" : "Completed",
+  "PARTY.ALIVE" : "Alive",
+  "PARTY.ACTIVE" : "Active",
+  "PARTY.AllyOrEnemy" : "Ally or Enemy?",
+
 
   "CHAT.SUCCEED": "Succeeded with",
   "CHAT.SUCCESS": "additional successes",
@@ -214,6 +232,7 @@
   "ITEM.AETHERIC_DEVICE": "Aetheric Device",
   "ITEM.RUNE": "Rune",
   "ITEM.EQUIPMENT": "Equipment",
+  "ITEM.PARTY": "Party Item",
 
   "MEMBER.NAME": "Name",
   "MEMBER.ARCHETYPE": "Archetype",

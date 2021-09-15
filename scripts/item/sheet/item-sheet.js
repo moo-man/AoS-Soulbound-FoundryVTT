@@ -1,6 +1,28 @@
 import ItemTraits from "../../apps/item-traits.js";
 
 export class AgeOfSigmarItemSheet extends ItemSheet {
+
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+        classes: ["age-of-sigmar-soulbound", "sheet", "item"],
+        width: 420,
+        height: 830,
+        resizable: false,
+        tabs: [
+            {
+                navSelector: ".sheet-tabs",
+                contentSelector: ".sheet-body",
+                initial: "description",
+            },
+        ]
+    });
+}
+
+get template() {
+   return `systems/age-of-sigmar-soulbound/template/sheet/${this.item.type}.html`
+}
+
+
   activateListeners(html) {
     super.activateListeners(html);
     html.find("input").focusin(ev => this._onFocusIn(ev));

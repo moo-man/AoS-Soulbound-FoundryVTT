@@ -23,9 +23,9 @@ export class AgeOfSigmarActor extends Actor {
     prepareData() {
 
         super.prepareData();
-        this._initializeData();
 
         if (this.type === "player" || this.type === "npc") {
+            this._initializeData();
             this._computeSkillTotals();
             this._computeItems();
             this._computeAttack();
@@ -410,4 +410,5 @@ export class AgeOfSigmarActor extends Actor {
     get soulfire() {return this.data.data.soulfire}
     get doom() {return this.data.data.doom}
     get power() {return this.data.data.power}
+    get members() {return this.data.data.members || []}
 }

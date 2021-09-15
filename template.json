@@ -281,6 +281,7 @@
         "max": 0
       },
       "doom": 0,
+      "members" : [],
       "notes": ""
     }
   },
@@ -302,7 +303,8 @@
       "talent",
       "threat",
       "weapon",
-      "wound"
+      "wound",
+      "partyItem"
     ],
     "templates": {
       "bonus": {
@@ -474,6 +476,11 @@
       "description": "",
       "damage": 0,
       "woundType" : ""
+    },
+    "partyItem" : {
+      "description": "",
+      "category": "resource",
+      "state": true
     }
   }
 }
