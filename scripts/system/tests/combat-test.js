@@ -26,7 +26,6 @@ export default class CombatTest extends Test {
         let regexMatch = regex.exec(weaponDamage);
         let damageValue = (+regexMatch[1]) ? +regexMatch[1] : 0;
         let addSuccess =!!(regexMatch[2]);
-        let traits = this.item.traits.toLowerCase()
 
         let damage = {
             total : 0,
@@ -37,7 +36,7 @@ export default class CombatTest extends Test {
         let effect = null;
     
         // TODO Deprecate in favor of trait objects
-        if(traits.includes(game.i18n.localize("TRAIT.INEFFECTIVE"))) {
+        if(this.item.traitList.ineffective) {
             effect = this._createTraitEffect();
             effect.isPlain = true;
             effect.text = game.i18n.localize("TRAIT.INEFFECTIVE_EFFECT");
@@ -45,7 +44,7 @@ export default class CombatTest extends Test {
             damage.armour *= 2;
         }
     
-        if(damage.armour > 0 && traits.includes(game.i18n.localize("TRAIT.PENETRATING"))) {
+        if(damage.armour > 0 && this.item.traitList.penetrating) {
             effect = this._createTraitEffect();
             effect.isPlain = true;
             effect.text = game.i18n.localize("TRAIT.PENETRATING_EFFECT");
@@ -55,14 +54,14 @@ export default class CombatTest extends Test {
     
         //On these two we may want to get more 6s if possible after we can't get more successes and have focus left over
         //No idea how to implement that yet may need to refactor _applyFocus a lot for that.
-        if(traits.includes(game.i18n.localize("TRAIT.CLEAVE"))) {
+        if(this.item.traitList.cleave) {
             effect = this._createTraitEffect();
             effect.isCleave = true;
             effect.text = game.i18n.format("TRAIT.CLEAVE_EFFECT", {triggers : result.triggers});
             damage.traitEffects.push(effect);
         }
     
-        if(traits.includes(game.i18n.localize("TRAIT.REND"))) {
+        if(this.item.traitList.rend) {
             effect = this._createTraitEffect();
             effect.isRend = true,
             effect.text = game.i18n.format("TRAIT.REND_EFFECT", {triggers : result.triggers});
