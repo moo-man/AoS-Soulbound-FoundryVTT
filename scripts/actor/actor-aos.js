@@ -28,7 +28,6 @@ export class AgeOfSigmarActor extends Actor {
             this._initializeData();
             this._computeSkillTotals();
             this._computeItems();
-            this._computeAttack();
             this._computeSecondary();
             this._computeRelativeCombatAbilities();
         }
@@ -102,15 +101,9 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeSkillTotals() {
-        for (let skill of Object.values(this.skills)) {
-            let attributeMod;
-            switch(skill.attribute) {
-                case "body" : attributeMod = this.attributes.body.total; break;
-                case "mind" : attributeMod = this.attributes.mind.total; break;
-                case "soul" : attributeMod = this.attributes.soul.total; break;
-                default: attributeMod = 0;
-            }
-            skill.total = skill.training + attributeMod + skill.bonus;
+        for (let skillKey in this.skills) {
+            let skill = this.skills[skillKey]
+            skill.total = skill.training + this.attributes[game.aos.config.skillAttributes[skillKey]].total + skill.bonus;
             skill.roll  = skill.training;
         }
     }
@@ -119,8 +112,10 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.wounds.forEach(i => {
             this.combat.health.wounds.value += i.damage;
         })
-        this.items.filter(i => i.isActive).forEach(i => {
-            this._computeGear(i)
+        this.items.forEach(i => {
+            i.prepareOwnedData()
+            if (i.isActive)
+                this._computeGear(i)
         })
     }
     
@@ -204,23 +199,6 @@ export class AgeOfSigmarActor extends Actor {
             this.data.token.update({"height" : 4});
             this.data.token.update({"width" : 4});
         }
-    }
-
-    _computeAttack() {
-
-        //TODO Move this to item prepare data
-        this.items.filter(i => i.isAttack).forEach(item => {
-            if (item.category === "melee") {
-                item.pool = this.skills.weaponSkill.total;
-                item.focus = this.skills.weaponSkill.focus;
-            } else {
-                item.pool = this.skills.ballisticSkill.total;
-                item.focus = this.skills.ballisticSkill.focus;
-            }
-            if(this.isSwarm) {
-                item.pool += this.combat.health.toughness.value;
-            }
-        })
     }
 
     _computeSecondary() {

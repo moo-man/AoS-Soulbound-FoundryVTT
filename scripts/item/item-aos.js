@@ -28,6 +28,30 @@ export class AgeOfSigmarItem extends Item {
         super.prepareData()
     }
 
+    prepareOwnedData() {
+        let functionName = `prepareOwned${this.type[0].toUpperCase() + this.type.slice(1)}`
+
+        if (this[functionName])
+            this[functionName]()
+
+        if (this.isAttack)
+            this.prepareAttack()
+    }
+
+    prepareAttack() {
+        if (this.category === "melee") {
+            this.pool = this.actor.skills.weaponSkill.total;
+            this.focus = this.actor.skills.weaponSkill.focus;
+        } else {
+            this.pool = this.actor.skills.ballisticSkill.total;
+            this.focus = this.actor.skills.ballisticSkill.focus;
+        }
+        if(this.isSwarm) {
+            this.pool += this.actor.combat.health.toughness.value;
+        }
+    }
+
+
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source);
         if (item.data.img.includes("/unknown")) {
