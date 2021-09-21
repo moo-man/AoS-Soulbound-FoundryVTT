@@ -1,4 +1,3 @@
-import { prepareCombatRoll, preparePowerRoll } from "./dialog.js";
 
 export default class AOS_MacroUtil {
     /**
@@ -34,16 +33,25 @@ export default class AOS_MacroUtil {
         return;    
     }
 
-    static createWeaponDialog(actor, weapon) {
-        const combat = actor.sheet._getCombat(weapon);
-        return prepareCombatRoll(actor.attributes, actor.skills, combat);
+    static async createWeaponDialog(actor, weapon) {
+        let testData = await actor.setupCombatTest(weapon)
+        let test = new game.aos.rollClass.CombatTest(testData)
+        await test.rollTest()
+        test.sendToChat()
     }
 
-    static createSpellRoll(actor, spell) {
-        return preparePowerRoll("channelling", actor.attributes, actor.skills, spell);
+    static async createSpellRoll(actor, spell) {
+        let testData = await actor.setupPowerTest(spell)
+        let test = new game.aos.rollClass.PowerTest(testData)
+        await test.rollTest()
+        test.sendToChat()
     }
 
-    static createMiracleRoll(actor, miracle) {
-        return preparePowerRoll("devotion", actor.attributes, actor.skills, miracle);
+    static async createMiracleRoll(actor, miracle) {
+        let testData = await actor.setupPowerTest(spell)
+        let test = new game.aos.rollClass.PowerTest(testData)
+        await test.rollTest()
+        test.sendToChat()
     }
+
 }

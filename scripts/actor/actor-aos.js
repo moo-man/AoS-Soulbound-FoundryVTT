@@ -1,3 +1,5 @@
+import { RollDialog, CombatDialog, PowerDialog } from "../system/dialog.js";
+
 export class AgeOfSigmarActor extends Actor {
 
     async _preCreate(data, options, user) {
@@ -226,6 +228,67 @@ export class AgeOfSigmarActor extends Actor {
             this.combat.mettle.max += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
         }
     }
+
+
+
+    //#region Rolling Setup
+    async setupAttributeTest(attribute) 
+    {
+        let dialogData = RollDialog._dialogData(this, attribute)
+        dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} Test`
+        let testData = await RollDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return testData 
+    }
+
+    async setupSkillTest(skill) 
+    {
+        let dialogData = RollDialog._dialogData(this, game.aos.config.skillAttributes[skill], skill)
+        dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
+        let testData = await RollDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return testData 
+    }
+
+    async setupCombatTest(weapon)
+    {
+        if (typeof weapon == "string")
+            weapon = this.items.get(weapon)
+
+        let dialogData = CombatDialog._dialogData(this, weapon)
+        dialogData.title = `${weapon.name} Test`
+        let testData = await CombatDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return testData 
+    }
+
+    async setupPowerTest(power)
+    {
+        if (typeof power == "string")
+            power = this.items.get(power)
+
+        let dialogData = PowerDialog._dialogData(this, power)
+        dialogData.title = `${power.name} Test`
+        let testData = await PowerDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return testData 
+    }
+    _getCombatData(weapon) {
+        let data = {
+            melee: this.actor.combat.melee.relative,
+            accuracy: this.actor.combat.accuracy.relative,
+            attribute: "body" ,
+            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
+            swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
+        }
+
+
+    }
+
+
+    //#endregion
+
+
 
     /**
      * applies Damage to the actor

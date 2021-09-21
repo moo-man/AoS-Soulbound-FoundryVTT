@@ -1,4 +1,3 @@
-import { prepareCommonRoll, prepareCombatRoll, preparePowerRoll } from "../../system/dialog.js";
 import ActorConfigure from "../../apps/actor-configure.js";
 import SpeedConfig from "../../apps/speed-config.js";
 
@@ -157,10 +156,10 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".item-state").click(this._onItemStateUpdate.bind(this));
-        html.find(".roll-attribute").click(this._prepareRollAttribute.bind(this));
-        html.find(".roll-skill").click(this._prepareRollSkill.bind(this));
-        html.find(".roll-weapon").click(this._prepareRollWeapon.bind(this));
-        html.find(".roll-power").click(this._prepareRollPower.bind(this));
+        html.find(".roll-attribute").click(this._onAttributeClick.bind(this));
+        html.find(".roll-skill").click(this._onSkillClick.bind(this));
+        html.find(".roll-weapon").click(this._onWeaponClick.bind(this));
+        html.find(".roll-power").click(this._onPowerClick.bind(this));
         html.find(".show-power").click(this._prepareShowPower.bind(this));
         html.find(".wound-create").click(this._onWoundCreate.bind(this));
         html.find(".wound-delete").click(this._onWoundDelete.bind(this));
@@ -268,46 +267,40 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return this.actor.updateEmbeddedDocuments("Item", [data]);
     }
 
-    async _prepareRollAttribute(event) {
+    async _onAttributeClick(event) {
         event.preventDefault();
-        const attributeName = $(event.currentTarget).data("attribute");
-        let rollData = await prepareCommonRoll(null, this.actor.attributes, this.actor.skills, attributeName);
-        rollData.speaker = this.actor.speakerData
-        let test = new game.aos.rollClass.Test(rollData)
+        const attribute = $(event.currentTarget).data("attribute");
+        let testData = await this.actor.setupAttributeTest(attribute)
+        let test = new game.aos.rollClass.Test(testData)
         await test.rollTest()
         test.sendToChat()
     }
 
-    async _prepareRollSkill(event) {
+    async _onSkillClick(event) {
         event.preventDefault();
         const skill = $(event.currentTarget).data("skill");
-        let rollData = await prepareCommonRoll(skill, this.actor.attributes, this.actor.skills);
-        rollData.speaker = this.actor.speakerData
-        let test = new game.aos.rollClass.Test(rollData)
+        let testData = await this.actor.setupSkillTest(skill)
+        let test = new game.aos.rollClass.Test(testData)
         await test.rollTest()
         test.sendToChat()
     }
 
-    async _prepareRollWeapon(event) {
+    async _onWeaponClick(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const weapon = this.actor.items.get(div.data("itemId"));
-        const combat = this._getCombat(weapon);
-        let rollData = await prepareCombatRoll(weapon, this.actor.attributes, this.actor.skills, combat);
-        rollData.speaker = this.actor.speakerData
-        let test = new game.aos.rollClass.CombatTest(rollData)
+        const weaponId = div.data("itemId");
+        let testData = await this.actor.setupCombatTest(weaponId)
+        let test = new game.aos.rollClass.CombatTest(testData)
         await test.rollTest()
         test.sendToChat()
     }
 
-    async _prepareRollPower(event) {
+    async _onPowerClick(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        const power = this.actor.items.get(div.data("itemId"));
-        let skill = power.data.type === "spell" ? "channelling" : "devotion"
-        let rollData = await preparePowerRoll(power, skill, this.actor.attributes, this.actor.skills);
-        rollData.speaker = this.actor.speakerData
-        let test = new game.aos.rollClass.PowerTest(rollData)
+        const powerId = div.data("itemId");
+        let testData = await this.actor.setupPowerTest(powerId)
+        let test = new game.aos.rollClass.PowerTest(testData)
         await test.rollTest()
         test.sendToChat()
     }
@@ -317,24 +310,6 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const power = this.actor.items.get(div.data("itemId"));
         power.sendToChat()
-    }
-
-    // TODO Maybe remove this too
-    _getCombat(weapon) {
-        return {
-            melee: this.actor.combat.melee.relative,
-            accuracy: this.actor.combat.accuracy.relative,
-            attribute: "body" ,
-            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
-            swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
-            weapon: {
-                name: weapon.name,
-                category: weapon.category,
-                damage: weapon.damage,
-                traits: weapon.traits
-            }
-            
-        };
     }
 
     _onWoundCreate(ev) { return this.actor.addWound("", 0) }
