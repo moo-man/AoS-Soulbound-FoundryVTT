@@ -6,7 +6,7 @@
         <div class="content-row">
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
-                <select id="attribute">
+                <select name="attribute" id="attribute">
                     {{#select combat.attribute}}
                     {{#each attributes as |attribute key|}}
                     <option value="{{key}}">{{localize attribute.label}}</option>
@@ -16,7 +16,7 @@
             </div>
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.SKILL"}}</h3>
-                <select id="skill">
+                <select name="skill" id="skill">
                     {{#select combat.skill}}
                     {{#each skills as |skill key|}}
                     <option value="{{key}}">{{localize skill.label}}</option>
@@ -26,7 +26,7 @@
             </div>
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.ATTACK"}}</h3>
-                <select id="attack">
+                <select name="attack" id="attack">
                     {{#select attackRating}}
                     {{#each (config "ratings") as | rating r|}}
                     <option value="{{r}}">{{rating}}</option>
@@ -38,7 +38,7 @@
         <div class="content-row">
             <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.FOCUSALLOCATION"}}</h3>
-                <select id="allocation">
+                <select name="allocation" id="allocation">
                     <option value="manual">{{localize "DIALOG.MANUAL"}}</option>
                     <option value="success" selected>{{localize "DIALOG.SUCCESSES"}}</option>
                     <option value="sixes">{{localize "DIALOG.SIXES"}}</option>
@@ -49,17 +49,23 @@
         <div class="content-row">
             <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.DOUBLE_TRAINING"}}</h3>
-                <input id="double-training" type="checkbox" value="active" />
+                <input name="double-training" id="double-training" type="checkbox" value="active" />
             </div>
             <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.DOUBLE_FOCUS"}}</h3>
-                <input id="double-focus" type="checkbox" value="active" />
+                <input name="double-focus" id="double-focus" type="checkbox" value="active" />
             </div>
         </div>
         <div class="content-row">
             <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
-                <div class="dialog-value"><input id="bonusDice" type="number" value="{{bonusDice}}" /></div>
+                <div class="dialog-value"><input name="bonusDice" id="bonusDice" type="number" value="{{bonusDice}}" /></div>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSDAMAGE"}}</h3>
+                <div class="dialog-value"><input name="bonusDamage" id="bonusDamage" type="number" value="{{combat.bonusDamage}}" /></div>
             </div>
         </div>
     </div>
@@ -71,7 +77,7 @@
         <div class="content-row">
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.DEFENSE"}}</h3>
-                <select id="defense">
+                <select name="defense" id="defense">
                     {{#select targetDefense}}
                     {{#each (config "ratings") as | rating r|}}
                     <option value="{{r}}">{{rating}}</option>
@@ -81,7 +87,7 @@
             </div>
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.ARMOUR"}}</h3>
-                <div class="dialog-value"><input id="armour" type="number" value="{{combat.armour}}" /></div>
+                <div class="dialog-value"><input name="armour" id="armour" type="number" value="{{combat.armour}}" /></div>
             </div>
         </div>
     </div>

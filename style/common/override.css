@@ -298,7 +298,6 @@ li.folder > .folder-header .create-folder,
 .dialog-value {
     display:flex;
     flex-direction: row;
-    flex-grow:1;
     justify-content: center;
     text-align: center;
     border:none;

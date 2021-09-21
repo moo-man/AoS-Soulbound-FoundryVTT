@@ -69,7 +69,7 @@ export class CombatDialog extends RollDialog {
                         label: game.i18n.localize("BUTTON.ROLL"),
                         callback: async (html) => {
                             let testData = this.extractDialogData(html)
-                            testData.combat = mergeObject(testData.combat, data.combat)
+                            testData.combat = mergeObject(data.combat, testData.combat)
                             testData.itemId = data.weapon.id
                             testData.dn = this._getDn(data.weapon.name, testData.rating, testData.targetDefense);
                             resolve(testData);
@@ -83,7 +83,7 @@ export class CombatDialog extends RollDialog {
     static extractDialogData(html) {
         let data = super.extractDialogData(html)
         data.rating = html.find("#attack")[0].value;
-        data.combat = {armour : html.find("#armour")[0].value}
+        data.combat = {armour : html.find("#armour")[0].value, bonusDamage : parseInt(html.find("#bonusDamage")[0].value)}
         data.targetDefense = html.find("#defense")[0].value;
 
         return data
@@ -105,8 +105,9 @@ export class CombatDialog extends RollDialog {
             accuracy: actor.combat.accuracy.relative,
             attribute: attribute ,
             skill: skill,
-            swarmDice: actor.type === "npc" && actor.isSwarm ? actor.combat.health.toughness.value : 0
-        }
+            swarmDice: actor.type === "npc" && actor.isSwarm ? actor.combat.health.toughness.value : 0,
+            bonusDamage : 0
+    }
 
         data.weapon = weapon
 

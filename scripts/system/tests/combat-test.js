@@ -73,7 +73,9 @@ export default class CombatTest extends Test {
         } else {
             damage.total = damageValue - damage.armour;
         }
-        
+       
+        damage.total += this.testData.combat.bonusDamage || 0
+       
         if(damage.total < 0) {
             damage.total = 0;
         }
