@@ -1,4 +1,13 @@
 export class RollDialog extends Dialog {
+
+    static get defaultOptions() {
+        let options = super.defaultOptions;
+        options.classes.push("roll-dialog")
+        options.classes.push("age-of-sigmar-soulbound")
+        options.resizable = true;
+        return options
+    }
+
     static async create(data) {
         return new Promise(async (resolve, reject) => {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
@@ -11,13 +20,17 @@ export class RollDialog extends Dialog {
                         label: game.i18n.localize("BUTTON.ROLL"),
                         callback: async (html) => {
                             let data = this.extractDialogData(html)
-                            data.dn = this._getDn(`${game.aos.config.attributes[data.attribute]} ${data.skill ? "(" + game.aos.config.skills[data.skill] + ")" : ""}`, html.find("#dn")[0].value);
+                            data.dn = {
+                                difficulty : parseInt(html.find("[name='difficulty']")[0].value),
+                                complexity : parseInt(html.find("[name='complexity']")[0].value),
+                                name : `${game.aos.config.attributes[data.attribute]} ${data.skill ? "(" + game.aos.config.skills[data.skill] + ")" : ""}`
+                            }
                             resolve(data);
                         },
                     }
                 },
                 default: "roll"
-            }).render(true)
+            }, {width: 450}).render(true)
         })
     }
     static extractDialogData(html) {
@@ -27,7 +40,6 @@ export class RollDialog extends Dialog {
         const doubleFocus = html.find("#double-focus")[0].checked;
         const allocation = html.find("#allocation")[0].value;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
-
         return { attribute, skill, doubleTraining, doubleFocus, allocation, bonusDice }
     }
 
@@ -39,19 +51,20 @@ export class RollDialog extends Dialog {
             skills : actor.skills,
             skillKey : skill,
             attributeKey: skill ? game.aos.config.skillAttributes[skill] : attribute,
-            bonusDice: 0 // some spells or miracles grant bonus dice 
+            difficulty : 4,
+            complexity : 1,
+            bonusDice: 0, // some spells or miracles grant bonus dice 
+            effects : actor.effects.filter(i => i.hasRollEffect)
         }
     }
 
-    static _getDn(name, dn) {
-        let regex = /([0-9]*)[:]*([0-9]*)/g;
-        let spellDn = dn.toLowerCase().replace(/( )*/g, '');
-        let regexMatch = regex.exec(spellDn);
-        return {
-            name: name,
-            difficulty: (+regexMatch[1]) ? +regexMatch[1] : 0,
-            complexity: (+regexMatch[2]) ? +regexMatch[2] : 0
-        }
+    activateListeners(html)
+    {
+        super.activateListeners(html)
+
+        html.find("input").focusin(ev => {
+            ev.target.select();
+        })
     }
     
 }
@@ -77,7 +90,7 @@ export class CombatDialog extends RollDialog {
                     }
                 },
                 default: "roll"
-            }).render(true)
+            }, {width: 450}).render(true)
         })
     }
     static extractDialogData(html) {
@@ -92,7 +105,7 @@ export class CombatDialog extends RollDialog {
     static _getDn(name, rating, defense) {
         let difficulty = 4 - (rating - defense);
         difficulty = Math.clamped(difficulty, 2, 6)
-        return super._getDn(name, `${difficulty}:1`)
+        return {name, difficulty, complexity : 1}
     }
         
     static _dialogData(actor, weapon)
@@ -146,13 +159,17 @@ export class PowerDialog extends RollDialog {
                         callback: async (html) => {
                             let testData = this.extractDialogData(html)
                             testData.itemId = data.power.id
-                            testData.dn = this._getDn(data.power.name, html.find("#dn")[0].value);
+                            testData.dn = {
+                                difficulty : parseInt(html.find("[name='difficulty']")[0].value),
+                                complexity : parseInt(html.find("[name='complexity']")[0].value),
+                                name : data.power.name
+                            }
                             resolve(testData);
                         },
                     }
                 },
                 default: "roll"
-            }).render(true)
+            }, {width: 450}).render(true)
         })
     }
     
@@ -161,7 +178,7 @@ export class PowerDialog extends RollDialog {
         let skill = power.data.type === "spell" ? "channelling" : "devotion"
         let attribute = game.aos.config.skillAttributes[skill]
         let data = super._dialogData(actor, attribute, skill)
-        data.dn = power.dn
+        mergeObject(data, power.DN)
         data.power = power
         return data
     }    

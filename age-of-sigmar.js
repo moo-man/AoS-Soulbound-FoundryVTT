@@ -12,11 +12,15 @@ import AOSUtility from "./scripts/system/utility.js";
 import Test from "./scripts/system/tests/test.js";
 import CombatTest from "./scripts/system/tests/combat-test.js";
 import PowerTest from "./scripts/system/tests/power-test.js";
-import ItemTraits from "./scripts/apps/item-traits.js";
+import ItemTraits from "./scripts/apps/item-traits.js"
+import AgeOfSigmarEffect from "./scripts/system/effect.js";
+import AgeOfSigmarEffectSheet from "./scripts/apps/active-effect-config.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
     CONFIG.Item.documentClass = AgeOfSigmarItem;
+    CONFIG.ActiveEffect.documentClass = AgeOfSigmarEffect
+    CONFIG.ActiveEffect.sheetClass = AgeOfSigmarEffectSheet
     CONFIG.fontFamilies.push("Alegreya Sans SC");
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });

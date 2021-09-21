@@ -6,7 +6,37 @@
         <div class="content-row">
             <div class="entry-vertical" style="width:100px;">
                 <h3>{{localize "DIALOG.DN"}}</h3>
-                <input id="dn" type="text" value="{{dn}}" />
+                <div class="dn-box">
+                    <select name="difficulty">
+                        {{#select difficulty}}
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        {{/select}}
+                    </select>
+                    :
+                    <select name="complexity">
+                        {{#select complexity}}
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        {{/select}}
+                    </select>
+                </div>
             </div>
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
@@ -58,4 +88,18 @@
         </div>
     </div>
     <hr>
+</div>
+<div class="dialog-effects">
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.EFFECTS"}}</h1>
+        </div>
+        <div class="content-row">
+            <select multiple>
+                {{#each effects as |effect e|}}
+                <option title="{{effect.data.flags.age-of-sigmar-soulbound.description}}"value="{{effect.id}}">{{effect.label}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
 </div>

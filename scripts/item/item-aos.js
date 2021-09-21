@@ -113,6 +113,10 @@ export class AgeOfSigmarItem extends Item {
         return traits
     }
 
+    get DN() {
+        return {difficulty : parseInt(this.dn.split(":")[0]), complexity : parseInt(this.dn.split(":")[1])}
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }

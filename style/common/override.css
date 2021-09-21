@@ -175,8 +175,7 @@ li.folder > .folder-header .create-folder,
 .age-of-sigmar-soulbound.dialog {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
-    flex-basis: 100%;
+    flex: 1;
     justify-content: stretch;
     justify-items: stretch;
 }
@@ -184,6 +183,38 @@ li.folder > .folder-header .create-folder,
 .dialog {
     justify-content: stretch;
 }
+
+.dialog .dialog-buttons{
+    flex: 0 0 35px;
+}
+
+.roll-dialog .dialog-content {
+    display: flex;
+}
+
+.roll-dialog .dialog-content .content-box{
+    flex: 1
+}
+
+.roll-dialog .dialog-effects {
+    flex: 0.3;
+}
+
+.roll-dialog .dialog-effects .content-box{
+    height: calc(100% - 15px);
+    border-left: none;
+}
+
+.roll-dialog .dialog-effects .content-box .content-row{
+    border-right: 2px solid #7c6c42
+}
+
+.roll-dialog .dialog-effects .content-box select{
+    height: 100%;
+    width: 100%
+}
+
+
 
 .content-box{
     display: flex;

@@ -93,3 +93,17 @@
     </div>
     <hr>
 </div>
+<div class="dialog-effects">
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.EFFECTS"}}</h1>
+        </div>
+        <div class="content-row">
+            <select multiple>
+                {{#each effects as |effect e|}}
+                <option title="{{effect.data.flags.age-of-sigmar-soulbound.description}}"value="{{effect.id}}">{{effect.label}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</div>
