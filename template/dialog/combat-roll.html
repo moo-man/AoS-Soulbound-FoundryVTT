@@ -99,9 +99,9 @@
             <h1>{{localize "DIALOG.EFFECTS"}}</h1>
         </div>
         <div class="content-row">
-            <select multiple>
+            <select class="effect-select" multiple>
                 {{#each effects as |effect e|}}
-                <option title="{{effect.data.flags.age-of-sigmar-soulbound.description}}"value="{{effect.id}}">{{effect.label}}</option>
+                <option title="{{effect.data.flags.age-of-sigmar-soulbound.description}}"value="{{e}}">{{effect.label}}</option>
                 {{/each}}
             </select>
         </div>

@@ -1,3 +1,5 @@
+import AgeOfSigmarEffect from "./effect.js";
+
 export class RollDialog extends Dialog {
 
     static get defaultOptions() {
@@ -14,6 +16,7 @@ export class RollDialog extends Dialog {
             return new this({
                 title: data.title,
                 content: html,
+                effects : data.effects,
                 buttons: {
                     roll: {
                         icon: '<i class="fas fa-check"></i>',
@@ -62,11 +65,116 @@ export class RollDialog extends Dialog {
     {
         super.activateListeners(html)
 
+        this.effectValues = {
+            "difficulty" : null,
+            "complexity" : null,
+            "allocation" : null,
+            "double-training" : null,
+            "double-focus" : null,
+            "bonusDice" : null,
+        }
+        
+
+        this.inputs = {}
+
         html.find("input").focusin(ev => {
             ev.target.select();
         })
+
+        this.inputs.difficulty = html.find('#difficulty').change(ev => {
+            this.userEntry.difficulty = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+        this.inputs.complexity = html.find('#complexity').change(ev => {
+            this.userEntry.complexity = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+        this.inputs.allocation = html.find('#allocation').change(ev => {
+            this.userEntry.allocation = ev.target.value
+            this.applyEffects()
+        })[0]
+        this.inputs["double-training"] = html.find('#double-training').change(ev => {
+            this.userEntry.double = ev.target.value
+            this.applyEffects()
+        })[0]
+        this.inputs["double-focus"] = html.find('#double-focus').change(ev => {
+            this.userEntry.double = ev.target.value
+            this.applyEffects()
+        })[0]
+        this.inputs.bonusDice = html.find('#bonusDice').change(ev => {
+            this.userEntry.bonusDice = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+
+
+        html.find(".effect-select").change(this._onEffectSelect.bind(this))
+
+        this.userEntry = {
+            "difficulty" : parseInt(this.inputs?.difficulty?.value),
+            "complexity" : parseInt(this.inputs?.complexity?.value),
+            "allocation" : this.inputs.allocation.value,
+            "double-training" : this.inputs["double-training"].checked,
+            "double-focus" : this.inputs["double-focus"].checked,
+            "bonusDice" : parseInt(this.inputs.bonusDice.value),
+        }
+
     }
-    
+
+    _onEffectSelect(ev) 
+    {
+        // Reset effect values
+        this.effectValues = {
+            "difficulty" : null,
+            "complexity" : null,
+            "allocation" : null,
+            "double-training" : null,
+            "double-focus" : null,
+            "bonusDice" : null
+        }
+        
+        let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)])
+        let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), [])
+        for (let c of changes)
+        {
+            if (AgeOfSigmarEffect.numericTypes.includes(c.key))
+                this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
+            else if (c.key == "double-training" || c.key == "double-focus")
+            {
+                if (c.value == "true")
+                    this.effectValues[c.key] = true
+                else if (c.value == "false")
+                    this.effectValues[c.key] = false
+            }
+            else if (c.key == "allocation" && Object.keys(game.aos.config.allocationTypes).includes(c.value))
+                this.effectValues[c.key] = c.value
+        }
+        this.applyEffects()
+    }
+
+    applyEffects()
+    {
+        for (let input in this.inputs)
+        {
+            if (!this.inputs[input])
+                continue
+            if (this.effectValues[input] != null)
+            {
+                if (this.inputs[input].type == "checkbox")
+                    this.inputs[input].checked = this.effectValues[input]
+                else if (Number.isNumeric(this.effectValues[input]))
+                    this.inputs[input].value = this.userEntry[input] + this.effectValues[input]
+                else 
+                    this.inputs[input].value = this.effectValues[input]
+            }
+            else // if not part of effect values, use user entry only
+            {
+                if (this.inputs[input].type == "checkbox")
+                    this.inputs[input].checked = this.userEntry[input]
+                else
+                    this.inputs[input].value = this.userEntry[input]
+            }
+        }
+    }
 }
 
 export class CombatDialog extends RollDialog {
@@ -76,6 +184,7 @@ export class CombatDialog extends RollDialog {
             return new this({
                 title: data.title,
                 content: html,
+                effects : data.effects,
                 buttons: {
                     roll: {
                         icon: '<i class="fas fa-check"></i>',
@@ -142,6 +251,47 @@ export class CombatDialog extends RollDialog {
 
         return data
     }
+
+    _onEffectSelect(ev)
+    {
+        this.effectValues.bonusDamage = null
+        super._onEffectSelect(ev)
+    }
+
+    activateListeners(html)
+    {
+        super.activateListeners(html)
+
+        this.effectValues["bonusDamage"] = null
+        this.effectValues["defense"] = null
+        this.effectValues["armour"] = null
+        this.effectValues["attack"] = null
+
+        this.inputs.bonusDamage = html.find('#bonusDamage').change(ev => {
+            this.userEntry.bonusDamage = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+
+        this.inputs.defense = html.find('#defense').change(ev => {
+            this.userEntry.defense = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+
+        this.inputs.armour = html.find('#armour').change(ev => {
+            this.userEntry.armour = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+
+        this.inputs.attack = html.find('#attack').change(ev => {
+            this.userEntry.attack  = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
+
+        this.userEntry["bonusDamage"] = parseInt(this.inputs.bonusDamage.value)
+        this.userEntry["defense"] = parseInt(this.inputs.defense.value)
+        this.userEntry["armour"] = parseInt(this.inputs.armour.value)
+        this.userEntry["attack"] = parseInt(this.inputs.attack.value)
+    }
 }
 
 
@@ -151,6 +301,7 @@ export class PowerDialog extends RollDialog {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
             return new this({
                 title: data.title,
+                effects : data.effects,
                 content: html,
                 buttons: {
                     roll: {

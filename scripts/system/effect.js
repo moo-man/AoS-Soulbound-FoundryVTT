@@ -26,4 +26,15 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
                 return super.sourceName;
         }
     }
+
+    static get numericTypes() {
+        return ["difficulty",
+            "complexity",
+            "bonusDice",
+            "bonusDamage",
+            "armour",
+            "defense",
+            "attack"]
+    }
+
 }

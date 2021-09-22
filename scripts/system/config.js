@@ -129,6 +129,14 @@ AOS.ratings = {
     6 : "ABILITIES.EXTRAORDINARY_NUM"
 }
 
+
+AOS.allocationTypes = {
+   "manual" :  "DIALOG.MANUAL",
+   "success" : "DIALOG.SUCCESSES",
+   "sixes" :  "DIALOG.SIXES",
+   "trigger" :  "DIALOG.TRIGGER"
+}
+
 AOS.partyItemCategories = {
     longGoal : "PARTY.LONG_TERM_GOAL",
     shortGoal : "PARTY.SHORT_TERM_GOAL",

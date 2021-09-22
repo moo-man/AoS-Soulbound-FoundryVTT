@@ -7,7 +7,7 @@
             <div class="entry-vertical" style="width:100px;">
                 <h3>{{localize "DIALOG.DN"}}</h3>
                 <div class="dn-box">
-                    <select name="difficulty">
+                    <select id="difficulty">
                         {{#select difficulty}}
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -22,7 +22,7 @@
                         {{/select}}
                     </select>
                     :
-                    <select name="complexity">
+                    <select id="complexity">
                         {{#select complexity}}
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -95,9 +95,9 @@
             <h1>{{localize "DIALOG.EFFECTS"}}</h1>
         </div>
         <div class="content-row">
-            <select multiple>
+            <select class="effect-select" multiple>
                 {{#each effects as |effect e|}}
-                <option title="{{effect.data.flags.age-of-sigmar-soulbound.description}}"value="{{effect.id}}">{{effect.label}}</option>
+                <option title="{{effect.data.flags.age-of-sigmar-soulbound.description}}"value="{{e}}">{{effect.label}}</option>
                 {{/each}}
             </select>
         </div>
