@@ -184,6 +184,10 @@ li.folder > .folder-header .create-folder,
     justify-content: stretch;
 }
 
+.dialog .quick-effect > * {
+    margin: 5px;display: flex; align-items: center; justify-content: space-between;
+}
+
 .dialog .dialog-buttons{
     flex: 0 0 35px;
 }
