@@ -133,7 +133,7 @@ export class RollDialog extends Dialog {
         }
         
         let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)])
-        let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), [])
+        let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
         for (let c of changes)
         {
             if (AgeOfSigmarEffect.numericTypes.includes(c.key))

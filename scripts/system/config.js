@@ -186,4 +186,83 @@ AOS.traits = {
 
 AOS.traitsWithValue = ["range", "thrown"]
 
+CONFIG.statusEffects = [
+    {
+        id : "blinded",
+        label : "Blinded",
+        icon : "icons/svg/blind.svg",
+        changes : [
+            {key: "difficulty", mode : 0, value : 2},
+            {key: "data.combat.melee.bonus", mode : 2, value : -1},
+            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+        ],
+        flags : { "age-of-sigmar-soulbound.description" : "Difficulty of Mind (Awareness) Tests that rely on sight are increased by 2"}
+    },
+    {
+        id : "charmed",
+        label : "Charmed",
+        icon : "icons/svg/heal.svg"
+    },
+    {
+        id : "deafened",
+        label : "Deafened",
+        icon : "icons/svg/deaf.svg",
+        changes : [{key: "bonusDice", mode : 0, value : -1}],
+        flags : { "age-of-sigmar-soulbound.description" : "The dice pool for any Tests that require hearing is reduced by 1"}
+    },
+    {
+        id : "frightened",
+        label : "Frightened",
+        icon : "icons/svg/terror.svg",
+        changes : [{key: "bonusDice", mode : 0, value : -1}],
+        flags : { "age-of-sigmar-soulbound.description" : "While the source of fear is within line of sight, roll one less die for all Tests"}
+    },
+    {
+        id : "incapacitated",
+        label : "Incapacitated",
+        icon : "icons/svg/cancel.svg"
+    },
+    {
+        id : "poisoned",
+        label : "Poisoned",
+        icon : "icons/svg/poison.svg",
+        changes : [{key: "bonusDice", mode : 0, value : -1}],
+        flags : { "age-of-sigmar-soulbound.description" : "The dice pool for all Tests are reduced by 1"}
+    },
+    {
+        id : "prone",
+        label : "Prone",
+        icon : "icons/svg/falling.svg",
+        changes : [
+            {key: "data.combat.melee.bonus", mode : 2, value : -1},
+            {key: "data.combat.accuracy.bonus", mode : 2, value : -1}
+        ]
+    },
+    {
+        id : "restrained",
+        label : "Restrained",
+        icon : "icons/svg/net.svg",
+        changes : [
+            {key: "data.combat.melee.bonus", mode : 2, value : -1},
+            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+        ]
+    },
+    {
+        id : "stunned",
+        label : "Stunned",
+        icon : "icons/svg/stoned.svg",
+        changes : [
+            {key: "data.combat.speeds.foot", mode : 5, value : "slow"},
+            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+        ]
+    },
+    {
+        id : "unconscious",
+        label : "Unconscious",
+        icon : "icons/svg/unconscious.svg"
+    }
+]
+
 export default AOS

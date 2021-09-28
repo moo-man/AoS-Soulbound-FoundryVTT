@@ -63,10 +63,9 @@
             <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.FOCUSALLOCATION"}}</h3>
                 <select id="allocation">
-                    <option value="manual">{{localize "DIALOG.MANUAL"}}</option>
-                    <option value="success" selected>{{localize "DIALOG.SUCCESSES"}}</option>
-                    <option value="sixes">{{localize "DIALOG.SIXES"}}</option>
-                    <option value="trigger">{{localize "DIALOG.TRIGGER"}}</option>
+                    {{#each (config "allocationTypes") as |alloc a|}}
+                    <option value="{{a}}">{{alloc}}</option>
+                    {{/each}}
                 </select>
             </div>
         </div>
