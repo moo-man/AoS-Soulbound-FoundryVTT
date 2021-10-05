@@ -14,13 +14,40 @@
     src: url("../../asset/font/Quadrat-Regular.otf");
 }
 
+@font-face {
+    font-family: "MinionPro";
+    src: url("../../asset/font/MinionPro-Regular.otf");
+}
+
+/* @font-face {
+    font-family: "MinionPro";
+    src: url("../../asset/font/MinionPro-Bold.otf");
+    font-weight: bold;
+} */
+
+@font-face {
+    font-family: "PompeiStd";
+    src: url("../../asset/font/PompeiStd-Regular.otf");
+}
+
+@font-face {
+    font-family: "PompeiStd";
+    src: url("../../asset/font/PompeiStd-Bold.otf");
+    font-weight: bold;
+}
+
 :root {
     --color-title: black;
     --color-text: black;
-    --color-border: #675914;
+    --color-border: #806b3a;
     --color-active: goldenrod;
     --color-header: whitesmoke;
     --color-succeed: darkgreen;
     --color-deadly: #680B0B;
-    --font-text: "Alegreya Sans SC", sans-serif;
+    --color-header-gold: #806b3a;
+    --color-header-blue: #183051;
+    --color-header-black: black;
+    --font-text: "MinionPro";
+    --font-header: "Quadrant-Regular";
+    --font-sidebar: "PompeiStd"
 }

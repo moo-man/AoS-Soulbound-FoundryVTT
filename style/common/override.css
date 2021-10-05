@@ -10,7 +10,7 @@ select:focus {
     box-shadow: 0 0 5px goldenrod
 }
 
-#sidebar-tabs {
+#block-tabs {
     flex: 0 0 32px;
     box-sizing: border-box;
     margin: 0 0 5px;
@@ -18,8 +18,15 @@ select:focus {
     box-shadow: 0 0 10px gold;
 }
 
+select {
+    border-radius: 0px;
+    border: 1px solid var(--color-header-gold);
+    background: url(../../asset/image/input-bg.jpg);
+    background-size: 100%;
+    background-position: 0px 0px;
+}
 
-#sidebar-tabs > .item.active {
+#block-tabs > .item.active {
     border:1px solid goldenrod;
     box-shadow: 0 0 6px inset goldenrod;
 }
@@ -74,7 +81,7 @@ li.folder > .folder-header .create-folder,
 }
 
 
-.sidebar-popout li.folder > .folder-header h3 {
+.block-popout li.folder > .folder-header h3 {
     color: black;
 }
 
@@ -344,4 +351,149 @@ li.folder > .folder-header .create-folder,
 
 .dialog select{
     border:none;
+}
+
+
+
+.editor,
+.editor-content {
+  font-family: var(--font-text);
+  font-size: 14px;
+  color: var(--color-text);
+}
+
+.editor h1,
+.editor-content h1 { 
+  font-family: var(--font-header);
+  text-transform: uppercase;
+  color : var(--color-header-gold);
+  font-size : 40px;
+  text-align: center;
+  border: 2px solid var(--color-header-gold);
+  border-left: 0px;
+  border-right: 0px;
+  line-height: 28px;
+}
+
+.editor h2,
+.editor-content h2 { 
+  font-family: var(--font-header);
+  text-transform: uppercase;
+  font-size: 26px;
+  color: var(--color-header-gold);
+  border-bottom: 2px solid var(--color-header-gold);
+}
+
+.editor h3,
+.editor-content h3 { 
+  font-family: var(--font-header);
+  font-size : 30px;
+  font-variant: small-caps;
+  color: var(--color-header-blue);
+}
+
+.editor .block h3,
+.editor-content .block h3 { 
+  font-family: var(--font-header);
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  border: none;
+  color: var(--color-header-gold)
+}
+
+.editor  h4,
+.editor-content  h4 { 
+  font-family: var(--font-header);
+  border: none;
+  font-size: 20px;
+  text-transform: uppercase;
+  color: var(--color-header-blue)
+}
+
+.editor  h5,
+.editor-content  h5 { 
+  font-family: var(--font-header);
+  border: none;
+  font-size: 16px;
+  text-transform: uppercase;
+  color: black;
+  margin: 0 0 0.5rem;
+  font-weight: normal
+}
+
+.editor .block,
+.editor-content .block {
+    background-color: black;
+    font-family: var(--font-sidebar);
+    color: white;
+    border: 5px solid transparent;
+    border-image: url(../../asset/image/sidebar-border.png) 8 8 8 8 repeat repeat;
+    margin-right: 10px;
+}
+
+.editor .block::before,
+.editor-content .block::before {
+    content: "";
+    background-image: url(../../asset/image/block-top.png) ;
+}
+
+
+#pause {
+    #controls .scene-control {
+        color: white;
+    background: url(../../asset/image/header.jpg) repeat;
+    background-size: 50%;
+    border: 1px solid var(--color-header-gold)
+}
+
+#controls .control-tool.active,
+#controls .scene-control.active {
+    border: 1px solid var(--color-active);
+    background: url(../../asset/image/background.jpg) repeat;
+    color: var(--color-header-blue);
+    box-shadow: 0 0 10px var(--color-active)
+}
+
+#controls .control-tool:hover,
+#controls .scene-control:hover {
+    border: 1px solid var(--color-active);
+}
+
+#navigation #scene-list .scene.view {
+    color: var(--color-header-blue);
+    border: 1px solid var(--color-active);
+    background: url(../../asset/image/background.jpg) repeat;
+    box-shadow: 0 0 10px var(--color-active);
+}
+
+#navigation #scene-list .scene {
+    color: white;
+    font-family: var(--font-sidebar);
+    border: 1px solid var(--color-header-gold);
+    background: url(../../asset/image/header.jpg) repeat;
+}
+
+#navigation #nav-toggle {
+    background: url(../../asset/image/header.jpg) repeat;
+    background-size: 50%;
+    border: 1px solid var(--color-header-gold)
+}
+
+#players {
+    background: url(../../asset/image/header-background-vertical.png) repeat;
+    border: 1px solid var(--color-header-gold)
+}
+
+#players h3 {
+    border-bottom: 2px groove var(--color-header-gold)
+
+}
+
+#hotbar #hotbar-directory-controls,
+#hotbar #hotbar-page-controls,
+    #macro-list {
+    font-family: var(--font-sidebar);
+    color: white;
+    background: url(../../asset/image/header-background.png) repeat;
 }

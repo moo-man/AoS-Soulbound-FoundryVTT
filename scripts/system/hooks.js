@@ -140,4 +140,12 @@ export default function registerHooks() {
       })
   })
 
+    Hooks.on("preCreateActiveEffect", (effect, data, options, user) => {
+        if (effect.parent?.type == "spell" || effect.parent?.type == "miracle")
+        {
+            effect.data.update({"transfer" : false})
+            effect.data.update({"label" : effect.parent.name})
+        }
+    })
+
 }

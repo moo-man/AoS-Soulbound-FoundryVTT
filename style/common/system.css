@@ -34,8 +34,14 @@
 #sidebar-tabs {
     background-image: url(../../asset/image/header-background.png);
     background-size: cover;
-    color: white
+    color: white;
+    box-shadow: 0 0 10px var(--color-active)
 }
+
+#sidebar-tabs .item.active {
+    border: 1px solid var(--color-active)
+}
+
 
 #scenes-popout .directory-list .directory-item .entity-name a,
 #sidebar #scenes .directory-list .directory-item .entity-name a {
@@ -111,7 +117,8 @@
     user-select: all;
 }
 
-.directory-item .entity-name{
+.directory-item .folder-header h3,
+    .directory-item .entity-name{
     color: darkslategrey;
     font-family: Quadrant-Regular;
     text-transform: uppercase;

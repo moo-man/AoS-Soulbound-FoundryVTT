@@ -6,8 +6,8 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     return mergeObject(super.defaultOptions, {
         classes: ["age-of-sigmar-soulbound", "sheet", "item"],
         width: 420,
-        height: 830,
-        resizable: false,
+        height: 530,
+        resizable: true,
         tabs: [
             {
                 navSelector: ".sheet-tabs",
