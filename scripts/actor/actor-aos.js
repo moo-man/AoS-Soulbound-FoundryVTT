@@ -369,7 +369,7 @@ export class AgeOfSigmarActor extends Actor {
                                           && i.isActive //Only Armour that is worn
                                           && i.subtype !== "shield" // That isn't a shield
                                           && i.benefit !== 0 // not already at zero
-                                          && !i.traitList.magical // Only nonmagical
+                                          && !i.traitList.magical) // Only nonmagical
         
         if(armours.length === 0) return;
         
