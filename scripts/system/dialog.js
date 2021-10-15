@@ -24,8 +24,8 @@ export class RollDialog extends Dialog {
                         callback: async (html) => {
                             let data = this.extractDialogData(html)
                             data.dn = {
-                                difficulty : parseInt(html.find("[name='difficulty']")[0].value),
-                                complexity : parseInt(html.find("[name='complexity']")[0].value),
+                                difficulty : parseInt(html.find("#difficulty")[0].value),
+                                complexity : parseInt(html.find("#complexity")[0].value),
                                 name : `${game.aos.config.attributes[data.attribute]} ${data.skill ? "(" + game.aos.config.skills[data.skill] + ")" : ""}`
                             }
                             resolve(data);
