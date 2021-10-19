@@ -63,6 +63,13 @@
     border-radius: 4px;
 }
 
+.age-of-sigmar-soulbound.chat .diceImg {
+    flex:none;
+	width: 36px;
+	height: 36px;
+	margin: 2px 2px;
+}
+
 .age-of-sigmar-soulbound.chat .diceHighlight {
 	flex:none;
     width: 36px;

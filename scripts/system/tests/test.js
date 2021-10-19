@@ -180,6 +180,18 @@ export default class Test {
         }            
         retVal.triggers = retVal.dice.filter(die => die.value === 6).length
         retVal.total = newTotal;
+
+        if (game.modules.get("soulbound-core")?.active)
+        {
+            retVal.core = true;
+            retVal.dice.forEach(die => {
+                die.img = `modules/soulbound-core/assets/dice/dice-${die.value}-failed.png`
+                if (die.success)
+                    die.img = `modules/soulbound-core/assets/dice/dice-${die.value}-chat.png`
+                if (die.highlight)
+                    die.img = `modules/soulbound-core/assets/dice/dice-${die.value}-highlight.png`
+            })
+        }
         
         return retVal;
     }

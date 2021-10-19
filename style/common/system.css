@@ -20,6 +20,7 @@
     box-shadow: 0 0 0px #000;
     border:none;
     color: black;
+    border-left: 3px solid var(--color-header-gold)
   }
 
 .sidebar-popout {
@@ -35,11 +36,13 @@
     background-image: url(../../asset/image/header-background.png);
     background-size: cover;
     color: white;
-    box-shadow: 0 0 10px var(--color-active)
+    box-shadow: 0 0 10px var(--color-active);
+    border-bottom: 1px solid goldenrod;
 }
 
 #sidebar-tabs .item.active {
-    border: 1px solid var(--color-active)
+    border: 1px solid var(--color-active);
+    box-shadow: 0 0 6px inset var(--color-active)
 }
 
 
@@ -136,4 +139,18 @@
 
 .directory-item .entity .item{
     border-left: 5px solid black;
+}
+
+.journal-image img{
+    border: none
+} 
+
+.journal-image {
+    display: flex;
+    width:100%;
+
+}
+
+.journal-image.centered {
+    justify-content: center;
 }

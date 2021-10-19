@@ -6,6 +6,9 @@
         </div>
         <div class="diceContainer">
             {{#each result.dice as |dice|}}
+            {{#if ../result.core}}
+            <img class="diceImg" src="{{dice.img}}">
+            {{else}}
             {{#if dice.highlight}}
             <div class="diceHighlight">
                 <div class="diceLabel">
@@ -25,6 +28,7 @@
                     {{dice.value}}
                 </div>
             </div>
+            {{/if}}
             {{/if}}
             {{/if}}
             {{/each}}

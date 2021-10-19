@@ -4,7 +4,7 @@ export default class AOSUtility {
             if (speaker.actor)
                 return game.actors.get(speaker.actor)
             else if (speaker.token && speaker.scene)
-                return game.scenes.get(speaker.scenes).tokens.get(speaker.token)
+                return game.scenes.get(speaker.scene).tokens.get(speaker.token)
             else
                 throw "Could not find speaker"
         }

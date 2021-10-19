@@ -21,9 +21,9 @@ select:focus {
 select {
     border-radius: 0px;
     border: 1px solid var(--color-header-gold);
-    background: url(../../asset/image/input-bg.jpg);
+    /*background: url(../../asset/image/input-bg.jpg);
     background-size: 100%;
-    background-position: 0px 0px;
+    background-position: 0px 0px;*/
 }
 
 #block-tabs > .item.active {
@@ -179,6 +179,9 @@ li.folder > .folder-header .create-folder,
     background: url(../../asset/image/background.jpg) repeat;
 }
 
+.window-app.image-popout .window-content {
+    background: url(../../asset/image/background.jpg) repeat;
+}
 .age-of-sigmar-soulbound.dialog {
     display: flex;
     flex-direction: column;
@@ -358,7 +361,7 @@ li.folder > .folder-header .create-folder,
 .editor,
 .editor-content {
   font-family: var(--font-text);
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-text);
 }
 
@@ -375,6 +378,16 @@ li.folder > .folder-header .create-folder,
   line-height: 28px;
 }
 
+.journal-sheet input{
+  font-family: var(--font-header);
+  color : var(--color-header-gold);
+  text-align: center;
+  border: 2px solid var(--color-header-gold);
+  border-left: 0px;
+  border-right: 0px;
+  border-radius: 0px;
+}
+
 .editor h2,
 .editor-content h2 { 
   font-family: var(--font-header);
@@ -387,7 +400,7 @@ li.folder > .folder-header .create-folder,
 .editor h3,
 .editor-content h3 { 
   font-family: var(--font-header);
-  font-size : 30px;
+  font-size : 28px;
   font-variant: small-caps;
   color: var(--color-header-blue);
 }
@@ -395,11 +408,22 @@ li.folder > .folder-header .create-folder,
 .editor .block h3,
 .editor-content .block h3 { 
   font-family: var(--font-header);
+  margin: 20px 0px;
   text-align: center;
-  text-transform: uppercase;
+  font-variant: small-caps;
   font-size: 24px;
   border: none;
   color: var(--color-header-gold)
+}
+
+.editor-content .sidebar,
+.editor .sidebar {
+    border-left: 3px solid darkgoldenrod
+}
+
+.editor-content .sidebar h3,
+.editor .sidebar h3 {
+    font-size: initial;
 }
 
 .editor  h4,
@@ -430,16 +454,41 @@ li.folder > .folder-header .create-folder,
     border: 5px solid transparent;
     border-image: url(../../asset/image/sidebar-border.png) 8 8 8 8 repeat repeat;
     margin-right: 10px;
-}
+} 
 
-.editor .block::before,
+/* .editor .block::before,
 .editor-content .block::before {
     content: "";
     background-image: url(../../asset/image/block-top.png) ;
+} */
+
+.editor table,
+.editor-content table {
+    /*background: url(../../asset/image/input-bg.jpg);
+    background-size: fill;*/
+    border: 1px solid var(--color-header-gold)
+}
+
+.editor table td,
+.editor-content table td {
+    border: 1px solid var(--color-header-gold)
+}
+
+.editor table .table-header,
+.editor-content table .table-header {
+    background: url(../../asset/image/header-background.png);
+    background-size: cover;
+    text-transform: uppercase;
+    color: white;
+    font-size: 20px;
+    font-family: var(--font-header);
+}
+table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.1);
 }
 
 
-#pause {
+#controls .control-tool,
     #controls .scene-control {
         color: white;
     background: url(../../asset/image/header.jpg) repeat;
@@ -474,6 +523,10 @@ li.folder > .folder-header .create-folder,
     background: url(../../asset/image/header.jpg) repeat;
 }
 
+#navigation #scene-list .scene.context {
+    border: 1px solid var(--color-active);
+}
+
 #navigation #nav-toggle {
     background: url(../../asset/image/header.jpg) repeat;
     background-size: 50%;
@@ -496,4 +549,114 @@ li.folder > .folder-header .create-folder,
     font-family: var(--font-sidebar);
     color: white;
     background: url(../../asset/image/header-background.png) repeat;
+    background-size : 100%;
+}
+
+#hotbar .macro {
+    border: 1px solid var(--color-header-gold)
+}
+
+#hotbar .macro:hover {
+    box-shadow: 0 0 10px var(--color-header-gold) inset
+}
+
+#hotbar .macro.active:hover {
+    border: 1px solid var(--color-active);
+}
+
+#hotbar #hotbar-directory-controls,
+#hotbar #hotbar-page-controls {
+    border: 2px solid var(--color-header-gold)
+}
+
+textarea:focus {
+    box-shadow: 0 0 6px var(--color-active)
+}
+
+
+button {
+    width: 100%;
+    margin: 0 1px;
+    background: url(../../asset/image/header-background-vertical.png) repeat;
+    border: 3px solid var(--color-header-gold);
+    border-radius: 0px;
+    font-size: 14px;
+    line-height: 28px;
+    color: white;
+    font-family: var(--font-sidebar);
+}
+
+form button {
+    background: url(../../asset/image/header-background-vertical.png) repeat;
+    border: 3px solid var(--color-header-gold);
+}
+
+.dialog .dialog-buttons button {
+    background: url(../../asset/image/header-background-vertical.png) repeat;
+    border: 3px solid var(--color-header-gold);
+    /*margin: 5px;*/
+}
+
+.dialog .dialog-buttons button.default {
+    box-shadow: 0 0 10px inset var(--color-active);
+    background: url(../../asset/image/header-background-vertical.png) repeat;
+    border: 3px solid var(--color-header-gold);
+}
+
+button:hover {
+    box-shadow: 0 0 10px var(--color-active);
+    border: 3px solid var(--color-header-gold);
+}
+
+button:disabled {
+    color: white;
+    opacity : 0.5;
+}
+
+.filepicker .current-dir button {
+    background: url(../../asset/image/header-background-vertical.png) repeat;
+    border: 1px solid var(--color-header-gold);
+}
+
+
+.sheet footer.sheet-footer > button {
+    margin: 5px;
+}
+
+#chat-controls .roll-type-select,
+.directory .directory-header .header-search input {
+    background: none;
+}
+
+.directory .action-buttons button {
+    line-height: 20px;
+}
+
+a.entity-link,
+a.inline-roll {
+    background: none;
+    border: 1px solid var(--color-header-gold);
+    color: darkslategrey
+}
+
+a.entity-link i,
+a.inline-roll i {
+    color: darkslategrey;
+    vertical-align: middle;
+}
+.editor .block a.entity-link i,
+.editor-content .block a.entity-link i {
+    color: var(--color-active)
+} 
+
+.editor .block a.entity-link,
+.editor-content .block a.entity-link {
+    color: white;
+}
+
+#settings #game-details {
+    color: white;
+    background: url(../../asset/image/header-background.png) ;
+    background-size: cover;
+    outline: 3px solid var(--color-header-gold);
 }

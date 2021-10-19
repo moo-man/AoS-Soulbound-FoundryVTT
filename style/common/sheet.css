@@ -113,11 +113,10 @@
 }
 
 .age-of-sigmar-soulbound.sheet .avatar {
-    border: 2px solid #7c6c42;
-    width:72px;
+    /*border: 2px solid #7c6c42;
+     width:72px;
     height:72px;
-    border-radius: 50%;
-    background-color: black;
+    border-radius: 50%; */
     box-shadow: none;
     position: absolute;
     top: 34px;
@@ -129,8 +128,8 @@
     border: 0 none;
     width: 72px;
     height: 72px;
+    object-fit: contain;
     margin: auto;
-    clip-path: circle(34px at center);
 }
 
  .avatar img:hover {
