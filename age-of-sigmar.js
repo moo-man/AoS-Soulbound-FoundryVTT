@@ -21,7 +21,6 @@ Hooks.once("init", () => {
     CONFIG.Item.documentClass = AgeOfSigmarItem;
     CONFIG.ActiveEffect.documentClass = AgeOfSigmarEffect
     CONFIG.ActiveEffect.sheetClass = AgeOfSigmarEffectSheet
-    CONFIG.fontFamilies.push("Alegreya Sans SC");
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
     Actors.registerSheet("age-of-sigmar-soulbound", NpcSheet, { types: ["npc"], makeDefault: true });
@@ -29,7 +28,7 @@ Hooks.once("init", () => {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("age-of-sigmar-soulbound", AgeOfSigmarItemSheet, { makeDefault: true });
     initializeHandlebars();
-
+    
     game.aos = {
         config : AOS,
         migration : Migration,
@@ -43,6 +42,11 @@ Hooks.once("init", () => {
             ItemTraits
         }
     };
+    
+    
+    CONFIG.fontFamilies.push("Quadrant-Regular");
+    CONFIG.defaultFontFamily = "Quadrant-Regular"
+    CONFIG.canvasTextStyle._fontFamily = "Quadrant-Regular"
 
 });
 

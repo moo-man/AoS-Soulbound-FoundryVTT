@@ -40,4 +40,8 @@ function registerHandlebarsHelpers() {
     Handlebars.registerHelper("configLookup", function (obj, key) {
         return game.aos.config[obj][key]
     })
+
+    Handlebars.registerHelper("arrayDisplay", function (array) {
+        return array.join(", ")
+    })
 }

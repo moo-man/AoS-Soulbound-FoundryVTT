@@ -118,14 +118,17 @@
             {{#if item.isAttack}}
                 {{#if item.isActive}}
                     <div class="weapon item table-element" data-item-id="{{item.id}}">
+                        <div class="table-element-img">
+                            <img src={{item.data.img}}/>
+                        </div>
                         <div class="roll-weapon">
                             <div class="table-element-row">
                                 <div class="table-label bold">{{item.name}}</div>
+                                <div class="table-label">{{{arrayDisplay item.Traits}}}</div>
                                 <div class="table-label bold">{{item.damage}} {{localize "WEAPON.DAMAGE"}}</div>
                             </div>
                             <div class="table-element-row">
-                                <div class="table-label">{{item.Traits}}</div>
-                                <div class="table-label">({{item.pool}}d6) + {{item.focus}} F</div>
+                                <div class="table-label">{{{item.description}}}</div>
                             </div>
                         </div>
                     </div>
@@ -143,6 +146,9 @@
         {{#each actor.items as |item|}}
             {{#if item.isPower}}
                 <div class="power item table-element" data-item-id="{{item.id}}">
+                    <div class="table-element-img">
+                        <img src={{item.data.img}}/>
+                    </div>
                     {{#if item.isSpell}}
                         <div class="roll-power">
                             <div class="table-element-row">

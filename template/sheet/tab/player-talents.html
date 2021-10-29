@@ -8,14 +8,19 @@
     <div class="content-wrapper">
         {{#each actor.items as |item|}}
             {{#if item.isTalent}}
-                <div class="talent item table-element-vertical" data-item-id="{{item.id}}">
-                    <div class="table-element-row">
-                        <div class="item-edit table-label bold">{{item.name}}</div>
-                        <div class="button">
-                            <a class="item-control item-delete" title="Delete Talent"><i class="fas fa-trash"></i></a>
-                        </div>
+                <div class="table-element">
+                    <div class="table-element-img">
+                        <img src={{item.data.img}}/>
                     </div>
-                    <div class="table-element-row">{{item.effect}}</div>
+                    <div class="talent item table-element-vertical" data-item-id="{{item.id}}">
+                        <div class="table-element-row">
+                            <div class="item-edit table-label bold">{{item.name}}</div>
+                            <div class="button">
+                                <a class="item-control item-delete" title="Delete Talent"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="table-element-row">{{item.description}}</div>
+                    </div>
                 </div>
             {{/if}}
         {{/each}}
@@ -32,6 +37,8 @@
     <div class="content-wrapper">
         {{#each actor.items as |item|}}
             {{#if item.isSpell}}
+            <div class="table-element">
+                <div class="table-element-img"><img src={{item.data.img}}/></div>
                 <div class="spell item table-element-vertical" data-item-id="{{item.id}}">
                     <div class="table-element-row">
                         <div class="item-edit table-label bold">{{item.name}}</div>
@@ -40,9 +47,10 @@
                         </div>
                     </div>
                     <div class="table-element-row">
-                        <div class="effect">{{item.effect}}</div>
+                        <div class="effect">{{item.description}}</div>
                     </div>
                 </div>
+            </div>
             {{/if}}
         {{/each}}
     </div>
@@ -58,15 +66,20 @@
     <div class="content-wrapper">
         {{#each actor.items as |item|}}
             {{#if item.isMiracle}}
-                <div class="miracle item table-element-vertical" data-item-id="{{item.id}}">
-                    <div class="table-element-row">
-                        <div class="item-edit">{{item.name}}</div>
-                        <div class="button">
-                            <a class="item-control item-delete" title="Delete Miracle"><i class="fas fa-trash"></i></a>
-                        </div>
+                <div class="table-element">
+                    <div class="table-element-img">
+                        <img src={{item.data.img}}/>
                     </div>
-                    <div class="table-element-row">
-                        <div class="effect">{{item.effect}}</div>
+                    <div class="miracle item table-element-vertical" data-item-id="{{item.id}}">
+                        <div class="table-element-row">
+                            <div class="item-edit">{{item.name}}</div>
+                            <div class="button">
+                                <a class="item-control item-delete" title="Delete Miracle"><i class="fas fa-trash"></i></a>
+                            </div>
+                        </div>
+                        <div class="table-element-row">
+                            <div class="effect">{{item.description}}</div>
+                        </div>
                     </div>
                 </div>
             {{/if}}

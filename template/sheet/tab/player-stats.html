@@ -64,6 +64,9 @@
         {{#each actor.items as |item|}}
             {{#if item.isTalent}}
                 <div class="talent item table-element" data-item-id="{{item.id}}">
+                    <div class="segment-img">
+                        <img src={{item.data.img}}/>
+                    </div>
                     <div class="segment-vertical">
                         <div class="table-element-row">
                             <div class="table-label bold">
@@ -71,7 +74,7 @@
                             </div>
                         </div>
                         <div class="table-element-row">
-                            <div class="effect">{{item.effect}}</div>
+                            <div class="effect">{{item.description}}</div>
                         </div>
                     </div>        
                 </div>
