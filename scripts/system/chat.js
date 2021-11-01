@@ -154,6 +154,8 @@ export default class SoulboundChat {
     static activateListeners(html)
     {
         html.on("click" , ".diceClick", SoulboundChat._onDiceClick);
+        html.on("click", ".test-button", SoulboundChat._onTestButtonClick)
+
     }
 
     static _onDiceClick(ev)
@@ -162,6 +164,43 @@ export default class SoulboundChat {
         let msg = game.messages.get(id)
         if (msg.isOwner)
             ev.currentTarget.classList.toggle("selected")
+    }
+
+    static async _onTestButtonClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let testData
+        if (canvas.tokens.controlled.length)
+        {
+            for (let t of canvas.tokens.controlled)
+            {
+                if (test.item.test.skill)
+                    testData = await t.actor.setupSkillTest(test.item.test.skill, test.item.test.attribute)            
+                else 
+                    testData = await t.actor.setupAttributeTest(test.item.test.attribute)  
+                    
+                let chatTest = new game.aos.rollClass.Test(testData)
+                await chatTest.rollTest()
+                chatTest.sendToChat()     
+            }
+        }
+        else if (game.user.character)
+        {
+            if (test.item.test.skill)
+                testData = await game.user.character.setupSkillTest(test.item.test.skill, test.item.test.attribute)            
+            else 
+                testData = await game.user.character.setupAttributeTest(test.item.test.attribute)       
+                
+            let chatTest = new game.aos.rollClass.Test(testData)
+            await chatTest.rollTest()
+            chatTest.sendToChat()     
+        }
+        else
+            return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToTest"))
+
+   
     }
 
 }

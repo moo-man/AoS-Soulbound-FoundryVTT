@@ -22,7 +22,6 @@
             <h4 style="color: var(--color-deadly)">{{localize "CHAT.FAILED" degree=result.degree}}</h4>
             {{/if}}
         </div>
-        {{log result}}
         <div class="content-wrapper">
             {{#if context.focusAllocated}}
             <p style="margin-top: 5px"><strong>{{localize "CHAT.FOCUS"}} :</strong> {{result.focus}} {{localize "CHAT.FOCUS_APPLIED"}}</p>
@@ -71,6 +70,11 @@
 
                 {{/each}}
             </ul>
+        </div>
+        {{/if}}
+        {{#if item.hasTest}}
+        <div class="content-wrapper test-buttons">
+            <button class="test-button" type="button">{{item.Test}} Test</button>
         </div>
         {{/if}}
     </div>

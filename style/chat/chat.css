@@ -107,3 +107,16 @@
 .age-of-sigmar-soulbound.chat p {
     margin: 0 0 4px 4px;
 }
+
+
+.age-of-sigmar-soulbound.chat .test-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.age-of-sigmar-soulbound.chat .test-button{
+    flex: 0.8;
+    margin: 10px;
+    width: 90%;
+}

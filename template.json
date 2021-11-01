@@ -445,7 +445,12 @@
       "target": "",
       "range": "you",
       "duration": "",
-      "test": "",
+      "test": {
+        "attribute" : "",
+        "skill" : "",
+        "dn" : ""
+      },
+      "damage" : "",
       "overcast": "",
       "description": "",
       "effect": "",

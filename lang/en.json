@@ -399,6 +399,7 @@
   "WOUND.DEADLY": "Deadly Wound",
 
   "ERROR.NotEnoughFocus" : "Not enough Focus!",
+  "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
 
   "CONFIGURE.LABEL" : "Configure",
   "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",

@@ -226,9 +226,9 @@ export class AgeOfSigmarActor extends Actor {
         return testData 
     }
 
-    async setupSkillTest(skill) 
+    async setupSkillTest(skill, attribute) 
     {
-        let dialogData = RollDialog._dialogData(this, game.aos.config.skillAttributes[skill], skill)
+        let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill)
         dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
         let testData = await RollDialog.create(dialogData);
         testData.speaker = this.speakerData

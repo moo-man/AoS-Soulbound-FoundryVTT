@@ -117,6 +117,11 @@ export class AgeOfSigmarItem extends Item {
         return {difficulty : parseInt(this.dn.split(":")[0]), complexity : parseInt(this.dn.split(":")[1])}
     }
 
+    get Test() {
+        let test = this.test
+        return `${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }
@@ -144,6 +149,16 @@ export class AgeOfSigmarItem extends Item {
     get isAttack() { return this.isWeapon || (this.isAethericDevice && this.damage) }
     get isRune() { return this.type === "rune" }
     get isEquipment() { return this.type === "equipment" }
+
+    get hasTest() {
+        if (!this.test.dn || !this.test.dn.includes(":"))
+            return false;
+        if (!game.aos.config.attributes[this.test.attribute])
+            return false;
+        if (!game.aos.config.skills[this.test.skill])
+            return false
+        return true;
+    }
 
     // @@@@@@ DATA GETTERS @@@@@@
     get bonus() { return this.data.data.bonus }

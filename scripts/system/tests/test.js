@@ -231,6 +231,7 @@ export default class Test {
         let chatData = {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
+            speaker : this.context.speaker,
             roll: this.roll,
             rollMode: game.settings.get("core", "rollMode"),
             content: html,

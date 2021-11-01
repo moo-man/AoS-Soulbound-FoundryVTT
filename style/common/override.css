@@ -340,6 +340,18 @@ li.folder > .folder-header .create-folder,
     padding: 2px;
 }
 
+.entry-inputs { 
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+.entry-inputs > *{  
+    flex: 1;
+    margin: 3px;
+}
+
+
 .dialog-value {
     display:flex;
     flex-direction: row;
