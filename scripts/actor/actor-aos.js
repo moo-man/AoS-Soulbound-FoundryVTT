@@ -124,9 +124,9 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.wounds.forEach(i => {
             this.combat.health.wounds.value += i.damage;
         })
-        this.items.forEach(i => {
-            i.prepareOwnedData()
-            if (i.isActive)
+        this.items.forEach(item => {
+            item.prepareOwnedData()
+            if (item.isActive)
             {
                 if (item.isArmour) this._computeArmour(item);
                 if (item.isAethericDevice) this._computeAethericDevice(item);
