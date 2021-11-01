@@ -250,9 +250,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             }
         })
         await dialog._render(true)
-        dialog._element.find(".label").select()
-
- 
+        dialog._element.find(".label").select() 
       }
 
     _onEffectEdit(ev)

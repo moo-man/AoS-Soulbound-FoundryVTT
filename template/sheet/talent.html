@@ -1,36 +1,45 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="avatar">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     </div>
     <div class="sheet-body">
         <div class="sheet-header">
-            <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+            <h1><input name="name" type="text" value="{{item.name}}" /></h1>
         </div>
         <div class="sheet-subHeader">
-            <h3>{{localize "ITEM.TALENT"}}</h3>  
+            <h3>{{localize "ITEM.TALENT"}}</h3>
         </div>
         <hr>
-        <hr>
+        <div class="sheet-tabs tabs" data-group="primary">
+            <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+            <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+        </div>
         <div class="sheet-content">
-            <div class="content-box">
-                <div class=content-header>
-                    <h1>{{localize "TITLE.STATS"}}</h1>
+            <div class="tab" data-group="primary" data-tab="description">
+                <div class="content-box">
+                    <div class=content-header>
+                        <h1>{{localize "TITLE.STATS"}}</h1>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "TALENT.REQUIREMENT"}}</h3>
+                            <input title="{{data.requirement}}" name="data.requirement" type="text"
+                                value="{{data.requirement}}" />
+                        </div>
+                    </div>
                 </div>
-                <div class="content-row">
-                    <div class="entry-vertical">
-                        <h3>{{localize "TALENT.REQUIREMENT"}}</h3>
-                        <input title="{{data.requirement}}" name="data.requirement" type="text" value="{{data.requirement}}"/>
+                <hr>
+                <div class="content-box fill">
+                    <div class="content-header">
+                        <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                    </div>
+                    <div class="content-wrapper">
+                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>
-            <hr>
-            <div class="content-box fill">
-                <div class="content-header">
-                    <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
-                </div>
-                <div class="content-wrapper">
-                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
-                </div>
+            <div class="tab" data-tab="effects">
+                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html}}
             </div>
         </div>
     </div>

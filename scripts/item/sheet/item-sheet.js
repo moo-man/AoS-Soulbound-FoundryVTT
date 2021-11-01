@@ -58,11 +58,37 @@ get template() {
       new ItemTraits(this.item).render(true)
     })
 
-    html.find(".effect-create").click(ev => {
+    html.find(".effect-create").click(async ev => {
       if (this.item.isOwned)
         ui.notifications.error("Effects can only be added to world items or actors directly")
 
-      this.object.createEmbeddedDocuments("ActiveEffect", [{ label: "New Effect", icon: "icons/svg/aura.svg" }])
+        let effectData = { label: "New Effect" , icon: (this.item.data.img || "icons/svg/aura.svg")}
+        
+        let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html")
+        let dialog = new Dialog({
+            title : "Quick Effect",
+            content : html,
+            buttons : {
+                "create" : {
+                    label : "Create",
+                    callback : html => {
+                        let mode = 2
+                        let label = html.find(".label").val()
+                        let key = html.find(".key").val()
+                        let value = parseInt(html.find(".modifier").val())
+                        effectData.label = label
+                        effectData.changes = [{key, mode, value}]
+                        this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
+                    }
+                },
+                "skip" : {
+                    label : "Skip",
+                    callback : () => this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
+                }
+            }
+        })
+        await dialog._render(true)
+        dialog._element.find(".label").select() 
     })
 
     html.find(".effect-edit").click(ev => {

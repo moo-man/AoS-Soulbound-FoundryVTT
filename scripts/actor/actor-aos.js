@@ -22,25 +22,35 @@ export class AgeOfSigmarActor extends Actor {
         this.data.update(initData)
     }
 
+    
     prepareData() {
-
+        this.derivedEffects = [];
         super.prepareData();
 
         if (this.type === "player" || this.type === "npc") {
-            this._initializeData();
-            this._computeSkillTotals();
             this._computeItems();
-            this._computeSecondary();
             this._computeRelativeCombatAbilities();
         }
         if (this.type==="npc")
             this._sizeToken()
     }
 
+
+    prepareBaseData() {
+        if (this.type === "player" || this.type === "npc")
+            this._initializeData();
+    }
+
+    prepareDerivedData() {
+        this.applyDerivedEffects()
+        if (this.type === "player" || this.type === "npc")
+        {
+            this._computeSkillTotals();
+            this._computeSecondary();
+        }
+    }
+
     _initializeData() {
-        this.attributes.body.total = this.attributes.body.value;
-        this.attributes.mind.total = this.attributes.mind.value;
-        this.attributes.soul.total = this.attributes.soul.value;
         this.combat.melee.total = 0;
         this.combat.melee.relative = 0;
         this.combat.accuracy.total = 0;
@@ -105,7 +115,7 @@ export class AgeOfSigmarActor extends Actor {
     _computeSkillTotals() {
         for (let skillKey in this.skills) {
             let skill = this.skills[skillKey]
-            skill.total = skill.training + this.attributes[game.aos.config.skillAttributes[skillKey]].total + skill.bonus;
+            skill.total = skill.training + this.attributes[game.aos.config.skillAttributes[skillKey]].value + skill.bonus;
             skill.roll  = skill.training;
         }
     }
@@ -117,57 +127,13 @@ export class AgeOfSigmarActor extends Actor {
         this.items.forEach(i => {
             i.prepareOwnedData()
             if (i.isActive)
-                this._computeGear(i)
+            {
+                if (item.isArmour) this._computeArmour(item);
+                if (item.isAethericDevice) this._computeAethericDevice(item);
+            }
         })
     }
     
-    _computeGear(item) {
-
-        if (item.isActive) {
-            this._computeItemAttributes(item);
-            this._computeItemSkills(item);
-            this._computeItemCombat(item);
-            if (item.isArmour) this._computeArmour(item);
-            if (item.isAethericDevice) this._computeAethericDevice(item);
-        }
-    }
-
-    _computeItemAttributes(item) {
-        let attributes = item.bonus.attributes
-    
-        this.attributes.body.total += attributes.body;
-        this.attributes.mind.total += attributes.mind;
-        this.attributes.soul.total += attributes.soul;
-    }
-
-    /**
-     * Add Bonus from Items to Total for Display to roll for acutally rolling the dice
-     * @param {*} item 
-     */
-    _computeItemSkills(item) {
-        let skills = item.bonus.skills;
-        for(let skill of Object.keys(skills)) {
-            this.skills[skill].roll  += skills[skill];
-            this.skills[skill].total += skills[skill];
-        }
-    }
-
-    _computeItemCombat(item) {
-        let combat = item.bonus.combat
-    
-        this.combat.mettle.max +=             combat.mettle;
-        this.combat.health.toughness.max +=   combat.health.toughness;
-        this.combat.health.wounds.max +=      combat.health.wounds;
-        this.combat.health.wounds.deadly =    this.combat.health.wounds.value >= this.combat.health.wounds.max;
-        this.combat.initiative.total +=       combat.initiative;
-        this.combat.naturalAwareness.total += combat.naturalAwareness;
-        this.combat.melee.total +=            (combat.melee * 2);
-        this.combat.accuracy.total +=         (combat.accuracy * 2);
-        this.combat.defense.total +=          (combat.defense * 2);
-        this.combat.armour.total +=           combat.armour;
-        this.combat.damage +=                 combat.damage;
-    }
-
     _computeArmour(item) {
         if (item.subtype === "shield") {
             // Like below treat shield benefit as an step increase
@@ -205,28 +171,48 @@ export class AgeOfSigmarActor extends Actor {
 
     _computeSecondary() {
         // melee, accuracy and defense bonus is doubled to represent a one step increase
-        this.combat.melee.total +=             this.attributes.body.total + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
-        this.combat.accuracy.total +=          this.attributes.mind.total + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
-        this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
+        this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
+        this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
+        this.combat.defense.total +=           this.attributes.body.value + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
         this.combat.armour.total +=            this.combat.armour.bonus;        
-        this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
-        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
+        this.combat.initiative.total +=        this.attributes.mind.value + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
+        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.value + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
         if(this.autoCalc.toughness) {
-            this.combat.health.toughness.max += this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+            this.combat.health.toughness.max += this.attributes.body.value + this.attributes.mind.value + this.attributes.soul.value + this.combat.health.toughness.bonus;
         } else if(!this.isSwarm) {
             this.combat.health.toughness.max = 1;
         }
         
         if(this.autoCalc.wounds) {
-            this.combat.health.wounds.max += Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
+            this.combat.health.wounds.max += Math.ceil((this.attributes.body.value + this.attributes.mind.value + this.attributes.soul.value) / 2) + this.combat.health.wounds.bonus;
             this.combat.health.wounds.deadly = this.combat.health.wounds.value >= this.combat.health.wounds.max;
         }
 
         if(this.autoCalc.mettle) {
-            this.combat.mettle.max += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
+            this.combat.mettle.max += Math.ceil(this.attributes.soul.value / 2) + this.combat.mettle.bonus;
         }
+    }
+
+    applyDerivedEffects() {
+        this.derivedEffects.forEach(change => {
+            change.effect.fillDerivedData(this, change)
+            const modes = CONST.ACTIVE_EFFECT_MODES;
+            switch ( change.mode ) {
+                case modes.CUSTOM:
+                return change.effect._applyCustom(this, change);
+                case modes.ADD:
+                return change.effect._applyAdd(this, change);
+                case modes.MULTIPLY:
+                return change.effect._applyMultiply(this, change);
+                case modes.OVERRIDE:
+                return change.effect._applyOverride(this, change);
+                case modes.UPGRADE:
+                case modes.DOWNGRADE:
+                return change.effect._applyUpgrade(this, change);
+            }
+        })
     }
 
 
