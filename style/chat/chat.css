@@ -59,7 +59,7 @@
 	width: 36px;
 	height: 36px;
 	margin: 2px 2px;
-    background-color: darkblue;
+    background-color: #00008b;
     border-radius: 4px;
 }
 
@@ -70,12 +70,16 @@
 	margin: 2px 2px;
 }
 
+.age-of-sigmar-soulbound.chat .selected .diceImg {
+    outline: 3px solid var(--color-active)
+}
+
 .age-of-sigmar-soulbound.chat .diceHighlight {
 	flex:none;
     width: 36px;
 	height: 36px;
 	margin: 2px 2px;
-    background-color: goldenrod;
+    background-color: #daa520;
     border-radius: 4px;
 }
 .age-of-sigmar-soulbound.chat .diceFailed {

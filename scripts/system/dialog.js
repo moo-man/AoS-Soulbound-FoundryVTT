@@ -41,7 +41,7 @@ export class RollDialog extends Dialog {
         const skill = html.find("#skill")[0].value;
         const doubleTraining = html.find("#double-training")[0].checked;
         const doubleFocus = html.find("#double-focus")[0].checked;
-        const allocation = html.find("#allocation")[0].value;
+        const allocation = []//html.find("#allocation")[0].value;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
         return { attribute, skill, doubleTraining, doubleFocus, allocation, bonusDice }
     }
@@ -68,7 +68,6 @@ export class RollDialog extends Dialog {
         this.effectValues = {
             "difficulty" : null,
             "complexity" : null,
-            "allocation" : null,
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
@@ -89,16 +88,13 @@ export class RollDialog extends Dialog {
             this.userEntry.complexity = parseInt(ev.target.value)
             this.applyEffects()
         })[0]
-        this.inputs.allocation = html.find('#allocation').change(ev => {
-            this.userEntry.allocation = ev.target.value
-            this.applyEffects()
-        })[0]
+
         this.inputs["double-training"] = html.find('#double-training').change(ev => {
-            this.userEntry.double = ev.target.value
+            this.userEntry["double-training"] = $(ev.currentTarget).is(":checked")
             this.applyEffects()
         })[0]
         this.inputs["double-focus"] = html.find('#double-focus').change(ev => {
-            this.userEntry.double = ev.target.value
+            this.userEntry["double-focus"] = $(ev.currentTarget).is(":checked")
             this.applyEffects()
         })[0]
         this.inputs.bonusDice = html.find('#bonusDice').change(ev => {
@@ -112,7 +108,6 @@ export class RollDialog extends Dialog {
         this.userEntry = {
             "difficulty" : parseInt(this.inputs?.difficulty?.value),
             "complexity" : parseInt(this.inputs?.complexity?.value),
-            "allocation" : this.inputs.allocation.value,
             "double-training" : this.inputs["double-training"].checked,
             "double-focus" : this.inputs["double-focus"].checked,
             "bonusDice" : parseInt(this.inputs.bonusDice.value),
@@ -126,7 +121,6 @@ export class RollDialog extends Dialog {
         this.effectValues = {
             "difficulty" : null,
             "complexity" : null,
-            "allocation" : null,
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null
@@ -145,8 +139,6 @@ export class RollDialog extends Dialog {
                 else if (c.value == "false")
                     this.effectValues[c.key] = false
             }
-            else if (c.key == "allocation" && Object.keys(game.aos.config.allocationTypes).includes(c.value))
-                this.effectValues[c.key] = c.value
         }
         this.applyEffects()
     }
@@ -311,8 +303,8 @@ export class PowerDialog extends RollDialog {
                             let testData = this.extractDialogData(html)
                             testData.itemId = data.power.id
                             testData.dn = {
-                                difficulty : parseInt(html.find("[name='difficulty']")[0].value),
-                                complexity : parseInt(html.find("[name='complexity']")[0].value),
+                                difficulty : parseInt(html.find("#difficulty")[0].value),
+                                complexity : parseInt(html.find("#complexity")[0].value),
                                 name : data.power.name
                             }
                             resolve(testData);

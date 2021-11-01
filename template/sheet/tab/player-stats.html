@@ -29,7 +29,7 @@
                     <div class="content-row" style="align-items: center;">
                         <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{localize skill.label}}</a>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
-                        <div class="sheet-table-value">({{skill.total}})</div>
+                        <div class="sheet-table-value">({{skill.value}})</div>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
                     </div>
                 {{/if}}
@@ -47,7 +47,7 @@
                     <div class="content-row" style="align-items: center;">
                         <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{localize skill.label}}</a>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
-                        <div class="sheet-table-value">({{skill.total}})</div>
+                        <div class="sheet-table-value">({{skill.value}})</div>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
                     </div>
                 {{/if}}
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="table-element-row">
-                            <div class="effect">{{item.description}}</div>
+                            <div class="effect">{{{item.description}}}</div>
                         </div>
                     </div>        
                 </div>

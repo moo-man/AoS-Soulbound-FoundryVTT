@@ -115,8 +115,7 @@ export class AgeOfSigmarActor extends Actor {
     _computeSkillTotals() {
         for (let skillKey in this.skills) {
             let skill = this.skills[skillKey]
-            skill.total = skill.training + this.attributes[game.aos.config.skillAttributes[skillKey]].value + skill.bonus;
-            skill.roll  = skill.training;
+            skill.value = skill.training + this.attributes[game.aos.config.skillAttributes[skillKey]].value + skill.bonus;
         }
     }
 

@@ -125,9 +125,8 @@
   "PARTY.AllyOrEnemy" : "Ally or Enemy?",
 
 
-  "CHAT.SUCCEED": "Succeeded with",
-  "CHAT.SUCCESS": "additional successes",
-  "CHAT.FAILED": "Failed, missing",
+  "CHAT.SUCCESS": "Succeeded with {degree} additional successes",
+  "CHAT.FAILED": "Failed, missing {degree}",
   "CHAT.FOCUS": "Focus",
   "CHAT.DAMAGE": "Damage",
   "CHAT.TRAITS": "Traits",
@@ -137,7 +136,10 @@
   "CHAT.RESIST": "Test",
   "CHAT.DURATION": "Duration",
   "CHAT.FOCUS_APPLIED" : "applied to highlighted dice",
+  "CHAT.FOCUS_AVAILABLE" : "{focus} available.",
   "CHAT.ARMOUR_SUBTRACTED" : "after armour of",
+  "CHAT.APPLY_FOCUS" : "Apply Focus",
+  "CHAT.RESET_FOCUS" : "Reset Focus",
   "CHAT.APPLY_DAMAGE" : "Apply Damage",
   "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage",
   "CHAT.APPLY_CLEAVE_DAMAGE" : "Apply Cleave Damage",
@@ -395,6 +397,8 @@
   "WOUND.LIGHT": "Minor Wound",
   "WOUND.SERIOUS": "Serious Wound",
   "WOUND.DEADLY": "Deadly Wound",
+
+  "ERROR.NotEnoughFocus" : "Not enough Focus!",
 
   "CONFIGURE.LABEL" : "Configure",
   "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",

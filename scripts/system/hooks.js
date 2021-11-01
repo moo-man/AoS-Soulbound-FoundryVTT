@@ -1,6 +1,6 @@
 import AOS_MacroUtil from "./macro.js"
 
-import * as chat from "./chat.js";
+import SoulboundChat from "./chat.js";
 import Migration from "./migrations.js";
 
 export default function registerHooks() {
@@ -35,7 +35,9 @@ export default function registerHooks() {
         _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
     });
 
-    Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
+    Hooks.on("getChatLogEntryContext", SoulboundChat.addChatMessageContextOptions);
+
+    Hooks.on("renderChatLog", (app, html) => SoulboundChat.activateListeners(html))
 
     /**
      * Create a macro when dropping an entity on the hotbar
