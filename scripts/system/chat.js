@@ -155,6 +155,7 @@ export default class SoulboundChat {
     {
         html.on("click" , ".diceClick", SoulboundChat._onDiceClick);
         html.on("click", ".test-button", SoulboundChat._onTestButtonClick)
+        html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick)
 
     }
 
@@ -171,15 +172,16 @@ export default class SoulboundChat {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
         let test = msg.getTest();
+        let [difficulty, complexity] = test.itemTest.dn.split(":").map(i=> parseInt(i))
         let testData
         if (canvas.tokens.controlled.length)
         {
             for (let t of canvas.tokens.controlled)
             {
-                if (test.item.test.skill)
-                    testData = await t.actor.setupSkillTest(test.item.test.skill, test.item.test.attribute)            
+                if (test.itemTest.skill)
+                    testData = await t.actor.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
                 else 
-                    testData = await t.actor.setupAttributeTest(test.item.test.attribute)  
+                    testData = await t.actor.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})  
                     
                 let chatTest = new game.aos.rollClass.Test(testData)
                 await chatTest.rollTest()
@@ -188,10 +190,10 @@ export default class SoulboundChat {
         }
         else if (game.user.character)
         {
-            if (test.item.test.skill)
-                testData = await game.user.character.setupSkillTest(test.item.test.skill, test.item.test.attribute)            
+            if (test.itemTest.skill)
+                testData = await game.user.character.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
             else 
-                testData = await game.user.character.setupAttributeTest(test.item.test.attribute)       
+                testData = await game.user.character.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})       
                 
             let chatTest = new game.aos.rollClass.Test(testData)
             await chatTest.rollTest()
@@ -201,6 +203,24 @@ export default class SoulboundChat {
             return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToTest"))
 
    
+    }
+
+    static async _onSpellFailClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let diceNum = test.testData.dn.complexity - test.result.successes;
+        let formula  = `${diceNum}d6`
+        let tableRoll = new Roll(formula).roll()
+        let table = game.tables.getName("The Price of Failure")
+        if (table)
+        {
+            let {roll, results} =  await table.roll({roll : tableRoll})
+            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.speakerData})
+        }
+        else
+            ui.notifications.error("No Table Found")
     }
 
 }

@@ -72,10 +72,15 @@
             </ul>
         </div>
         {{/if}}
-        {{#if item.hasTest}}
+        {{#if hasTest}}
         <div class="content-wrapper test-buttons">
-            <button class="test-button" type="button">{{item.Test}} Test</button>
+            <button class="test-button" type="button">{{ItemTestDisplay}}</button>
         </div>
         {{/if}}
+        {{#if spellFailed}}
+        <div class="content-wrapper test-buttons">
+            <button class="spell-fail-button" type="button">The Price of Failure</button>
+        </div>
+        {{/if }}
     </div>
 </div>

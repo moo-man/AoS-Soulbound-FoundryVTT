@@ -119,7 +119,7 @@ export class AgeOfSigmarItem extends Item {
 
     get Test() {
         let test = this.test
-        return `${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@

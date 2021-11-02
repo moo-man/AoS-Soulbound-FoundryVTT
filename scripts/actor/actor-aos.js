@@ -217,30 +217,31 @@ export class AgeOfSigmarActor extends Actor {
 
 
     //#region Rolling Setup
-    async setupAttributeTest(attribute) 
+    async setupAttributeTest(attribute, options={}) 
     {
-        let dialogData = RollDialog._dialogData(this, attribute)
+        console.log(options)
+        let dialogData = RollDialog._dialogData(this, attribute, null, options)
         dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} Test`
         let testData = await RollDialog.create(dialogData);
         testData.speaker = this.speakerData
         return testData 
     }
 
-    async setupSkillTest(skill, attribute) 
+    async setupSkillTest(skill, attribute, options={}) 
     {
-        let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill)
+        let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill, options)
         dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
         let testData = await RollDialog.create(dialogData);
         testData.speaker = this.speakerData
         return testData 
     }
 
-    async setupCombatTest(weapon)
+    async setupCombatTest(weapon, options)
     {
         if (typeof weapon == "string")
             weapon = this.items.get(weapon)
 
-        let dialogData = CombatDialog._dialogData(this, weapon)
+        let dialogData = CombatDialog._dialogData(this, weapon, options)
         dialogData.title = `${weapon.name} Test`
         let testData = await CombatDialog.create(dialogData);
         testData.speaker = this.speakerData

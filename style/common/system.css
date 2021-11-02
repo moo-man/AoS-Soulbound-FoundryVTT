@@ -62,13 +62,14 @@
 }
 
 #chat-log .message {
-    padding: 0px 0px 2px 0px;
+    /* padding: 0px 0px 2px 0px;
     margin: 6px 8px;
     border-radius: 0px;
     box-shadow: none;
     font-size: 14px;
     font-weight: 500;
-    border:none;
+    border:none; */
+    border: 2px solid darkslategrey;
     background: none;
 }
   

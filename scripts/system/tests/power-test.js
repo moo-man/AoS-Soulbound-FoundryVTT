@@ -28,4 +28,9 @@ export default class PowerTest extends Test{
     get power() {
         return this.item
     }
+
+    get spellFailed()
+    {
+        return !this.result.success
+    }
 }

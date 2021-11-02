@@ -500,6 +500,7 @@ table tr:nth-child(even) {
 }
 
 
+/* .placeable-hud .control-icon, */
 #controls .control-tool,
     #controls .scene-control {
         color: white;
@@ -507,6 +508,16 @@ table tr:nth-child(even) {
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
+/* .placeable-hud .control-icon.active {
+    border: 1px solid var(--color-active);
+}
+
+.placeable-hud input[type="text"]
+{
+    background: url(../../asset/image/background.jpg) repeat;
+    color: black;
+    font-family: var(--font-header)
+} */
 
 #controls .control-tool.active,
 #controls .scene-control.active {

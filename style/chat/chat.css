@@ -115,8 +115,9 @@
     justify-content: center;
 }
 
-.age-of-sigmar-soulbound.chat .test-button{
+.age-of-sigmar-soulbound.chat .test-buttons > button{
     flex: 0.8;
     margin: 10px;
+    font-size: 13px;
     width: 90%;
 }

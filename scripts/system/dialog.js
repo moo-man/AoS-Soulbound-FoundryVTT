@@ -47,16 +47,16 @@ export class RollDialog extends Dialog {
     }
 
     
-    static _dialogData(actor, attribute, skill)
+    static _dialogData(actor, attribute, skill, options={})
     {
         return {
             attributes : actor.attributes,
             skills : actor.skills,
             skillKey : skill,
             attributeKey: skill ? game.aos.config.skillAttributes[skill] : attribute,
-            difficulty : 4,
-            complexity : 1,
-            bonusDice: 0, // some spells or miracles grant bonus dice 
+            difficulty : options.difficulty || 4,
+            complexity : options.complexity || 1,
+            bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
             effects : actor.effects.filter(i => i.hasRollEffect)
         }
     }

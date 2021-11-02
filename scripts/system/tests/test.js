@@ -301,4 +301,21 @@ export default class Test {
     get message() {
         return game.messages.get(this.context.messageId);
     }
+
+    get itemTest() {
+        let DN = this.item.test.dn
+        if (DN.includes("S"))
+            DN = DN.replace("S", 1 + this.result.degree)
+        
+        return {dn : DN, attribute : this.item.test.attribute, skill : this.item.test.skill} 
+    }
+
+    get ItemTestDisplay() {
+        let test = this.itemTest;
+        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+    }
+
+    get hasTest() {
+        return this.result.success && this.item.hasTest
+    }
 }
