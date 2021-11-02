@@ -444,7 +444,10 @@
       "dn": "",
       "target": "",
       "range": "you",
-      "duration": "",
+      "duration": {
+        "value" : null,
+        "unit" : "instant"
+      },
       "test": {
         "attribute" : "",
         "skill" : "",

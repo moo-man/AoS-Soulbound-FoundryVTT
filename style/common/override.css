@@ -350,6 +350,9 @@ li.folder > .folder-header .create-folder,
     flex: 1;
     margin: 3px;
 }
+.entry-inputs > input {
+    flex: 0.5
+}
 
 
 .dialog-value {
