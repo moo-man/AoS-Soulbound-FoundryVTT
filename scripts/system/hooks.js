@@ -146,7 +146,7 @@ export default function registerHooks() {
         if (effect.parent?.type == "spell" || effect.parent?.type == "miracle")
         {
             effect.data.update({"transfer" : false})
-            effect.data.update({"label" : effect.parent.name})
+            //effect.data.update({"label" : effect.parent.name})
         }
     })
 

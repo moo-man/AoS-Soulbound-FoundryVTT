@@ -73,6 +73,12 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
     }
 
+    
+    get isCondition()
+    {
+      return CONFIG.statusEffects.map(i => i.id).includes(this.getFlag("core", "statusId"))
+    }
+
     static get numericTypes() {
         return ["difficulty",
             "complexity",

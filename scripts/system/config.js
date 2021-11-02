@@ -129,12 +129,13 @@ AOS.ratings = {
     6 : "ABILITIES.EXTRAORDINARY_NUM"
 }
 
-
-AOS.allocationTypes = {
-   "manual" :  "DIALOG.MANUAL",
-   "success" : "DIALOG.SUCCESSES",
-   "sixes" :  "DIALOG.SIXES",
-   "trigger" :  "DIALOG.TRIGGER"
+AOS.durations = {
+    "instant" : "Instant",
+    "round"  : "Round",
+    "minute" :  "Minute",
+    "hour" : "Hour",
+    "day" : "Day",
+    "permanent" : "Permanent"
 }
 
 AOS.partyItemCategories = {
@@ -190,7 +191,7 @@ CONFIG.statusEffects = [
     {
         id : "blinded",
         label : "Blinded",
-        icon : "icons/svg/blind.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
             {key: "difficulty", mode : 0, value : 2},
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
@@ -202,38 +203,38 @@ CONFIG.statusEffects = [
     {
         id : "charmed",
         label : "Charmed",
-        icon : "icons/svg/heal.svg"
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/charmed.svg"
     },
     {
         id : "deafened",
         label : "Deafened",
-        icon : "icons/svg/deaf.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
         changes : [{key: "bonusDice", mode : 0, value : -1}],
         flags : { "age-of-sigmar-soulbound.description" : "The dice pool for any Tests that require hearing is reduced by 1"}
     },
     {
         id : "frightened",
         label : "Frightened",
-        icon : "icons/svg/terror.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
         changes : [{key: "bonusDice", mode : 0, value : -1}],
         flags : { "age-of-sigmar-soulbound.description" : "While the source of fear is within line of sight, roll one less die for all Tests"}
     },
     {
         id : "incapacitated",
         label : "Incapacitated",
-        icon : "icons/svg/cancel.svg"
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/incapacitated.svg"
     },
     {
         id : "poisoned",
         label : "Poisoned",
-        icon : "icons/svg/poison.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
         changes : [{key: "bonusDice", mode : 0, value : -1}],
         flags : { "age-of-sigmar-soulbound.description" : "The dice pool for all Tests are reduced by 1"}
     },
     {
         id : "prone",
         label : "Prone",
-        icon : "icons/svg/falling.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
         changes : [
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
             {key: "data.combat.accuracy.bonus", mode : 2, value : -1}
@@ -242,7 +243,7 @@ CONFIG.statusEffects = [
     {
         id : "restrained",
         label : "Restrained",
-        icon : "icons/svg/net.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
         changes : [
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
             {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
@@ -252,7 +253,7 @@ CONFIG.statusEffects = [
     {
         id : "stunned",
         label : "Stunned",
-        icon : "icons/svg/stoned.svg",
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
             {key: "data.combat.speeds.foot", mode : 5, value : "slow"},
             {key: "data.combat.defence.bonus", mode : 2, value : -1}
@@ -261,7 +262,7 @@ CONFIG.statusEffects = [
     {
         id : "unconscious",
         label : "Unconscious",
-        icon : "icons/svg/unconscious.svg"
+        icon : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
     }
 ]
 

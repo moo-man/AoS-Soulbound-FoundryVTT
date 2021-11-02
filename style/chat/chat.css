@@ -120,4 +120,8 @@
     margin: 10px;
     font-size: 13px;
     width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+

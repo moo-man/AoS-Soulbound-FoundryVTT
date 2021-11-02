@@ -302,6 +302,10 @@ export default class Test {
         return game.messages.get(this.context.messageId);
     }
 
+    get effects() {
+        return this.item.effects.filter(e => !e.data.transfer)
+    }
+
     get itemTest() {
         let DN = this.item.test.dn
         if (DN.includes("S"))

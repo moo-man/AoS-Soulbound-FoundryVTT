@@ -400,6 +400,7 @@
 
   "ERROR.NotEnoughFocus" : "Not enough Focus!",
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
+  "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
 
   "CONFIGURE.LABEL" : "Configure",
   "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",

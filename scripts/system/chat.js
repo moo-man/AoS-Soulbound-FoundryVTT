@@ -156,6 +156,7 @@ export default class SoulboundChat {
         html.on("click" , ".diceClick", SoulboundChat._onDiceClick);
         html.on("click", ".test-button", SoulboundChat._onTestButtonClick)
         html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick)
+        html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick)
 
     }
 
@@ -223,6 +224,39 @@ export default class SoulboundChat {
             ui.notifications.error("No Table Found")
     }
 
+    static async _onEffectButtonClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let effectId = $(ev.currentTarget).attr("data-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let item = test.item
+        let effect = item.effects.get(effectId).toObject()
+        effect.origin = test.actor.uuid
+        let duration = item.duration
+
+        if (duration.unit == "round")
+            effect.duration.rounds = parseInt(duration.value)
+        else if  (duration.unit == "minute")
+            effect.duration.seconds = parseInt(duration.value) * 60
+        else if (duration.unit == "hour")
+            effect.duration.seconds = parseInt(duration.value) * 60 * 60
+        else if (duration.unit == "day")
+            effect.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+
+        if (canvas.tokens.controlled.length)
+        {
+            for (let t of canvas.tokens.controlled)
+                t.actor.createEmbeddedDocuments("ActiveEffect", [effect])
+        }
+        else if (game.user.character)
+            game.user.character.createEmbeddedDocuments("ActiveEffect", [effect])
+
+        else
+            return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToApply"))
+
+   
+    }
 }
 
 

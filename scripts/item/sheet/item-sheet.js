@@ -44,6 +44,15 @@ get template() {
   getData() {
     const data = super.getData();
     data.data = data.data.data; // project system data so that handlebars has the same name and value paths
+    data.conditions = CONFIG.statusEffects.map(i => {
+      return {
+          label : i.label,
+          key : i.id,
+          img : i.icon,
+          existing : this.item.hasCondition(i.id)
+      }
+  })
+
     return data;
   }
 
@@ -62,9 +71,9 @@ get template() {
       if (this.item.isOwned)
         ui.notifications.error("Effects can only be added to world items or actors directly")
 
-        let effectData = { label: "New Effect" , icon: (this.item.data.img || "icons/svg/aura.svg")}
+        let effectData = { label: this.item.name , icon: (this.item.data.img || "icons/svg/aura.svg")}
         
-        let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html")
+        let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html", effectData)
         let dialog = new Dialog({
             title : "Quick Effect",
             content : html,
@@ -99,6 +108,15 @@ get template() {
     html.find(".effect-delete").click(ev => {
       let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
       this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
+    })
+
+    html.find(".condition-toggle").click(ev => {
+        let key = $(ev.currentTarget).parents(".condition").data("key")
+        if (this.item.hasCondition(key))
+            this.item.removeCondition(key)
+        else 
+            this.item.addCondition(key);
+
     })
   }
 }

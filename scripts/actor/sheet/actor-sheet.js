@@ -129,9 +129,17 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     {
         let effects = {}
 
-        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled)
+        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled && !i.isCondition)
         effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled)
-        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled)
+        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled && !i.isCondition)
+        effects.conditions = CONFIG.statusEffects.map(i => {
+            return {
+                label : i.label,
+                key : i.id,
+                img : i.icon,
+                existing : this.actor.hasCondition(i.id)
+            }
+        })
 
         sheetData.effects = effects;
     }
@@ -165,6 +173,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".wound-delete").click(this._onWoundDelete.bind(this));
         html.find(".wound-edit").change(this._onWoundEdit.bind(this));
         html.find(".speed-config").click(this._onSpeedConfigClick.bind(this));
+        html.find(".condition-toggle").click(this._onConditionToggle.bind(this));
     }
 
     _getHeaderButtons() {
@@ -358,5 +367,15 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     
     _onSpeedConfigClick(ev) {
         new SpeedConfig(this.actor).render(true)
+    }
+
+    _onConditionToggle(ev)
+    {
+        let key = $(ev.currentTarget).parents(".condition").data("key")
+        if (this.actor.hasCondition(key))
+            this.actor.removeCondition(key)
+        else 
+            this.actor.addCondition(key);
+
     }
 }
