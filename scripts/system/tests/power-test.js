@@ -9,20 +9,27 @@ export default class PowerTest extends Test{
             this.testData.combat = data.combat
     }
 
-    _computeResult()
+    computeResult()
     {
-        let result = super._computeResult()
+        let result = super.computeResult()
         if (this.item.type == "spell")
         {
             result.overcast = this.power.overcast;
             result.duration = this.power.duration;
-            result.resist = this.power.test;
-            let complexity = result.total - this.testData.dn.complexity + 1 // complexity of spelltest is 1 + successes Core p.266 
-            if(result.resist !== null && complexity > 0) {
-                result.resist = result.resist.replace(/:s/ig, ":" + complexity);
-            }
         }
+        result.damage = this.computeDamage(result);
         return result
+    }
+
+    computeDamage(result) {
+        let damage = {}
+        if (this.item.type == "spell" && result.success)
+        {
+            let formula = this.item.damage;
+            formula = formula.toLowerCase().replace("s", result.degree)
+            damage.total = eval(formula)
+        }
+        return damage
     }
 
     get power() {

@@ -37,16 +37,8 @@
             <p style="margin-top: 5px"><strong>{{localize "CHAT.TRAITS"}} :</strong> {{result.traits}}</p>
             {{/if}}
 
-            {{#if result.effect}}
-            <p style="margin-top: 5px"><strong>{{localize "CHAT.EFFECT"}} :</strong> {{result.effect}}</p>
-            {{/if}}
-
             {{#if result.duration}}
-            <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration}}</p>
-            {{/if}}
-
-            {{#if result.resist}}
-            <p style="margin-top: 5px"><strong>{{localize "CHAT.RESIST"}} :</strong> {{result.resist}}</p>
+            <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration.value}} {{result.duration.unit}} </p>
             {{/if}}
 
             {{#if result.overcast}}

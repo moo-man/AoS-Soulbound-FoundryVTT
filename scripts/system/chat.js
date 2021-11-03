@@ -68,16 +68,27 @@ export default class SoulboundChat {
                 name: "CHAT.APPLY_DAMAGE",
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApplyDamage,
-                callback: li => this.applyChatCardDamage(li, 1)
+                callback: li => SoulboundChat.applyChatCardDamage(li, 1)
             }
         );
+
+        options.push(
+            {
+                name: "CHAT.APPLY_DAMAGE_IGNORE_ARMOUR",
+                icon: '<i class="fas fa-user-minus"></i>',
+                condition: canApplyDamage,
+                callback: li => SoulboundChat.applyChatCardDamage(li, 1,  {ignoreArmour : true})
+            }
+        );
+    
+
         options.push(
             {
                 name: "CHAT.APPLY_DOUBLE_DAMAGE",
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApplyDamage,
-                callback: li => this.applyChatCardDamage(li, 2)
-            }
+                callback: li => SoulboundChat.applyChatCardDamage(li, 2)
+            }   
         );
     
 
@@ -86,7 +97,7 @@ export default class SoulboundChat {
                 name: "CHAT.APPLY_CLEAVE_DAMAGE",
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApplyCleave,
-                callback: li => this.applyCleaveDamage(li)
+                callback: li => SoulboundChat.applyCleaveDamage(li)
             }
         )
         
@@ -96,7 +107,7 @@ export default class SoulboundChat {
                 name: "CHAT.APPLY_REND_DAMAGE",
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApplyRend,
-                callback: li => this.applyRend(li)
+                callback: li => SoulboundChat.applyRend(li)
             }
         )
     
@@ -107,14 +118,14 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyChatCardDamage(li, multiplier) {
+    static applyChatCardDamage(li, multiplier, options) {
         const message = game.messages.get(li.data("messageId"));
         let damage = message.getTest().result.damage.total
         damage *= multiplier;
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
-            return a.applyDamage(damage);
+            return a.applyDamage(damage, options);
         }));
     }
 
@@ -123,7 +134,8 @@ export default class SoulboundChat {
      * @return {Promise}
      */
     static applyCleaveDamage(message) {    
-        let damage = extractChatCardNumber(message, ".cleave-value");
+        let test = message.getTest();
+        let damage = test.result.triggers
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
@@ -136,7 +148,8 @@ export default class SoulboundChat {
      * @return {Promise}
      */
     static applyRend(message) {    
-        let damage = extractChatCardNumber(message, ".rend-value");
+        let test = message.getTest();
+        let damage = test.result.triggers
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;

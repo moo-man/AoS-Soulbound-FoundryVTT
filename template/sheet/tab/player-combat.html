@@ -19,7 +19,7 @@
     <div class="content-row">
         <div class="entry-vertical">
             <h3>{{localize "HEADER.ARMOUR"}}</h3>
-            <div class="sheet-table-valueMain armour"><input name="data.combat.armour.total" type="number" value="{{data.combat.armour.total}}" data-dtype="Number" /></div>
+            <div class="sheet-table-valueMain armour"><input name="data.combat.armour.value" type="number" value="{{data.combat.armour.value}}" data-dtype="Number" /></div>
             <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input type="number" name="data.combat.armour.bonus" data-dtype="Number" value="{{data.combat.armour.bonus}}" /></div></div>
         </div>
         <div class="entry-vertical">
@@ -157,7 +157,7 @@
                             </div>
                             <div class="table-element-row">
                                 <div class="table-label">{{localize "POWER.TARGET"}}: {{item.target}} in {{item.range}} {{localize "POWER.RANGE"}}</div>
-                                <div class="table-label">{{localize "POWER.DURATION"}}: {{item.duration}}</div>
+                                <div class="table-label">{{localize "POWER.DURATION"}}: {{item.duration.value}} {{item.duration.unit}}</div>
                             </div>
                         </div>
                     {{else}}
@@ -168,7 +168,7 @@
                             </div>
                             <div class="table-element-row">
                                 <div class="table-label">{{localize "POWER.TARGET"}}: {{item.target}} in {{item.range}} {{localize "POWER.RANGE"}}</div> 
-                                <div class="table-label">{{localize "POWER.DURATION"}}: {{item.duration}}</div>
+                                <div class="table-label">{{localize "POWER.DURATION"}}: {{item.duration.value}} {{item.duration.unit}}</div>
                             </div>
                         </div>
                     {{/if}}

@@ -57,7 +57,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.accuracy.relative = 0;
         this.combat.defense.total = 0;
         this.combat.defense.relative = 0;
-        this.combat.armour.total = 0;
+        this.combat.armour.value = 0;
         this.combat.health.toughness.max = 0;        
         this.combat.health.wounds.value = 0;
         this.combat.health.wounds.max = 0;
@@ -139,7 +139,7 @@ export class AgeOfSigmarActor extends Actor {
             this.combat.defense.total += (item.benefit * 2);
             this.combat.defense.relative = this._getCombatLadderValue("defense");
         } else {
-            this.combat.armour.total += item.benefit;
+            this.combat.armour.value += item.benefit;
         }
     }
 
@@ -173,7 +173,7 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
         this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
         this.combat.defense.total +=           this.attributes.body.value + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
-        this.combat.armour.total +=            this.combat.armour.bonus;        
+        this.combat.armour.value +=            this.combat.armour.bonus;        
         this.combat.initiative.total +=        this.attributes.mind.value + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
         this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.value + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
@@ -280,7 +280,10 @@ export class AgeOfSigmarActor extends Actor {
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage) {
+    async applyDamage(damage, {ignoreArmour = false}={}) {
+        damage = ignoreArmour ? damage : damage - this.combat.armour.value
+        if (damage < 0)
+            damage = 0
         let remaining = this.combat.health.toughness.value - damage;
          // Update the Actor
          const updates = {
@@ -322,7 +325,7 @@ export class AgeOfSigmarActor extends Actor {
         if(remaining === -1) {
             type = "minor"
             damage = 1;
-        } else if (remaining > -4) {
+        } else if (remaining >= -4) {
             type = "serious"
             damage = 2;            
         } else {

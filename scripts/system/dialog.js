@@ -236,7 +236,7 @@ export class CombatDialog extends RollDialog {
             if (target)
             {
                 data.targetDefense = target.combat.defense.relative;
-                data.combat.armour = target.combat.armour.total;
+                data.combat.armour = target.combat.armour.value;
                 data.targetSpeaker = target.spakerData
             }
         }

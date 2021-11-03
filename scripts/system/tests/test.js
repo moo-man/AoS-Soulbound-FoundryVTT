@@ -76,9 +76,10 @@ export default class Test {
                     die.highlight = true;
                 }
                 if (die.value >= dn.difficulty)
-                {
                     die.success = true;
-                }
+                    
+                if (die.value == 6)
+                    die.trigger = true;
                 result.dice.push(die)
             }            
     

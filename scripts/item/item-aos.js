@@ -198,8 +198,6 @@ export class AgeOfSigmarItem extends Item {
             return false;
         if (!game.aos.config.attributes[this.test.attribute])
             return false;
-        if (!game.aos.config.skills[this.test.skill])
-            return false
         return true;
     }
 

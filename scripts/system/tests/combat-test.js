@@ -9,16 +9,16 @@ export default class CombatTest extends Test {
             this.testData.combat = data.combat
     }
 
-    _computeResult()
+    computeResult()
     {
-        let result = super._computeResult()
+        let result = super.computeResult()
         result.success = this.result.total,
-        result.damage = this._computeDamage(result)
+        result.damage = this.computeDamage(result)
         return result
     }
 
 
-    _computeDamage(result)
+    computeDamage(result)
     {
         if (!result) result = this.result
         let regex = /([0-9]*)[+]*(s*)/g;
