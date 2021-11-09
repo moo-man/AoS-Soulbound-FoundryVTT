@@ -22,7 +22,6 @@ export class AgeOfSigmarActor extends Actor {
         this.data.update(initData)
     }
 
-    
     prepareData() {
         this.derivedEffects = [];
         super.prepareData();

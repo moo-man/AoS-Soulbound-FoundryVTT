@@ -15,6 +15,7 @@ import PowerTest from "./scripts/system/tests/power-test.js";
 import ItemTraits from "./scripts/apps/item-traits.js"
 import AgeOfSigmarEffect from "./scripts/system/effect.js";
 import AgeOfSigmarEffectSheet from "./scripts/apps/active-effect-config.js";
+import SoulboundCounter from "./scripts/apps/counter.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -43,6 +44,7 @@ Hooks.once("init", () => {
         }
     };
     
+    game.counter = new SoulboundCounter()
     
     CONFIG.fontFamilies.push("Quadrant-Regular");
     CONFIG.defaultFontFamily = "Quadrant-Regular"

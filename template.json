@@ -280,7 +280,9 @@
         "value": 0,
         "max": 0
       },
-      "doom": 0,
+      "doom": {
+        "value" : 0
+      },
       "members" : [],
       "notes": ""
     }

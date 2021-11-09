@@ -30,9 +30,56 @@ export default function registerHooks() {
             type: String
         });
 
+        game.settings.register('age-of-sigmar-soulbound', 'soulfire', {
+            name: "Soulfire",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: 0,
+            type: Number
+        });
+        game.settings.register('age-of-sigmar-soulbound', 'doom', {
+            name: "Doom",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: 0,
+            type: Number
+        });
+        game.settings.register('age-of-sigmar-soulbound', 'playerCounterEdit', {
+            name: "Player Counter Edit",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: true,
+            type: Boolean
+        });
+        game.settings.register('age-of-sigmar-soulbound', 'counterParty', {
+            name: "Counter Party Link",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: "",
+            type: String
+        });
+
         game.macro = AOS_MacroUtil;
 
         _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
+
+
+        game.socket.on("system.age-of-sigmar-soulbound", async data => {
+            if (data.type == "updateCounter") {
+              game.counter.render(true)
+            }
+            else if (data.type == "setCounter" && game.user.isGM) {
+              if (game.counter.party)
+                game.counter.party.update({[`data.${data.payload.type}.value`] : parseInt(data.payload.value)})
+              else
+                await game.settings.set("age-of-sigmar-soulbound", data.payload.type, data.payload.value)
+              game.counter.render(true)
+            }
+          })
     });
 
     Hooks.on("getChatLogEntryContext", SoulboundChat.addChatMessageContextOptions);
@@ -81,6 +128,7 @@ export default function registerHooks() {
 
     Hooks.on("ready", () => {
         Migration.checkMigration()
+        game.counter.render(true)
 
         CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
             let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
@@ -128,16 +176,19 @@ export default function registerHooks() {
    * Add right click option to actors to add all basic skills
    */
   Hooks.on("getActorDirectoryEntryContext", async (html, options) => {
+    let canLink = li => {
+      let actor = game.actors.get(li.attr("data-entity-id"));
+      return actor.type == "party"
+    }
     options.push(
       {
         
-        name: game.i18n.localize("ACTOR.ImportStatBlock"),
-        condition: game.user.isGM,
-        icon: '<i class="fa fa-download"></i>',
-        callback: target => {
-          const actor = game.actors.get(target.attr('data-entity-id'));
-          if (game.system.data.name == "age-of-sigmar-soulbound")
-          new StatBlockParser(actor).render(true)
+        name: game.i18n.localize("ACTOR.COUNTER_LINK"),
+        condition: game.user.isGM && canLink,
+        icon: '<i class="fas fa-link"></i>',
+        callback: async target => {
+          await game.settings.set('age-of-sigmar-soulbound', 'counterParty', target.attr('data-entity-id'))
+          game.counter.render(true)
         }
       })
   })
@@ -147,6 +198,15 @@ export default function registerHooks() {
         {
             effect.data.update({"transfer" : false})
             //effect.data.update({"label" : effect.parent.name})
+        }
+    })
+
+    Hooks.on("updateActor", (actor, updateData) => {
+        if(actor.type == "party" && actor.id == game.settings.get('age-of-sigmar-soulbound', 'counterParty'))
+        {
+            if (hasProperty(updateData, "data.soulfire.value") || hasProperty(updateData, "data.doom.value"))
+                game.counter.render(true)
+
         }
     })
 
