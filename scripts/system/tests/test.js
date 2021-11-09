@@ -17,7 +17,8 @@ export default class Test {
                 speaker : data.speaker,
                 targetSpeaker : data.targetSpeaker,
                 rollClass : this.constructor.name,
-                focusAllocated : false
+                focusAllocated : false,
+                messageId : undefined
             },
             result : {}
         }
@@ -68,9 +69,10 @@ export default class Test {
                     highlight : false,
                     success: false
                 }
-                if (this.testData.allocation.includes(i))
+                if (this.testData.allocation[i] > 0)
                 {
-                    die.value++
+                    die.value += this.testData.allocation[i]
+                    die.focus = this.testData.allocation[i]
                     if (die.value > 6)
                         die.value = 6;
                     die.highlight = true;
@@ -210,7 +212,7 @@ export default class Test {
 
     allocateFocus(allocation)
     {
-        if (allocation.length > this.result.focus)
+        if (allocation.reduce((prev, current) => prev + current, 0) > this.result.focus)
             return ui.notifications.error(game.i18n.localize("ERROR.NotEnoughFocus"))
         this.testData.allocation = allocation;
         this.context.focusAllocated = true;
@@ -304,6 +306,8 @@ export default class Test {
     }
 
     get effects() {
+        if(!this.item)
+            return []
         return this.item.effects.filter(e => !e.data.transfer)
     }
 
@@ -321,6 +325,6 @@ export default class Test {
     }
 
     get hasTest() {
-        return this.result.success && this.item.hasTest
+        return this.result.success && this.item?.hasTest
     }
 }

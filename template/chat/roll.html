@@ -7,10 +7,20 @@
         <div class="diceContainer">
             {{#each result.dice as |dice index|}}
             {{#if ../context.focusAllocated}}
-            <img class="diceImg" src="{{dice.img}}">
-            {{else}}
-            <a class="diceClick" data-index={{index}}>
+            <div class="die">
                 <img class="diceImg" src="{{dice.img}}">
+                {{#if dice.focus}}
+                <div class="focus-counter">
+                    {{dice.focus}}
+                </div>
+                {{/if}}
+            </div>
+            {{else}}
+            <a class="die diceClick" data-index={{index}}>
+                <img class="diceImg" src="{{dice.img}}">
+                <div class="focus-counter" style="display:none">
+                    0
+                </div>
             </a>
             {{/if}}
             {{/each}}

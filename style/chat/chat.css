@@ -70,6 +70,10 @@
 	margin: 2px 2px;
 }
 
+.age-of-sigmar-soulbound.chat .die {
+    position: relative
+}
+
 .age-of-sigmar-soulbound.chat .selected .diceImg {
     outline: 3px solid var(--color-active)
 }
@@ -89,6 +93,22 @@
 	margin: 2px 2px;
     background-color: darkgray;
     border-radius: 4px;
+}
+
+.age-of-sigmar-soulbound.chat .focus-counter {
+    height: 20px;
+    width: 20px;
+    background-color: var(--color-header-blue);
+    color: var(--color-active);
+    border-radius: 50%;
+    border: 2px solid var(--color-active);
+    display: inline-block;
+    position: absolute;
+    margin-top: 25px;
+    margin-left: -15px;
+    font-size: 15px;
+    text-align: center;
+    z-index: 1;
 }
 
 .age-of-sigmar-soulbound.chat .diceLabel {

@@ -13,6 +13,20 @@ export default class SoulboundChat {
             return test.context.focusAllocated
         }
 
+        let canClearFocus = li => {
+            const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest();
+            if(test.context.focusAllocated)
+                return false
+            let hasFocusCounter = false;
+            let counters = Array.from(li.find(".focus-counter"))
+            counters.forEach(c => {
+                if (parseInt(c.text) > 0 || c.style.display != "none")
+                    hasFocusCounter = true;
+            })
+            return hasFocusCounter           
+        }
+
         let canApplyDamage = li => {
             const message = game.messages.get(li.data("messageId"));
             return message.isRoll
@@ -45,7 +59,7 @@ export default class SoulboundChat {
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.getTest();
-                    test.allocateFocus(Array.from(li.find(".selected")).map(i => parseInt(i.dataset.index)).filter(i => Number.isNumeric(i)))
+                    test.allocateFocus(Array.from(li.find(".focus-counter")).map(i => parseInt(i.textContent) || 0))
                 }
             }
         );
@@ -59,6 +73,18 @@ export default class SoulboundChat {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.getTest();
                     test.resetFocus();
+                    SoulboundChat._clearFocusCounters(li)
+                }
+            }
+        );
+
+        options.unshift(
+            {
+                name: "CHAT.CLEAR_FOCUS",
+                icon: '<i class="fas fa-redo"></i>',
+                condition: canClearFocus,
+                callback: li => {
+                    SoulboundChat._clearFocusCounters(li)
                 }
             }
         );
@@ -166,10 +192,10 @@ export default class SoulboundChat {
 
     static activateListeners(html)
     {
-        html.on("click" , ".diceClick", SoulboundChat._onDiceClick);
-        html.on("click", ".test-button", SoulboundChat._onTestButtonClick)
-        html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick)
-        html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick)
+        html.on("click" , ".diceClick", SoulboundChat._onDiceClick.bind(this));
+        html.on("click", ".test-button", SoulboundChat._onTestButtonClick.bind(this))
+        html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick.bind(this))
+        html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick.bind(this))
 
     }
 
@@ -177,8 +203,59 @@ export default class SoulboundChat {
     {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
+        let counter = $(ev.currentTarget).find(".focus-counter")
+        let test = msg.getTest()
+        const MAX_FOCUS = test.result.focus
+        let current = this._sumFocus($(ev.currentTarget).parents(".message"))
+        let num = parseInt(counter[0].textContent) || 0
+
+        if (MAX_FOCUS == 0)
+            return
+        if (current >=  MAX_FOCUS)
+            return ui.notifications.error("Not Enough Focus!")
+        
         if (msg.isOwner)
-            ev.currentTarget.classList.toggle("selected")
+        {
+            if (ev.currentTarget.classList.contains("selected"))
+                num++
+            else
+            {
+                ev.currentTarget.classList.toggle("selected")
+                num++
+                counter.show()
+            }
+
+            if(num > MAX_FOCUS)
+            {
+                num = 0
+                ev.currentTarget.classList.toggle("selected")
+                counter.hide()
+            }
+        }
+        counter[0].textContent = num
+
+    }
+
+    static _sumFocus(html)
+    {
+        let counters = Array.from(html.find(".focus-counter"))
+        let num = 0;
+        counters.forEach(c => {
+            num += parseInt(c.textContent) || 0
+        })
+        return num;
+    }
+
+    static _clearFocusCounters(html)
+    {
+        html.find(".focus-counter").each((c, counter) => {
+            counter.textContent = "0";
+            counter.style.display = "none"
+        })
+
+        html.find(".selected").each((d, die) => {
+            die.classList.remove("selected")
+        })
     }
 
     static async _onTestButtonClick(ev)
