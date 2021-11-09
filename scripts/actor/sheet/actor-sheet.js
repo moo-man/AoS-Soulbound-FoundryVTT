@@ -13,6 +13,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         {
             this._addWoundImages(data)
             this._orderSkills(data)
+            this._addPowerBar(data)
         }
         return data;
       }
@@ -43,6 +44,17 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             skill.isRight = i >= middle;
             i++;
         }
+    }
+
+    _addPowerBar(sheetData)
+    {
+        sheetData.data.power.pct = (sheetData.data.power.consumed / sheetData.data.power.capacity) * 100;
+        if (sheetData.data.power.pct <= 30)
+            sheetData.data.power.state = "low";
+        else if (sheetData.data.power.pct <= 70)
+            sheetData.data.power.state = "medium";
+        else if (sheetData.data.power.pct <= 100)
+            sheetData.data.power.state = "high";
     }
 
     constructItemLists(sheetData) 

@@ -337,3 +337,63 @@
     width: 50px;
     height: 50px;
 }
+
+
+
+.age-of-sigmar-soulbound.sheet .content-box.power{
+    flex: 1
+}
+
+.age-of-sigmar-soulbound.sheet .content-box.power .content-row{
+    flex: 1
+}
+
+
+.age-of-sigmar-soulbound.sheet .power-bar-container {
+    width: 100%;
+    height: 100%;
+    /* border-radius: 10px; */
+}
+
+.age-of-sigmar-soulbound.sheet .power-bar-progress {
+    /* border-radius: 10px; */
+    height: 100%
+}
+.age-of-sigmar-soulbound.sheet .power-bar-progress.low {
+    background-color: darkslategray;
+}
+
+.age-of-sigmar-soulbound.sheet .power-bar-progress.medium {
+    background: url(../../asset/image/header-background-vertical.png);
+
+    -webkit-animation: glow-medium 1s ease-in-out infinite alternate;
+    -moz-animation: glow-medium 1s ease-in-out infinite alternate;
+    animation: glow-medium 1s ease-in-out infinite alternate;
+    
+}
+
+@-webkit-keyframes glow-medium{
+    from {
+      box-shadow: 0 0 5px #2e64b1;
+    }
+    to {
+      box-shadow: 0 0 10px #2e64b1;
+    }
+  }
+
+.age-of-sigmar-soulbound.sheet .power-bar-progress.high {
+    background: url(../../asset/image/foreground.jpg);
+
+    -webkit-animation: glow-high 0.5s ease-in-out infinite alternate;
+    -moz-animation: glow-high 0.5s ease-in-out infinite alternate;
+    animation: glow-high 0.5s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow-high{
+    from {
+      box-shadow: 0 0 5px var(--color-active);
+    }
+    to {
+      box-shadow: 0 0 15px var(--color-active);
+    }
+  }

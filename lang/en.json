@@ -57,6 +57,7 @@
   "AETHERIC_DEVICE.CATEGORY": "Category",
   "AETHERIC_DEVICE.DAMAGE": "Damage",
   "AETHERIC_DEVICE.TRAITS": "Traits",
+  "AETHERIC_DEVICE.POWER": "Power",
   "AETHERIC_DEVICE.POWER_CAPACITY": "Power Capacity",
   "AETHERIC_DEVICE.POWER_CONSUMPTION": "Power Consumption",
   "AETHERIC_DEVICE.CRAFTING": "Crafting",
@@ -265,6 +266,7 @@
   "POWER.RANGE": "Range",
   "POWER.DURATION": "Duration",
   "POWER.EFFECT": "Effect",
+  "POWER.STATUS" : "Power Consumed: {consumed}/{capacity}",
 
   "RANGE.SPECIAL": "Special",
   "RANGE.SELF": "Self",

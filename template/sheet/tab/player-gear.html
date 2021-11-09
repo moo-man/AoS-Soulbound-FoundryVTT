@@ -18,12 +18,24 @@
             </div>
         </div>
     </div>
-    <div class="content-box">
+    <div class="content-box power">
         <div class="content-header">
             <h1>{{localize "TITLE.ENERGY"}}</h1>
         </div>
         <div class="content-row">
             <div class="entry-vertical">
+                <h3>{{localize "POWER.STATUS" consumed=data.power.consumed capacity=data.power.capacity}}</h3>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <div class="power-bar-container">
+                    <div class="power-bar-progress {{data.power.state}}" style="width:{{data.power.pct}}%">
+
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="entry-vertical">
                 <h3>{{localize "HEADER.CAPACITY"}}</h3>
                 <input name="data.power.capacity" type="number" value="{{data.power.capacity}}" data-dtype="Number" disabled />
             </div>
@@ -34,7 +46,7 @@
                 {{else}}
                     <input name="data.power.consumed" type="number" value="{{data.power.consumed}}" data-dtype="Number" disabled />
                 {{/if}}
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
