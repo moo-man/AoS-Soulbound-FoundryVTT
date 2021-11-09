@@ -1,12 +1,15 @@
 export default class SoulboundCounter extends Application {
 
+    constructor(...args)
+    {
+      super(...args)
+    }
+
     static get defaultOptions() {
       const options = super.defaultOptions;
       options.id = 'counter';
       options.template = 'systems/age-of-sigmar-soulbound/template/apps/counter.html';
-      options.width = 'auto';
-      options.height = 300;
-      options.popOut = false;
+      options.popOut = true;
       return options;
     }
     /* -------------------------------------------- */
@@ -32,9 +35,36 @@ export default class SoulboundCounter extends Application {
   
       return data;
     }
+
+
+    render(force=false, options={})
+    {
+      let position = game.settings.get("age-of-sigmar-soulbound", "counterPosition")
+      options.top = position.top || window.innerHeight - 200;
+      options.left = position.left || 250;
+      return super.render(force, options);
+    }
+
+    close() {
+      return
+    }
+
+    setCounterDrag()
+    {
+      new Draggable(this, this._element, this._element.find(".handle")[0], false)
+    }
+
+    setPosition(...args)
+    {
+      super.setPosition(...args)
+      game.settings.set("age-of-sigmar-soulbound", "counterPosition", this.position)
+    }
   
     activateListeners(html) {
       super.activateListeners(html);
+      
+
+      new Draggable(this, html, html.find(".handle")[0], false)
   
       html.find('input').focusin(ev => {
         ev.target.select()
@@ -60,7 +90,7 @@ export default class SoulboundCounter extends Application {
       });
       
 
-      html.find(".party").mousedown(async ev => {
+      html.find(".party a").mousedown(async ev => {
         if (ev.button == 0)
           this.party.sheet.render(true)
         else 
@@ -69,6 +99,15 @@ export default class SoulboundCounter extends Application {
           game.counter.render(true)
         }
       })
+
+      // html.mousedown(ev => {
+      //   this.position = duplicate(this.app.position);
+      //   this._initial = {x: event.clientX, y: event.clientY};
+
+      //       // Add temporary handlers
+      //     window.addEventListener(...this.handlers.dragMove);
+      //     window.addEventListener(...this.handlers.dragUp);
+      // })
     }
   
     // ************************* STATIC FUNCTIONS ***************************

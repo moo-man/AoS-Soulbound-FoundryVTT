@@ -1,7 +1,12 @@
 <div class="counter-app"> 
-  <a class="party" style="{{#unless party}} visibility: hidden;{{/unless}}">
-    Linked to {{party.name}}
-  </a>
+  <div><div class="party">
+    <a class="party" style="{{#unless party}} visibility: hidden;{{/unless}}">
+      Linked to {{party.name}}
+    </a>
+  </div>
+  <div class="handle">
+    <i class="fas fa-grip-horizontal"></i>
+  </div>
   <div class="counters">
     <div class="counter">
       <h3>{{localize "PARTY.SOULFIRE"}}</h3>

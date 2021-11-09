@@ -63,6 +63,16 @@ export default function registerHooks() {
             type: String
         });
 
+      game.settings.register("age-of-sigmar-soulbound", "counterPosition", {
+        name: "Counter Position",
+        hint: "",
+        scope: "client",
+        config: false,
+        default: undefined,
+        type: Object
+      })
+
+
         game.macro = AOS_MacroUtil;
 
         _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));

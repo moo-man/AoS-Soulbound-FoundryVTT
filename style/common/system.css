@@ -156,18 +156,32 @@
     justify-content: center;
 }
 
+#counter .window-header{
+    display:none
+}
+
+#counter.window-app{
+    box-shadow: none;
+    background: none;
+}
+
+#counter.window-app .window-content{
+    background: none;
+}
+
+
 .counter-app {
     display: flex;
     flex-direction: column;
     font-family: var(--font-sidebar);
     color: var(--color-header-blue);
     position: absolute;
+    /* bottom: 99px;
+    left: 251px; */
     width: 240px;
     height: 85px;
     background: url(/systems/age-of-sigmar-soulbound/asset/image/background.jpg) repeat;
     border: 2px solid var(--color-header-gold);
-    bottom: 99px;
-    left: 251px;
     border-radius: 0px;
     box-shadow: 0 0 15px inset;
 }
@@ -175,6 +189,16 @@
 .counter-app .counters {
     display: flex;
     justify-content: space-around;
+}
+
+.counter-app .handle {
+    width: 0px;
+    position: absolute;
+    top: 0px;
+    height: 0px;
+    right: 20px;
+    opacity: 0.7;
+    cursor: pointer;
 }
 
 .counter-app .party {
