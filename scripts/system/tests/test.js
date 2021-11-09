@@ -29,6 +29,8 @@ export default class Test {
         let test = new game.aos.rollClass[data.context.rollClass]()
         test.data = data;
         test.roll = Roll.fromData(test.testData.roll)
+        if (test.context.rerolled)
+            test.rerolledDice = Roll.fromData(test.testData.reroll)
         return test
     }
 
@@ -57,17 +59,30 @@ export default class Test {
             focus : this.skill?.focus || 0
         }
         result.focus = this.testData.doubleFocus ? result.focus * 2 : result.focus
+        let dn = this.testData.dn
         
         // Sorted to effiencently apply success not filtered since we would need 
         // to make another function to highlight dice in chat 
         let sorted = Test._getSortedDiceFromRoll(this.roll);
-        let dn = this.testData.dn
+
+        if (this.context.rerolled) 
+        {
+            let sortedReroll = Test._getSortedDiceFromRoll(this.rerolledDice);
+            sorted = sorted.map((die, index) => {
+                if (this.testData.shouldReroll[index])
+                    return sortedReroll[index]
+                else
+                    return sorted[index]
+            })
+        }
+
 
         for(let i = 0; i < sorted.length; i++) {
                 let die = {
-                    value : sorted[i],
+                    value : this.context.maximized ? 6 : sorted[i],
                     highlight : false,
-                    success: false
+                    success: false,
+                    rerolled : this.context.rerolled ? this.testData.shouldReroll[i] : false 
                 }
                 if (this.testData.allocation[i] > 0)
                 {
@@ -85,111 +100,6 @@ export default class Test {
                 result.dice.push(die)
             }            
     
-            // if (this.testData.allocation == "success") {
-            //     if (die.value >= dn.difficulty) {
-            //         die.success = true;
-            //     }
-            //     else {
-            //         if (f >= dn.difficulty - die.value) {
-            //             f -= (dn.difficulty - die.value);
-            //             die.value += (dn.difficulty - die.value);
-            //             die.success = true;
-            //             newTotal++;
-            //             die.highlight = true;
-            //         }
-            //     }
-            //     result.dice.push(die);
-            //     continue;
-            // }
-    
-            // if (this.testData.allocation == "sixes") {
-            //     if (die.value >= dn.difficulty) {
-            //         die.success = true;
-            //          // was successful, checking for sixes now
-            //     }
-            //     if (die.value < 6) {
-            //          // ie.value is smaller than six
-            //         if (f >= dn.difficulty - die.value && die.success == false) {
-            //              //  still have focus to push to DN
-            //             f -= (dn.difficulty - die.value);
-            //             die.value += (dn.difficulty - die.value);
-            //             if (die.success == false) {
-            //                  // pushed to DN, 
-            //                 die.success = true;
-            //                 newTotal++;
-            //             }   
-            //             die.highlight = true;
-            //         }
-            //         if (f >= 6 - die.value) {
-            //              //  still have focus to push to 6
-            //             f -= (6 - die.value);
-            //             die.value += (6 - die.value);
-            //             die.highlight = true;
-            //              // promoted to 6
-            //         }
-            //     }
-            //     result.dice.push(die);
-            //     continue;
-            // }
-    
-            // if (this.testData.allocation == "trigger") {
-            //     if (die.value >= dn.difficulty) {
-            //         die.success = true;
-            //          // was successful
-            //         if (die.value >= 6) {
-            //             triggered = true;
-            //              // ding
-            //         }
-            //     }
-            //     if (triggered == false) {
-            //          // wasn't triggered so check for sixes
-            //         if (die.value < 6) {
-            //              // ie.value +" is smaller than six
-            //             if (f >= dn.difficulty - die.value && die.success == false) {
-            //                  //  still have focus to push to DN
-            //                 f -= (dn.difficulty - die.value);
-            //                 die.value += (dn.difficulty - die.value);
-            //                 if (die.success == false) {
-            //                      // pushed to DN
-            //                     die.success = true;
-            //                     newTotal++;
-            //                 }   
-            //                 die.highlight = true;
-            //             }
-            //             if (f >= 6 - die.value) {
-            //                  //  still have focus to push to 6
-            //                 f -= (6 - die.value);
-            //                 die.value += (6 - die.value);
-            //                 die.highlight = true;
-            //                  // promoted to 6
-            //             }
-            //         }
-            //     }
-            //     else {
-            //          // has already been triggered so just go for DN
-            //         if (f >= dn.difficulty - die.value && die.success == false) {
-            //              //  +" focus remain, push to DN
-            //             f -= (dn.difficulty - die.value);
-            //             die.value += (dn.difficulty - die.value);
-            //             if (die.success == false) {
-            //                 die.success = true;
-            //                 newTotal++;
-            //             }
-            //             die.highlight = true;
-            //         }
-            //     }
-            //     result.dice.push(die);
-            //     continue;
-            // }
-    
-            // if (this.testData.allocation == "manual") {
-            //     if (die.value >= dn.difficulty) {
-            //         die.success = true;
-            //         newTotal++;
-            //     }
-            //     result.dice.push(die);
-            //     continue;
-            // }
         result.triggers = result.dice.filter(die => die.value === 6).length
         result.successes = result.dice.reduce((prev, current) => prev += current.success, 0)
 
@@ -224,6 +134,23 @@ export default class Test {
     {
         this.testData.allocation = [];
         this.context.focusAllocated = false;
+        this.data.result = this.computeResult();
+        this.sendToChat();
+    }
+
+    reroll(shouldReroll)
+    {
+        this.rerolledDice = this.roll.reroll();
+        this.context.rerolled = true;
+        this.testData.reroll = this.rerolledDice.toJSON()
+        this.testData.shouldReroll = shouldReroll
+        this.data.result = this.computeResult();
+        this.sendToChat();
+    }
+
+    maximize()
+    {
+        this.context.maximized = true;
         this.data.result = this.computeResult();
         this.sendToChat();
     }

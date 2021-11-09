@@ -54,6 +54,11 @@
     border-right: 2px solid #7c6c42;
 }
 
+#reroller .age-of-sigmar-soulbound.chat .diceContainer
+{
+    border: none
+}
+
 .age-of-sigmar-soulbound.chat .dice {
     flex:none;
 	width: 36px;
@@ -107,6 +112,23 @@
     margin-top: 25px;
     margin-left: -15px;
     font-size: 15px;
+    text-align: center;
+    z-index: 1;
+}
+
+.age-of-sigmar-soulbound.chat .reroll-icon {
+    height: 20px;
+    width: 20px;
+    background-color: var(--color-header-blue);
+    color: var(--color-active);
+    border-radius: 50%;
+    border: 2px solid var(--color-active);
+    display: inline-block;
+    position: absolute;
+    margin-top: -4px;
+    margin-left: -15px;
+    padding-top: 1px;
+    font-size: 12px;
     text-align: center;
     z-index: 1;
 }

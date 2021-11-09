@@ -14,6 +14,11 @@
                     {{dice.focus}}
                 </div>
                 {{/if}}
+                {{#if dice.rerolled}}
+                <div class="reroll-icon">
+                    <i class="fas fa-redo"></i>
+                </div>
+                {{/if}}
             </div>
             {{else}}
             <a class="die diceClick" data-index={{index}}>
@@ -21,6 +26,11 @@
                 <div class="focus-counter" style="display:none">
                     0
                 </div>
+                {{#if dice.rerolled}}
+                <div class="reroll-icon">
+                    <i class="fas fa-redo"></i>
+                </div>
+                {{/if}}
             </a>
             {{/if}}
             {{/each}}

@@ -1,3 +1,5 @@
+import Reroller from "../apps/reroller.js";
+
 export default class SoulboundChat {
 
     static addChatMessageContextOptions(html, options) {
@@ -27,6 +29,18 @@ export default class SoulboundChat {
             return hasFocusCounter           
         }
 
+        let canReroll = li => {
+            const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest();
+            return !(test.context.rerolled || test.context.maximized)
+        }
+
+        let canMaximize = li => {
+            const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest();
+            return !(test.context.focusAllocated || test.context.rerolled || test.context.maximized)
+        }
+
         let canApplyDamage = li => {
             const message = game.messages.get(li.data("messageId"));
             return message.isRoll
@@ -53,19 +67,6 @@ export default class SoulboundChat {
 
         options.unshift(
             {
-                name: "CHAT.APPLY_FOCUS",
-                icon: '<i class="fas fa-angle-double-up"></i>',
-                condition: canApplyFocus,
-                callback: li => {
-                    const message = game.messages.get(li.data("messageId"));
-                    let test = message.getTest();
-                    test.allocateFocus(Array.from(li.find(".focus-counter")).map(i => parseInt(i.textContent) || 0))
-                }
-            }
-        );
-        
-        options.unshift(
-            {
                 name: "CHAT.RESET_FOCUS",
                 icon: '<i class="fas fa-redo"></i>',
                 condition: canResetFocus,
@@ -78,6 +79,34 @@ export default class SoulboundChat {
             }
         );
 
+
+        options.unshift(
+            {
+                name: "CHAT.MAXIMIZE",
+                icon: '<i class="fas fa-sort-numeric-up-alt"></i>',
+                condition: canMaximize,
+                callback: li => {
+                    const message = game.messages.get(li.data("messageId"));
+                    let test = message.getTest();
+                    test.maximize();
+                }
+            }
+        );
+        
+        options.unshift(
+            {
+                name: "CHAT.REROLL",
+                icon: '<i class="fas fa-dice"></i>',
+                condition: canReroll,
+                callback: li => {
+                    const message = game.messages.get(li.data("messageId"));
+                    let test = message.getTest();
+                    new Reroller(test).render(true)
+                }
+            }
+        );
+
+
         options.unshift(
             {
                 name: "CHAT.CLEAR_FOCUS",
@@ -88,6 +117,21 @@ export default class SoulboundChat {
                 }
             }
         );
+
+        
+        options.unshift(
+            {
+                name: "CHAT.APPLY_FOCUS",
+                icon: '<i class="fas fa-angle-double-up"></i>',
+                condition: canApplyFocus,
+                callback: li => {
+                    const message = game.messages.get(li.data("messageId"));
+                    let test = message.getTest();
+                    test.allocateFocus(Array.from(li.find(".focus-counter")).map(i => parseInt(i.textContent) || 0))
+                }
+            }
+        );
+        
 
         options.push(
             {
