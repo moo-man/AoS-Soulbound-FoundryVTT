@@ -12,7 +12,6 @@ export default class CombatTest extends Test {
     computeResult()
     {
         let result = super.computeResult()
-        result.success = this.result.total,
         result.damage = this.computeDamage(result)
         return result
     }
@@ -69,7 +68,7 @@ export default class CombatTest extends Test {
         }
     
         if (addSuccess) {
-            damage.total = damageValue + result.total - damage.armour;
+            damage.total = damageValue + result.successes - damage.armour;
         } else {
             damage.total = damageValue - damage.armour;
         }
