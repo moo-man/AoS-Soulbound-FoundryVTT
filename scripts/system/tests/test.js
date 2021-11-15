@@ -138,12 +138,22 @@ export default class Test {
         this.sendToChat();
     }
 
-    reroll(shouldReroll)
+    async reroll(shouldReroll)
     {
         this.rerolledDice = this.roll.reroll();
         this.context.rerolled = true;
         this.testData.reroll = this.rerolledDice.toJSON()
         this.testData.shouldReroll = shouldReroll
+        
+        if (game.dice3d)
+        {
+            let dsnRerollData = duplicate(this.testData.reroll);
+            dsnRerollData.terms[0].results = Test._getSortedDiceFromRoll(dsnRerollData).map(i => {return {result: i}})
+            dsnRerollData.terms[0].results = dsnRerollData.terms[0].results.filter((die, index) => this.testData.shouldReroll[index])
+            let dsnReroll = Roll.fromData    (dsnRerollData)
+            await game.dice3d.showForRoll(dsnReroll)
+        }
+
         this.data.result = this.computeResult();
         this.sendToChat();
     }
