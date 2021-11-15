@@ -165,6 +165,20 @@ export class AgeOfSigmarItem extends Item {
         return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
     }
 
+    get Damage() {
+        if (this.damage)
+            return this.damage.toUpperCase().split("").filter(i => i).join(" ")
+    }
+
+    get Duration() {
+        return `${this.duration.value} ${game.aos.config.durations[this.duration.unit]}${this.duration.value > 0 ? "s" : "" }`
+    }
+
+    get Type() {
+        if (this.type == "armour")
+            return game.aos.config.armourType[this.subtype]
+    }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }

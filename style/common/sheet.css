@@ -268,47 +268,121 @@
 
 /****** ITEM LISTS ******/
 
-
-.age-of-sigmar-soulbound.sheet .item .item-property.item-name{
-    flex: 1
+.age-of-sigmar-soulbound.sheet .item-list{
+    display: flex;
+    flex-direction: column;
+    background: url(../../asset/image/input.jpg) repeat;
+    border: 2px solid #7c6c42;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property.item-image{
+.age-of-sigmar-soulbound.sheet .item-list .item-header{
+    display:flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-text);
+    font-family: var(--font-text);
+    color: whitesmoke;
+    border-bottom: 2px solid #7c6c42;
+    background-image: url('../../asset/image/header-background.png');
+    background-size: cover;
+    padding-left: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item-header .absolute{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item-header .header-columns{
+    display: flex;
+    font-family: var(--font-text);
+    width: 100%;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    padding-left: 5px;
+    border-bottom: 3px groove rgba(0, 0, 0, 0.05)
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item:last-of-type {
+    border-bottom: none
+}
+
+
+.age-of-sigmar-soulbound.sheet .item-list .item-content {
+    display:flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%
+}
+
+
+.age-of-sigmar-soulbound.sheet .item-name .item-image img
+{
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item-property.item-name{
+    flex: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item-property.item-image{
     flex: 0 0 35px;
     height: 35px;
     width: 35px;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-controls{
-    display:flex;
+.age-of-sigmar-soulbound.sheet .item-list .item-controls{
+    display: flex;
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex: 0 0 50px;
+    color: darkslategray;
+    width: 50px;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-controls > *{
+.age-of-sigmar-soulbound.sheet .item-list .item-controls > *{
     margin: 5px;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property{
+.age-of-sigmar-soulbound.sheet .item-list .item-property{
     flex: 0 0 60px;
     text-align: center;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property.flex{
+.age-of-sigmar-soulbound.sheet .item-list .item-property.flex{
     flex: 1
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property.small{
+.age-of-sigmar-soulbound.sheet .item-list .item-property.small{
     flex: 0 0 30px;
 }
 
 
-.age-of-sigmar-soulbound.sheet .item .item-property.long{
+.age-of-sigmar-soulbound.sheet .item-list .item-property.long{
     flex: 0 0 150px;
 }
 
 .age-of-sigmar-soulbound.sheet .effects .item .item-property {
     display:flex;
     align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet .item .item-property.description {
+    flex: 1;
+    text-align: left;
 }
 
 .age-of-sigmar-soulbound.sheet .table-element-img img,
