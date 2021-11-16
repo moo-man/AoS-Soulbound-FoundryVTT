@@ -268,11 +268,25 @@
 
 /****** ITEM LISTS ******/
 
-.age-of-sigmar-soulbound.sheet .item-list{
+.age-of-sigmar-soulbound.sheet .item-list-columns {
+    display: flex;
+}
+.age-of-sigmar-soulbound.sheet .item-list-columns > *{
+    margin: 0px 3px;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list-columns > .item-list:first-of-type{
+    margin-left: 0px;
+}
+.age-of-sigmar-soulbound.sheet .item-list-columns > .item-list:last-of-type{
+    margin-right: 0px;
+}
+    .age-of-sigmar-soulbound.sheet .item-list{
     display: flex;
     flex-direction: column;
     background: url(../../asset/image/input.jpg) repeat;
     border: 2px solid #7c6c42;
+    width: 100%
 }
 
 .age-of-sigmar-soulbound.sheet .item-list .item-header{
@@ -341,6 +355,11 @@
     flex: 0 0 35px;
     height: 35px;
     width: 35px;
+}
+
+.age-of-sigmar-soulbound.sheet .item-list .item-property.fit{
+    margin: 0px 3px 0px 0px;
+    flex: unset
 }
 
 .age-of-sigmar-soulbound.sheet .item-list .item-controls{
