@@ -151,6 +151,11 @@ export default function registerHooks() {
                     game.aos.config[key][prop] = game.i18n.localize(game.aos.config[key][prop])
             }
         }
+
+        for (let effect of CONFIG.statusEffects)
+        {
+            effect.label = game.i18n.localize(effect.label)
+        }
     })
 
     Hooks.on("preCreateItem", (data, options, user) => {

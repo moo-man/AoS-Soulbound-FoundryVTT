@@ -190,7 +190,7 @@ AOS.traitsWithValue = ["range", "thrown"]
 CONFIG.statusEffects = [
     {
         id : "blinded",
-        label : "Blinded",
+        label : "CONDITION.BLINDED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
             {key: "difficulty", mode : 0, value : 2},
@@ -202,38 +202,38 @@ CONFIG.statusEffects = [
     },
     {
         id : "charmed",
-        label : "Charmed",
+        label : "CONDITION.CHARMED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/charmed.svg"
     },
     {
         id : "deafened",
-        label : "Deafened",
+        label : "CONDITION.DEAFENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
         changes : [{key: "bonusDice", mode : 0, value : -1}],
         flags : { "age-of-sigmar-soulbound.description" : "The dice pool for any Tests that require hearing is reduced by 1"}
     },
     {
         id : "frightened",
-        label : "Frightened",
+        label : "CONDITION.FRIGHTENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
         changes : [{key: "bonusDice", mode : 0, value : -1}],
         flags : { "age-of-sigmar-soulbound.description" : "While the source of fear is within line of sight, roll one less die for all Tests"}
     },
     {
         id : "incapacitated",
-        label : "Incapacitated",
+        label : "CONDITION.INCAPACITATED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/incapacitated.svg"
     },
     {
         id : "poisoned",
-        label : "Poisoned",
+        label : "CONDITION.POISONED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
         changes : [{key: "bonusDice", mode : 0, value : -1}],
         flags : { "age-of-sigmar-soulbound.description" : "The dice pool for all Tests are reduced by 1"}
     },
     {
         id : "prone",
-        label : "Prone",
+        label : "CONDITION.PRONE",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
         changes : [
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
@@ -242,7 +242,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "restrained",
-        label : "Restrained",
+        label : "CONDITION.RESTRAINED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
         changes : [
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
@@ -252,7 +252,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "stunned",
-        label : "Stunned",
+        label : "CONDITION.STUNNED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
             {key: "data.combat.speeds.foot", mode : 5, value : "slow"},
@@ -261,7 +261,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "unconscious",
-        label : "Unconscious",
+        label : "CONDITION.UNCONSCIOUS",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
     }
 ]

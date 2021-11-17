@@ -115,6 +115,12 @@ export class AgeOfSigmarItem extends Item {
         ChatMessage.create(chatData);
     }
 
+    
+    dropdownData()
+    {
+        return {text : this.description}
+    }
+
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get State() {
@@ -157,7 +163,7 @@ export class AgeOfSigmarItem extends Item {
     }
 
     get DN() {
-        return {difficulty : parseInt(this.dn.split(":")[0]), complexity : parseInt(this.dn.split(":")[1])}
+        return this.dn.split("").map(i => i.trim()).filter(i => i).join("")
     }
 
     get Test() {
@@ -174,9 +180,31 @@ export class AgeOfSigmarItem extends Item {
         return `${this.duration.value} ${game.aos.config.durations[this.duration.unit]}${this.duration.value > 0 ? "s" : "" }`
     }
 
+    get Range() {
+        return game.aos.config.range[this.range]
+    }
+
     get Type() {
         if (this.type == "armour")
             return game.aos.config.armourType[this.subtype]
+    }
+
+    get Availability() {
+            return game.aos.config.availability[this.availability]
+    }
+
+    get Category() {
+        if (this.type == "weapon" || this.type == "aethericDevice")
+            return this.category == "melee" ? "Melee" : "Ranged"
+        if (this.type == "armour")
+            return game.aos.config.armourType[this.category]
+        if (this.type == "partyItem")
+            return game.aos.config.partyItemCategories[this.category]
+    }
+
+    get difficultyNumber()
+    {
+        return {difficulty : parseInt(this.DN.split(":")[0]), complexity : parseInt(this.DN.split(":")[1])}
     }
 
     // @@@@@@ TYPE GETTERS @@@@@@
@@ -240,4 +268,5 @@ export class AgeOfSigmarItem extends Item {
     get lore() { return this.data.data.lore }
     get requirement() { return this.data.data.requirement }
     get category() { return this.data.data.category }
+    get equipped() { return this.data.data.equipped }
 }

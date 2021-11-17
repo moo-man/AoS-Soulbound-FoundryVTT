@@ -23,13 +23,22 @@
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "PARTY.CATEGORY"}}</h3>
+                        {{#unless (eq item.parent.type "party")}}
                         <select name="data.category">
-                        {{#select data.category}}
-                        {{#each (config "partyItemCategories") as |category c|}}
-                        <option value="{{c}}">{{category}}</option>
-                        {{/each}}
-                        {{/select}}
+                            {{#select data.category}}
+                            <option value="shortGoal">Short-Term Goal</option>
+                            <option value="longGoal">Long-Term Goal</option>
+                            {{/select}}
+                        </select>   
+                        {{else}}
+                        <select name="data.category">
+                            {{#select data.category}}
+                            {{#each (config "partyItemCategories") as |category c|}}
+                            <option value="{{c}}">{{category}}</option>
+                            {{/each}}
+                            {{/select}}
                         </select>
+                        {{/unless}}
                     </div>
                 </div>
             </div>

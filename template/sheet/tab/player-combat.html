@@ -68,7 +68,7 @@
                         data-dtype="Number" disabled /></div>
             </div>
             <div class="segment-horizontal">
-                <h3><a class="speed-config">{{localize "HEADER.SPEED"}}</a></h3>
+                <h3><a class="speed-config">{{localize "HEADER.SPEED"}} <i class="fas fa-cog"></i></a></a></h3>
                 <div class="sheet-table-value speed">
                     {{actor.Speed}}
                 </div>
@@ -119,9 +119,7 @@
             <div class="item-controls"></div>
         </div>
     </div>
-    {{#each actor.items as |item|}}
-        {{#if item.isAttack}}
-            {{#if item.isActive}}
+    {{#each items.attacks as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
                     <div class="item-content">
                         <div class="item-property item-name">
@@ -133,16 +131,14 @@
                         <div class="item-property">{{item.Damage}}</div>
                         <div class="item-property flex">{{{arrayDisplay item.Traits}}}</div>
                         <div class="item-controls">
-                            <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                             <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
+                            <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                         </div>
                     </div>
                     <div class="item-content">
                         <div class="item-property description dropdown-target">{{{item.description}}}</div>
                     </div>
                 </div>
-            {{/if}}
-        {{/if}}
     {{/each}}
 </div>
 <hr>
@@ -160,33 +156,50 @@
             <div class="item-controls"></div>
         </div>
     </div>
-    {{#each actor.items as |item|}}
-        {{#if item.isPower}}
-                <div class="item" data-item-id="{{item.id}}">
-                    <div class="item-content">
-                        <div class="item-property item-name">
-                            <div class="item-image">
-                                <img src={{item.data.img}} />
-                            </div>
-                            <a class="roll-power">{{item.name}}</a>
-                        </div>
-                        <div class="item-property">{{item.Damage}}</div>
-                        <div class="item-property long">{{item.target}}</div>
-                        <div class="item-property long">{{item.Duration}}</div>
-                        {{#if item.isSpell}}
-                        <div class="item-property">DN {{item.dn}}</div>
-                        {{else}}
-                        <div class="item-property">{{item.cost}} Mettle</div>
-                        {{/if}}
-                        <div class="item-controls">
-                            <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
-                            <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
-                        </div>
+    {{#each items.spells as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+            <div class="item-content">
+                <div class="item-property item-name">
+                    <div class="item-image">
+                        <img src={{item.data.img}} />
                     </div>
-                    <div class="item-content">
-                        <div class="item-property description dropdown-target">{{{item.description}}}</div>
-                    </div>
+                    <a class="roll-power">{{item.name}}</a>
                 </div>
-        {{/if}}
+                <div class="item-property">{{item.Damage}}</div>
+                <div class="item-property long">{{item.target}}</div>
+                <div class="item-property long">{{item.Duration}}</div>
+                <div class="item-property">DN {{item.dn}}</div>
+                <div class="item-controls">
+                    <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
+                    <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                </div>
+            </div>
+            <div class="item-content">
+                <div class="item-property description dropdown-target">{{{item.description}}}</div>
+            </div>
+        </div>
     {{/each}}
+    {{#each items.miracles as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+            <div class="item-content">
+                <div class="item-property item-name">
+                    <div class="item-image">
+                        <img src={{item.data.img}} />
+                    </div>
+                    <a class="roll-power">{{item.name}}</a>
+                </div>
+                <div class="item-property">{{item.Damage}}</div>
+                <div class="item-property long">{{item.target}}</div>
+                <div class="item-property long">{{item.Duration}}</div>
+                <div class="item-property">{{item.cost}} Mettle</div>
+                <div class="item-controls">
+                    <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
+                    <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                </div>
+            </div>
+            <div class="item-content">
+                <div class="item-property description dropdown-target">{{{item.description}}}</div>
+            </div>
+        </div>
+{{/each}}
 </div>

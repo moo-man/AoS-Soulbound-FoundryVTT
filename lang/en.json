@@ -399,6 +399,7 @@
   "WEAPON.CATEGORY": "Category",
   "WEAPON.AVAILABILITY": "Availability",
   "WEAPON.COST": "Cost",
+  "WEAPON.DESCRIPTION": "Description",
 
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Wounds",
@@ -419,6 +420,18 @@
   "CONFIGURE.AUTO_CALC_METTLE": "Automatically Calculate Mettle",
   "CONFIGURE.AUTO_CALC_METTLE_HINT": "Automatically calculate mettle based on actor attributes",
   "CONFIGURE.AUTO_CALC_TOKEN": "Automatically set token sizes",
-  "CONFIGURE.AUTO_CALC_TOKEN_HINT": "Tokens are automatically sized depending on the selection in the size field on the npc sheet. Does not resize swarms and tokens on the canvas"
+  "CONFIGURE.AUTO_CALC_TOKEN_HINT": "Tokens are automatically sized depending on the selection in the size field on the npc sheet. Does not resize swarms and tokens on the canvas",
+
+
+  "CONDITION.BLINDED" : "Blinded",
+  "CONDITION.CHARMED" : "Charmed",
+  "CONDITION.DEAFENED" : "Deafened",
+  "CONDITION.FRIGHTENED" : "Frightened",
+  "CONDITION.INCAPACITATED" : "Incapacitated",
+  "CONDITION.POISONED" : "Poisoned",
+  "CONDITION.PRONE" : "Prone",
+  "CONDITION.RESTRAINED" : "Restrained",
+  "CONDITION.STUNNED" : "Stunned",
+  "CONDITION.UNCONSCIOUS" : "Unconscious"
   
 }

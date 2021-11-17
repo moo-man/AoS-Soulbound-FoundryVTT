@@ -26,13 +26,13 @@
                     <h4>{{localize "ITEM.TALENT"}}</h4>
                 {{/if}}
                 {{#if item.isArmour}}
-                    <h4>{{item.subtype}} {{localize "ITEM.ARMOUR"}}</h4>
+                    <h4>{{item.Type}} {{localize "ITEM.ARMOUR"}}</h4>
                 {{/if}}
                 {{#if item.isWeapon}}
-                    <h4>{{item.category}} {{localize "ITEM.WEAPON"}}</h4>
+                    <h4>{{item.Category}} {{localize "ITEM.WEAPON"}}</h4>
                 {{/if}}
                 {{#if item.isAethericDevice}}
-                    <h4>{{localize "ITEM.AETHERIC_DEVICE"}}, {{item.category}}</h4>
+                    <h4>{{localize "ITEM.AETHERIC_DEVICE"}}, {{item.Category}}</h4>
                 {{/if}}
                 {{#if item.isRune}}
                     <h4>{{localize "ITEM.RUNE"}}</h4>
@@ -69,19 +69,22 @@
             <div class="content-row">
                 <div class="entry-vertical" style="width:50px">
                     <div class="content-label-centered"><strong>{{localize "SPELL.DN"}}</strong></div>
-                    <div class="content-label-centered">{{item.dn}}</div>
+                    <div class="content-label-centered">{{item.DN}}</div>
                 </div>
                 <div class="entry-vertical" style="flex-grow:1;">
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.TARGET"}}:</strong> {{item.target}} in <strong>{{localize "SPELL.RANGE"}}:</strong> {{item.range}}</div>
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.DURATION"}}:</strong> {{item.duration}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.TARGET"}}: </strong> {{item.target}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.RANGE"}}: </strong> {{item.Range}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.DURATION"}}: </strong> {{item.Duration}}</div>
                 </div>
             </div>
             <div class="content-row" style="flex-grow:1;">
-                <div class="entry-horizontal"><strong>{{localize "SPELL.OVERCAST"}}:</strong> {{item.overcast}}</div>
+                <div class="entry-horizontal"><strong>{{localize "SPELL.OVERCAST"}}: </strong> {{item.overcast}}</div>
             </div>
+            {{#if item.hasTest}}
             <div class="content-row" style="flex-grow:1;">
-                <div class="entry-horizontal"><strong>{{localize "SPELL.TEST"}}:</strong> {{item.test}}</div>
+                <div class="entry-horizontal"><strong>{{localize "SPELL.TEST"}}: </strong> {{item.Test}}</div>
             </div>
+            {{/if}}
             <div class="content-wrapper">
                 <div class="content-label-centered"><strong>{{localize "SPELL.DESCRIPTION"}}</strong></div> 
                 {{{item.description}}}
@@ -92,11 +95,12 @@
             <div class="content-row">
                 <div class="entry-vertical" style="width:50px">
                     <div class="content-label-centered"><strong>{{localize "MIRACLE.COST"}}</strong></div>
-                    <div class="content-label-centered">{{item.cost}}</div>
+                    <div class="content-label-centered">{{item.cost}} Mettle</div>
                 </div>
                 <div class="entry-vertical" style="flex-grow:1;">
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.TARGET"}}:</strong> {{item.target}} in <strong>{{localize "MIRACLE.RANGE"}}:</strong> {{item.range}}</div>
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.DURATION"}}:</strong> {{item.duration}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.TARGET"}}: </strong> {{item.target}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.RANGE"}}: </strong> {{item.Range}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.DURATION"}}: </strong> {{item.duration}}</div>
                 </div>
             </div>
             <div class="content-wrapper">
@@ -107,7 +111,7 @@
 
         {{#if item.isTalent}}
             <div class="content-row" style="flex-grow:1;">
-                <div class="entry-horizontal"><strong>{{localize "TALENT.REQUIREMENT"}}:</strong> {{item.requirement}}</div>
+                <div class="entry-horizontal"><strong>{{localize "TALENT.REQUIREMENT"}}: </strong> {{item.requirement}}</div>
             </div>
             <div class="content-wrapper">
                 <div class="content-label-centered"><strong>{{localize "TALENT.DESCRIPTION"}}</strong></div> 
@@ -122,8 +126,8 @@
                     <div class="content-label-centered">{{item.benefit}}</div>
                 </div>
                 <div class="entry-vertical" style="flex-grow:1;">
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "ARMOUR.REQUIREMENTS"}}:</strong> {{item.requirements}}</div>
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "ARMOUR.TRAITS"}}:</strong> {{item.traits}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "ARMOUR.REQUIREMENTS"}}: </strong> {{item.requirements}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "ARMOUR.TRAITS"}}: </strong> {{{arrayDisplay item.Traits}}}</div>
                 </div>
             </div>
             <div class="content-wrapper">
@@ -132,10 +136,10 @@
             </div>
             <div class="content-row">
                 <div class="entry-horizontal">
-                    <strong>{{localize "ARMOUR.COST"}}:</strong> {{item.cost}}
+                    <strong>{{localize "ARMOUR.COST"}}: </strong> {{item.cost}}
                 </div>
                 <div class="entry-horizontal">
-                    <strong>{{localize "ARMOUR.AVAILABILITY"}}:</strong> {{item.availability}}
+                    <strong>{{localize "ARMOUR.AVAILABILITY"}}: </strong> {{item.Availability}}
                 </div>
             </div>
         {{/if}}
@@ -144,10 +148,10 @@
             <div class="content-row">
                 <div class="entry-vertical" style="width:50px">
                     <div class="content-label-centered"><strong>{{localize "WEAPON.DAMAGE"}}</strong></div>
-                    <div class="content-label-centered">{{item.damage}}</div>
+                    <div class="content-label-centered">{{item.Damage}}</div>
                 </div>
                 <div class="entry-vertical" style="flex-grow:1;">
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "WEAPON.TRAITS"}}:</strong> {{item.traits}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "WEAPON.TRAITS"}}: </strong> {{{arrayDisplay item.Traits}}}</div>
                 </div>
             </div>
             <div class="content-wrapper">
@@ -156,10 +160,10 @@
             </div>
             <div class="content-row">
                 <div class="entry-horizontal">
-                    <strong>{{localize "WEAPON.COST"}}:</strong> {{item.cost}}
+                    <strong>{{localize "WEAPON.COST"}}: </strong> {{item.cost}}
                 </div>
                 <div class="entry-horizontal">
-                    <strong>{{localize "WEAPON.AVAILABILITY"}}:</strong> {{item.availability}}
+                    <strong>{{localize "WEAPON.AVAILABILITY"}}: </strong> {{item.Availability}}
                 </div>
             </div>
         {{/if}}
@@ -171,15 +175,15 @@
                     <div class="content-label-centered">{{item.damage}}</div>
                 </div>
                 <div class="entry-vertical" style="flex-grow:1;">
-                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "AETHERIC_DEVICE.TRAITS"}}:</strong> {{item.traits}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "AETHERIC_DEVICE.TRAITS"}}: </strong> {{{arrayDisplay item.Traits}}}</div>
                 </div>
             </div>
             <div class="content-row">
                 <div class="entry-horizontal">
-                    <strong>{{localize "AETHERIC_DEVICE.POWER_CAPACITY"}}:</strong> {{item.power.capacity}}
+                    <strong>{{localize "AETHERIC_DEVICE.POWER_CAPACITY"}}: </strong> {{item.power.capacity}}
                 </div>
                 <div class="entry-horizontal">
-                    <strong>{{localize "AETHERIC_DEVICE.POWER_CONSUMPTION"}}:</strong> {{item.power.consumption}}
+                    <strong>{{localize "AETHERIC_DEVICE.POWER_CONSUMPTION"}}: </strong> {{item.power.consumption}}
                 </div>
             </div>
             <div class="content-wrapper">
@@ -188,18 +192,18 @@
             </div>
             <div class="content-row">
                 <div class="entry-horizontal">
-                    <strong>{{localize "AETHERIC_DEVICE.COST"}}:</strong> {{item.cost}}
+                    <strong>{{localize "AETHERIC_DEVICE.COST"}}: </strong> {{item.cost}}
                 </div>
                 <div class="entry-horizontal">
-                    <strong>{{localize "AETHERIC_DEVICE.AVAILABILITY"}}:</strong> {{item.availability}}
+                    <strong>{{localize "AETHERIC_DEVICE.AVAILABILITY"}}: </strong> {{item.Availability}}
                 </div>
             </div>
             <div class="content-row">
                 <div class="entry-horizontal">
-                    <strong>{{localize "AETHERIC_DEVICE.CRAFTING"}}:</strong> {{item.crafting}}
+                    <strong>{{localize "AETHERIC_DEVICE.CRAFTING"}}: </strong> {{item.crafting}}
                 </div>
                 <div class="entry-horizontal">
-                    <strong>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}:</strong> {{item.requirements}}
+                    <strong>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}: </strong> {{item.requirements}}
                 </div>
             </div>
         {{/if}}
@@ -218,10 +222,10 @@
             </div>
             <div class="content-row">
                 <div class="entry-horizontal">
-                    <strong>{{localize "EQUIPMENT.COST"}}:</strong> {{item.cost}}
+                    <strong>{{localize "EQUIPMENT.COST"}}: </strong> {{item.cost}}
                 </div>
                 <div class="entry-horizontal">
-                    <strong>{{localize "EQUIPMENT.AVAILABILITY"}}:</strong> {{item.availability}}
+                    <strong>{{localize "EQUIPMENT.AVAILABILITY"}}: </strong> {{item.Availability}}
                 </div>
             </div>
         {{/if}}

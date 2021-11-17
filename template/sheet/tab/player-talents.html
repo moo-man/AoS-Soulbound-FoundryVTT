@@ -3,15 +3,14 @@
         <h1 class="header-text">{{localize "TITLE.TALENTS"}}</h1>
         <a class="item-create absolute" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
     </div>
-    {{#each actor.items as |item|}}
-        {{#if item.isTalent}}
+    {{#each items.talents as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
                     <div class="item-content">
                         <div class="item-property item-name">
                             <div class="item-image">
                                 <img src={{item.data.img}} />
                             </div>
-                            <a class="">{{item.name}}</a>
+                            <a class="item-dropdown item-edit-rc">{{item.name}}</a>
                         </div>
                         <div class="item-controls">
                             <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
@@ -24,7 +23,6 @@
                         <div class="item-property description dropdown-target">{{{item.description}}}</div>
                     </div>
                 </div>
-        {{/if}}
     {{/each}}
 </div>
 <hr>
@@ -33,15 +31,14 @@
         <h1 class="header-text">{{localize "TITLE.SPELLS"}}</h1>
         <a class="item-create absolute" title="Add Spell" data-type="spell"><i class="fas fa-plus"></i></a>
     </div>
-    {{#each actor.items as |item|}}
-        {{#if item.isSpell}}
+    {{#each items.spells as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
                     <div class="item-content">
                         <div class="item-property item-name">
                             <div class="item-image">
                                 <img src={{item.data.img}} />
                             </div>
-                            <a class="">{{item.name}}</a>
+                            <a class="item-dropdown item-edit-rc">{{item.name}}</a>
                         </div>
                         <div class="item-controls">
                             <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
@@ -54,7 +51,6 @@
                         <div class="item-property description dropdown-target">{{{item.description}}}</div>
                     </div>
                 </div>
-        {{/if}}
     {{/each}}
 </div>
 <hr>
@@ -63,15 +59,14 @@
         <h1 class="header-text">{{localize "TITLE.MIRACLES"}}</h1>
         <a class="item-create absolute" title="Add Miracle" data-type="miracle"><i class="fas fa-plus"></i></a>
     </div>
-    {{#each actor.items as |item|}}
-        {{#if item.isMiracle}}
+    {{#each items.miracles as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
                     <div class="item-content">
                         <div class="item-property item-name">
                             <div class="item-image">
                                 <img src={{item.data.img}} />
                             </div>
-                            <a class="">{{item.name}}</a>
+                            <a class="item-dropdown item-edit-rc">{{item.name}}</a>
                         </div>
                         <div class="item-controls">
                             <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
@@ -84,6 +79,5 @@
                         <div class="item-property description dropdown-target">{{{item.description}}}</div>
                     </div>
                 </div>
-        {{/if}}
     {{/each}}
 </div>

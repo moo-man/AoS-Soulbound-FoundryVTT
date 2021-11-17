@@ -321,7 +321,7 @@ export class PowerDialog extends RollDialog {
         let skill = power.data.type === "spell" ? "channelling" : "devotion"
         let attribute = game.aos.config.skillAttributes[skill]
         let data = super._dialogData(actor, attribute, skill)
-        mergeObject(data, power.DN)
+        mergeObject(data, power.difficultyNumber)
         data.power = power
         return data
     }    

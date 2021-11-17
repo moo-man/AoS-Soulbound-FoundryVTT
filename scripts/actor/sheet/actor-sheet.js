@@ -3,6 +3,21 @@ import SpeedConfig from "../../apps/speed-config.js";
 
 export class AgeOfSigmarActorSheet extends ActorSheet {
 
+
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            classes: ["age-of-sigmar-soulbound", "sheet", "actor"],
+            tabs: [
+                {
+                    navSelector: ".sheet-tabs",
+                    contentSelector: ".sheet-content",
+                    initial: "main",
+                },
+            ],
+            scrollY: [".sheet-content"]
+        });
+    }
+
     getData() {
         const data = super.getData();
         data.data = data.data.data; // project system data so that handlebars has the same name and value paths
@@ -69,7 +84,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         items.equipment = this.actor.getItemTypes("equipment")
         items.enemies = this.actor.getItemTypes("enemy")
         items.fears = this.actor.getItemTypes("fear")
-        items.goals = this.actor.getItemTypes("goal")
+        items.goals = this.actor.getItemTypes("partyItem").filter(i => i.category == "shortGoal" || i.category == "longGoal")
         items.miracles = this.actor.getItemTypes("miracle")
         items.resources = this.actor.getItemTypes("resource")
         items.rumours = this.actor.getItemTypes("rumour")
@@ -80,8 +95,10 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         items.weapons = this.actor.getItemTypes("weapon")
         items.partyItems = this.actor.getItemTypes("partyItem")
 
-        items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.state == "active")
-        items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.state == "active")
+        items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.equipped)
+        items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.equipped)
+
+        items.attacks = items.equipped.weapons.concat(items.aethericDevices.filter(i => i.damage && i.equipped))
 
         sheetData.items = items;
 
@@ -169,6 +186,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
+        html.find(".item-post").click(this._onItemPost.bind(this));
         //html.find(".item-property").click(this._onChangeItemProperty.bind(this));
         html.find(".effect-create").click(this._onEffectCreate.bind(this));  
         html.find(".effect-edit").click(this._onEffectEdit.bind(this));  
@@ -176,6 +194,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".item-state").click(this._onItemStateUpdate.bind(this));
+        html.find(".item-toggle").click(this._onItemToggle.bind(this));
         html.find(".roll-attribute").click(this._onAttributeClick.bind(this));
         html.find(".roll-skill").click(this._onSkillClick.bind(this));
         html.find(".roll-weapon").click(this._onWeaponClick.bind(this));
@@ -186,6 +205,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".wound-edit").change(this._onWoundEdit.bind(this));
         html.find(".speed-config").click(this._onSpeedConfigClick.bind(this));
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this));
+        html.find(".condition-click").click(this._onConditionClick.bind(this));
+        html.find(".item-dropdown").click(this._onDropdownClick.bind(this))
     }
 
     _getHeaderButtons() {
@@ -214,6 +235,10 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
              name : `New ${game.i18n.localize(CONFIG.Item.typeLabels[header.type])}`,
              type : header.type
         };
+
+        if (data.type == "goal")
+            data.type = "partyItem"
+
         if (header.category)
             data["data.category"] = header.category
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
@@ -232,6 +257,15 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
         div.slideUp(200, () => this.render(false));
     }
+
+    
+    _onItemPost(event) {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        let item = this.actor.items.get(div.data("itemId"));
+        item.sendToChat()
+    }
+
 
     _onChangeItemProperty(event) {
         const itemId = $(event.currentTarget).parents(".item").data("itemId");
@@ -313,6 +347,14 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return this.actor.updateEmbeddedDocuments("Item", [data]);
     }
 
+    _onItemToggle(event) {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        const target = event.currentTarget.dataset["target"]
+        const item = this.actor.items.get(div.data("itemId"));
+        item.update({[target] : !getProperty(item.data, target)})
+    }
+
     async _onAttributeClick(event) {
         event.preventDefault();
         const attribute = $(event.currentTarget).data("attribute");
@@ -388,6 +430,64 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             this.actor.removeCondition(key)
         else 
             this.actor.addCondition(key);
-
     }
+    
+    _onConditionClick(ev)
+    {
+        let key = $(ev.currentTarget).parents(".condition").data("key")
+        let effect = CONFIG.statusEffects.find(i => i.id == key)
+        if (effect)
+        {
+            let journal = game.journal.getName(effect.label)
+            if (journal)
+                journal.sheet.render(true)
+        }
+    }
+
+    _onDropdownClick(ev)
+    {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        const item = this.actor.items.get(div.data("itemId"));
+        return this._dropdown(ev, item.dropdownData())
+    }
+
+
+    async _dropdown(event, dropdownData) {
+        let dropdownHTML = ""
+        event.preventDefault()
+        let li = $(event.currentTarget).parents(".item")
+
+        // Toggle expansion for an item
+        if (li.hasClass("expanded")) // If expansion already shown - remove
+        {
+            let summary = li.children(".item-summary");
+            summary.slideUp(200, () => summary.remove());
+            if(li.find(".dropdown-target").length)
+                li.find(".dropdown-target").show()
+        } else {
+            // Add a div with the item summary belowe the item
+            let div
+            if (!dropdownData) {
+                return
+            } else {
+                dropdownHTML = `<div class="item-summary">${TextEditor.enrichHTML(dropdownData.text)}`;
+            }
+            if (dropdownData.groups) {
+
+            }
+            dropdownHTML += "</div>"
+            div = $(dropdownHTML)
+            li.append(div.hide());
+            div.slideDown(200);
+            if(li.find(".dropdown-target").length)
+            {
+                let placeholder = li.find(".dropdown-target")
+
+                placeholder.slideUp(200, () => placeholder.hide());
+            }
+        }
+        li.toggleClass("expanded");
+    }
+
 }

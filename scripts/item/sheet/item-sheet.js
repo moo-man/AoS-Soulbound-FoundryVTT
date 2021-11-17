@@ -52,7 +52,6 @@ get template() {
           existing : this.item.hasCondition(i.id)
       }
   })
-
     return data;
   }
 

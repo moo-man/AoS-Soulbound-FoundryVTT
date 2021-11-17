@@ -253,7 +253,8 @@
         "background": "",
         "faction": "",
         "subfaction": "",
-        "eyeType": ""
+        "eyeType": "",
+        "connections" : ""
       },
       "experience": 0,
       "notes": ""
