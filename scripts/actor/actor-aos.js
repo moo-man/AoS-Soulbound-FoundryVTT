@@ -124,10 +124,11 @@ export class AgeOfSigmarActor extends Actor {
         })
         this.items.forEach(item => {
             item.prepareOwnedData()
-            if (item.isActive)
+            if (item.isEquipped)
             {
                 if (item.isArmour) this._computeArmour(item);
                 if (item.isAethericDevice) this._computeAethericDevice(item);
+                if (item.isWeapon) this._computeWeapon(item)
             }
         })
     }
@@ -136,7 +137,6 @@ export class AgeOfSigmarActor extends Actor {
         if (item.subtype === "shield") {
             // Like below treat shield benefit as an step increase
             this.combat.defense.total += (item.benefit * 2);
-            this.combat.defense.relative = this._getCombatLadderValue("defense");
         } else {
             this.combat.armour.value += item.benefit;
         }
@@ -145,6 +145,13 @@ export class AgeOfSigmarActor extends Actor {
     _computeAethericDevice(item) {
         this.power.consumed += item.power.consumption;
         this.power.capacity += item.power.capacity;
+    }
+
+    _computeWeapon(item)
+    {
+        if(item.traitList.defensive)
+            this.combat.defense.total += 2;
+
     }
 
     _sizeToken() {
@@ -279,15 +286,31 @@ export class AgeOfSigmarActor extends Actor {
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage, {ignoreArmour = false}={}) {
-        damage = ignoreArmour ? damage : damage - this.combat.armour.value
+    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false}={}) {
+        let armour = this.combat.armour.value
+
+        armour -= penetrating
+
+        if (ineffective) armour *= 2
+
+        damage = ignoreArmour ? damage : damage - armour
+
+
+
         if (damage < 0)
             damage = 0
         let remaining = this.combat.health.toughness.value - damage;
+
+        if (ineffective)
+            remaining = -1 // ineffective can only cause minor wounds
+
          // Update the Actor
          const updates = {
             "data.combat.health.toughness.value": remaining >= 0 ? remaining : 0
         };
+
+        if (damage > 0 && restraining)
+            await this.addCondition("restrained")
 
         // Delegate damage application to a hook
         const allowed = Hooks.call("modifyTokenAttribute", {
@@ -395,8 +418,7 @@ export class AgeOfSigmarActor extends Actor {
 
     async applyRend(damage) {
 
-        let armours = this.items.filter(i => i.isArmour 
-                                          && i.isActive //Only Armour that is worn
+        let armours = this.items.filter(i => i.isEquipped 
                                           && i.subtype !== "shield" // That isn't a shield
                                           && i.benefit !== 0 // not already at zero
                                           && !i.traitList.magical) // Only nonmagical
@@ -465,6 +487,13 @@ export class AgeOfSigmarActor extends Actor {
 
         return display.join(", ")
         
+    }
+
+    get size() {
+        if (this.type == "npc")
+            return this.bio.size
+        else
+            return 2
     }
 
     // @@@@@ BOOLEAN GETTERS @@@@@

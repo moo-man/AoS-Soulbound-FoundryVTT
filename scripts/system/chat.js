@@ -54,7 +54,15 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && li.find('.cleave-value').length; //has cleave effect
+                && message.getTest().item.traitList?.cleave
+        };
+
+        let canApplyBlast = li => {
+            const message = game.messages.get(li.data("messageId"));
+            return message.isRoll
+                && message.isContentVisible //can be seen
+                && canvas.tokens?.controlled.length //has something selected
+                && message.getTest().item.traitList?.blast
         };
 
         let canApplyRend = li => {
@@ -62,7 +70,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && li.find('.rend-value').length; //has rend effect
+                && message.getTest().item.traitList?.rend
         };
 
         options.unshift(
@@ -170,12 +178,22 @@ export default class SoulboundChat {
                 callback: li => SoulboundChat.applyCleaveDamage(li)
             }
         )
+
+        
+        options.push(
+            {
+                name: "CHAT.APPLY_BLAST_DAMAGE",
+                icon: '<i class="fas fa-bomb"></i>',
+                condition: canApplyBlast,
+                callback: li => SoulboundChat.applyBlastDamage(li)
+            }
+        )
         
 
         options.push(
             {
                 name: "CHAT.APPLY_REND_DAMAGE",
-                icon: '<i class="fas fa-user-minus"></i>',
+                icon: '<i class="fas fa-shield-alt"></i>',
                 condition: canApplyRend,
                 callback: li => SoulboundChat.applyRend(li)
             }
@@ -188,10 +206,16 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyChatCardDamage(li, multiplier, options) {
+    static applyChatCardDamage(li, multiplier, options={}) {
         const message = game.messages.get(li.data("messageId"));
-        let damage = message.getTest().result.damage.total
+        let test = message.getTest();
+        let damage = test.result.damage.total
         damage *= multiplier;
+
+        options.penetrating = test.item.traitList?.penetrating ? 1 : 0
+        options.ineffective = test.item.traitList?.ineffective
+        options.restraining = test.item.traitList?.restraining
+
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
@@ -203,9 +227,25 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyCleaveDamage(message) {    
+    static applyCleaveDamage(li) {    
+        const message = game.messages.get(li.data("messageId"));
         let test = message.getTest();
         let damage = test.result.triggers
+        // apply to any selected actors
+        return Promise.all(canvas.tokens.controlled.map(t => {
+            const a = t.actor;
+            return a.applyDamage(damage);
+        }));
+    }
+
+        /**
+     * @param {HTMLElement} messsage    The chat entry which contains the roll data
+     * @return {Promise}
+     */
+    static applyBlastDamage(li) {    
+        const message = game.messages.get(li.data("messageId"));
+        let test = message.getTest();
+        let damage = test.item.traitList.blast.rating
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
@@ -217,7 +257,8 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyRend(message) {    
+    static applyRend(li) {    
+        const message = game.messages.get(li.data("messageId"));
         let test = message.getTest();
         let damage = test.result.triggers
         // apply to any selected actors

@@ -151,6 +151,7 @@
   "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage",
   "CHAT.APPLY_CLEAVE_DAMAGE" : "Apply Cleave Damage",
   "CHAT.APPLY_REND_DAMAGE" : "Apply Rend to Armour",
+  "CHAT.APPLY_BLAST_DAMAGE" : "Apply Blast Damage",
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
   "NOTIFICATION.APPLY_REND": "{damage} Points of nonmagical Armour reduced on {name}",

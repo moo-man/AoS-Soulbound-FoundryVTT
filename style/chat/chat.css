@@ -41,6 +41,11 @@
     margin-top: -4px;
 }
 
+.whisper .content-header {
+    background-image: linear-gradient(to right, var(--color-border), #183051, #183051, #183051, #183051,#183051, var(--color-border));
+}
+
+
 .age-of-sigmar-soulbound.chat .diceContainer {
 	display:flex;
     flex-direction: row;

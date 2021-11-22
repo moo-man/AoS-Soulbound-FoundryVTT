@@ -107,11 +107,8 @@ export class AgeOfSigmarItem extends Item {
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
         };
-        if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-            chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-        } else if (chatData.rollMode === "selfroll") {
-            chatData.whisper = [game.user];
-        }
+
+        ChatMessage.applyRollMode(chatData, chatData.rollMode)
         ChatMessage.create(chatData);
     }
 
@@ -227,7 +224,7 @@ export class AgeOfSigmarItem extends Item {
     get isThreat() { return this.type === "threat" }
     get isActive() { return this.state === "active" }
     /************** GEAR *********************/
-    get isEquipped() { return this.state === "equipped" }
+    get isEquipped() { return this.data.data.equipped }
     get isArmour() { return this.type === "armour" }
     get isWeapon() { return this.type === "weapon" }
     get isAethericDevice() { return this.type === "aethericDevice" }

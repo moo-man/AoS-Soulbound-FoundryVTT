@@ -280,7 +280,7 @@ li.folder > .folder-header .create-folder,
     background-size: cover;
     border-right: 2px solid #7c6c42;
     border-top: 2px solid #7c6c42;
-    padding: 0px 4px 0px 24px;
+    justify-content: center;
 }
 
 
