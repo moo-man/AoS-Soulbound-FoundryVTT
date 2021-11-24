@@ -237,10 +237,10 @@ li.folder > .folder-header .create-folder,
     border-left: 2px solid #7c6c42;
 }
 
-.fill{
+/* .fill{
     height:100%;
 }
-
+ */
 .content-row{
     display:flex;
     flex-direction: row;

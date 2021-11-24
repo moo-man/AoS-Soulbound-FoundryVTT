@@ -12,6 +12,22 @@
     overflow:hidden;
 }
 
+.age-of-sigmar-soulbound.sheet.item .window-content {
+    overflow:hidden;
+}
+
+.age-of-sigmar-soulbound.sheet.item .window-content form {
+    height: 100%
+}
+
+
+.age-of-sigmar-soulbound.sheet.item .window-content .sheet-content{
+    height: calc(100% - 80px);
+}
+
+
+
+
 .age-of-sigmar-soulbound.sheet .sheet-body {
     display:flex;
     flex-direction: column;

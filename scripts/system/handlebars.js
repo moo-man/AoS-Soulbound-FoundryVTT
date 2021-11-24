@@ -44,4 +44,8 @@ function registerHandlebarsHelpers() {
     Handlebars.registerHelper("arrayDisplay", function (array) {
         return array.join(", ")
     })
+
+    Handlebars.registerHelper("enrich", function (string) {
+        return TextEditor.enrichHTML(string)
+    })
 }
