@@ -156,6 +156,12 @@ export default function registerHooks() {
         {
             effect.label = game.i18n.localize(effect.label)
         }
+
+
+        game.actors.contents.forEach(a => {
+            if (a.postReadyEffects.length)
+                a.prepareData()
+        })
     })
 
     Hooks.on("preCreateItem", (data, options, user) => {

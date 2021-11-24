@@ -5,7 +5,13 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
      * */
     apply(actor, change) {
         if (change.value.includes("@"))
-            actor.derivedEffects.push((change))
+        {
+            if (change.value == "@doom" && !game.ready)
+                actor.postReadyEffects.push(change)
+            else
+                actor.derivedEffects.push(change)
+
+        }
         else
             super.apply(actor, change)
     }

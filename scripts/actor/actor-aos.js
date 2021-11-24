@@ -24,6 +24,11 @@ export class AgeOfSigmarActor extends Actor {
 
     prepareData() {
         this.derivedEffects = [];
+        this.postReadyEffects = []
+
+        if (game.ready && this.type != "party")
+            this.data.update({"data.doom" : game.counter.doom}) // Add doom to actor data so it can be used with effects
+
         super.prepareData();
 
         if (this.type === "player" || this.type === "npc") {

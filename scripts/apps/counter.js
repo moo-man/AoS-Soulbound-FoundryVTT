@@ -145,6 +145,13 @@ export default class SoulboundCounter extends Application {
       // Emit socket event for users to rerender their counters
       game.socket.emit('system.age-of-sigmar-soulbound', {type: 'updateCounter'});
   
+      // Some actors have effects based on doom, rerender their sheets to reflect the change
+      if (type == "doom")
+        Object.values(ui.windows).filter(i => i instanceof ActorSheet).forEach(s => {
+          s.actor.prepareData()
+          s.render(true)
+        })
+
       return value
     }
   
@@ -164,6 +171,16 @@ export default class SoulboundCounter extends Application {
           return parseInt(this.party[type].value)
       else 
         return game.settings.get('age-of-sigmar-soulbound', type);
+    }
+
+    get soulfire()
+    {
+      return SoulboundCounter.getValue("soulfire")
+    }
+
+    get doom()
+    {
+      return SoulboundCounter.getValue("doom")
     }
 
     static get party() {

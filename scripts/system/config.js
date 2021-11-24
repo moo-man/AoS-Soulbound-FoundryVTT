@@ -196,7 +196,7 @@ CONFIG.statusEffects = [
             {key: "difficulty", mode : 0, value : 2},
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
             {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "data.combat.defense.bonus", mode : 2, value : -1}
         ],
         flags : { "age-of-sigmar-soulbound.description" : "Difficulty of Mind (Awareness) Tests that rely on sight are increased by 2"}
     },
@@ -247,7 +247,7 @@ CONFIG.statusEffects = [
         changes : [
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
             {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "data.combat.defense.bonus", mode : 2, value : -1}
         ]
     },
     {
@@ -256,7 +256,7 @@ CONFIG.statusEffects = [
         icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
             {key: "data.combat.speeds.foot", mode : 5, value : "slow"},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "data.combat.defense.bonus", mode : 2, value : -1}
         ]
     },
     {
