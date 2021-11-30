@@ -70,6 +70,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             sheetData.data.power.state = "medium";
         else if (sheetData.data.power.pct <= 100)
             sheetData.data.power.state = "high";
+        else if (sheetData.data.power.pct > 100)
+            sheetData.data.power.state = "over";
+
     }
 
     constructItemLists(sheetData) 

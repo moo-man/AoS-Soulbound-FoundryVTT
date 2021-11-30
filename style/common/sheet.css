@@ -497,7 +497,7 @@
     height: 100%
 }
 .age-of-sigmar-soulbound.sheet .power-bar-progress.low {
-    background-color: darkslategray;
+    background: linear-gradient(slategrey, darkslategray);
 }
 
 .age-of-sigmar-soulbound.sheet .power-bar-progress.medium {
@@ -532,5 +532,22 @@
     }
     to {
       box-shadow: 0 0 15px var(--color-active);
+    }
+  }
+
+  .age-of-sigmar-soulbound.sheet .power-bar-progress.over {
+    background: linear-gradient(red, darkred);
+
+    -webkit-animation: glow-over 0.2s ease-in-out infinite alternate;
+    -moz-animation: glow-over 0.2s ease-in-out infinite alternate;
+    animation: glow-over 0.2s ease-in-out infinite alternate;
+}
+
+@-webkit-keyframes glow-over{
+    from {
+      box-shadow: 0 0 5px darkred;
+    }
+    to {
+      box-shadow: 0 0 10px darkred;
     }
   }
