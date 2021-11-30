@@ -129,9 +129,8 @@
                             <a class="roll-weapon">{{item.name}}</a>
                         </div>
                         <div class="item-property">{{item.Damage}}</div>
-                        <div class="item-property flex">{{{arrayDisplay item.Traits}}}</div>
+                        <div class="item-property flex">{{{arrayDisplay item.Traits "item-trait"}}}</div>
                         <div class="item-controls">
-                            <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
                             <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                         </div>
                     </div>
@@ -170,7 +169,6 @@
                 <div class="item-property long">{{item.Duration}}</div>
                 <div class="item-property">DN {{item.dn}}</div>
                 <div class="item-controls">
-                    <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
                     <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                 </div>
             </div>
@@ -193,7 +191,6 @@
                 <div class="item-property long">{{item.Duration}}</div>
                 <div class="item-property">{{item.cost}} Mettle</div>
                 <div class="item-controls">
-                    <a class="item-control item-dropdown"><i class="fas fa-chevron-down"></i></a> 
                     <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                 </div>
             </div>

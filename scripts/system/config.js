@@ -185,6 +185,8 @@ AOS.traits = {
     twohanded : "Two-handed"
 }
 
+AOS.traitDescriptions = {}
+
 AOS.traitsWithValue = ["range", "thrown", "blast"]
 
 CONFIG.statusEffects = [

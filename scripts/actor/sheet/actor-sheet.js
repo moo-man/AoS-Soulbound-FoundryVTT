@@ -220,6 +220,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".condition-toggle").click(this._onConditionToggle.bind(this));
         html.find(".condition-click").click(this._onConditionClick.bind(this));
         html.find(".item-dropdown").click(this._onDropdownClick.bind(this))
+        html.find(".item-dropdown-right").contextmenu(this._onDropdownClick.bind(this))
+        html.find(".item-trait").click(this._onTraitClick.bind(this))
     }
 
     _getHeaderButtons() {
@@ -466,18 +468,32 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     }
 
 
+    _onTraitClick(ev)
+    {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        const item = this.actor.items.get(div.data("itemId"));
+        let text = ev.target.text.trim()
+        let key = Object.values(item.traitList).find(i => i.display == text)?.name
+        this._dropdown(ev, {text : game.aos.config.traitDescriptions[key]})
+    }
+
+
     async _dropdown(event, dropdownData) {
         let dropdownHTML = ""
         event.preventDefault()
         let li = $(event.currentTarget).parents(".item")
-
+        let target = li.find(".dropdown-target")
         // Toggle expansion for an item
-        if (li.hasClass("expanded")) // If expansion already shown - remove
+        if (li.hasClass("expanded")) // If expansion already shown - switch to description
         {
             let summary = li.children(".item-summary");
-            summary.slideUp(200, () => summary.remove());
-            if(li.find(".dropdown-target").length)
-                li.find(".dropdown-target").show()
+            summary.slideUp(200, () => {
+                summary.remove()
+                target.slideDown(200)
+                target.show()
+            });
+
         } else {
             // Add a div with the item summary belowe the item
             let div
@@ -492,13 +508,16 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             dropdownHTML += "</div>"
             div = $(dropdownHTML)
             li.append(div.hide());
-            div.slideDown(200);
-            if(li.find(".dropdown-target").length)
+            if (target.length)
             {
-                let placeholder = li.find(".dropdown-target")
-
-                placeholder.slideUp(200, () => placeholder.hide());
+                target.slideUp(200, () => {
+                    target.hide()
+                    div.slideDown(200);
+                })
             }
+            else 
+                div.slideDown(200);
+                
         }
         li.toggleClass("expanded");
     }

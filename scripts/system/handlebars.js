@@ -41,11 +41,14 @@ function registerHandlebarsHelpers() {
         return game.aos.config[obj][key]
     })
 
-    Handlebars.registerHelper("arrayDisplay", function (array) {
-        return array.join(", ")
-    })
-
     Handlebars.registerHelper("enrich", function (string) {
         return TextEditor.enrichHTML(string)
+    })
+
+    Handlebars.registerHelper("arrayDisplay", function (array, cls) {
+        if (typeof cls == "string")
+            return array.map(i => `<a class="${cls}">${i}</a>`).join(`,`)
+        else
+            return array.join(", ")
     })
 }
