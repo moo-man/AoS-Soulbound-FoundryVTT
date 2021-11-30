@@ -264,7 +264,7 @@ export default class SoulboundChat {
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
-            return a.applyRend(damage);
+            return a.applyRend(damage, {magicWeapon : test.item.traitList?.magical});
         }));
     }
 

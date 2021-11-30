@@ -154,7 +154,8 @@
   "CHAT.APPLY_BLAST_DAMAGE" : "Apply Blast Damage",
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
-  "NOTIFICATION.APPLY_REND": "{damage} Points of nonmagical Armour reduced on {name}",
+  "NOTIFICATION.APPLY_REND": "{damage} Points of Armour reduced on {name}",
+  "NOTIFICATION.REND_FAIL": "No applicable armour to Rend",
   "NOTIFICATION.MACRO_ITEM_NOT_FOUND": "Couldn't find the Item. You may not have a Token selected or the Actor doesn't posses the item",
 
   "CONNECTION.NAME": "Name",

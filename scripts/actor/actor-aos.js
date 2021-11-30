@@ -421,14 +421,15 @@ export class AgeOfSigmarActor extends Actor {
         return existing
       }
 
-    async applyRend(damage) {
+    async applyRend(damage, {magicWeapon = false}={}) {
 
         let armours = this.items.filter(i => i.isEquipped 
                                           && i.subtype !== "shield" // That isn't a shield
                                           && i.benefit !== 0 // not already at zero
-                                          && !i.traitList.magical) // Only nonmagical
+                                          && (!i.traitList.magical || (i.traitList.magical && magicWeapon)) // Only nonmagical - unless magic weapon
+                                          && (!i.traitList.sigmarite || (i.traitList.sigmarite && magicWeapon))) // Only sigmarite - unless magic weapon
         
-        if(armours.length === 0) return;
+        if(armours.length === 0) return ui.notifications.notify(game.i18n.localize("NOTIFICATION.REND_FAIL"));
         
         let sub = damage
         for(let am of armours) {            
