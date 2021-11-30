@@ -45,6 +45,12 @@
     background-image: linear-gradient(to right, var(--color-border), #183051, #183051, #183051, #183051,#183051, var(--color-border));
 }
 
+.age-of-sigmar-soulbound.chat.item:hover {    
+    outline: 1px dotted black;
+    cursor: pointer
+}
+
+
 
 .age-of-sigmar-soulbound.chat .diceContainer {
 	display:flex;

@@ -106,6 +106,7 @@ export class AgeOfSigmarItem extends Item {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
+            "flags.age-of-sigmar-soulbound.itemData" : this.toObject()
         };
 
         ChatMessage.applyRollMode(chatData, chatData.rollMode)

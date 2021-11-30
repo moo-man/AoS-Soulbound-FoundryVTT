@@ -179,6 +179,19 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         data = diffObject(flattenObject(this.actor.toObject(false)), data)
         return data
       }
+
+      _onDrop(ev)
+      {
+          let data = ev.dataTransfer.getData("text/plain")
+          if (data)
+          {
+              data = JSON.parse(data)
+              if (data.type == "itemDrop")
+                  this.actor.createEmbeddedDocuments("Item", [data.payload])
+              else
+                  super._onDrop(ev)
+          }
+      }
     
 
     activateListeners(html) {

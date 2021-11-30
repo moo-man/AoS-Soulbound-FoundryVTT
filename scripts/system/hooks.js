@@ -96,6 +96,19 @@ export default function registerHooks() {
 
     Hooks.on("renderChatLog", (app, html) => SoulboundChat.activateListeners(html))
 
+
+    Hooks.on("renderChatMessage", (message, html) => {
+        let item = html.find(".age-of-sigmar-soulbound.chat.item")
+        if (item.length)
+        {
+            item.attr("draggable", true)
+            item[0].addEventListener("dragstart", ev => {
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemDrop", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
+            })
+        }
+
+    })
+
     /**
      * Create a macro when dropping an entity on the hotbar
      * Item      - open roll dialog for item
