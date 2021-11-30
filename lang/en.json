@@ -57,6 +57,7 @@
 
   "AETHERIC_DEVICE.NAME": "Name",
   "AETHERIC_DEVICE.CATEGORY": "Category",
+  "AETHERIC_DEVICE.ARMOUR": "Armour",
   "AETHERIC_DEVICE.DAMAGE": "Damage",
   "AETHERIC_DEVICE.TRAITS": "Traits",
   "AETHERIC_DEVICE.POWER": "Power",
@@ -434,6 +435,8 @@
   "CONDITION.PRONE" : "Prone",
   "CONDITION.RESTRAINED" : "Restrained",
   "CONDITION.STUNNED" : "Stunned",
-  "CONDITION.UNCONSCIOUS" : "Unconscious"
+  "CONDITION.UNCONSCIOUS" : "Unconscious",
+
+  "EFFECT.RequiresEquip" : "Requires Equip"
   
 }

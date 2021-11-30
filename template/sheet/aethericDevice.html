@@ -36,16 +36,26 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.CATEGORY"}}</h3>
-                            <select name="data.category">
-                                {{#select data.category}}
-                                <option value="melee">{{localize "CATEGORY.MELEE"}}</option>
-                                <option value="range">{{localize "CATEGORY.RANGE"}}</option>
-                                {{/select}}
-                            </select>
+                                <div class="segment-horizontal">
+                                    <select name="data.category">
+                                        {{#select data.category}}
+                                        <option value="melee">{{localize "CATEGORY.MELEE"}}</option>
+                                        <option value="range">{{localize "CATEGORY.RANGE"}}</option>
+                                        {{/select}}
+                                    </select>
+                            </div>
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.DAMAGE"}}</h3>
-                            <input name="data.damage" type="text" value="{{data.damage}}"/>
+                                <div class="segment-horizontal">
+                                <input name="data.damage" type="text" value="{{data.damage}}"/>
+                            </div>
+                        </div> 
+                        <div class="entry-vertical">
+                            <h3>{{localize "AETHERIC_DEVICE.ARMOUR"}}</h3>
+                                <div class="segment-horizontal">
+                                <input name="data.armour" type="number" value="{{data.armour}}" data-dtype="Number"/>
+                            </div>
                         </div> 
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.POWER"}}:</h3>

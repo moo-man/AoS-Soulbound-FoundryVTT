@@ -61,6 +61,15 @@
             </div>
         </div>
         {{/if}}
+
+        {{#if equippableItem}}
+        <div class="form-group">
+            <label>{{localize "EFFECT.RequiresEquip"}}</label>
+            <div class="form-fields">
+                <input type="checkbox" name="flags.age-of-sigmar-soulbound.requiresEquip" {{checked data.flags.age-of-sigmar-soulbound.requiresEquip}}/>
+            </div>
+        </div>
+        {{/if}}
     </section>
 
     <!-- Duration Tab -->

@@ -172,7 +172,6 @@ export default function registerHooks() {
 
 
         game.actors.contents.forEach(a => {
-            if (a.postReadyEffects.length)
                 a.prepareData()
         })
     })

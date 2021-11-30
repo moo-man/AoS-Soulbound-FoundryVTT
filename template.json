@@ -329,7 +329,8 @@
       "crafting": "",
       "damage": "",
       "traits": [],
-      "state": "other"
+      "state": "other",
+      "armour" : 0
     },
     "ally": {
       "description": "",

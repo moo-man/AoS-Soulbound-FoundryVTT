@@ -1,5 +1,13 @@
 export default class AgeOfSigmarEffect extends ActiveEffect {
 
+
+    prepareData()
+    {
+        if (game.ready && this.item && this.item.equippable && this.requiresEquip)
+            this.data.disabled = !this.item.equipped
+            //this.data.update({"disabled" : !this.item.equipped})
+    }
+
     /** @override 
      * Adds support for referencing actor data
      * */
@@ -19,7 +27,23 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     fillDerivedData(actor, change) {
         change.value = eval(Roll.replaceFormulaData(change.value, actor.getRollData()))
     }
-    
+
+    get item() {
+        if (this.parent && this.parent.documentName == "Item")
+            return this.parent
+        else if (this.data.origin && this.parent.documentName == "Actor") 
+        {
+            let origin = this.data.origin.split(".")
+            if (origin[1] == this.parent.id) // If origin ID is same as parent ID
+            {
+                if (origin[3])
+                {
+                    return this.parent.items.get(origin[3])
+                }
+            }
+        }
+    }
+
     get label() {
         return this.data.label
     }
@@ -47,6 +71,9 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
     }
 
+    get requiresEquip() {
+        return this.getFlag("age-of-sigmar-soulbound", "requiresEquip")
+    }
 
     get isCondition() {
         return CONFIG.statusEffects.map(i => i.id).includes(this.getFlag("core", "statusId"))

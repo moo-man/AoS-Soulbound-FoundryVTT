@@ -205,6 +205,8 @@ export class AgeOfSigmarItem extends Item {
         return {difficulty : parseInt(this.DN.split(":")[0]), complexity : parseInt(this.DN.split(":")[1])}
     }
 
+    get equippable() { return hasProperty(this, "data.data.equipped") }
+
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }
@@ -267,4 +269,5 @@ export class AgeOfSigmarItem extends Item {
     get requirement() { return this.data.data.requirement }
     get category() { return this.data.data.category }
     get equipped() { return this.data.data.equipped }
+    get armour() { return this.data.data.armour }
 }

@@ -27,6 +27,7 @@
       "path": "lang/en.json"
     }
   ],
+  "background" : "../../modules/soulbound-core/assets/images/cover.png",
   "gridDistance": 1,
   "gridUnits": "m",
   "primaryTokenAttribute": null,

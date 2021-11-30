@@ -150,6 +150,8 @@ export class AgeOfSigmarActor extends Actor {
     _computeAethericDevice(item) {
         this.power.consumed += item.power.consumption;
         this.power.capacity += item.power.capacity;
+        if (item.armour > 0)
+            this.combat.armour.value += item.armour
     }
 
     _computeWeapon(item)
