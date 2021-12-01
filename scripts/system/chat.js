@@ -54,7 +54,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().item.traitList?.cleave
+                && message.getTest().item?.traitList?.cleave
         };
 
         let canApplyBlast = li => {
@@ -62,7 +62,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().item.traitList?.blast
+                && message.getTest().item?.traitList?.blast
         };
 
         let canApplyRend = li => {
@@ -70,7 +70,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().item.traitList?.rend
+                && message.getTest().item?.traitList?.rend
         };
 
         options.unshift(
@@ -212,9 +212,9 @@ export default class SoulboundChat {
         let damage = test.result.damage.total
         damage *= multiplier;
 
-        options.penetrating = test.item.traitList?.penetrating ? 1 : 0
-        options.ineffective = test.item.traitList?.ineffective
-        options.restraining = test.item.traitList?.restraining
+        options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
+        options.ineffective = test.item?.traitList?.ineffective
+        options.restraining = test.item?.traitList?.restraining
 
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
@@ -264,7 +264,7 @@ export default class SoulboundChat {
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
-            return a.applyRend(damage, {magicWeapon : test.item.traitList?.magical});
+            return a.applyRend(damage, {magicWeapon : test.item?.traitList?.magical});
         }));
     }
 
@@ -393,7 +393,7 @@ export default class SoulboundChat {
         if (table)
         {
             let {roll, results} =  await table.roll({roll : tableRoll})
-            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.speakerData})
+            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.speakerData, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
         }
         else
             ui.notifications.error("No Table Found")
@@ -409,6 +409,7 @@ export default class SoulboundChat {
         let effect = item.effects.get(effectId).toObject()
         effect.origin = test.actor.uuid
         let duration = item.duration
+        setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
 
         if (duration.unit == "round")
             effect.duration.rounds = parseInt(duration.value)

@@ -312,11 +312,19 @@
     "templates": {
       "equipped" : {
         "equipped" : false
+      },
+      "test" : {
+        "test": {
+          "attribute" : "",
+          "skill" : "",
+          "dn" : ""
+        }
       }
     },
     "aethericDevice": {
       "templates": [
-        "equipped"
+        "equipped",
+        "test"
       ],
       "description": "",
       "cost": "",
@@ -375,6 +383,9 @@
       "completed": false
     },
     "miracle": {
+      "templates" : [
+        "test"
+      ],                                  
       "cost": 0,
       "target": "",
       "range": "self",
@@ -399,17 +410,15 @@
       "state": "other"
     },
     "spell": {
+      "templates" : [
+        "test"
+      ],
       "dn": "",
       "target": "",
       "range": "you",
       "duration": {
         "value" : null,
         "unit" : "instant"
-      },
-      "test": {
-        "attribute" : "",
-        "skill" : "",
-        "dn" : ""
       },
       "damage" : "",
       "overcast": "",

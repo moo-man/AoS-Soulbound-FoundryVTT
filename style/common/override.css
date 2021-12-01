@@ -42,7 +42,6 @@ input[type="time"]:focus {
 .window-header{
     display:flex;
     flex-direction: row;
-    align-items: center;
     color: var(--color-text);
     font-family: var(--font-text);
     color: whitesmoke;
@@ -70,10 +69,29 @@ li.folder > .folder-header h3 {
     color: unset;
 }
 
+
+#combat li.combatant {
+    font-family: Quadrant-Regular;
+    color:  var(--color-border)
+}
+
+
+#combat li.combatant .token-initiative .initiative {
+    font-size: 18px;
+    text-shadow: none
+}
+
+#combat li.combatant.active {
+    background: rgba(0, 0, 0, 0.2);
+}
+
 li.directory-item.folder:not(.collapsed) {
     box-shadow: inset 0 0 10px blue;
 }
 
+.directory .directory-list .directory-item.context, .directory .directory-list .directory-item.active {
+    border-color: var(--color-active);
+}
 
 li.folder > .folder-header .create-folder,
  li.folder > .folder-header .create-entity {

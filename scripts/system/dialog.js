@@ -287,7 +287,7 @@ export class CombatDialog extends RollDialog {
 }
 
 
-export class PowerDialog extends RollDialog {
+export class SpellDialog extends RollDialog {
     static async create(data) {
         return new Promise(async (resolve, reject) => {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
@@ -301,11 +301,11 @@ export class PowerDialog extends RollDialog {
                         label: game.i18n.localize("BUTTON.ROLL"),
                         callback: async (html) => {
                             let testData = this.extractDialogData(html)
-                            testData.itemId = data.power.id
+                            testData.itemId = data.spell.id
                             testData.dn = {
                                 difficulty : parseInt(html.find("#difficulty")[0].value),
                                 complexity : parseInt(html.find("#complexity")[0].value),
-                                name : data.power.name
+                                name : data.spell.name
                             }
                             resolve(testData);
                         },
@@ -316,13 +316,52 @@ export class PowerDialog extends RollDialog {
         })
     }
     
-    static _dialogData(actor, power)
+    static _dialogData(actor, spell)
     {
-        let skill = power.data.type === "spell" ? "channelling" : "devotion"
+        let skill = "channelling" 
         let attribute = game.aos.config.skillAttributes[skill]
         let data = super._dialogData(actor, attribute, skill)
-        mergeObject(data, power.difficultyNumber)
-        data.power = power
+        mergeObject(data, spell.difficultyNumber)
+        data.spell = spell
+        return data
+    }    
+}
+
+export class MiracleDialog extends RollDialog {
+    // static async create(data) {
+    //     return new Promise(async (resolve, reject) => {
+    //         const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
+    //         return new this({
+    //             title: data.title,
+    //             effects : data.effects,
+    //             content: html,
+    //             buttons: {
+    //                 roll: {
+    //                     icon: '<i class="fas fa-check"></i>',
+    //                     label: game.i18n.localize("BUTTON.ROLL"),
+    //                     callback: async (html) => {
+    //                         let testData = this.extractDialogData(html)
+    //                         testData.itemId = data.power.id
+    //                         testData.dn = {
+    //                             difficulty : parseInt(html.find("#difficulty")[0].value),
+    //                             complexity : parseInt(html.find("#complexity")[0].value),
+    //                             name : data.power.name
+    //                         }
+    //                         resolve(testData);
+    //                     },
+    //                 }
+    //             },
+    //             default: "roll"
+    //         }, {width: 450}).render(true)
+    //     })
+    // }
+    
+    static _dialogData(actor, power)
+    {
+        let skill = power.test.opposed  ? "devotion" : ""
+        let attribute = game.aos.config.skillAttributes[skill]
+        let data = super._dialogData(actor, attribute, skill)
+
         return data
     }    
 }

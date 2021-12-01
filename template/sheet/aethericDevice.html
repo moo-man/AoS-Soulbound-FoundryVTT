@@ -38,6 +38,7 @@
                             <h3>{{localize "AETHERIC_DEVICE.CATEGORY"}}</h3>
                                 <div class="segment-horizontal">
                                     <select name="data.category">
+                                        <option value="">–</option>
                                         {{#select data.category}}
                                         <option value="melee">{{localize "CATEGORY.MELEE"}}</option>
                                         <option value="range">{{localize "CATEGORY.RANGE"}}</option>
@@ -64,6 +65,30 @@
                                 <h3> / </h3>
                                 +<div class="sheet-table-value"><input name="data.power.capacity" type="number" value="{{data.power.capacity}}" data-dtype="Number"/></div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "AETHERIC_DEVICE.TEST"}}</h3>
+                            <div class="entry-inputs">
+                                <input name="data.test.dn" type="text" placeholder="DN" value="{{data.test.dn}}"/>
+                                <select name="data.test.attribute">
+                                    {{#select data.test.attribute}}
+                                    <option value="">-</option>
+                                    {{#each (config "attributes") as |attribute a|}}
+                                    <option value="{{a}}">{{attribute}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                                <select name="data.test.skill">
+                                    {{#select data.test.skill}}
+                                    <option value="">-</option>
+                                    {{#each (config "skills") as |skill s|}}
+                                    <option value="{{s}}">{{skill}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                            </div>                            
                         </div>
                     </div>
                     <div class="content-row">

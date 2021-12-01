@@ -146,7 +146,9 @@ export class AgeOfSigmarItem extends Item {
 
     get traitList () {
         let traits = {}
-        this.data.data.traits.forEach(i => {
+        if (!this.traits)
+            return traits
+        this.traits.forEach(i => {
             traits[i.name] = {
                 name : i.name,
                 display : game.aos.config.traits[i.name]
@@ -175,7 +177,10 @@ export class AgeOfSigmarItem extends Item {
     }
 
     get Duration() {
-        return `${this.duration.value} ${game.aos.config.durations[this.duration.unit]}${this.duration.value > 0 ? "s" : "" }`
+        if (this.type == "spell")
+            return `${this.duration.value} ${game.aos.config.durations[this.duration.unit]}${this.duration.value > 0 ? "s" : "" }`
+        else if (this.type == "miracle")
+            return this.duration
     }
 
     get Range() {

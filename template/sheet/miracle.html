@@ -1,64 +1,93 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="avatar">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
     </div>
     <div class="sheet-body">
         <div class="sheet-header">
-            <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+            <h1><input name="name" type="text" value="{{item.name}}" /></h1>
         </div>
         <div class="sheet-subHeader">
             <div class="segment-horizontal">
                 <h3>{{localize "MIRACLE.OF"}}</h3>
-                <input name="data.god" type="text" value="{{data.god}}" placeholder="{{localize "MIRACLE.GOD"}}" style="width:60%"/>
+                <input name="data.god" type="text" value="{{data.god}}" placeholder="{{localize "MIRACLE.GOD"}}"
+                    style="width:60%" />
             </div>
         </div>
         <hr>
-        <div class="content-box">
-            <div class="content-header">
-                <h1>{{localize "TITLE.STATS"}}</h1>
-            </div>
-            <div class="content-row">
-                <div class="entry-vertical">
-                    <h3>{{localize "MIRACLE.TARGET"}}</h3>
-                    <input name="data.target" type="text" value="{{data.target}}" />
-                </div>
-                <div class="entry-vertical">
-                    <h3>{{localize "SPELL.RANGE"}}</h3>
-                    <select name="data.range">
-                        {{#select data.range}}
-                        {{#each (config "range") as |range r|}}
-                        <option value="{{r}}">{{range}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </div>
-                <div class="entry-vertical">
-                    <h3>{{localize "MIRACLE.DURATION"}}</h3>
-                    <input name="data.duration" type="text" value="{{data.duration}}"/>
-                </div>
-                <div class="entry-vertical">
-                    <h3>{{localize "MIRACLE.COST"}}</h3>
-                    <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number"/>
-                </div>
-            </div>
-            <div class="content-row">
-                <div class="entry-vertical">
-                    <h3>{{localize "MIRACLE.EFFECT"}}</h3>
-                    <input name="data.effect" type="text" value="{{data.effect}}"/>
-                </div>
-            </div>
-        </div>  
-        <hr>    
+        <div class="sheet-tabs tabs">
+            <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+            <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+        </div>
         <div class="sheet-content">
-            <div class="content-box item-description">
-                <div class="content-header">
-                    <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+            <div class="tab" data-tab="description">
+                <div class="content-box">
+                    <div class="content-header">
+                        <h1>{{localize "TITLE.STATS"}}</h1>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "MIRACLE.TARGET"}}</h3>
+                            <input name="data.target" type="text" value="{{data.target}}" />
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.RANGE"}}</h3>
+                            <select name="data.range">
+                                {{#select data.range}}
+                                {{#each (config "range") as |range r|}}
+                                <option value="{{r}}">{{range}}</option>
+                                {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "MIRACLE.DURATION"}}</h3>
+                            <input name="data.duration" type="text" value="{{data.duration}}" />
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "MIRACLE.COST"}}</h3>
+                            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+                        </div>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "MIRACLE.TEST"}}</h3>
+                            <div class="entry-inputs">
+                                <input name="data.test.dn" type="text" placeholder="DN" value="{{data.test.dn}}" />
+                                <select name="data.test.attribute">
+                                    {{#select data.test.attribute}}
+                                    <option value="">-</option>
+                                    {{#each (config "attributes") as |attribute a|}}
+                                    <option value="{{a}}">{{attribute}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                                <select name="data.test.skill">
+                                    {{#select data.test.skill}}
+                                    <option value="">-</option>
+                                    {{#each (config "skills") as |skill s|}}
+                                    <option value="{{s}}">{{skill}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                                <h3>{{localize "MIRACLE.OPPOSED"}}</h3>
+                                <input name="data.test.opposed" type="checkbox" {{checked data.test.opposed}} />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="content-wrapper">
-                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                <hr>
+                <div class="content-box" style="height:100%">
+                    <div class="content-header">
+                        <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                    </div>
+                    <div class="content-wrapper">
+                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                    </div>
                 </div>
+            </div>
+            <div class="tab" data-tab="effects">
+                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html}}
             </div>
         </div>
-        {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html}}
     </div>
 </form>

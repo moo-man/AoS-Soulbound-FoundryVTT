@@ -228,9 +228,14 @@ export default function registerHooks() {
 
     Hooks.on("preCreateActiveEffect", (effect, data, options, user) => {
         if (effect.parent?.type == "spell" || effect.parent?.type == "miracle")
-        {
             effect.data.update({"transfer" : false})
-            //effect.data.update({"label" : effect.parent.name})
+
+        if (effect.item && effect.item.equippable && effect.parent.documentName == "Item")
+            effect.data.update({"flags.age-of-sigmar-soulbound.requiresEquip" : true})
+        else if (effect.item && effect.parent.documentName == "Actor")
+        {
+            effect.data.update({"flags.age-of-sigmar-soulbound.requiresEquip" : getProperty(data, "flags.age-of-sigmar-soulbound.requiresEquip")})
+            effect.data.update({"disabled" : effect.data.disabled})
         }
     })
 

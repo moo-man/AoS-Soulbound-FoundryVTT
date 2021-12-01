@@ -11,7 +11,8 @@ import Migration from "./scripts/system/migrations.js";
 import AOSUtility from "./scripts/system/utility.js";
 import Test from "./scripts/system/tests/test.js";
 import CombatTest from "./scripts/system/tests/combat-test.js";
-import PowerTest from "./scripts/system/tests/power-test.js";
+import SpellTest from "./scripts/system/tests/spell-test.js";
+import MiracleTest from "./scripts/system/tests/miracle-test.js";
 import ItemTraits from "./scripts/apps/item-traits.js"
 import AgeOfSigmarEffect from "./scripts/system/effect.js";
 import AgeOfSigmarEffectSheet from "./scripts/apps/active-effect-config.js";
@@ -37,7 +38,8 @@ Hooks.once("init", () => {
         rollClass : {
             Test,
             CombatTest,
-            PowerTest
+            SpellTest,
+            MiracleTest
         },
         apps: {
             ItemTraits

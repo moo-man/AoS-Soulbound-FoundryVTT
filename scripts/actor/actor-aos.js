@@ -1,4 +1,7 @@
-import { RollDialog, CombatDialog, PowerDialog } from "../system/dialog.js";
+import { RollDialog, CombatDialog, SpellDialog } from "../system/dialog.js";
+import Test from "../system/tests/test.js";
+import CombatTest from "../system/tests/combat-test.js";
+import SpellTest from "../system/tests/spell-test.js";
 
 export class AgeOfSigmarActor extends Actor {
 
@@ -237,7 +240,7 @@ export class AgeOfSigmarActor extends Actor {
         dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} Test`
         let testData = await RollDialog.create(dialogData);
         testData.speaker = this.speakerData
-        return testData 
+        return new Test(testData)
     }
 
     async setupSkillTest(skill, attribute, options={}) 
@@ -246,7 +249,7 @@ export class AgeOfSigmarActor extends Actor {
         dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
         let testData = await RollDialog.create(dialogData);
         testData.speaker = this.speakerData
-        return testData 
+        return new Test(testData)
     }
 
     async setupCombatTest(weapon, options)
@@ -258,20 +261,33 @@ export class AgeOfSigmarActor extends Actor {
         dialogData.title = `${weapon.name} Test`
         let testData = await CombatDialog.create(dialogData);
         testData.speaker = this.speakerData
-        return testData 
+        return new CombatTest(testData)
     }
 
-    async setupPowerTest(power)
+    async setupSpellTest(power)
     {
         if (typeof power == "string")
             power = this.items.get(power)
 
-        let dialogData = PowerDialog._dialogData(this, power)
+        let dialogData = SpellDialog._dialogData(this, power)
         dialogData.title = `${power.name} Test`
-        let testData = await PowerDialog.create(dialogData);
+        let testData = await SpellDialog.create(dialogData);
         testData.speaker = this.speakerData
-        return testData 
+        return new SpellTest(testData)
     }
+
+    async setupMiracleTest(power)
+    {
+        if (typeof power == "string")
+            power = this.items.get(power)
+
+        let dialogData = MiracleDialog._dialogData(this, power)
+        dialogData.title = `${power.name} Test`
+        let testData = await SpellDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return new SpellTest(testData)
+    }
+
     _getCombatData(weapon) {
         let data = {
             melee: this.actor.combat.melee.relative,

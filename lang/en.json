@@ -68,6 +68,7 @@
   "AETHERIC_DEVICE.COST": "Cost",
   "AETHERIC_DEVICE.AVAILABILITY": "Availability",
   "AETHERIC_DEVICE.DESCRIPTION": "Description",
+  "AETHERIC_DEVICE.TEST": "Test",
 
   "ARMOUR.NAME": "Name",
   "ARMOUR.DESCRIPTION": "Description",
@@ -187,6 +188,8 @@
   "DIALOG.SUCCESSES" : "Successes",
   "DIALOG.SIXES" : "Sixes",
   "DIALOG.TRIGGER" : "Triggers",
+  "DIALOG.ITEM_DELETE" : "Item Delete",
+  "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
     
 
 
@@ -254,12 +257,15 @@
 
   "MIRACLE.NAME": "Name",
   "MIRACLE.COST": "Cost",
+  "MIRACLE.TEST": "Test",
   "MIRACLE.TARGET": "Target",
   "MIRACLE.RANGE": "Range",
   "MIRACLE.DURATION": "Duration",
   "MIRACLE.DESCRIPTION": "Description",
   "MIRACLE.EFFECT": "Effect",
   "MIRACLE.GOD": "God",
+  "MIRACLE.OPPOSED": "Opposed",
+  "MIRACLE.OF": "Miracle of",
 
   "PARTY.SOULFIRE": "Soulfire",
   "PARTY.DOOM": "Doom",

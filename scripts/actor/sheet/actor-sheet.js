@@ -201,6 +201,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         super.activateListeners(html);
         html.find(".item-create").click(this._onItemCreate.bind(this));
         html.find(".item-edit").click(this._onItemEdit.bind(this));
+        html.find(".item-edit-right").contextmenu(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find(".item-post").click(this._onItemPost.bind(this));
         //html.find(".item-property").click(this._onChangeItemProperty.bind(this));
@@ -214,7 +215,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".roll-attribute").click(this._onAttributeClick.bind(this));
         html.find(".roll-skill").click(this._onSkillClick.bind(this));
         html.find(".roll-weapon").click(this._onWeaponClick.bind(this));
-        html.find(".roll-power").click(this._onPowerClick.bind(this));
+        html.find(".roll-power").click(this._onSpellMiracleClick.bind(this));
         html.find(".show-power").click(this._prepareShowPower.bind(this));
         html.find(".wound-create").click(this._onWoundCreate.bind(this));
         html.find(".wound-delete").click(this._onWoundDelete.bind(this));
@@ -272,8 +273,25 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     _onItemDelete(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
-        this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
-        div.slideUp(200, () => this.render(false));
+
+        new Dialog({
+            title : game.i18n.localize("DIALOG.ITEM_DELETE"),
+            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}`,
+            buttons : {
+                "yes" : {
+                    label : game.i18n.localize("Yes"),
+                    callback: () => {
+                        this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
+                        div.slideUp(200, () => this.render(false));
+                    }
+                },
+                "cancel" : {
+                    label : game.i18n.localize("Cancel"),
+                    callback : () => {}
+                }
+            }
+        }).render(true)
+
     }
 
     
@@ -376,8 +394,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _onAttributeClick(event) {
         event.preventDefault();
         const attribute = $(event.currentTarget).data("attribute");
-        let testData = await this.actor.setupAttributeTest(attribute)
-        let test = new game.aos.rollClass.Test(testData)
+        let test = await this.actor.setupAttributeTest(attribute)
         await test.rollTest()
         test.sendToChat()
     }
@@ -385,8 +402,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     async _onSkillClick(event) {
         event.preventDefault();
         const skill = $(event.currentTarget).data("skill");
-        let testData = await this.actor.setupSkillTest(skill)
-        let test = new game.aos.rollClass.Test(testData)
+        let test = await this.actor.setupSkillTest(skill)
         await test.rollTest()
         test.sendToChat()
     }
@@ -395,18 +411,23 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const weaponId = div.data("itemId");
-        let testData = await this.actor.setupCombatTest(weaponId)
-        let test = new game.aos.rollClass.CombatTest(testData)
+        let test = await this.actor.setupCombatTest(weaponId)
         await test.rollTest()
         test.sendToChat()
     }
 
-    async _onPowerClick(event) {
+    async _onSpellMiracleClick(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const powerId = div.data("itemId");
-        let testData = await this.actor.setupPowerTest(powerId)
-        let test = new game.aos.rollClass.PowerTest(testData)
+        let item = this.actor.items.get(powerId)
+
+        let test
+        if (item.type == "spell")
+            test = await this.actor.setupSpellTest(powerId)
+        else if (item.type == "miracle")
+            test = await this.actor.setupMiracleTest(powerId)
+
         await test.rollTest()
         test.sendToChat()
     }

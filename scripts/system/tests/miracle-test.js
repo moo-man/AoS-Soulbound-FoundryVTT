@@ -1,6 +1,6 @@
 import Test from "./test.js";
 
-export default class PowerTest extends Test{
+export default class MiracleTest extends Test{
 
     constructor(data)
     {
@@ -12,6 +12,11 @@ export default class PowerTest extends Test{
     computeResult()
     {
         let result = super.computeResult()
+        if (this.item.type == "miracle" && !this.item.test.opposed)
+        {
+            result.success = true;
+            result.degree = 0
+        }
         if (this.item.type == "spell")
         {
             result.overcast = this.power.overcast;
@@ -32,9 +37,25 @@ export default class PowerTest extends Test{
         return damage
     }
 
+    _computeRoll()
+    {
+        if(this.item.type == "spell")
+            return super._computeRoll();
+        else if (this.item.type == "miracle" && !this.item.test.opposed)
+        {
+            return {
+                triggers : 0,
+                dice : [],
+                focus : this.skill?.focus || 0
+            }
+        }
+    }
+
     get power() {
         return this.item
     }
+
+    
 
     get spellFailed()
     {
