@@ -288,8 +288,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                 "cancel" : {
                     label : game.i18n.localize("Cancel"),
                     callback : () => {}
-                }
-            }
+                },
+            },
+            default: "yes"
         }).render(true)
 
     }

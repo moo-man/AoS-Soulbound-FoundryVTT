@@ -9,6 +9,10 @@ export default class SpellTest extends Test{
             this.testData.combat = data.combat
     }
 
+    get template() {
+        return "systems/age-of-sigmar-soulbound/template/chat/spell/spell-roll.html"
+    }
+
     computeResult()
     {
         let result = super.computeResult()

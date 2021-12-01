@@ -2,6 +2,7 @@ import { RollDialog, CombatDialog, SpellDialog } from "../system/dialog.js";
 import Test from "../system/tests/test.js";
 import CombatTest from "../system/tests/combat-test.js";
 import SpellTest from "../system/tests/spell-test.js";
+import MiracleTest from "../system/tests/miracle-test.js";
 
 export class AgeOfSigmarActor extends Actor {
 
@@ -281,11 +282,15 @@ export class AgeOfSigmarActor extends Actor {
         if (typeof power == "string")
             power = this.items.get(power)
 
-        let dialogData = MiracleDialog._dialogData(this, power)
+        if (power.cost > this.combat.mettle.value)
+            return ui.notifications.error("Not enough Mettle!")
+
+        let dialogData = RollDialog._dialogData(this, "soul", "devotion")
         dialogData.title = `${power.name} Test`
-        let testData = await SpellDialog.create(dialogData);
+        let testData = await RollDialog.create(dialogData);
+        testData.itemId = power.id
         testData.speaker = this.speakerData
-        return new SpellTest(testData)
+        return new MiracleTest(testData)
     }
 
     _getCombatData(weapon) {

@@ -349,17 +349,16 @@ export default class SoulboundChat {
         let msg = game.messages.get(id)
         let test = msg.getTest();
         let [difficulty, complexity] = test.itemTest.dn.split(":").map(i=> parseInt(i))
-        let testData
+        let chatTest
         if (canvas.tokens.controlled.length)
         {
             for (let t of canvas.tokens.controlled)
             {
                 if (test.itemTest.skill)
-                    testData = await t.actor.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
+                    chatTest = await t.actor.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
                 else 
-                    testData = await t.actor.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})  
+                    chatTest = await t.actor.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})  
                     
-                let chatTest = new game.aos.rollClass.Test(testData)
                 await chatTest.rollTest()
                 chatTest.sendToChat()     
             }
@@ -367,11 +366,10 @@ export default class SoulboundChat {
         else if (game.user.character)
         {
             if (test.itemTest.skill)
-                testData = await game.user.character.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
+                chatTest = await game.user.character.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
             else 
-                testData = await game.user.character.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})       
+                chatTest = await game.user.character.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})       
                 
-            let chatTest = new game.aos.rollClass.Test(testData)
             await chatTest.rollTest()
             chatTest.sendToChat()     
         }

@@ -15,6 +15,14 @@ function preloadHandlebarsTemplates() {
         "systems/age-of-sigmar-soulbound/template/sheet/tab/party-main.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/party-members.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html",
+        "systems/age-of-sigmar-soulbound/template/chat/base/base-result.html",
+        "systems/age-of-sigmar-soulbound/template/chat/base/dice-container.html",
+        "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-result.html",
+        "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-buttons.html",
+        "systems/age-of-sigmar-soulbound/template/chat/spell/spell-result.html",
+        "systems/age-of-sigmar-soulbound/template/chat/spell/spell-buttons.html",
+        "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-result.html",
+        "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-buttons.html"
     ];
     return loadTemplates(templatePaths);
 }

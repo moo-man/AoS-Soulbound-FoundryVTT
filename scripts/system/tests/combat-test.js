@@ -16,6 +16,9 @@ export default class CombatTest extends Test {
         return result
     }
 
+    get template() {
+        return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-roll.html"
+    }
 
     computeDamage(result)
     {
@@ -34,7 +37,6 @@ export default class CombatTest extends Test {
     
         let effect = null;
     
-        // TODO Deprecate in favor of trait objects
         if(this.item.traitList.ineffective) {
             effect = this._createTraitEffect();
             effect.isPlain = true;
@@ -51,8 +53,6 @@ export default class CombatTest extends Test {
             damage.armour -= 1;        
         }
     
-        //On these two we may want to get more 6s if possible after we can't get more successes and have focus left over
-        //No idea how to implement that yet may need to refactor _applyFocus a lot for that.
         if(this.item.traitList.cleave) {
             effect = this._createTraitEffect();
             effect.isCleave = true;

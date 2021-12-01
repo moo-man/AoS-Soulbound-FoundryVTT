@@ -24,6 +24,10 @@ export default class Test {
         }
     }
 
+    get template() {
+        return "systems/age-of-sigmar-soulbound/template/chat/base/base-roll.html"
+    }
+
     static recreate(data)
     {
         let test = new game.aos.rollClass[data.context.rollClass]()
@@ -167,7 +171,7 @@ export default class Test {
 
     async sendToChat({newMessage = false} = {})
     {
-        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/roll.html", this);
+        const html = await renderTemplate(this.template, this);
         let chatData = {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,

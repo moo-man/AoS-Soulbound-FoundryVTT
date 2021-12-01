@@ -1,0 +1,14 @@
+<div class="age-of-sigmar-soulbound chat roll">
+    <div class="content-box">
+        {{#if result.rolled}}
+        <div class="content-header">
+            <h2>DN {{testData.dn.difficulty}}:{{testData.dn.complexity}} {{testData.dn.name}} Test</h2>
+        </div>
+
+        {{> systems/age-of-sigmar-soulbound/template/chat/base/dice-container.html}}
+        {{/if}}
+
+        {{> systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-result.html}}
+        {{> systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-buttons.html}}
+    </div>
+</div>

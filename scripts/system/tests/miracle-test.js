@@ -2,63 +2,64 @@ import Test from "./test.js";
 
 export default class MiracleTest extends Test{
 
-    constructor(data)
-    {
-        super(data)
-        if(data)
-            this.testData.combat = data.combat
+
+    get template() {
+        return "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-roll.html"
+    }
+
+
+    async rollTest() {
+        if (this.item.test.opposed)
+        {
+            this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
+            await this.roll.evaluate({async:true})  
+            this.data.result = this.computeResult()   
+        }
+        else 
+            this.roll = new Roll("")
+
+        this.testData.roll = this.roll.toJSON()
+
+        if (!this.context.mettleSubtracted)
+        {
+            this.actor.update({"data.combat.mettle.value" : this.actor.combat.mettle.value - this.item.cost})
+            this.context.mettleSubtracted = true
+        }
     }
 
     computeResult()
     {
-        let result = super.computeResult()
-        if (this.item.type == "miracle" && !this.item.test.opposed)
+        let result
+        if (this.item.test.opposed)
         {
-            result.success = true;
-            result.degree = 0
+            result = this._computeRoll();
+            result.success = result.successes >= this.testData.dn.complexity
+            result.degree = result.success ? result.successes - this.testData.dn.complexity : this.testData.dn.complexity - result.successes
+            result.dn = this.testData.dn
+            result.rolled = true
         }
-        if (this.item.type == "spell")
-        {
-            result.overcast = this.power.overcast;
-            result.duration = this.power.duration;
+        else {
+            result = {
+                triggers : 0,
+                dice : [],
+                focus : this.skill?.focus || 0,
+                success : true
+            }
         }
-        result.damage = this.computeDamage(result);
+
+
+        result.duration = this.item.duration
+
         return result
     }
 
-    computeDamage(result) {
-        let damage = {}
-        if (this.item.type == "spell" && result.success)
-        {
-            let formula = this.item.damage;
-            formula = formula.toLowerCase().replace("s", result.degree)
-            damage.total = eval(formula)
-        }
-        return damage
-    }
-
-    _computeRoll()
-    {
-        if(this.item.type == "spell")
-            return super._computeRoll();
-        else if (this.item.type == "miracle" && !this.item.test.opposed)
-        {
-            return {
-                triggers : 0,
-                dice : [],
-                focus : this.skill?.focus || 0
-            }
-        }
-    }
-
-    get power() {
+    get miracle() {
         return this.item
     }
 
-    
-
-    get spellFailed()
-    {
-        return !this.result.success
+    // Remove successful condition to show the test
+    get hasTest() {
+        return this.item?.hasTest
     }
+
 }
