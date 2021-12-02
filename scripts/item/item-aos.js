@@ -207,7 +207,11 @@ export class AgeOfSigmarItem extends Item {
 
     get difficultyNumber()
     {
-        return {difficulty : parseInt(this.DN.split(":")[0]), complexity : parseInt(this.DN.split(":")[1])}
+        return game.aos.utility.DNToObject(this.dn)
+    }
+
+    get nonTransferEffects() {
+        return this.effects.filter(i => !i.data.transfer)
     }
 
     get equippable() { return hasProperty(this, "data.data.equipped") }

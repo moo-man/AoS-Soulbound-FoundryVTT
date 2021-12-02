@@ -437,7 +437,8 @@
     },
     "weapon": {
       "templates": [
-        "equipped"
+        "equipped",
+        "test"
       ],
       "description": "",
       "category": "melee",

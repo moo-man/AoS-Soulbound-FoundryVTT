@@ -409,6 +409,7 @@
   "WEAPON.AVAILABILITY": "Availability",
   "WEAPON.COST": "Cost",
   "WEAPON.DESCRIPTION": "Description",
+  "WEAPON.TEST": "Test",
 
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Wounds",

@@ -6,6 +6,10 @@
         </div>
 
         {{> systems/age-of-sigmar-soulbound/template/chat/base/dice-container.html}}
+        {{else}}
+        <div class="content-header">
+            <h2>{{miracle.name}}</h2>
+        </div>
         {{/if}}
 
         {{> systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-result.html}}

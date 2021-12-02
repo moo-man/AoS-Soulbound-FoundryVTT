@@ -226,6 +226,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".item-dropdown").click(this._onDropdownClick.bind(this))
         html.find(".item-dropdown-right").contextmenu(this._onDropdownClick.bind(this))
         html.find(".item-trait").click(this._onTraitClick.bind(this))
+        html.find(".transfer-effect").click(this._onTransferEffectClick.bind(this))
     }
 
     _getHeaderButtons() {
@@ -347,19 +348,19 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _onEffectEdit(ev)
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         this.object.effects.get(id).sheet.render(true)
     }
 
     _onEffectDelete(ev)
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
     }
 
     _onEffectToggle(ev)
     {
-        let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         let effect = this.object.effects.get(id)
 
         effect.update({"disabled" : !effect.data.disabled})
@@ -545,6 +546,17 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                 
         }
         li.toggleClass("expanded");
+    }
+
+    _onTransferEffectClick(ev) {
+        event.preventDefault();
+        const div = $(event.currentTarget).parents(".item");
+        const item = this.actor.items.get(div.data("itemId"));
+        let effects = item.nonTransferEffects.map(i => i.toObject())
+        effects.forEach(i => i["flags.core.statusId"] = i.label.slugify())
+        canvas.tokens.controlled.forEach(token => {
+            token.actor.createEmbeddedDocuments("ActiveEffect", effects)
+        })
     }
 
 }

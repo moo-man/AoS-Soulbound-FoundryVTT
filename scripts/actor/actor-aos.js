@@ -287,6 +287,8 @@ export class AgeOfSigmarActor extends Actor {
 
         let dialogData = RollDialog._dialogData(this, "soul", "devotion")
         dialogData.title = `${power.name} Test`
+        dialogData.difficulty = game.aos.utility.DNToObject(power.test.dn).difficulty || dialogData.difficulty
+        dialogData.complexity = game.aos.utility.DNToObject(power.test.dn).complexity || dialogData.complexity
         let testData = await RollDialog.create(dialogData);
         testData.itemId = power.id
         testData.speaker = this.speakerData

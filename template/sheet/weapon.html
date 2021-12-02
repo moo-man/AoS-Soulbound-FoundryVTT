@@ -54,6 +54,30 @@
                             <input name="data.traits" type="text" value="{{item.Traits}}" disabled/>
                         </div>
                     </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "WEAPON.TEST"}}</h3>
+                            <div class="entry-inputs">
+                                <input name="data.test.dn" type="text" placeholder="DN" value="{{data.test.dn}}"/>
+                                <select name="data.test.attribute">
+                                    {{#select data.test.attribute}}
+                                    <option value="">-</option>
+                                    {{#each (config "attributes") as |attribute a|}}
+                                    <option value="{{a}}">{{attribute}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                                <select name="data.test.skill">
+                                    {{#select data.test.skill}}
+                                    <option value="">-</option>
+                                    {{#each (config "skills") as |skill s|}}
+                                    <option value="{{s}}">{{skill}}</option>
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                            </div>                            
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <div class="content-box item-description">

@@ -409,14 +409,17 @@ export default class SoulboundChat {
         let duration = item.duration
         setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
 
-        if (duration.unit == "round")
-            effect.duration.rounds = parseInt(duration.value)
-        else if  (duration.unit == "minute")
-            effect.duration.seconds = parseInt(duration.value) * 60
-        else if (duration.unit == "hour")
-            effect.duration.seconds = parseInt(duration.value) * 60 * 60
-        else if (duration.unit == "day")
-            effect.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+        if (duration)
+        {
+            if (duration.unit == "round")
+                effect.duration.rounds = parseInt(duration.value)
+            else if  (duration.unit == "minute")
+                effect.duration.seconds = parseInt(duration.value) * 60
+            else if (duration.unit == "hour")
+                effect.duration.seconds = parseInt(duration.value) * 60 * 60
+            else if (duration.unit == "day")
+                effect.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+        }
 
         if (canvas.tokens.controlled.length)
         {

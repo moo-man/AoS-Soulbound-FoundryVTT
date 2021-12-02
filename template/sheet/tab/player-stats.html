@@ -70,6 +70,11 @@
                             </div>
                             <a class="">{{item.name}}</a>
                         </div>
+                        {{#if item.nonTransferEffects.length}}
+                        <div class="item-property">
+                            <a title="Transfer effects to selected tokens" class="transfer-effect"><i class="fas fa-crosshairs"></i></a>
+                        </div>
+                        {{/if}}
                         <div class="item-controls">
                             <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
                             <a class="item-control item-post"><i class="fas fa-comment"></i></a> 

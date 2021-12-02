@@ -100,12 +100,12 @@ get template() {
     })
 
     html.find(".effect-edit").click(ev => {
-      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
       this.object.effects.get(id).sheet.render(true)
     })
 
     html.find(".effect-delete").click(ev => {
-      let id = $(ev.currentTarget).parents(".item").attr("data-item-id")
+      let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
       this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
     })
 
