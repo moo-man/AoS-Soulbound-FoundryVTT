@@ -14,7 +14,7 @@
     width: 300px;
     margin: 0px;
     padding: 0px;
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
     background-position-y: 45px;
     border-radius: 0px;
     box-shadow: 0 0 0px #000;
@@ -33,7 +33,7 @@
 
 
 #sidebar-tabs {
-    background-image: url(../../asset/image/header-background.png);
+    background-image: url(../../asset/image/header-background.webp);
     background-size: cover;
     color: white;
     box-shadow: 0 0 10px var(--color-active);
@@ -180,7 +180,7 @@
     left: 251px; */
     width: 240px;
     height: 85px;
-    background: url(/systems/age-of-sigmar-soulbound/asset/image/background.jpg) repeat;
+    background: url(/systems/age-of-sigmar-soulbound/asset/image/background.webp) repeat;
     border: 2px solid var(--color-header-gold);
     border-radius: 0px;
     box-shadow: 0 0 15px inset;
@@ -240,7 +240,7 @@
 }
 
 .counter .input-controls a {
-    background: url(../../asset/image/header-background-vertical.png);
+    background: url(../../asset/image/header-background-vertical.webp);
     border: 1px outset var(--color-active);
     color: var(--color-active);
     width: 20px;

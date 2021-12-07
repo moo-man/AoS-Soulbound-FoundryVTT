@@ -1,4 +1,4 @@
-export default class AOSUtility {
+export default class SoulboundUtility {
     static getSpeaker(speaker) {
         try {
             if (speaker.actor)
@@ -42,5 +42,30 @@ export default class AOSUtility {
         return {difficulty: null, complexity: null}
       }
 
+    }
+
+    static _keepID(id, document) {
+      try {
+        let compendium = !!document.pack
+        let world = !compendium
+        let collection
+  
+        if (compendium) {
+          let pack = game.packs.get(document.pack)
+          collection = pack.index
+        }
+        else if (world)
+          collection = document.collection
+  
+        if (collection.has(id)) {
+          ui.notifications.notify(`${game.i18n.format("ERROR.ID", {name: document.name})}`)
+          return false
+        }
+        else return true
+      }
+      catch (e) {
+        console.error(e)
+        return false
+      }
     }
 }

@@ -21,7 +21,7 @@ select:focus {
 select {
     border-radius: 0px;
     border: 1px solid var(--color-header-gold);
-    /*background: url(../../asset/image/input-bg.jpg);
+    /*background: url(../../asset/image/input-bg.webp);
     background-size: 100%;
     background-position: 0px 0px;*/
 }
@@ -46,7 +46,7 @@ input[type="time"]:focus {
     font-family: var(--font-text);
     color: whitesmoke;
     border: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.png');
+    background-image: url('../../asset/image/header-background.webp');
     background-size: cover;
     border-bottom: none
 }
@@ -129,8 +129,12 @@ li.folder > .folder-header .create-folder,
     font-family: var(--font-text);
     color: whitesmoke;
     border: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.png');
+    background-image: url('../../asset/image/header-background.webp');
     background-size: cover;
+}
+
+#compendium li.compendium-pack .compendium-footer {
+    color: var(--color-border)
 }
 
 .age-of-sigmar-soulbound.sheet.actor .window-content .fas:hover,
@@ -194,11 +198,11 @@ li.folder > .folder-header .create-folder,
 }
 
 .window-app .window-content {
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
 }
 
 .window-app.image-popout .window-content {
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
 }
 .age-of-sigmar-soulbound.dialog {
     display: flex;
@@ -251,7 +255,7 @@ li.folder > .folder-header .create-folder,
 .content-box{
     display: flex;
     flex-direction: column;
-    background: url(../../asset/image/input.jpg) repeat;
+    background: url(../../asset/image/input.webp) repeat;
     border-left: 2px solid #7c6c42;
 }
 
@@ -294,7 +298,7 @@ li.folder > .folder-header .create-folder,
     font-family: var(--font-text);
     color: whitesmoke;
     border-bottom: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.png');
+    background-image: url('../../asset/image/header-background.webp');
     background-size: cover;
     border-right: 2px solid #7c6c42;
     border-top: 2px solid #7c6c42;
@@ -486,19 +490,19 @@ li.folder > .folder-header .create-folder,
     font-family: var(--font-sidebar);
     color: white;
     border: 5px solid transparent;
-    border-image: url(../../asset/image/sidebar-border.png) 8 8 8 8 repeat repeat;
+    border-image: url(../../asset/image/sidebar-border.webp) 8 8 8 8 repeat repeat;
     margin-right: 10px;
 } 
 
 /* .editor .block::before,
 .editor-content .block::before {
     content: "";
-    background-image: url(../../asset/image/block-top.png) ;
+    background-image: url(../../asset/image/block-top.webp) ;
 } */
 
 .editor table,
 .editor-content table {
-    /*background: url(../../asset/image/input-bg.jpg);
+    /*background: url(../../asset/image/input-bg.webp);
     background-size: fill;*/
     border: 1px solid var(--color-header-gold)
 }
@@ -510,7 +514,7 @@ li.folder > .folder-header .create-folder,
 
 .editor table .table-header,
 .editor-content table .table-header {
-    background: url(../../asset/image/header-background.png);
+    background: url(../../asset/image/header-background.webp);
     background-size: cover;
     text-transform: uppercase;
     color: white;
@@ -526,7 +530,7 @@ table tr:nth-child(even) {
 #controls .control-tool,
     #controls .scene-control {
         color: white;
-    background: url(../../asset/image/header.jpg) repeat;
+    background: url(../../asset/image/header.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
@@ -536,7 +540,7 @@ table tr:nth-child(even) {
 
 .placeable-hud input[type="text"]
 {
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
     color: black;
     font-family: var(--font-header)
 } */
@@ -544,7 +548,7 @@ table tr:nth-child(even) {
 #controls .control-tool.active,
 #controls .scene-control.active {
     border: 1px solid var(--color-active);
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
     color: var(--color-header-blue);
     box-shadow: 0 0 10px var(--color-active)
 }
@@ -557,7 +561,7 @@ table tr:nth-child(even) {
 #navigation #scene-list .scene.view {
     color: var(--color-header-blue);
     border: 1px solid var(--color-active);
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
     box-shadow: 0 0 10px var(--color-active);
 }
 
@@ -565,7 +569,7 @@ table tr:nth-child(even) {
     color: white;
     font-family: var(--font-sidebar);
     border: 1px solid var(--color-header-gold);
-    background: url(../../asset/image/header.jpg) repeat;
+    background: url(../../asset/image/header.webp) repeat;
 }
 
 #navigation #scene-list .scene.context {
@@ -573,13 +577,13 @@ table tr:nth-child(even) {
 }
 
 #navigation #nav-toggle {
-    background: url(../../asset/image/header.jpg) repeat;
+    background: url(../../asset/image/header.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
 
 #players {
-    background: url(../../asset/image/header-background-vertical.png) repeat;
+    background: url(../../asset/image/header-background-vertical.webp) repeat;
     border: 1px solid var(--color-header-gold)
 }
 
@@ -593,7 +597,7 @@ table tr:nth-child(even) {
     #macro-list {
     font-family: var(--font-sidebar);
     color: white;
-    background: url(../../asset/image/header-background.png) repeat;
+    background: url(../../asset/image/header-background.webp) repeat;
     background-size : 100%;
 }
 
@@ -622,7 +626,7 @@ textarea:focus {
 button {
     width: 100%;
     margin: 0 1px;
-    background: url(../../asset/image/header-background-vertical.png) repeat;
+    background: url(../../asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
     border-radius: 0px;
     font-size: 14px;
@@ -632,19 +636,19 @@ button {
 }
 
 form button {
-    background: url(../../asset/image/header-background-vertical.png) repeat;
+    background: url(../../asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
 }
 
 .dialog .dialog-buttons button {
-    background: url(../../asset/image/header-background-vertical.png) repeat;
+    background: url(../../asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
     /*margin: 5px;*/
 }
 
 .dialog .dialog-buttons button.default {
     box-shadow: 0 0 10px inset var(--color-active);
-    background: url(../../asset/image/header-background-vertical.png) repeat;
+    background: url(../../asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
 }
 
@@ -659,7 +663,7 @@ button:disabled {
 }
 
 .filepicker .current-dir button {
-    background: url(../../asset/image/header-background-vertical.png) repeat;
+    background: url(../../asset/image/header-background-vertical.webp) repeat;
     border: 1px solid var(--color-header-gold);
 }
 
@@ -701,7 +705,12 @@ a.inline-roll i {
 
 #settings #game-details {
     color: white;
-    background: url(../../asset/image/header-background.png) ;
+    background: url(../../asset/image/header-background.webp) ;
     background-size: cover;
     outline: 3px solid var(--color-header-gold);
+}
+
+
+#client-settings section.content .submenu > button {
+    height: unset
 }

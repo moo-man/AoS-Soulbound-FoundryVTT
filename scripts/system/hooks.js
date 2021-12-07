@@ -2,6 +2,9 @@ import AOS_MacroUtil from "./macro.js"
 
 import SoulboundChat from "./chat.js";
 import Migration from "./migrations.js";
+import FoundryOverrides from "./overrides.js";
+import SoulboundUtility from "./utility.js"
+import BugReportFormSoulbound from "../apps/bug-report.js"
 
 export default function registerHooks() {
     Hooks.once("init", () => {
@@ -71,6 +74,14 @@ export default function registerHooks() {
         default: undefined,
         type: Object
       })
+
+      game.settings.register('age-of-sigmar-soulbound', 'bugReportName', {
+        name: 'Bug Report Name',
+        scope: 'world',
+        config: false,
+        default: "",
+        type: String,
+      });
 
 
         game.macro = AOS_MacroUtil;
@@ -151,6 +162,7 @@ export default function registerHooks() {
 
     Hooks.on("ready", () => {
         Migration.checkMigration()
+        FoundryOverrides()
         game.counter.render(true)
 
         CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
@@ -247,5 +259,29 @@ export default function registerHooks() {
 
         }
     })
+
+    Hooks.on("renderSidebarTab", async (app, html) => {
+        if (app.options.id == "settings")
+        {
+            let button = $(`<button class='bug-report'>${game.i18n.localize("BUTTON.PostBug")}</button>`)
+            
+            button.click(ev => {
+                new BugReportFormSoulbound().render(true);
+            })
+            
+            button.insertAfter(html.find("#game-details"))
+            
+        }
+    })
+
+    Hooks.on("preCreateJournalEntry", _keepID)
+    Hooks.on("preCreateScene", _keepID)
+    Hooks.on("preCreateRollTable", _keepID)
+
+    
+    function _keepID(document, data, options) {
+        if (data._id)
+            options.keepId = SoulboundUtility._keepID(data._id, document)
+    }
 
 }

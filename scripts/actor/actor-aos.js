@@ -3,10 +3,15 @@ import Test from "../system/tests/test.js";
 import CombatTest from "../system/tests/combat-test.js";
 import SpellTest from "../system/tests/spell-test.js";
 import MiracleTest from "../system/tests/miracle-test.js";
+import SoulboundUtility from "../system/utility.js";
 
 export class AgeOfSigmarActor extends Actor {
 
     async _preCreate(data, options, user) {
+        if (data._id)
+            options.keepId = SoulboundUtility._keepID(data._id, this)
+        
+            await super._preCreate(data, options, user)
 
         let initData = {
             "token.bar1" :{ "attribute" : "combat.health.toughness" },
@@ -542,4 +547,20 @@ export class AgeOfSigmarActor extends Actor {
     get doom() {return this.data.data.doom}
     get power() {return this.data.data.power}
     get members() {return this.data.data.members || []}
+
+
+      /**
+   * Transform the Document data to be stored in a Compendium pack.
+   * Remove any features of the data which are world-specific.
+   * This function is asynchronous in case any complex operations are required prior to exporting.
+   * @param {CompendiumCollection} [pack]   A specific pack being exported to
+   * @return {object}                       A data object of cleaned data suitable for compendium import
+   * @memberof ClientDocumentMixin#
+   * @override - Retain ID
+   */
+  toCompendium(pack) {
+    let data = super.toCompendium(pack)
+    data._id = this.id; // Replace deleted ID so it is preserved
+    return data;
+  }
 }

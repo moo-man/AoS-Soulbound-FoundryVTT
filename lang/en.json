@@ -421,6 +421,7 @@
   "ERROR.NotEnoughFocus" : "Not enough Focus!",
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
   "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
+  "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
 
   "CONFIGURE.LABEL" : "Configure",
   "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",
@@ -444,6 +445,36 @@
   "CONDITION.STUNNED" : "Stunned",
   "CONDITION.UNCONSCIOUS" : "Unconscious",
 
-  "EFFECT.RequiresEquip" : "Requires Equip"
+  "EFFECT.RequiresEquip" : "Requires Equip",
+
+  
+  "UpdaterTitle1": "Update",
+  "UpdaterTitle2": "Content",
+  "Updater1": "This process will import new documents and overwrite previously imported documents with their content from the Compendium.",
+  "Updater2": "THIS MEANS ANY CHANGES YOU'VE MADE WILL BE OVERWRITTEN.",
+  "Updater3": "Only use this if you've initialized this module previously.",
+  "UPDATER.OverwriteActors": "Overwrite Actors",
+  "UPDATER.OverwriteItems": "Overwrite Items",
+  "UPDATER.OverwriteJournals": "Overwrite Journals",
+  "UPDATER.OverwriteScenes": "Overwrite Scenes",
+  "UPDATER.Exclude": "Exclude Name Changes",
+  "UPDATER.ExcludeHint": "Checking this will not update documents if their names have been changed",
+  "UPDATER.Error": "You can only update if you've initialized this module at least once.",
+  "UPDATER.Notification": "Created {created} and updated {updated} documents from {name} - {version}",
+ 
+  "BUGREPORT.Contact": "Contact Info",
+  "BUGREPORT.ContactPlaceholder": "Discord Tag or Email.",
+  "BUGREPORT.DescriptionPlaceholder": "What happened, how to reproduce, etc.",
+  "GRIEVANCE.Warning1": "Be aware",
+  "GRIEVANCE.Warning2": ": This information is posted on the GitHub issues page, which is public, so Discord tag is preferred. Otherwise, contact me (Moo Man) directly.",
+  "GRIEVANCE.Warning3": "Before submitting a bug report",
+  "GRIEVANCE.Warning4": "please ensure the Wrath & Glory System and the modules in question are up to date!",
+  "ImperialPost": "The Imperial Post Has Received Your Grievance! See the console for a link.",
+  "ImperialPostError": "The Imperial Post cannot receive your missive. Please see console for details.",
+  "Something went wrong": "Something went wrong",
+  "BugReport.ErrorForm": "Please fill out the form",
+  "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
+  "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
+  "BUTTON.PostBug" : "Soulbound Bug Report"
   
 }

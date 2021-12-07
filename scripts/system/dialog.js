@@ -126,7 +126,7 @@ export class RollDialog extends Dialog {
             "bonusDice" : null
         }
         
-        let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)])
+        let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)]).map(i => i.clone())
         let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
         changes.forEach(c => {
             if (c.value.includes("@"))

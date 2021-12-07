@@ -8,7 +8,7 @@ import { initializeHandlebars } from "./scripts/system/handlebars.js";
 import hooks from "./scripts/system/hooks.js"
 import AOS from "./scripts/system/config.js"
 import Migration from "./scripts/system/migrations.js";
-import AOSUtility from "./scripts/system/utility.js";
+import SoulboundUtility from "./scripts/system/utility.js";
 import Test from "./scripts/system/tests/test.js";
 import CombatTest from "./scripts/system/tests/combat-test.js";
 import SpellTest from "./scripts/system/tests/spell-test.js";
@@ -17,6 +17,8 @@ import ItemTraits from "./scripts/apps/item-traits.js"
 import AgeOfSigmarEffect from "./scripts/system/effect.js";
 import AgeOfSigmarEffectSheet from "./scripts/apps/active-effect-config.js";
 import SoulboundCounter from "./scripts/apps/counter.js";
+import ModuleUpdater from "./scripts/apps/module-updater.js";
+import ModuleInitializer from "./scripts/apps/module-initialization.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -34,7 +36,7 @@ Hooks.once("init", () => {
     game.aos = {
         config : AOS,
         migration : Migration,
-        utility : AOSUtility,
+        utility : SoulboundUtility,
         rollClass : {
             Test,
             CombatTest,
@@ -42,7 +44,9 @@ Hooks.once("init", () => {
             MiracleTest
         },
         apps: {
-            ItemTraits
+            ItemTraits,
+            ModuleUpdater,
+            ModuleInitializer
         }
     };
     

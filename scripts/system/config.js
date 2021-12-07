@@ -186,6 +186,7 @@ AOS.traits = {
 }
 
 AOS.traitDescriptions = {}
+AOS.conditionDescriptions = {}
 
 AOS.traitsWithValue = ["range", "thrown", "blast"]
 

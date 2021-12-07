@@ -8,7 +8,7 @@
 
 
 .age-of-sigmar-soulbound.sheet.actor .window-content {
-    background: url(../../asset/image/background.jpg) repeat;
+    background: url(../../asset/image/background.webp) repeat;
     overflow:hidden;
 }
 
@@ -67,7 +67,7 @@
 .sheet-header {
     display: flex;
     flex-direction: row;
-    background-image: url('../../asset/image/header-background.png');
+    background-image: url('../../asset/image/header-background.webp');
     background-size: cover;
     margin: 0px 0px 0px 32px; 
     border: 2px solid #7c6c42;
@@ -298,7 +298,7 @@
     .age-of-sigmar-soulbound.sheet .item-list{
     display: flex;
     flex-direction: column;
-    background: url(../../asset/image/input.jpg) repeat;
+    background: url(../../asset/image/input.webp) repeat;
     border: 2px solid #7c6c42;
     width: 100%
 }
@@ -312,7 +312,7 @@
     font-family: var(--font-text);
     color: whitesmoke;
     border-bottom: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.png');
+    background-image: url('../../asset/image/header-background.webp');
     background-size: cover;
     padding-left: 5px;
 }
@@ -499,7 +499,7 @@
 }
 
 .age-of-sigmar-soulbound.sheet .power-bar-progress.medium {
-    background: url(../../asset/image/header-background-vertical.png);
+    background: url(../../asset/image/header-background-vertical.webp);
 
     -webkit-animation: glow-medium 1s ease-in-out infinite alternate;
     -moz-animation: glow-medium 1s ease-in-out infinite alternate;
@@ -517,7 +517,7 @@
   }
 
 .age-of-sigmar-soulbound.sheet .power-bar-progress.high {
-    background: url(../../asset/image/foreground.jpg);
+    background: url(../../asset/image/foreground.webp);
 
     -webkit-animation: glow-high 0.5s ease-in-out infinite alternate;
     -moz-animation: glow-high 0.5s ease-in-out infinite alternate;

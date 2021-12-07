@@ -3,7 +3,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
 
     prepareData()
     {
-        if (game.ready && this.item && this.item.equippable && this.requiresEquip)
+        if (game.ready && this.item && this.item.equippable && this.requiresEquip && !this.parent.pack)
             this.data.disabled = !this.item.equipped
             //this.data.update({"disabled" : !this.item.equipped})
     }
