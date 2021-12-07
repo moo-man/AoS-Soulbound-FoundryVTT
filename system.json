@@ -1,7 +1,7 @@
 {
   "name": "age-of-sigmar-soulbound",
   "title": "Age of Sigmar : Soulbound",
-  "description": "Perilous adventures in the mortal realms",
+  "description": "The official system for the first ever roleplaying game set in the world of Warhammer: Age of Sigmar! Forge your group from some of the most powerful heroes in the realms and face down roving bands of cannibals, legions of undead, and hordes of daemons in a desperate struggle for survival.",
   "version": "4.0.0",
   "minimumCoreVersion": "0.8.4",
   "compatibleCoreVersion": "0.8.9",
