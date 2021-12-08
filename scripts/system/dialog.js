@@ -189,7 +189,7 @@ export class CombatDialog extends RollDialog {
                             let testData = this.extractDialogData(html)
                             testData.combat = mergeObject(data.combat, testData.combat)
                             testData.itemId = data.weapon.id
-                            testData.dn = this._getDn(data.weapon.name, testData.rating, testData.targetDefense);
+                            testData.dn = this._getDn(data.weapon.name, testData.rating, testData.targetDefence);
                             resolve(testData);
                         },
                     }
@@ -202,13 +202,13 @@ export class CombatDialog extends RollDialog {
         let data = super.extractDialogData(html)
         data.rating = html.find("#attack")[0].value;
         data.combat = {armour : html.find("#armour")[0].value, bonusDamage : parseInt(html.find("#bonusDamage")[0].value)}
-        data.targetDefense = html.find("#defense")[0].value;
+        data.targetDefence = html.find("#defence")[0].value;
 
         return data
     }
 
-    static _getDn(name, rating, defense) {
-        let difficulty = 4 - (rating - defense);
+    static _getDn(name, rating, defence) {
+        let difficulty = 4 - (rating - defence);
         difficulty = Math.clamped(difficulty, 2, 6)
         return {name, difficulty, complexity : 1}
     }
@@ -231,7 +231,7 @@ export class CombatDialog extends RollDialog {
 
         let target = game.user.targets.values().next().value;
         const hasTarget = target !== undefined; // No additinal Input when target function is used
-        data.targetDefense = 3; // good defense seems to be the most likely starting point
+        data.targetDefence = 3; // good defence seems to be the most likely starting point
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
         data.combat.armour = 0;
 
@@ -239,7 +239,7 @@ export class CombatDialog extends RollDialog {
             target = target.actor
             if (target)
             {
-                data.targetDefense = target.combat.defense.relative;
+                data.targetDefence = target.combat.defence.relative;
                 data.combat.armour = target.combat.armour.value;
                 data.targetSpeaker = target.spakerData
             }
@@ -259,7 +259,7 @@ export class CombatDialog extends RollDialog {
         super.activateListeners(html)
 
         this.effectValues["bonusDamage"] = null
-        this.effectValues["defense"] = null
+        this.effectValues["defence"] = null
         this.effectValues["armour"] = null
         this.effectValues["attack"] = null
 
@@ -268,8 +268,8 @@ export class CombatDialog extends RollDialog {
             this.applyEffects()
         })[0]
 
-        this.inputs.defense = html.find('#defense').change(ev => {
-            this.userEntry.defense = parseInt(ev.target.value)
+        this.inputs.defence = html.find('#defence').change(ev => {
+            this.userEntry.defence = parseInt(ev.target.value)
             this.applyEffects()
         })[0]
 
@@ -284,7 +284,7 @@ export class CombatDialog extends RollDialog {
         })[0]
 
         this.userEntry["bonusDamage"] = parseInt(this.inputs.bonusDamage.value)
-        this.userEntry["defense"] = parseInt(this.inputs.defense.value)
+        this.userEntry["defence"] = parseInt(this.inputs.defence.value)
         this.userEntry["armour"] = parseInt(this.inputs.armour.value)
         this.userEntry["attack"] = parseInt(this.inputs.attack.value)
     }

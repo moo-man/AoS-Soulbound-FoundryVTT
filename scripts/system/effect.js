@@ -85,7 +85,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
             "bonusDice",
             "bonusDamage",
             "armour",
-            "defense",
+            "defence",
             "attack"]
     }
 
