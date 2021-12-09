@@ -12,7 +12,7 @@ export default class SoulboundChat {
         let canResetFocus = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return test.context.focusAllocated
+            return test.context.focusAllocated && message.isOwner
         }
 
         let canClearFocus = li => {
@@ -26,19 +26,19 @@ export default class SoulboundChat {
                 if (parseInt(c.text) > 0 || c.style.display != "none")
                     hasFocusCounter = true;
             })
-            return hasFocusCounter           
+            return hasFocusCounter && message.isOwner           
         }
 
         let canReroll = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return !(test.context.rerolled || test.context.maximized)
+            return !(test.context.rerolled || test.context.maximized) && message.isOwner
         }
 
         let canMaximize = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return !(test.context.focusAllocated || test.context.rerolled || test.context.maximized)
+            return !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isOwner
         }
 
         let canApplyDamage = li => {
