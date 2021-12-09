@@ -120,7 +120,7 @@ export default class Migration {
                     trait.value = Number.isNumeric(value) ? parseInt(value) : value
                 trait.name = utility.findKey(t.split("(")[0].trim(), config.traits)
                 return trait
-            })
+            }).filter(i => i.name)
         }
         updateData._id = item.id
         return updateData
@@ -144,5 +144,10 @@ export default class Migration {
 
     static async cleanActorData(actor) {
         await actor.deleteEmbeddedDocuments("Item", actor.items.filter(i => i.type == "wound" || i.type == "ally" || i.type == "connection" || i.type == "enemy" || i.type == "fear" || i.type == "goal" || i.type == "resource" || i.type == "rumour" || i.type == "threat").map(i => i.id))
+    }
+
+    static _getParenthesesText(text)
+    {
+        return text.slice(text.indexOf("(") + 1, text.indexOf(")"))
     }
 }
