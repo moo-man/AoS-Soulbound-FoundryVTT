@@ -152,8 +152,8 @@ export class AgeOfSigmarItem extends Item {
 
     get traitList () {
         let traits = {}
-        if (!this.traits)
-            return traits
+        if (!this.traits || !Array.isArray(this.traits))
+            return []
         this.traits.forEach(i => {
             traits[i.name] = {
                 name : i.name,
