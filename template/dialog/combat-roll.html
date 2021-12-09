@@ -65,9 +65,9 @@
         </div>
         <div class="content-row">
             <div class="entry-vertical">
-                <h3>{{localize "DIALOG.DEFENSE"}}</h3>
-                <select name="defense" id="defense">
-                    {{#select targetDefense}}
+                <h3>{{localize "DIALOG.DEFENCE"}}</h3>
+                <select name="defence" id="defence">
+                    {{#select targetDefence}}
                     {{#each (config "ratings") as | rating r|}}
                     <option value="{{r}}">{{rating}}</option>
                     {{/each}}

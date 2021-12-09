@@ -68,8 +68,8 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.melee.relative = 0;
         this.combat.accuracy.total = 0;
         this.combat.accuracy.relative = 0;
-        this.combat.defense.total = 0;
-        this.combat.defense.relative = 0;
+        this.combat.defence.total = 0;
+        this.combat.defence.relative = 0;
         this.combat.armour.value = 0;
         this.combat.health.toughness.max = 0;        
         this.combat.health.wounds.value = 0;
@@ -86,11 +86,11 @@ export class AgeOfSigmarActor extends Actor {
     _computeRelativeCombatAbilities() {
         this.combat.melee.relative = this._getCombatLadderValue("melee");
         this.combat.accuracy.relative = this._getCombatLadderValue("accuracy");
-        this.combat.defense.relative = this._getCombatLadderValue("defense");
+        this.combat.defence.relative = this._getCombatLadderValue("defence");
 
         this.combat.melee.ability = this._getCombatAbility("melee")
         this.combat.accuracy.ability = this._getCombatAbility("accuracy")
-        this.combat.defense.ability = this._getCombatAbility("defense")
+        this.combat.defence.ability = this._getCombatAbility("defence")
     }
     
     _getCombatAbility(combatStat)
@@ -150,7 +150,7 @@ export class AgeOfSigmarActor extends Actor {
     _computeArmour(item) {
         if (item.subtype === "shield") {
             // Like below treat shield benefit as an step increase
-            this.combat.defense.total += (item.benefit * 2);
+            this.combat.defence.total += (item.benefit * 2);
         } else {
             this.combat.armour.value += item.benefit;
         }
@@ -166,7 +166,7 @@ export class AgeOfSigmarActor extends Actor {
     _computeWeapon(item)
     {
         if(item.traitList.defensive)
-            this.combat.defense.total += 2;
+            this.combat.defence.total += 2;
 
     }
 
@@ -191,10 +191,10 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeSecondary() {
-        // melee, accuracy and defense bonus is doubled to represent a one step increase
+        // melee, accuracy and defence bonus is doubled to represent a one step increase
         this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
         this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
-        this.combat.defense.total +=           this.attributes.body.value + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
+        this.combat.defence.total +=           this.attributes.body.value + this.skills.reflexes.training + (this.combat.defence.bonus * 2);
         this.combat.armour.value +=            this.combat.armour.bonus;        
         this.combat.initiative.total +=        this.attributes.mind.value + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
         this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.value + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
