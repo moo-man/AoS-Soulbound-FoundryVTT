@@ -457,6 +457,7 @@
   "UPDATER.OverwriteItems": "Overwrite Items",
   "UPDATER.OverwriteJournals": "Overwrite Journals",
   "UPDATER.OverwriteScenes": "Overwrite Scenes",
+  "UPDATER.OverwriteTables": "Overwrite Tables",
   "UPDATER.Exclude": "Exclude Name Changes",
   "UPDATER.ExcludeHint": "Checking this will not update documents if their names have been changed",
   "UPDATER.Error": "You can only update if you've initialized this module at least once.",

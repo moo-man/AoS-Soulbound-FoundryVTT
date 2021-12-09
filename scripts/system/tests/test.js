@@ -114,11 +114,11 @@ export default class Test {
             path = `systems/age-of-sigmar-soulbound/asset/image`
     
         result.dice.forEach(die => {
-            die.img = `${path}/dice-${die.value}-failed.png`
+            die.img = `${path}/dice-${die.value}-failed.webp`
             if (die.success)
-                die.img = `${path}/dice-${die.value}-chat.png`
+                die.img = `${path}/dice-${die.value}-chat.webp`
             if (die.highlight)
-                die.img = `${path}/dice-${die.value}-highlight.png`
+                die.img = `${path}/dice-${die.value}-highlight.webp`
         })
         
         return result;

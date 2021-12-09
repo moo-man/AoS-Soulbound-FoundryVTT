@@ -27,7 +27,7 @@
       "path": "lang/en.json"
     }
   ],
-  "background" : "../../modules/soulbound-core/assets/images/cover.webp",
+  "background" : "../../modules/soulbound-core/assets/images/login.webp",
   "gridDistance": 1,
   "gridUnits": "m",
   "primaryTokenAttribute": null,
