@@ -274,6 +274,12 @@ export default function registerHooks() {
         }
     })
 
+    Hooks.on("preCreateScene", (scene, data) => {
+        scene.data.update({gridDistance : 5, gridUnits : "ft"})
+    })
+
+
+
     Hooks.on("preCreateJournalEntry", _keepID)
     Hooks.on("preCreateScene", _keepID)
     Hooks.on("preCreateRollTable", _keepID)
