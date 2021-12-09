@@ -169,7 +169,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                 label : i.label,
                 key : i.id,
                 img : i.icon,
-                existing : this.actor.hasCondition(i.id)
+                existing : this.actor.hasCondition(i.id),
+                tooltip : game.aos.config.conditionDescriptions[i.id]
             }
         })
 
