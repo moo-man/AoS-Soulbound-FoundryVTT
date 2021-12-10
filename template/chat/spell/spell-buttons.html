@@ -1,8 +1,9 @@
-{{#if result.failed}}
+{{log result}}
+{{#unless result.success}}
 <div class="content-wrapper test-buttons">
     <button class="spell-fail-button" type="button">The Price of Failure</button>
 </div>
-{{/if }}
+{{/unless}}
 
 {{#if hasTest}}
 <div class="content-wrapper test-buttons">
