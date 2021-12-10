@@ -1,7 +1,10 @@
 import AOS_MacroUtil from "./macro.js"
 
-import * as chat from "./chat.js";
+import SoulboundChat from "./chat.js";
 import Migration from "./migrations.js";
+import FoundryOverrides from "./overrides.js";
+import SoulboundUtility from "./utility.js"
+import BugReportFormSoulbound from "../apps/bug-report.js"
 
 export default function registerHooks() {
     Hooks.once("init", () => {
@@ -30,12 +33,92 @@ export default function registerHooks() {
             type: String
         });
 
+        game.settings.register('age-of-sigmar-soulbound', 'soulfire', {
+            name: "Soulfire",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: 0,
+            type: Number
+        });
+        game.settings.register('age-of-sigmar-soulbound', 'doom', {
+            name: "Doom",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: 0,
+            type: Number
+        });
+        game.settings.register('age-of-sigmar-soulbound', 'playerCounterEdit', {
+            name: "Player Counter Edit",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: true,
+            type: Boolean
+        });
+        game.settings.register('age-of-sigmar-soulbound', 'counterParty', {
+            name: "Counter Party Link",
+            hint: "",
+            scope: "world",
+            config: false,
+            default: "",
+            type: String
+        });
+
+      game.settings.register("age-of-sigmar-soulbound", "counterPosition", {
+        name: "Counter Position",
+        hint: "",
+        scope: "client",
+        config: false,
+        default: undefined,
+        type: Object
+      })
+
+      game.settings.register('age-of-sigmar-soulbound', 'bugReportName', {
+        name: 'Bug Report Name',
+        scope: 'world',
+        config: false,
+        default: "",
+        type: String,
+      });
+
+
         game.macro = AOS_MacroUtil;
 
         _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
+
+
+        game.socket.on("system.age-of-sigmar-soulbound", async data => {
+            if (data.type == "updateCounter") {
+              game.counter.render(true)
+            }
+            else if (data.type == "setCounter" && game.user.isGM) {
+              if (game.counter.party)
+                game.counter.party.update({[`data.${data.payload.type}.value`] : parseInt(data.payload.value)})
+              else
+                await game.settings.set("age-of-sigmar-soulbound", data.payload.type, data.payload.value)
+              game.counter.render(true)
+            }
+          })
     });
 
-    Hooks.on("getChatLogEntryContext", chat.addChatMessageContextOptions);
+    Hooks.on("getChatLogEntryContext", SoulboundChat.addChatMessageContextOptions);
+
+    Hooks.on("renderChatLog", (app, html) => SoulboundChat.activateListeners(html))
+
+
+    Hooks.on("renderChatMessage", (message, html) => {
+        let item = html.find(".age-of-sigmar-soulbound.chat.item")
+        if (item.length)
+        {
+            item.attr("draggable", true)
+            item[0].addEventListener("dragstart", ev => {
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemDrop", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
+            })
+        }
+
+    })
 
     /**
      * Create a macro when dropping an entity on the hotbar
@@ -79,6 +162,13 @@ export default function registerHooks() {
 
     Hooks.on("ready", () => {
         Migration.checkMigration()
+        FoundryOverrides()
+        game.counter.render(true)
+
+        CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
+            let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
+            return game.aos.rollClass.Test.recreate(rollData)
+        }
 
         for (let key in game.aos.config) {
             for (let prop in game.aos.config[key]) {
@@ -86,13 +176,118 @@ export default function registerHooks() {
                     game.aos.config[key][prop] = game.i18n.localize(game.aos.config[key][prop])
             }
         }
+
+        for (let effect of CONFIG.statusEffects)
+        {
+            effect.label = game.i18n.localize(effect.label)
+        }
+
+
+        game.actors.contents.forEach(a => {
+                a.prepareData()
+        })
     })
 
     Hooks.on("preCreateItem", (data, options, user) => {
-        if (data.type == "wound")
+        if (data.type == "wound" 
+         || data.type == "ally" 
+         || data.type == "connection" 
+         || data.type == "enemy" 
+         || data.type == "fear" 
+         || data.type == "goal" 
+         || data.type == "resource" 
+         || data.type == "rumour" 
+         || data.type == "threat")
         {
-            ui.notifications.warn("The Wound Type item is deprecated")
+            if (data.type == "wound")
+                ui.notifications.warn("The Wound Type item is deprecated")
+            else
+                ui.notifications.warn("This item type is deprecated. Use the Party Item type instead")
             return false
         }
     })
+
+
+    Hooks.on("renderDialog", (dialog, html) => {
+        Array.from(html.find("#entity-create option")).forEach(i => {
+            if (i.value == "wound" || i.value == "ally" || i.value == "connection" || i.value == "enemy" || i.value == "fear" || i.value == "goal" || i.value == "resource" || i.value == "rumour" || i.value == "threat")
+            {
+                i.remove()
+            }
+        })
+    })
+
+      /**
+   * Add right click option to actors to add all basic skills
+   */
+  Hooks.on("getActorDirectoryEntryContext", async (html, options) => {
+    let canLink = li => {
+      let actor = game.actors.get(li.attr("data-entity-id"));
+      return actor.type == "party"
+    }
+    options.push(
+      {
+        
+        name: game.i18n.localize("ACTOR.COUNTER_LINK"),
+        condition: game.user.isGM && canLink,
+        icon: '<i class="fas fa-link"></i>',
+        callback: async target => {
+          await game.settings.set('age-of-sigmar-soulbound', 'counterParty', target.attr('data-entity-id'))
+          game.counter.render(true)
+        }
+      })
+  })
+
+    Hooks.on("preCreateActiveEffect", (effect, data, options, user) => {
+        if (effect.parent?.type == "spell" || effect.parent?.type == "miracle")
+            effect.data.update({"transfer" : false})
+
+        if (effect.item && effect.item.equippable && effect.parent.documentName == "Item")
+            effect.data.update({"flags.age-of-sigmar-soulbound.requiresEquip" : true})
+        else if (effect.item && effect.parent.documentName == "Actor")
+        {
+            effect.data.update({"flags.age-of-sigmar-soulbound.requiresEquip" : getProperty(data, "flags.age-of-sigmar-soulbound.requiresEquip")})
+            effect.data.update({"disabled" : effect.data.disabled})
+        }
+    })
+
+    Hooks.on("updateActor", (actor, updateData) => {
+        if(actor.type == "party" && actor.id == game.settings.get('age-of-sigmar-soulbound', 'counterParty'))
+        {
+            if (hasProperty(updateData, "data.soulfire.value") || hasProperty(updateData, "data.doom.value"))
+                game.counter.render(true)
+
+        }
+    })
+
+    Hooks.on("renderSidebarTab", async (app, html) => {
+        if (app.options.id == "settings")
+        {
+            let button = $(`<button class='bug-report'>${game.i18n.localize("BUTTON.PostBug")}</button>`)
+            
+            button.click(ev => {
+                new BugReportFormSoulbound().render(true);
+            })
+            
+            button.insertAfter(html.find("#game-details"))
+            
+        }
+    })
+
+    Hooks.on("preCreateScene", (scene, data) => {
+        scene.data.update({gridDistance : 5, gridUnits : "ft"})
+    })
+
+
+
+    Hooks.on("preCreateJournalEntry", _keepID)
+    Hooks.on("preCreateScene", _keepID)
+    Hooks.on("preCreateRollTable", _keepID)
+
+    
+    function _keepID(document, data, options) {
+        if (data._id)
+            options.keepId = SoulboundUtility._keepID(data._id, document)
+    }
+
 }

@@ -1,73 +1,79 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="armour">
+    <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    </div>
+    <div class="sheet-body">
         <div class="sheet-header">
-            <div class="avatar">
-                <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+            <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <div class="entry-horizontal">
+                <h3>{{localize "ARMOUR.AVAILABILITY"}}</h3>
+                <select name="data.availability">
+                    {{#select data.availability}}
+                    {{#each (config "availability") as |availability a|}}
+                    <option value="{{a}}">{{availability}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
             </div>
-            <div class="wrapper-column">
-                <div class="name">
-                    <label>{{localize "ARMOUR.NAME"}}</label>
-                    <input name="name" type="text" value="{{item.name}}"/>
-                </div>
+            <div class="segment-horizontal">
+                <h3>{{localize "ARMOUR.COST"}}</h3>
+                <input name="data.cost" type="text" value="{{data.cost}}"/>
             </div>
         </div>
-
+        <hr>
         <div class="sheet-tabs tabs" data-group="primary">
             <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
-            <b class="item" data-tab="stats">{{localize "TAB.STATS"}}</b>
-            <b class="item" data-tab="bonus">{{localize "TAB.BONUS"}}</b>
+            <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
         </div>
 
-        <div class="sheet-body">
+        <div class="sheet-content">
             <div class="tab" data-group="primary" data-tab="description">
-                <div class="description">
-                    <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
-                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                <div class="content-box">
+                    <div class="content-header">
+                        <h1>{{localize "TITLE.STATS"}}</h1>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "ARMOUR.TYPE"}}</h3>
+                            <select name="data.type">
+                                {{#select data.type}}
+                                    <option value="light">{{localize "TYPE.LIGHT"}}</option>
+                                    <option value="medium">{{localize "TYPE.MEDIUM"}}</option>
+                                    <option value="heavy">{{localize "TYPE.HEAVY"}}</option>
+                                    <option value="shield">{{localize "TYPE.SHIELD"}}</option>
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "ARMOUR.REQUIREMENTS"}}</h3>
+                            <input name="data.requirements" type="text" value="{{data.requirements}}"/>
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "ARMOUR.BENEFIT"}}</h3>
+                            <input name="data.benefit" type="number" value="{{data.benefit}}" data-dtype="Number"/>
+                        </div>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "ARMOUR.TRAITS"}} <a class="item-traits"><i class="fas fa-cog"></i></a></h3>
+                            <input name="data.traits" type="text" value="{{item.Traits}}" disabled/>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="tab" data-group="primary" data-tab="stats">
-                <div class="stats">
-                    <h1>{{localize "TITLE.STATS"}}</h1>
-                    <div class="wrapper">
-                        <label>{{localize "ARMOUR.TYPE"}}</label>
-                        <select name="data.type">
-                            {{#select data.type}}
-                            {{#each (config "armourType") as |type t|}}
-                                <option value="{{t}}">{{type}}</option>
-                            {{/each}}
-                            {{/select}}
-                        </select>
+                <hr>
+                <div class="content-box item-description">
+                    <div class="content-header">
+                        <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
-                    <div class="wrapper">
-                        <label>{{localize "ARMOUR.REQUIREMENTS"}}</label>
-                        <input name="data.requirements" type="text" value="{{data.requirements}}"/>
-                    </div>
-                    <div class="wrapper">
-                        <label>{{localize "ARMOUR.BENEFIT"}}</label>
-                        <input name="data.benefit" type="number" value="{{data.benefit}}" data-dtype="Number"/>
-                    </div>
-                    <div class="wrapper">
-                        <label>{{localize "ARMOUR.TRAITS"}}</label>
-                        <input name="data.traits" type="text" value="{{data.traits}}"/>
-                    </div>
-                    <div class="wrapper">
-                        <label>{{localize "ARMOUR.COST"}}</label>
-                        <input name="data.cost" type="text" value="{{data.cost}}"/>
-                    </div>
-                    <div class="wrapper">
-                        <label>{{localize "ARMOUR.AVAILABILITY"}}</label>
-                        <select name="data.availability">
-                            {{#select data.availability}}
-                            {{#each (config "availability") as |availability a|}}
-                                <option value="{{a}}">{{availability}}</option>
-                            {{/each}}
-                            {{/select}}
-                        </select>
+                    <div class="content-wrapper">
+                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>
-            <div class="tab" data-group="primary" data-tab="bonus">
-                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-bonus.html}}
+            <div class="tab" data-group="primary" data-tab="effects">
+                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html}}
             </div>
         </div>
     </div>

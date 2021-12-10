@@ -1,0 +1,258 @@
+#chat-controls {
+    color:darkslategrey;
+}
+
+.sidebar-popout,
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100vh;
+    width: 300px;
+    margin: 0px;
+    padding: 0px;
+    background: url(../../asset/image/background.webp) repeat;
+    background-position-y: 45px;
+    border-radius: 0px;
+    box-shadow: 0 0 0px #000;
+    border:none;
+    color: black;
+    border-left: 3px solid var(--color-header-gold)
+  }
+
+.sidebar-popout {
+    height: unset
+}
+
+.sidebar-popout .sidebar-tab{
+    color: black
+}
+
+
+#sidebar-tabs {
+    background-image: url(../../asset/image/header-background.webp);
+    background-size: cover;
+    color: white;
+    box-shadow: 0 0 10px var(--color-active);
+    border-bottom: 1px solid goldenrod;
+}
+
+#sidebar-tabs .item.active {
+    border: 1px solid var(--color-active);
+    box-shadow: 0 0 6px inset var(--color-active)
+}
+
+
+#scenes-popout .directory-list .directory-item .entity-name a,
+#sidebar #scenes .directory-list .directory-item .entity-name a {
+    background: #000000d4;
+    border-radius: 2px;
+    border: 3px double #564d3a;
+    padding: 10px;
+    box-shadow: 0 0 5px #000000 inset;
+    font-family: var(--actor-input-font-family);
+    font-size: 18px;
+    font-weight: var(--actor-input-font-weight);
+    position: relative;
+    top: -2px;
+    color: #CCC
+}
+
+#chat-log .message {
+    /* padding: 0px 0px 2px 0px;
+    margin: 6px 8px;
+    border-radius: 0px;
+    box-shadow: none;
+    font-size: 14px;
+    font-weight: 500;
+    border:none; */
+    border: 2px solid darkslategrey;
+    background: none;
+}
+  
+#chat-log .message .message-header {
+    padding: 2px;
+    line-height: normal;
+    vertical-align: middle;
+    font-size: 14px;
+    color: darkslategrey;
+    font-weight: 500;
+    min-height: 20px;
+}
+
+#chat-log .message .message-header .message-sender {
+      flex: 3;
+      margin: 0px;
+      color: darkslategrey;
+      text-shadow: 0px 0px 1px #00000087;
+      vertical-align: middle;
+      position: relative;
+      height: 100%;
+      /* background: var(--debug-background-color-green); */
+}
+
+#chat-log .message .message-header .message-sender.with-image {
+    top: 12px;
+}
+    
+#chat-log .message .message-header .message-metadata {
+    text-align: right;
+    vertical-align: middle;
+    font-size: 14px;
+    font-weight: 500;
+    color: darkslategrey;
+    text-shadow: 0px 0px 1px #00000087;
+}
+
+#chat-log .message .message-header .message-metadata .message-delete {
+    position: relative;
+    top: 0px;
+    right: 0px;
+    font-size: 13px;
+    color: darkslategrey;
+    text-shadow: none;
+}
+
+#chat-log .message .message-content {
+    border-top: none;
+    user-select: all;
+}
+
+.directory-item .folder-header h3,
+    .directory-item .entity-name{
+    color: darkslategrey;
+    font-family: Quadrant-Regular;
+    text-transform: uppercase;
+    text-shadow: 1px 1px whitesmoke;
+}
+
+.profile .item-profile img{
+    border: 2px solid #7c6c42;
+    width:72px;
+    height:72px;
+    border-radius: 50%;
+    background-color: black;
+    box-shadow: none;
+}
+
+.directory-item .entity .item{
+    border-left: 5px solid black;
+}
+
+.journal-image img{
+    border: none
+} 
+
+.journal-image {
+    display: flex;
+    width:100%;
+
+}
+
+.journal-image.centered {
+    justify-content: center;
+}
+
+#counter .window-header{
+    display:none
+}
+
+#counter.window-app{
+    box-shadow: none;
+    background: none;
+}
+
+#counter.window-app .window-content{
+    background: none;
+}
+
+
+.counter-app {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-sidebar);
+    color: var(--color-header-blue);
+    position: absolute;
+    /* bottom: 99px;
+    left: 251px; */
+    width: 240px;
+    height: 85px;
+    background: url(/systems/age-of-sigmar-soulbound/asset/image/background.webp) repeat;
+    border: 2px solid var(--color-header-gold);
+    border-radius: 0px;
+    box-shadow: 0 0 15px inset;
+}
+
+.counter-app .counters {
+    display: flex;
+    justify-content: space-around;
+}
+
+.counter-app .handle {
+    width: 0px;
+    position: absolute;
+    top: 0px;
+    height: 0px;
+    right: 20px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.counter-app .party {
+    width: 100%;
+    font-family: var(--font-text);
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.counter-app > * {
+    opacity: 1
+}
+
+
+.counter h3{
+    text-align: center;
+    margin: 0;
+    font-family: var(--font-text);
+    font-weight: bold;
+}
+
+.counter .input-controls {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.counter .input-controls > * {
+    margin: 5px;
+}
+
+.counter .input-controls input {
+    text-align: center;
+    width: 30px;
+    border: 1px outset var(--color-active);
+    background: rgba(0, 0, 0, 0.1   );
+    border-radius: 0px;
+}
+
+.counter .input-controls a {
+    background: url(../../asset/image/header-background-vertical.webp);
+    border: 1px outset var(--color-active);
+    color: var(--color-active);
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.counter .input-controls a:hover {
+    cursor: pointer
+}
+
+.counter .input-controls a.clicked {
+    border: 1px inset var(--color-active);
+}

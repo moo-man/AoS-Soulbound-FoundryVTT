@@ -1,6 +1,17 @@
+import { RollDialog, CombatDialog, SpellDialog } from "../system/dialog.js";
+import Test from "../system/tests/test.js";
+import CombatTest from "../system/tests/combat-test.js";
+import SpellTest from "../system/tests/spell-test.js";
+import MiracleTest from "../system/tests/miracle-test.js";
+import SoulboundUtility from "../system/utility.js";
+
 export class AgeOfSigmarActor extends Actor {
 
     async _preCreate(data, options, user) {
+        if (data._id)
+            options.keepId = SoulboundUtility._keepID(data._id, this)
+        
+            await super._preCreate(data, options, user)
 
         let initData = {
             "token.bar1" :{ "attribute" : "combat.health.toughness" },
@@ -21,31 +32,45 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     prepareData() {
+        this.derivedEffects = [];
+        this.postReadyEffects = []
+
+        if (game.ready && this.type != "party")
+            this.data.update({"data.doom" : game.counter.doom}) // Add doom to actor data so it can be used with effects
+
         super.prepareData();
 
         if (this.type === "player" || this.type === "npc") {
-            this._initializeData();
-            this._computeSkillTotals();
             this._computeItems();
-            this._computeAttack();
-            this._computeSecondary();
             this._computeRelativeCombatAbilities();
         }
         if (this.type==="npc")
             this._sizeToken()
     }
 
+
+    prepareBaseData() {
+        if (this.type === "player" || this.type === "npc")
+            this._initializeData();
+    }
+
+    prepareDerivedData() {
+        this.applyDerivedEffects()
+        if (this.type === "player" || this.type === "npc")
+        {
+            this._computeSkillTotals();
+            this._computeSecondary();
+        }
+    }
+
     _initializeData() {
-        this.attributes.body.total = this.attributes.body.value;
-        this.attributes.mind.total = this.attributes.mind.value;
-        this.attributes.soul.total = this.attributes.soul.value;
         this.combat.melee.total = 0;
         this.combat.melee.relative = 0;
         this.combat.accuracy.total = 0;
         this.combat.accuracy.relative = 0;
-        this.combat.defense.total = 0;
-        this.combat.defense.relative = 0;
-        this.combat.armour.total = 0;
+        this.combat.defence.total = 0;
+        this.combat.defence.relative = 0;
+        this.combat.armour.value = 0;
         this.combat.health.toughness.max = 0;        
         this.combat.health.wounds.value = 0;
         this.combat.health.wounds.max = 0;
@@ -61,11 +86,11 @@ export class AgeOfSigmarActor extends Actor {
     _computeRelativeCombatAbilities() {
         this.combat.melee.relative = this._getCombatLadderValue("melee");
         this.combat.accuracy.relative = this._getCombatLadderValue("accuracy");
-        this.combat.defense.relative = this._getCombatLadderValue("defense");
+        this.combat.defence.relative = this._getCombatLadderValue("defence");
 
         this.combat.melee.ability = this._getCombatAbility("melee")
         this.combat.accuracy.ability = this._getCombatAbility("accuracy")
-        this.combat.defense.ability = this._getCombatAbility("defense")
+        this.combat.defence.ability = this._getCombatAbility("defence")
     }
     
     _getCombatAbility(combatStat)
@@ -101,16 +126,9 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     _computeSkillTotals() {
-        for (let skill of Object.values(this.skills)) {
-            let attributeMod;
-            switch(skill.attribute) {
-                case "body" : attributeMod = this.attributes.body.total; break;
-                case "mind" : attributeMod = this.attributes.mind.total; break;
-                case "soul" : attributeMod = this.attributes.soul.total; break;
-                default: attributeMod = 0;
-            }
-            skill.total = skill.training + attributeMod;
-            skill.roll  = skill.training;
+        for (let skillKey in this.skills) {
+            let skill = this.skills[skillKey]
+            skill.value = skill.training + this.attributes[game.aos.config.skillAttributes[skillKey]].value + skill.bonus;
         }
     }
 
@@ -118,71 +136,38 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.wounds.forEach(i => {
             this.combat.health.wounds.value += i.damage;
         })
-        this.items.filter(i => i.isActive).forEach(i => {
-            this._computeGear(i)
+        this.items.forEach(item => {
+            item.prepareOwnedData()
+            if (item.isEquipped)
+            {
+                if (item.isArmour) this._computeArmour(item);
+                if (item.isAethericDevice) this._computeAethericDevice(item);
+                if (item.isWeapon) this._computeWeapon(item)
+            }
         })
     }
     
-    _computeGear(item) {
-
-        if (item.isActive) {
-            this._computeItemAttributes(item);
-            this._computeItemSkills(item);
-            this._computeItemCombat(item);
-            if (item.isArmour) this._computeArmour(item);
-            if (item.isAethericDevice) this._computeAethericDevice(item);
-        }
-    }
-
-    _computeItemAttributes(item) {
-        let attributes = item.bonus.attributes
-    
-        this.attributes.body.total += attributes.body;
-        this.attributes.mind.total += attributes.mind;
-        this.attributes.soul.total += attributes.soul;
-    }
-
-    /**
-     * Add Bonus from Items to Total for Display to roll for acutally rolling the dice
-     * @param {*} item 
-     */
-    _computeItemSkills(item) {
-        let skills = item.bonus.skills;
-        for(let skill of Object.keys(skills)) {
-            this.skills[skill].roll  += skills[skill];
-            this.skills[skill].total += skills[skill];
-        }
-    }
-
-    _computeItemCombat(item) {
-        let combat = item.bonus.combat
-    
-        this.combat.mettle.max +=             combat.mettle;
-        this.combat.health.toughness.max +=   combat.health.toughness;
-        this.combat.health.wounds.max +=      combat.health.wounds;
-        this.combat.health.wounds.deadly =    this.combat.health.wounds.value >= this.combat.health.wounds.max;
-        this.combat.initiative.total +=       combat.initiative;
-        this.combat.naturalAwareness.total += combat.naturalAwareness;
-        this.combat.melee.total +=            (combat.melee * 2);
-        this.combat.accuracy.total +=         (combat.accuracy * 2);
-        this.combat.defense.total +=          (combat.defense * 2);
-        this.combat.armour.total +=           combat.armour;
-        this.combat.damage +=                 combat.damage;
-    }
-
     _computeArmour(item) {
         if (item.subtype === "shield") {
             // Like below treat shield benefit as an step increase
-            this.combat.defense.total += (item.benefit * 2);
-            this.combat.defense.relative = this._getCombatLadderValue("defense");
+            this.combat.defence.total += (item.benefit * 2);
         } else {
-            this.combat.armour.total += item.benefit;
+            this.combat.armour.value += item.benefit;
         }
     }
 
     _computeAethericDevice(item) {
         this.power.consumed += item.power.consumption;
         this.power.capacity += item.power.capacity;
+        if (item.armour > 0)
+            this.combat.armour.value += item.armour
+    }
+
+    _computeWeapon(item)
+    {
+        if(item.traitList.defensive)
+            this.combat.defence.total += 2;
+
     }
 
     _sizeToken() {
@@ -205,59 +190,162 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
-    _computeAttack() {
-
-        //TODO Move this to item prepare data
-        this.items.filter(i => i.isAttack).forEach(item => {
-            if (item.category === "melee") {
-                item.pool = this.skills.weaponSkill.total;
-                item.focus = this.skills.weaponSkill.focus;
-            } else {
-                item.pool = this.skills.ballisticSkill.total;
-                item.focus = this.skills.ballisticSkill.focus;
-            }
-            if(this.isSwarm) {
-                item.pool += this.combat.health.toughness.value;
-            }
-        })
-    }
-
     _computeSecondary() {
-        // melee, accuracy and defense bonus is doubled to represent a one step increase
-        this.combat.melee.total +=             this.attributes.body.total + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
-        this.combat.accuracy.total +=          this.attributes.mind.total + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
-        this.combat.defense.total +=           this.attributes.body.total + this.skills.reflexes.training + (this.combat.defense.bonus * 2);
-        this.combat.armour.total +=            this.combat.armour.bonus;        
-        this.combat.initiative.total +=        this.attributes.mind.total + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
-        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.total + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
+        // melee, accuracy and defence bonus is doubled to represent a one step increase
+        this.combat.melee.total +=             this.attributes.body.value + this.skills.weaponSkill.training + (this.combat.melee.bonus * 2);
+        this.combat.accuracy.total +=          this.attributes.mind.value + this.skills.ballisticSkill.training + (this.combat.accuracy.bonus * 2);
+        this.combat.defence.total +=           this.attributes.body.value + this.skills.reflexes.training + (this.combat.defence.bonus * 2);
+        this.combat.armour.value +=            this.combat.armour.bonus;        
+        this.combat.initiative.total +=        this.attributes.mind.value + this.skills.awareness.training + this.skills.reflexes.training + this.combat.initiative.bonus;
+        this.combat.naturalAwareness.total +=  Math.ceil((this.attributes.mind.value + this.skills.awareness.training) / 2) + this.combat.naturalAwareness.bonus;        
         this.power.isUndercharge =             this.power.consumed > this.power.capacity;
         
         if(this.autoCalc.toughness) {
-            this.combat.health.toughness.max += this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total + this.combat.health.toughness.bonus;
+            this.combat.health.toughness.max += this.attributes.body.value + this.attributes.mind.value + this.attributes.soul.value + this.combat.health.toughness.bonus;
         } else if(!this.isSwarm) {
             this.combat.health.toughness.max = 1;
         }
         
         if(this.autoCalc.wounds) {
-            this.combat.health.wounds.max += Math.ceil((this.attributes.body.total + this.attributes.mind.total + this.attributes.soul.total) / 2) + this.combat.health.wounds.bonus;
+            this.combat.health.wounds.max += Math.ceil((this.attributes.body.value + this.attributes.mind.value + this.attributes.soul.value) / 2) + this.combat.health.wounds.bonus;
             this.combat.health.wounds.deadly = this.combat.health.wounds.value >= this.combat.health.wounds.max;
         }
 
         if(this.autoCalc.mettle) {
-            this.combat.mettle.max += Math.ceil(this.attributes.soul.total / 2) + this.combat.mettle.bonus;
+            this.combat.mettle.max += Math.ceil(this.attributes.soul.value / 2) + this.combat.mettle.bonus;
         }
     }
+
+    applyDerivedEffects() {
+        this.derivedEffects.forEach(change => {
+            change.effect.fillDerivedData(this, change)
+            const modes = CONST.ACTIVE_EFFECT_MODES;
+            switch ( change.mode ) {
+                case modes.CUSTOM:
+                return change.effect._applyCustom(this, change);
+                case modes.ADD:
+                return change.effect._applyAdd(this, change);
+                case modes.MULTIPLY:
+                return change.effect._applyMultiply(this, change);
+                case modes.OVERRIDE:
+                return change.effect._applyOverride(this, change);
+                case modes.UPGRADE:
+                case modes.DOWNGRADE:
+                return change.effect._applyUpgrade(this, change);
+            }
+        })
+    }
+
+
+
+    //#region Rolling Setup
+    async setupAttributeTest(attribute, options={}) 
+    {
+        console.log(options)
+        let dialogData = RollDialog._dialogData(this, attribute, null, options)
+        dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} Test`
+        let testData = await RollDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return new Test(testData)
+    }
+
+    async setupSkillTest(skill, attribute, options={}) 
+    {
+        let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill, options)
+        dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
+        let testData = await RollDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return new Test(testData)
+    }
+
+    async setupCombatTest(weapon, options)
+    {
+        if (typeof weapon == "string")
+            weapon = this.items.get(weapon)
+
+        let dialogData = CombatDialog._dialogData(this, weapon, options)
+        dialogData.title = `${weapon.name} Test`
+        let testData = await CombatDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return new CombatTest(testData)
+    }
+
+    async setupSpellTest(power)
+    {
+        if (typeof power == "string")
+            power = this.items.get(power)
+
+        let dialogData = SpellDialog._dialogData(this, power)
+        dialogData.title = `${power.name} Test`
+        let testData = await SpellDialog.create(dialogData);
+        testData.speaker = this.speakerData
+        return new SpellTest(testData)
+    }
+
+    async setupMiracleTest(power)
+    {
+        if (typeof power == "string")
+            power = this.items.get(power)
+
+        if (power.cost > this.combat.mettle.value)
+            return ui.notifications.error("Not enough Mettle!")
+
+        let dialogData = RollDialog._dialogData(this, "soul", "devotion")
+        dialogData.title = `${power.name} Test`
+        dialogData.difficulty = game.aos.utility.DNToObject(power.test.dn).difficulty || dialogData.difficulty
+        dialogData.complexity = game.aos.utility.DNToObject(power.test.dn).complexity || dialogData.complexity
+        let testData = await RollDialog.create(dialogData);
+        testData.itemId = power.id
+        testData.speaker = this.speakerData
+        return new MiracleTest(testData)
+    }
+
+    _getCombatData(weapon) {
+        let data = {
+            melee: this.actor.combat.melee.relative,
+            accuracy: this.actor.combat.accuracy.relative,
+            attribute: "body" ,
+            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
+            swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
+        }
+
+
+    }
+
+
+    //#endregion
+
+
 
     /**
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage) {
+    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false}={}) {
+        let armour = this.combat.armour.value
+
+        armour -= penetrating
+
+        if (ineffective) armour *= 2
+
+        damage = ignoreArmour ? damage : damage - armour
+
+
+
+        if (damage < 0)
+            damage = 0
         let remaining = this.combat.health.toughness.value - damage;
+
+        if (ineffective)
+            remaining = -1 // ineffective can only cause minor wounds
+
          // Update the Actor
          const updates = {
             "data.combat.health.toughness.value": remaining >= 0 ? remaining : 0
         };
+
+        if (damage > 0 && restraining)
+            await this.addCondition("restrained")
 
         // Delegate damage application to a hook
         const allowed = Hooks.call("modifyTokenAttribute", {
@@ -294,7 +382,7 @@ export class AgeOfSigmarActor extends Actor {
         if(remaining === -1) {
             type = "minor"
             damage = 1;
-        } else if (remaining > -4) {
+        } else if (remaining >= -4) {
             type = "serious"
             damage = 2;            
         } else {
@@ -321,15 +409,57 @@ export class AgeOfSigmarActor extends Actor {
         return this.update({"data.combat.wounds" : wounds})
     }
 
-    async applyRend(damage) {
+    async addCondition(effect) {
+        if (typeof (effect) === "string")
+          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+        if (!effect)
+          return "No Effect Found"
+    
+        if (!effect.id)
+          return "Conditions require an id field"
+    
+    
+        let existing = this.hasCondition(effect.id)
+    
+        if (!existing) {
+          effect.label = game.i18n.localize(effect.label)
+          effect["flags.core.statusId"] = effect.id;
+          delete effect.id
+          return this.createEmbeddedDocuments("ActiveEffect", [effect])
+        }
+      }
+    
+      async removeCondition(effect, value = 1) {
+        if (typeof (effect) === "string")
+          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+        if (!effect)
+          return "No Effect Found"
+    
+        if (!effect.id)
+          return "Conditions require an id field"
+    
+        let existing = this.hasCondition(effect.id)
+    
+        if (existing) {
+          return existing.delete()
+        }
+      }
+    
+    
+      hasCondition(conditionKey) {
+        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        return existing
+      }
 
-        let armours = this.items.filter(i => i.isArmour 
-                                          && i.isActive //Only Armour that is worn
+    async applyRend(damage, {magicWeapon = false}={}) {
+
+        let armours = this.items.filter(i => i.isEquipped 
                                           && i.subtype !== "shield" // That isn't a shield
                                           && i.benefit !== 0 // not already at zero
-                                          && !i.traits.toLowerCase().includes(game.i18n.localize("TRAIT.MAGICAL"))); // Only nonmagical
+                                          && (!i.traitList.magical || (i.traitList.magical && magicWeapon)) // Only nonmagical - unless magic weapon
+                                          && (!i.traitList.sigmarite || (i.traitList.sigmarite && magicWeapon))) // Only sigmarite - unless magic weapon
         
-        if(armours.length === 0) return;
+        if(armours.length === 0) return ui.notifications.notify(game.i18n.localize("NOTIFICATION.REND_FAIL"));
         
         let sub = damage
         for(let am of armours) {            
@@ -350,6 +480,9 @@ export class AgeOfSigmarActor extends Actor {
         ui.notifications.notify(note);
     }
 
+    getItemTypes(type) {
+        return (this.itemCategories || this.itemTypes)[type]
+    }
 
     get autoCalc() {
         return {
@@ -358,6 +491,45 @@ export class AgeOfSigmarActor extends Actor {
             wounds :  this.type == "player" || this.bio.type > 3,
             tokenSize : !this.isSwarm && this.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
         }
+    }
+
+    get speakerData() {
+        if (this.isToken)
+        {
+            return {
+                token : this.token.id,
+                scene : this.token.parent.id
+            }
+        }
+        else
+        {
+            return {
+                actor : this.id
+            }
+        }
+    }
+
+
+    get Speed() {
+        let speed = this.combat.speeds
+        let display = []
+        display.push(`${game.aos.config.speed[speed.foot]}`)
+
+        if (speed.flight != "none")
+            display.push(`${game.i18n.localize("HEADER.FLY_SPEED")} (${game.aos.config.speed[speed.flight]})`)
+
+        if (speed.swim != "none")
+            display.push(`${game.i18n.localize("HEADER.SWIM_SPEED")} (${game.aos.config.speed[speed.swim]})`)
+
+        return display.join(", ")
+        
+    }
+
+    get size() {
+        if (this.type == "npc")
+            return this.bio.size
+        else
+            return 2
     }
 
     // @@@@@ BOOLEAN GETTERS @@@@@
@@ -374,4 +546,21 @@ export class AgeOfSigmarActor extends Actor {
     get soulfire() {return this.data.data.soulfire}
     get doom() {return this.data.data.doom}
     get power() {return this.data.data.power}
+    get members() {return this.data.data.members || []}
+
+
+      /**
+   * Transform the Document data to be stored in a Compendium pack.
+   * Remove any features of the data which are world-specific.
+   * This function is asynchronous in case any complex operations are required prior to exporting.
+   * @param {CompendiumCollection} [pack]   A specific pack being exported to
+   * @return {object}                       A data object of cleaned data suitable for compendium import
+   * @memberof ClientDocumentMixin#
+   * @override - Retain ID
+   */
+  toCompendium(pack) {
+    let data = super.toCompendium(pack)
+    data._id = this.id; // Replace deleted ID so it is preserved
+    return data;
+  }
 }

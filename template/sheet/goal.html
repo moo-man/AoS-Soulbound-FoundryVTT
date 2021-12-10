@@ -1,44 +1,37 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="goal">
+    <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    </div>
+    <div class="sheet-body">
         <div class="sheet-header">
-            <div class="avatar">
-                <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+            <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <div class="entry-horizontal">
+                <h3>{{localize "GOAL.TYPE"}}</h3>
+                <select name="data.type">
+                    {{#select data.type}}
+                        <option value="short">{{localize "GOAL.SHORT"}}</option>
+                        <option value="long">{{localize "GOAL.LONG"}}</option>
+                    {{/select}}
+                </select>
             </div>
-            <div class="wrapper-column">
-                <div class="name">
-                    <label>{{localize "GOAL.NAME"}}</label>
-                    <input name="name" type="text" value="{{item.name}}"/>
-                </div>
+            <div class="segment-horizontal">
+                <h3>{{localize "GOAL.COMPLETED"}}</h3>
+                {{#if data.completed}}
+                    <input name="data.completed" type="checkbox" value="active" checked/>
+                {{else}}
+                    <input name="data.completed" type="checkbox" value="active"/>
+                {{/if}}
             </div>
         </div>
-
-        <div class="sheet-tabs tabs" data-group="primary">
-            <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
-        </div>
-
-        <div class="sheet-body">
-            <div class="tab" data-group="primary" data-tab="description">
-                <div class="wrapper">
-                    <div class="type">
-                        <label>{{localize "GOAL.TYPE"}}</label>
-                        <select name="data.type">
-                            {{#select data.type}}
-                                <option value="short">{{localize "GOAL.SHORT"}}</option>
-                                <option value="long">{{localize "GOAL.LONG"}}</option>
-                            {{/select}}
-                        </select>
-                    </div>
-                    <div class="completed">
-                        <label>{{localize "GOAL.COMPLETED"}}</label>
-                        {{#if data.completed}}
-                            <input name="data.completed" type="checkbox" value="active" checked/>
-                        {{else}}
-                            <input name="data.completed" type="checkbox" value="active"/>
-                        {{/if}}
-                    </div>
-                </div>
-                <div class="description">
+        <hr>
+        <div class="sheet-content">
+            <div class="content-box item-description">
+                <div class="content-header">   
                     <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                </div>
+                <div class="content-wrapper">
                     {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
                 </div>
             </div>

@@ -1,0 +1,31 @@
+<div class="diceContainer">
+    {{#each result.dice as |dice index|}}
+    {{#if ../context.focusAllocated}}
+    <div class="die">
+        <img class="diceImg" src="{{dice.img}}">
+        {{#if dice.focus}}
+        <div class="focus-counter">
+            {{dice.focus}}
+        </div>
+        {{/if}}
+        {{#if dice.rerolled}}
+        <div class="reroll-icon">
+            <i class="fas fa-redo"></i>
+        </div>
+        {{/if}}
+    </div>
+    {{else}}
+    <a class="die diceClick" data-index={{index}}>
+        <img class="diceImg" src="{{dice.img}}">
+        <div class="focus-counter" style="display:none">
+            0
+        </div>
+        {{#if dice.rerolled}}
+        <div class="reroll-icon">
+            <i class="fas fa-redo"></i>
+        </div>
+        {{/if}}
+    </a>
+    {{/if}}
+    {{/each}}
+</div>

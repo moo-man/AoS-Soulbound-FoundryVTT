@@ -1,40 +1,25 @@
 <form class="{{cssClass}}" autocomplete="off">
-    <div class="wound">
+    <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    </div>
+    <div class="sheet-body">
         <div class="sheet-header">
-            <div class="avatar">
-                <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
-            </div>
-            <div class="wrapper-column">
-                <div class="name">
-                    <label>{{localize "WOUND.NAME"}}</label>
-                    <input name="name" type="text" value="{{item.name}}"/>
-                </div>
+            <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <div class="segment-horizontal">
+                <h3>{{localize "WOUND.DAMAGE"}}</h3>
+                <input name="data.damage" type="number" value="{{data.damage}}" data-dtype="Number"/>
             </div>
         </div>
-
-        <div class="sheet-tabs tabs" data-group="primary">
-            <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
-        </div>
-
-        <div class="sheet-body">
-            <div class="tab" data-group="primary" data-tab="description">
-                <div class="wrapper">
-                    <div class="damage">
-                        <label>{{localize "WOUND.DAMAGE"}}</label>
-                        <input name="data.damage" type="number" value="{{data.damage}}" data-dtype="Number"/>
-                    </div>
-                    <label>{{localize "WOUND.TYPE"}}</label>
-                    <select name="data.woundType">
-                        {{#select data.woundType}}
-                        <option value=""></option>
-                        {{#each (config "woundType") as |type t|}}
-                            <option value="{{t}}">{{type}}</option>
-                        {{/each}}
-                        {{/select}}
-                    </select>
-                </div>
-                <div class="description">
+        <hr>
+        <hr>
+        <div class="sheet-content">
+            <div class="content-box item-description">
+                <div class="content-header">
                     <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                </div>
+                <div class="content-wrapper">
                     {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
                 </div>
             </div>

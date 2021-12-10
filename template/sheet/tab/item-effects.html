@@ -1,0 +1,37 @@
+<div class="effects">
+  <div class="condition-list">
+    {{#each conditions as |effect e|}}
+    <div class="condition" title={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
+        <img src="{{effect.img}}"/>
+        <a class="condition-toggle">
+          {{#if effect.existing}}
+          <i class="far fa-check-square"></i>
+          {{else}}
+          <i class="far fa-square"></i>
+          {{/if}}
+        </a>
+    </div>
+    {{/each}}
+  </div>
+
+  <div class="item-list">
+    <div class="item-header">
+        <h1>{{localize "HEADER.EFFECTS"}}</h1>
+        <a class="effect-create absolute" title="Create Effect"><i class="fas fa-plus"></i></a>
+    </div>
+      {{#each item.effects as |effect|}}
+                <div class="item" data-effect-id="{{effect.id}}">
+                    <div class="item-content">
+                        <div class="item-property item-name">
+                            <div class="item-image">
+                                <img src={{effect.data.icon}} />
+                            </div>
+                            <a class="effect-edit">{{effect.data.label}}</a>
+                        </div>
+                        <div class="item-controls">
+                            <a class="item-control effect-delete"><i class="fas fa-trash"></i></a> 
+                        </div>
+                    </div>
+                </div>
+    {{/each}}
+</div>

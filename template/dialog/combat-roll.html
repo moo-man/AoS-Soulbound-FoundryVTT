@@ -1,57 +1,98 @@
 <div class="age-of-sigmar-soulbound dialog">
-    <div class="wrapper">
-        <label>{{localize "DIALOG.ATTRIBUTE"}}</label>
-        <select id="attribute">
-            {{#select combat.attribute}}
-            {{#each attributes as |attribute key|}}
-                <option value="{{key}}">{{localize attribute.label}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
-    <div class="wrapper">
-        <!-- TODO Refactor this too-->
-        <label>{{localize "DIALOG.SKILL"}}</label>
-        <select id="skill">
-            {{#select combat.skill}}
-            {{#each skills as |skill key|}}
-                <option value="{{key}}">{{localize skill.label}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.ATTACK"}}</label>
-        <select id="attack">
-            {{#select attackRating}}
-            {{#each (config "ratings") as | rating r|}}
-                <option value="{{r}}">{{rating}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.DEFENSE"}}</label>
-        <select id="defense">
-            {{#select targetDefense}}
-            {{#each (config "ratings") as | rating r|}}
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.COMBAT_ROLL"}}</h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
+                <select name="attribute" id="attribute">
+                    {{#select combat.attribute}}
+                    {{#each attributes as |attribute key|}}
+                    <option value="{{key}}">{{localize attribute.label}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.SKILL"}}</h3>
+                <select name="skill" id="skill">
+                    {{#select combat.skill}}
+                    {{#each skills as |skill key|}}
+                    <option value="{{key}}">{{localize skill.label}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ATTACK"}}</h3>
+                <select name="attack" id="attack">
+                    {{#select attackRating}}
+                    {{#each (config "ratings") as | rating r|}}
                     <option value="{{r}}">{{rating}}</option>
-            {{/each}}
-            {{/select}}
-        </select>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DOUBLE_TRAINING"}}</h3>
+                <input name="double-training" id="double-training" type="checkbox" />
+            </div>
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DOUBLE_FOCUS"}}</h3>
+                <input name="double-focus" id="double-focus" type="checkbox" />
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
+                <div class="dialog-value"><input name="bonusDice" id="bonusDice" type="number" value="{{bonusDice}}" /></div>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSDAMAGE"}}</h3>
+                <div class="dialog-value"><input name="bonusDamage" id="bonusDamage" type="number" value="{{combat.bonusDamage}}" /></div>
+            </div>
+        </div>
     </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.ARMOUR"}}</label>
-            <input id="armour" type="number" value="{{combat.armour}}"/>
+    <hr>
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.OPPONENT"}}</h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.DEFENCE"}}</h3>
+                <select name="defence" id="defence">
+                    {{#select targetDefence}}
+                    {{#each (config "ratings") as | rating r|}}
+                    <option value="{{r}}">{{rating}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ARMOUR"}}</h3>
+                <div class="dialog-value"><input name="armour" id="armour" type="number" value="{{combat.armour}}" /></div>
+            </div>
+        </div>
     </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.BONUSDICE"}}</label>
-        <input id="bonusDice" type="number" value="{{bonusDice}}" />
-    </div>
-    <div class="wrapper">
-        <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
-        <input id="double-training" type="checkbox" value="active" />
-        <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
-        <input id="double-focus" type="checkbox" value="active" />
+    <hr>
+</div>
+<div class="dialog-effects">
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.EFFECTS"}}</h1>
+        </div>
+        <div class="content-row">
+            <select class="effect-select" multiple>
+                {{#each effects as |effect e|}}
+                <option title="{{effect.label}}"value="{{e}}">{{effect.data.flags.age-of-sigmar-soulbound.description}}</option>
+                {{/each}}
+            </select>
+        </div>
     </div>
 </div>
