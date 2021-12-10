@@ -107,12 +107,7 @@ export default class Test {
         result.triggers = result.dice.filter(die => die.value === 6).length
         result.successes = result.dice.reduce((prev, current) => prev += current.success, 0)
 
-        let path;
-        if (game.modules.get("soulbound-core")?.active)
-            path = `modules/soulbound-core/assets/dice`
-        else  
-            path = `systems/age-of-sigmar-soulbound/asset/image`
-    
+        let path = game.aos.config.dicePath;
         result.dice.forEach(die => {
             die.img = `${path}/dice-${die.value}-failed.webp`
             if (die.success)

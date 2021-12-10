@@ -185,6 +185,7 @@ AOS.traits = {
     twohanded : "Two-handed"
 }
 
+AOS.dicePath = "systems/age-of-sigmar-soulbound/asset/image"
 AOS.traitDescriptions = {}
 AOS.conditionDescriptions = {}
 
