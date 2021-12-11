@@ -27,6 +27,12 @@
       "path": "lang/en.json"
     }
   ],
+  "media": [
+    {
+      "type": "cover",
+      "url": "https://user-images.githubusercontent.com/28637157/145496204-852c373e-c785-4354-8f39-cba680b4b0c0.png"
+    }
+  ],
   "background" : "../../modules/soulbound-core/assets/images/login.webp",
   "gridDistance": 1,
   "gridUnits": "m",

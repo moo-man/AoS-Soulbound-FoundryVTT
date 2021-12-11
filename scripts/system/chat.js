@@ -12,7 +12,7 @@ export default class SoulboundChat {
         let canResetFocus = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return test.context.focusAllocated && message.isOwner
+            return test.context.focusAllocated && message.isAuthor
         }
 
         let canClearFocus = li => {
@@ -299,7 +299,7 @@ export default class SoulboundChat {
         if (current >=  MAX_FOCUS)
             return ui.notifications.error("Not Enough Focus!")
         
-        if (msg.isOwner)
+        if (msg.isAuthor)
         {
             if (ev.currentTarget.classList.contains("selected"))
                 num++

@@ -186,7 +186,10 @@ export default class Test {
 
         if (this.message && !newMessage)
         {
-            chatData.roll = chatData.roll.toJSON()
+            // TODO: UNCOMMENT IN V9, remove delete statement
+            //chatData.roll = chatData.roll.toJSON()
+            delete chatData.roll
+
             this.message.update(chatData)
         }
         else
