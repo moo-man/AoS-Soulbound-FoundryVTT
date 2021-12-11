@@ -126,10 +126,11 @@ export default function registerHooks() {
      */
     Hooks.on("hotbarDrop", async (bar, data, slot) => {
         // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
+        let macro
         if (data.type == "Item") {
             let item = data.data
             let command = `game.macro.rollItemMacro("${item.name}", "${item.type}");`;
-            let macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
+            macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
             if (!macro) {
                 macro = await Macro.create({
                     name: item.name,
@@ -138,10 +139,28 @@ export default function registerHooks() {
                     command: command
                 }, { displaySheet: false })
             }
-            game.user.assignHotbarMacro(macro, slot);
-        } else {
-            return;
+        } 
+        else if (data.type == "Actor"){
+            let actor = game.actors.get(data.id)
+            macro = await Macro.create({
+                name: actor.name,
+                type: "script",
+                img: actor.data.img,
+                command: `game.actors.get("${data.id}").sheet.render(true)`
+            }, { displaySheet: false })
         }
+        else if (data.type == "JournalEntry")
+        {
+            let j = game.journal.get(data.id)
+            macro = await Macro.create({
+                name: j.name,
+                type: "script",
+                img: "icons/svg/book.svg",
+                command: `game.journal.get("${data.id}").sheet.render(true)`
+            }, { displaySheet: false })
+        }
+        if (macro)
+            game.user.assignHotbarMacro(macro, slot);
     });
 
     /** Helpers  */
