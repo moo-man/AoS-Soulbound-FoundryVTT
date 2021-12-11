@@ -34,22 +34,19 @@ export default class AOS_MacroUtil {
     }
 
     static async createWeaponDialog(actor, weapon) {
-        let testData = await actor.setupCombatTest(weapon)
-        let test = new game.aos.rollClass.CombatTest(testData)
+        let test = await actor.setupCombatTest(weapon)
         await test.rollTest()
         test.sendToChat()
     }
 
     static async createSpellRoll(actor, spell) {
-        let testData = await actor.setupPowerTest(spell)
-        let test = new game.aos.rollClass.PowerTest(testData)
+        let test = await actor.setupPowerTest(spell)
         await test.rollTest()
         test.sendToChat()
     }
 
     static async createMiracleRoll(actor, miracle) {
-        let testData = await actor.setupPowerTest(spell)
-        let test = new game.aos.rollClass.PowerTest(testData)
+        let test = await actor.setupPowerTest(spell)
         await test.rollTest()
         test.sendToChat()
     }
