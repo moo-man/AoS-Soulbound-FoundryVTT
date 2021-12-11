@@ -32,13 +32,13 @@ export default class SoulboundChat {
         let canReroll = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return !(test.context.rerolled || test.context.maximized) && message.isOwner
+            return !(test.context.rerolled || test.context.maximized) && message.isAuthor
         }
 
         let canMaximize = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isOwner
+            return !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isAuthor
         }
 
         let canApplyDamage = li => {
