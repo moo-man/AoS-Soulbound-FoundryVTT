@@ -171,9 +171,12 @@ export default function registerHooks() {
         }
 
         for (let key in game.aos.config) {
-            for (let prop in game.aos.config[key]) {
-                if (typeof game.aos.config[key][prop] == "string")
-                    game.aos.config[key][prop] = game.i18n.localize(game.aos.config[key][prop])
+            if (typeof game.aos.config[key] == "object")
+            {
+                for (let prop in game.aos.config[key]) {
+                    if (typeof game.aos.config[key][prop] == "string")
+                        game.aos.config[key][prop] = game.i18n.localize(game.aos.config[key][prop])
+                }
             }
         }
 
