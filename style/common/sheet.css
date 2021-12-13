@@ -266,6 +266,8 @@
     margin: 5px;
 }
 
+
+
 .age-of-sigmar-soulbound.sheet .content-row.wounds-row {
     max-height: 115px;
 }
@@ -277,6 +279,31 @@
 .age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list .table-element {
     flex-grow: unset
 } 
+
+.age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list .table-element input {
+    width: 30px;
+} 
+
+.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element{
+    justify-content: unset;
+}
+
+
+.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element > *{
+    flex: 1
+}
+
+.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element b{
+    padding-left: 20px;
+}
+
+.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element b.damage{
+    padding-left: 50px;
+}
+
+.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element .button{
+    flex: 0 0 20px
+}
 
 
 
