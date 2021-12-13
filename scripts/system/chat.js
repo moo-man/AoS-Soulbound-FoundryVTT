@@ -26,7 +26,7 @@ export default class SoulboundChat {
                 if (parseInt(c.text) > 0 || c.style.display != "none")
                     hasFocusCounter = true;
             })
-            return hasFocusCounter && message.isOwner           
+            return hasFocusCounter && message.isAuthor           
         }
 
         let canReroll = li => {

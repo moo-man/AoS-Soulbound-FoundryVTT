@@ -68,9 +68,9 @@ export default class CombatTest extends Test {
         }
     
         if (addSuccess) {
-            damage.total = damageValue + result.successes - damage.armour;
+            damage.total = damageValue + result.successes// - damage.armour;
         } else {
-            damage.total = damageValue - damage.armour;
+            damage.total = damageValue// - damage.armour;
         }
        
         damage.total += this.testData.combat.bonusDamage || 0

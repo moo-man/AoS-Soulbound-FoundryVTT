@@ -61,16 +61,6 @@
         </div>
         <div class="content-row">
             <div class="entry-horizontal">
-                <h3>{{localize "DIALOG.FOCUSALLOCATION"}}</h3>
-                <select id="allocation">
-                    {{#each (config "allocationTypes") as |alloc a|}}
-                    <option value="{{a}}">{{alloc}}</option>
-                    {{/each}}
-                </select>
-            </div>
-        </div>
-        <div class="content-row">
-            <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.DOUBLE_TRAINING"}}</h3>
                 <input id="double-training" type="checkbox" value="active" />
             </div>
