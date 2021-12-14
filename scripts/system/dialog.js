@@ -179,6 +179,8 @@ export class CombatDialog extends RollDialog {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
             return new this({
                 title: data.title,
+                actor : data.actor,
+                targets : data.targets,
                 content: html,
                 effects : data.effects,
                 buttons: {
@@ -190,6 +192,21 @@ export class CombatDialog extends RollDialog {
                             testData.combat = mergeObject(data.combat, testData.combat)
                             testData.itemId = data.weapon.id
                             testData.dn = this._getDn(data.weapon.name, testData.rating, testData.targetDefence);
+                            if (html.find("#dual-wielding").is(":checked"))
+                            {
+                                testData.dualWieldingData = {
+                                    primary : {
+                                        pool : parseInt(html.find(".primary .pool")[0].value),
+                                        defence : parseInt(html.find(".primary #defence")[0].value),
+                                        armour : parseInt(html.find(".primary #armour")[0].value)
+                                    },
+                                    secondary: {
+                                        pool : parseInt(html.find(".secondary .pool")[0].value),
+                                        defence : parseInt(html.find(".secondary #defence")[0].value),
+                                        armour : parseInt(html.find(".secondary #armour")[0].value)
+                                    }
+                                }
+                            }
                             resolve(testData);
                         },
                     }
@@ -225,23 +242,41 @@ export class CombatDialog extends RollDialog {
             skill: skill,
             swarmDice: actor.type === "npc" && actor.isSwarm ? actor.combat.health.toughness.value : 0,
             bonusDamage : 0
-    }
+        }
 
+        data.showDualWielding = actor.getItemTypes("weapon").filter(i => i.equipped).length >= 2
         data.weapon = weapon
+        data.actor = actor
 
-        let target = game.user.targets.values().next().value;
-        const hasTarget = target !== undefined; // No additinal Input when target function is used
-        data.targetDefence = 3; // good defence seems to be the most likely starting point
+
+
+        let targets = Array.from(game.user.targets)
+        data.targets = targets
+        const hasTarget = targets.length; // No additinal Input when target function is used
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
-        data.combat.armour = 0;
+        data.targetSpeakers = targets.map(i => i.actor.speakerData)
 
+        data.primaryTarget = {
+            defence : 3,
+            armour : 0
+        }
+            data.secondaryTarget = duplicate(data.primaryTarget)
+
+        
         if (hasTarget) {
-            target = target.actor
-            if (target)
+            data.primaryTarget = {
+                name : targets[0].name,
+                defence : targets[0].actor.combat.defence.relative,
+                armour : targets[0].actor.combat.armour.value
+            }
+
+            if (targets[1])
             {
-                data.targetDefence = target.combat.defence.relative;
-                data.combat.armour = target.combat.armour.value;
-                data.targetSpeaker = target.spakerData
+                data.secondaryTarget = {
+                    name : targets[1].name,
+                    defence : targets[1].actor.combat.defence.relative,
+                    armour : targets[1].actor.combat.armour.value
+                }
             }
         }
 
@@ -287,6 +322,107 @@ export class CombatDialog extends RollDialog {
         this.userEntry["defence"] = parseInt(this.inputs.defence.value)
         this.userEntry["armour"] = parseInt(this.inputs.armour.value)
         this.userEntry["attack"] = parseInt(this.inputs.attack.value)
+
+
+        html.find("#attribute, #skill, #double-training, #bonusDice, .effect-select").change(ev => {
+            this.updateDualWieldingPools(ev)
+        })
+
+        html.find(".pool").change(ev => {
+            let parent = $(ev.currentTarget).parents(".dual")[0]
+            let dialog = $(ev.currentTarget).parents(".dialog")
+            
+            let isPrimary = parent.classList.contains("primary")
+
+            let poolSize = this.numberOfDice()
+
+            let inputValue = parseInt(ev.currentTarget.value)
+
+            if (inputValue > poolSize)
+            {
+                this.updateDualWieldingPools(ev)
+                return ui.notifications.error(game.i18n.localize("DIALOG.POOL_INPUT_ERROR"))
+            }
+
+            let otherInput
+            if (isPrimary)
+                otherInput = dialog.find("[name='secondary-pool']")[0]
+            else // if isSecondary
+                otherInput = dialog.find("[name='primary-pool']")[0]
+
+
+            otherInput.value = poolSize - inputValue
+        })
+
+
+        html.find("#dual-wielding").change(ev => {
+            this.toggleDualWielding(ev)
+        })
+    }
+
+    toggleDualWielding(ev) {
+        let checked = $(ev.currentTarget).is(":checked")
+        let el = $(ev.currentTarget).parents(".dialog")
+        if (checked)
+        {
+            el.find(".dual").each((index, element) => {
+                element.style.display = "flex"
+            })
+            el.find(".non-dual").each((index, element) => {
+                element.style.display = "none"
+            })
+            $(ev.currentTarget).parents(".app")[0].style.height = (parseInt($(ev.currentTarget).parents(".app")[0].style.height) + 100) + "px"
+
+            if (this.data.targets.length == 1)
+                el.find(".secondary .target-name")[0].textContent = `(${this.data.targets[0].name})`
+
+            this.updateDualWieldingPools(ev)
+
+        }
+        else
+        {
+            el.find(".dual").each((index, element) => {
+                element.style.display = "none"
+            })
+            el.find(".non-dual").each((index, element) => {
+                element.style.display = "flex"
+            })
+            $(ev.currentTarget).parents(".app")[0].style.height = (parseInt($(ev.currentTarget).parents(".app")[0].style.height) - 100) + "px"
+        }
+    }
+
+
+    updateDualWieldingPools(ev) {
+        let el = $(ev.currentTarget).parents(".dialog")
+
+        let primary = el.find(".dual.primary")
+        let secondary = el.find(".dual.secondary")
+        let pool = this.numberOfDice()
+
+        let primaryPool = Math.floor(pool / 2)
+        let secondaryPool = Math.floor(pool / 2)
+        if (pool % 2 != 0)
+            primaryPool++
+
+        primary.find(".pool")[0].value = primaryPool
+        secondary.find(".pool")[0].value = secondaryPool
+    }
+
+    numberOfDice()
+    {
+        let html = this.element
+        let actor = this.data.actor
+        let attribute = html.find("#attribute")[0].value
+        let skill = html.find("#skill")[0].value
+        let doubleTraining = html.find("#double-training").is(":checked")
+        let bonusDice = parseInt(html.find("#bonusDice")[0].value)
+        let num = actor.attributes[attribute].value + bonusDice
+        if (skill)
+        {
+            let skillObject = this.data.actor.skills[skill]
+            num += (doubleTraining ? skillObject.training * 2 : skillObject.training) + skillObject.bonus
+        }
+        return num
     }
 }
 

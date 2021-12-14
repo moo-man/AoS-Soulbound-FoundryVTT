@@ -11,7 +11,7 @@ export default class Reroller extends FormApplication
 
     
     async _updateObject(event) {
-        let dice = Array.from($(event.currentTarget).find(".die")).map(i => i.classList.contains("selected"))
+        let dice = Array.from($(event.currentTarget).find(".die")).sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.classList.contains("selected"))
 
         this.object.reroll(dice)
     }

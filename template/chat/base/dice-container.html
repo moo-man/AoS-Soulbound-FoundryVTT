@@ -1,5 +1,5 @@
 <div class="diceContainer">
-    {{#each result.dice as |dice index|}}
+    {{#each result.dice as |dice|}}
     {{#if ../context.focusAllocated}}
     <div class="die">
         <img class="diceImg" src="{{dice.img}}">
@@ -15,7 +15,7 @@
         {{/if}}
     </div>
     {{else}}
-    <a class="die diceClick" data-index={{index}}>
+    <a class="die diceClick" data-index={{dice.index}}>
         <img class="diceImg" src="{{dice.img}}">
         <div class="focus-counter" style="display:none">
             0

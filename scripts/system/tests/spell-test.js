@@ -15,7 +15,8 @@ export default class SpellTest extends Test{
 
     computeResult()
     {
-        let result = super.computeResult()
+        super.computeResult()
+        let result = this.result
         result.overcast = this.spell.overcast;
         result.duration = this.spell.duration;
         result.damage = this.computeDamage(result);

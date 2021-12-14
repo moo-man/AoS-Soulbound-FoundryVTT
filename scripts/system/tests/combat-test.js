@@ -6,15 +6,63 @@ export default class CombatTest extends Test {
     {
         super(data)
         if (data) 
+        {
             this.testData.combat = data.combat
+            this.testData.dualWieldingData = data.dualWieldingData
+        }
+
     }
 
     computeResult()
     {
-        let result = super.computeResult()
-        result.damage = this.computeDamage(result)
+        super.computeResult()
+
+        if (this.isDualWielding)
+        {
+            this.computeDualWielding()
+        }
+        else 
+        {
+            let result = this.result
+            result.damage = this.computeDamage(result)
+        }
         return result
     }
+
+
+
+
+    // computeResult()
+    // {
+    //     let result = this._computeRoll();
+    //     result.success = result.successes >= this.testData.dn.complexity
+    //     result.degree = result.success ? result.successes - this.testData.dn.complexity : this.testData.dn.complexity - result.successes
+    //     result.dn = this.testData.dn
+    //     this.data.result = result
+    // }
+
+
+    computeDualWielding()
+    {
+        let result = this.result
+        result.dual = true;
+
+        result.primary = {
+            triggers : 0,
+            dice : [],
+        }
+        result.secondary = {
+            triggers : 0,
+            dice : [],
+        }
+
+        for (let i = 0; i < this.roll.dice[0].results.length ; i++)
+        {
+            let dieResult = this.roll.dice[0].results.length
+        }
+    }
+
+
 
     get template() {
         return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-roll.html"
@@ -94,6 +142,11 @@ export default class CombatTest extends Test {
     get numberOfDice()
     {
         return super.numberOfDice + this.testData.combat.swarmDice
+    }
+
+    get isDualWielding() 
+    {
+        return !!this.testData.dualWieldingData
     }
 
     get weapon() {

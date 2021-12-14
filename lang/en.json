@@ -177,6 +177,10 @@
   "DIALOG.CUSTOM_ROLL": "Custom Roll",
   "DIALOG.DOUBLE_TRAINING": "Double Your Training",
   "DIALOG.DOUBLE_FOCUS": "Double Your Focus",
+  "DIALOG.DUAL_WIELDING": "Dual Wielding",
+  "DIALOG.PRIMARY": "Primary",
+  "DIALOG.SECONDARY": "Secondary",
+  "DIALOG.POOL" : "Pool",
   "DIALOG.ATTACK": "Attacker Rating",
   "DIALOG.DEFENCE": "Target Defence",
   "DIALOG.ARMOUR" : "Target Armour",
@@ -190,7 +194,7 @@
   "DIALOG.TRIGGER" : "Triggers",
   "DIALOG.ITEM_DELETE" : "Item Delete",
   "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
-    
+  "DIALOG.POOL_INPUT_ERROR" : "Input larger than pool size",
 
 
   "EQUIPMENT.NAME": "Name",

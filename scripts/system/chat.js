@@ -135,7 +135,7 @@ export default class SoulboundChat {
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.getTest();
-                    test.allocateFocus(Array.from(li.find(".focus-counter")).map(i => parseInt(i.textContent) || 0))
+                    test.allocateFocus(Array.from(li.find(".focus-counter")).sort((a, b) => parseInt(a.dataset.index) - parseInt(b.dataset.index)).map(i => parseInt(i.textContent) || 0))
                 }
             }
         );
