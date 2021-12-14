@@ -250,6 +250,10 @@ li.folder > .folder-header .create-folder,
     width: 100%
 }
 
+.roll-dialog .target-name {
+    font-size : 14px;
+}
+
 
 
 .content-box{

@@ -192,21 +192,12 @@ export class CombatDialog extends RollDialog {
                             testData.combat = mergeObject(data.combat, testData.combat)
                             testData.itemId = data.weapon.id
                             testData.dn = this._getDn(data.weapon.name, testData.rating, testData.targetDefence);
-                            if (html.find("#dual-wielding").is(":checked"))
+                            if (testData.dualWieldingData)
                             {
-                                testData.dualWieldingData = {
-                                    primary : {
-                                        pool : parseInt(html.find(".primary .pool")[0].value),
-                                        defence : parseInt(html.find(".primary #defence")[0].value),
-                                        armour : parseInt(html.find(".primary #armour")[0].value)
-                                    },
-                                    secondary: {
-                                        pool : parseInt(html.find(".secondary .pool")[0].value),
-                                        defence : parseInt(html.find(".secondary #defence")[0].value),
-                                        armour : parseInt(html.find(".secondary #armour")[0].value)
-                                    }
-                                }
+                                testData.dualWieldingData.primary.dn = this._getDn(data.weapon.name, testData.rating, testData.dualWieldingData.primary.defence)
+                                testData.dualWieldingData.secondary.dn = this._getDn(data.actor.items.get(testData.dualWieldingData.secondary.itemId).name, testData.rating, testData.dualWieldingData.secondary.defence)
                             }
+    
                             resolve(testData);
                         },
                     }
@@ -217,9 +208,26 @@ export class CombatDialog extends RollDialog {
     }
     static extractDialogData(html) {
         let data = super.extractDialogData(html)
-        data.rating = html.find("#attack")[0].value;
+        data.rating = parseInt(html.find("#attack")[0].value);
         data.combat = {armour : html.find("#armour")[0].value, bonusDamage : parseInt(html.find("#bonusDamage")[0].value)}
-        data.targetDefence = html.find("#defence")[0].value;
+        data.targetDefence = parseInt(html.find("#defence")[0].value);
+
+        if (html.find("#dual-wielding").is(":checked"))
+        {
+            data.dualWieldingData = {
+                primary : {
+                    pool : parseInt(html.find(".primary .pool")[0].value),
+                    defence : parseInt(html.find(".primary #defence")[0].value),
+                    armour : parseInt(html.find(".primary #armour")[0].value)
+                },
+                secondary: {
+                    pool : parseInt(html.find(".secondary .pool")[0].value),
+                    defence : parseInt(html.find(".secondary #defence")[0].value),
+                    armour : parseInt(html.find(".secondary #armour")[0].value),
+                    itemId : html.find("#dual-weapon")[0].value
+                }
+            }
+        }
 
         return data
     }
@@ -247,6 +255,7 @@ export class CombatDialog extends RollDialog {
         data.showDualWielding = actor.getItemTypes("weapon").filter(i => i.equipped).length >= 2
         data.weapon = weapon
         data.actor = actor
+        data.otherWeapons = actor.getItemTypes("weapon").filter(i => i.equipped && i.id != weapon.id)
 
 
 
@@ -260,7 +269,7 @@ export class CombatDialog extends RollDialog {
             defence : 3,
             armour : 0
         }
-            data.secondaryTarget = duplicate(data.primaryTarget)
+        data.secondaryTarget = duplicate(data.primaryTarget)
 
         
         if (hasTarget) {
@@ -371,7 +380,7 @@ export class CombatDialog extends RollDialog {
             el.find(".non-dual").each((index, element) => {
                 element.style.display = "none"
             })
-            $(ev.currentTarget).parents(".app")[0].style.height = (parseInt($(ev.currentTarget).parents(".app")[0].style.height) + 100) + "px"
+            $(ev.currentTarget).parents(".app")[0].style.height = (parseInt($(ev.currentTarget).parents(".app")[0].style.height) + 110) + "px"
 
             if (this.data.targets.length == 1)
                 el.find(".secondary .target-name")[0].textContent = `(${this.data.targets[0].name})`
@@ -387,7 +396,7 @@ export class CombatDialog extends RollDialog {
             el.find(".non-dual").each((index, element) => {
                 element.style.display = "flex"
             })
-            $(ev.currentTarget).parents(".app")[0].style.height = (parseInt($(ev.currentTarget).parents(".app")[0].style.height) - 100) + "px"
+            $(ev.currentTarget).parents(".app")[0].style.height = (parseInt($(ev.currentTarget).parents(".app")[0].style.height) - 110) + "px"
         }
     }
 

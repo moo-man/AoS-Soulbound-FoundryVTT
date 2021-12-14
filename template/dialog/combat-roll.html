@@ -97,6 +97,19 @@
 
 
     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@ DUAL WIELDING @@@@@@@@@@@@@@@@@@@@@@@@-->
+    <div class="content-box dual weapon" style="display: none">
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DUAL_WEAPON"}}</h3>
+                <select name="dual-weapon" id="dual-weapon">
+                    {{#each otherWeapons as |weapon|}}
+                    <option value="{{weapon.id}}">{{weapon.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+
     
     <div class="content-box dual primary" style="display: none">
         <div class="content-header">

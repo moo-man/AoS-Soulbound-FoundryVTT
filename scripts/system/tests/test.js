@@ -56,6 +56,7 @@ export default class Test {
         result.degree = result.success ? result.successes - this.testData.dn.complexity : this.testData.dn.complexity - result.successes
         result.dn = this.testData.dn
         this.data.result = result
+        return result
     }
 
     _computeRoll() {
@@ -146,7 +147,7 @@ export default class Test {
     {
         this.rerolledDice = this.roll.reroll();
         this.rerolledDice.dice[0].results.forEach((result, i) => {
-            result.index = this.roll.dice[0].results[i].index // indices of the reroll must match original roll
+            result.index = i
         })
         this.context.rerolled = true;
         this.testData.reroll = this.rerolledDice.toJSON()
@@ -255,27 +256,44 @@ export default class Test {
     get message() {
         return game.messages.get(this.context.messageId);
     }
-
-    get effects() {
-        if(!this.item)
-            return []
-        return this.item.effects.filter(e => !e.data.transfer)
+    
+    get testEffects() {
+        return this._testEffects(this.item)
     }
 
     get itemTest() {
-        let DN = this.item.test.dn
-        if (DN.includes("S"))
-            DN = DN.replace("S", 1 + this.result.degree)
-        
-        return {dn : DN, attribute : this.item.test.attribute, skill : this.item.test.skill} 
+        return this._itemTest(this.item)
     }
 
     get ItemTestDisplay() {
-        let test = this.itemTest;
-        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+        return this._ItemTestDisplay(this.item)
     }
 
     get hasTest() {
-        return this.result.success && this.item?.hasTest
+        return this._hasTest(this.item)
     }
+
+    _testEffects(item) {
+        if(!item)
+            return []
+        return item.effects.filter(e => !e.data.transfer)
+    }
+
+    _itemTest(item) {
+        let DN = item.test.dn
+        if (DN.includes("S"))
+            DN = DN.replace("S", 1 + this.result.degree)
+        
+        return {dn : DN, attribute : item.test.attribute, skill : item.test.skill} 
+    }
+
+    _ItemTestDisplay(item) {
+        let test = this._itemTest(item);
+        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+    }
+
+    _hasTest(item) {
+        return this.result.success && item?.hasTest
+    }
+
 }

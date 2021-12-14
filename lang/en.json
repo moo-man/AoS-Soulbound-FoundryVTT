@@ -178,6 +178,7 @@
   "DIALOG.DOUBLE_TRAINING": "Double Your Training",
   "DIALOG.DOUBLE_FOCUS": "Double Your Focus",
   "DIALOG.DUAL_WIELDING": "Dual Wielding",
+  "DIALOG.DUAL_WEAPON" : "Secondary Weapon",
   "DIALOG.PRIMARY": "Primary",
   "DIALOG.SECONDARY": "Secondary",
   "DIALOG.POOL" : "Pool",
@@ -195,6 +196,10 @@
   "DIALOG.ITEM_DELETE" : "Item Delete",
   "DIALOG.ITEM_DELETE_PROMPT" : "Are you sure you want to delete this item?",
   "DIALOG.POOL_INPUT_ERROR" : "Input larger than pool size",
+  "DIALOG.PRIMARY_SECONDARY_SELECT_TITLE" : "Primary or Secondary",
+  "DIALOG.PRIMARY_SECONDARY_SELECT" : "Use Primary or Secondary Test?",
+  "DIALOG.PRIMARY" : "Primary",
+  "DIALOG.SECONDARY" : "Secondary",
 
 
   "EQUIPMENT.NAME": "Name",

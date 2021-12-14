@@ -50,6 +50,7 @@ export default class MiracleTest extends Test{
 
         result.duration = this.item.duration
 
+        this.data.result = result
         return result
     }
 
