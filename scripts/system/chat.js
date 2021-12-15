@@ -1,4 +1,5 @@
 import Reroller from "../apps/reroller.js";
+import SoulboundCounter from "../apps/counter.js";
 
 export default class SoulboundChat {
 
@@ -96,6 +97,9 @@ export default class SoulboundChat {
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.getTest();
+
+                    if (!game.user.isGM)
+                        SoulboundCounter.changeCounter(-1, "soulfire")
                     test.maximize();
                 }
             }

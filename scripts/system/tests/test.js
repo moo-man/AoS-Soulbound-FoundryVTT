@@ -156,7 +156,6 @@ export default class Test {
         if (game.dice3d)
         {
             let dsnRerollData = duplicate(this.testData.reroll);
-            dsnRerollData.terms[0].results = Test._getSortedDiceFromRoll(dsnRerollData).map(i => {return {result: i}})
             dsnRerollData.terms[0].results = dsnRerollData.terms[0].results.filter((die) => this.testData.shouldReroll[die.index])
             let dsnReroll = Roll.fromData    (dsnRerollData)
             await game.dice3d.showForRoll(dsnReroll)
