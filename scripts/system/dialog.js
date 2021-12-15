@@ -252,12 +252,10 @@ export class CombatDialog extends RollDialog {
             bonusDamage : 0
         }
 
-        data.showDualWielding = actor.getItemTypes("weapon").filter(i => i.equipped).length >= 2
+        data.showDualWielding = actor.items.filter(i => i.isAttack).length >= 2
         data.weapon = weapon
         data.actor = actor
-        data.otherWeapons = actor.getItemTypes("weapon").filter(i => i.equipped && i.id != weapon.id)
-
-
+        data.otherWeapons = actor.items.filter(i => i.isAttack && i.id != weapon.id)
 
         let targets = Array.from(game.user.targets)
         data.targets = targets
