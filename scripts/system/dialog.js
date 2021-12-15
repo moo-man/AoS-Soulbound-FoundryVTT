@@ -285,6 +285,8 @@ export class CombatDialog extends RollDialog {
                     armour : targets[1].actor.combat.armour.value
                 }
             }
+            else // Populate secondary target with the same as the primary target
+                data.secondaryTarget = duplicate(data.primaryTarget)
         }
 
         return data
