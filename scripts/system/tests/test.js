@@ -94,10 +94,10 @@ export default class Test {
                     success: false,
                     rerolled : this.context.rerolled ? this.testData.shouldReroll[sorted[i].index] : false 
                 }
-                if (this.testData.allocation[i] > 0)
+                if (this.testData.allocation[die.index] > 0)
                 {
-                    die.value += this.testData.allocation[i]
-                    die.focus = this.testData.allocation[i]
+                    die.value += this.testData.allocation[die.index]
+                    die.focus = this.testData.allocation[die.index]
                     if (die.value > 6)
                         die.value = 6;
                     die.highlight = true;
