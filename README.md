@@ -1,5 +1,5 @@
 # Age of Sigmar: Soulbound
-The **official** system for playing Age of Sigmar: Soulbound on [Foundry VTT](https://foundryvtt.com/). Created by Moo Man.
+The **official** system for playing Age of Sigmar: Soulbound on [Foundry VTT](https://foundryvtt.com/). Developed by Moo Man.
 
 ![repo-cover-soulbound](https://user-images.githubusercontent.com/28637157/145496204-852c373e-c785-4354-8f39-cba680b4b0c0.png)
 
@@ -24,6 +24,10 @@ The **official** system for playing Age of Sigmar: Soulbound on [Foundry VTT](ht
 
 ## Have an issue?
 Use the Bug Reporter (found in the settings sidebar tab within Foundry) to report any bugs or issues. Alternatively, you can submit an issue your self on the [issues page](https://github.com/moo-man/AoS-Soulbound-FoundryVTT/issues).
+
+## Join the community
+If you want to be more involved in development, test latest features, or provide more feedback, you can always join my [Moohammer Discord Server](https://discord.gg/GrMcdeDHh8). Alternatively, I'm very active on the [Foundry Discord Server](https://discord.gg/foundryvtt), just stop by the `#warhammer` channel!
+
 
 ## Licence
 [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/)
