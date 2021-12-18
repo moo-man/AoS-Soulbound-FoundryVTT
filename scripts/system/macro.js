@@ -40,15 +40,14 @@ export default class AOS_MacroUtil {
     }
 
     static async createSpellRoll(actor, spell) {
-        let test = await actor.setupPowerTest(spell)
+        let test = await actor.setupSpellTest(spell)
         await test.rollTest()
         test.sendToChat()
     }
 
-    static async createMiracleRoll(actor, miracle) {
-        let test = await actor.setupPowerTest(spell)
+    static async createMiracleRoll(actor, spell) {
+        let test = await actor.setupMiracleTest(spell)
         await test.rollTest()
         test.sendToChat()
     }
-
 }
