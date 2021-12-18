@@ -6,25 +6,89 @@ export default class CombatTest extends Test {
     {
         super(data)
         if (data) 
+        {
             this.testData.combat = data.combat
+            this.testData.dualWieldingData = data.dualWieldingData
+        }
+
     }
 
     computeResult()
     {
-        let result = super.computeResult()
-        result.damage = this.computeDamage(result)
+        super.computeResult()
+
+        if (this.isDualWielding)
+        {
+            this.result.primary = this.computeDualResult("primary")
+            this.result.secondary = this.computeDualResult("secondary")
+
+        }
+        else 
+        {
+            super.computeResult()
+            if (this.result.success)
+                this.result.damage = this.computeDamage()
+        }
+        return this.result
+    }
+
+    // Compute primary or secondary result (for dual wielding)
+    computeDualResult(type)
+    {
+        let result = {}
+        let testData = this.testData.dualWieldingData[type]
+
+        // assign dice based on index to separate pool
+        if (type == "primary")
+            result.dice = duplicate(this.result.dice.filter(i => i.index < testData.pool))
+        else
+            result.dice = duplicate(this.result.dice.filter(i => i.index >= this.testData.dualWieldingData.primary.pool))
+
+
+        result.dice.forEach(d => d.success = d.value >= testData.dn.difficulty) // Re evaluate whether the dice succeded or not with new difficulty
+
+        result.successes = result.dice.reduce((prev, current) => prev += current.success, 0)
+        result.success = result.successes >= testData.dn.complexity
+        result.degree = result.success ? result.successes - testData.dn.complexity : testData.dn.complexity - result.successes
+        result.triggers = result.dice.filter(die => die.value === 6).length
+        result.dn = testData.dn
+
+        if (result.success)
+            result.damage = this._computeDamageWithWeapon(result, type == "primary" ? this.weapon : this.secondaryWeapon)
+
+
+        let path = game.aos.config.dicePath;
+        result.dice.forEach(die => {
+            die.img = `${path}/dice-${die.value}-failed.webp`
+            if (die.success)
+                die.img = `${path}/dice-${die.value}-chat.webp`
+            if (die.highlight)
+                die.img = `${path}/dice-${die.value}-highlight.webp`
+        })    
+
         return result
     }
 
+    
+
+
     get template() {
-        return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-roll.html"
+        if (this.isDualWielding)
+            return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-dual-roll.html"
+        else
+            return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-roll.html"
     }
 
     computeDamage(result)
     {
         if (!result) result = this.result
+        return this._computeDamageWithWeapon(result, this.item)
+    }
+
+    _computeDamageWithWeapon(result, weapon)
+    {
         let regex = /([0-9]*)[+]*(s*)/g;
-        let weaponDamage = this.item.damage.toLowerCase().replace(/( )*/g, '');
+        let weaponDamage = weapon.damage.toLowerCase().replace(/( )*/g, '');
         let regexMatch = regex.exec(weaponDamage);
         let damageValue = (+regexMatch[1]) ? +regexMatch[1] : 0;
         let addSuccess =!!(regexMatch[2]);
@@ -37,7 +101,7 @@ export default class CombatTest extends Test {
     
         let effect = null;
     
-        if(this.item.traitList.ineffective) {
+        if(weapon.traitList.ineffective) {
             effect = this._createTraitEffect();
             effect.isPlain = true;
             effect.text = game.i18n.localize("TRAIT.INEFFECTIVE_EFFECT");
@@ -45,7 +109,7 @@ export default class CombatTest extends Test {
             damage.armour *= 2;
         }
     
-        if(damage.armour > 0 && this.item.traitList.penetrating) {
+        if(damage.armour > 0 && weapon.traitList.penetrating) {
             effect = this._createTraitEffect();
             effect.isPlain = true;
             effect.text = game.i18n.localize("TRAIT.PENETRATING_EFFECT");
@@ -53,14 +117,14 @@ export default class CombatTest extends Test {
             damage.armour -= 1;        
         }
     
-        if(this.item.traitList.cleave) {
+        if(weapon.traitList.cleave) {
             effect = this._createTraitEffect();
             effect.isCleave = true;
             effect.text = game.i18n.format("TRAIT.CLEAVE_EFFECT", {triggers : result.triggers});
             damage.traitEffects.push(effect);
         }
     
-        if(this.item.traitList.rend) {
+        if(weapon.traitList.rend) {
             effect = this._createTraitEffect();
             effect.isRend = true,
             effect.text = game.i18n.format("TRAIT.REND_EFFECT", {triggers : result.triggers});
@@ -68,9 +132,9 @@ export default class CombatTest extends Test {
         }
     
         if (addSuccess) {
-            damage.total = damageValue + result.successes - damage.armour;
+            damage.total = damageValue + result.successes// - damage.armour;
         } else {
-            damage.total = damageValue - damage.armour;
+            damage.total = damageValue// - damage.armour;
         }
        
         damage.total += this.testData.combat.bonusDamage || 0
@@ -96,8 +160,34 @@ export default class CombatTest extends Test {
         return super.numberOfDice + this.testData.combat.swarmDice
     }
 
+    get isDualWielding() 
+    {
+        return !!this.testData.dualWieldingData
+    }
+
     get weapon() {
         return this.item
+    }
+
+    get secondaryWeapon() {
+        return this.actor.items.get(this.testData.dualWieldingData?.secondary?.itemId)
+    }
+
+    
+    get secondaryTestEffects() {
+        return this._testEffects(this.secondaryWeapon)
+    }
+
+    get secondaryItemTest() {
+        return this._itemTest(this.secondaryWeapon)
+    }
+
+    get secondaryItemTestDisplay() {
+        return this._ItemTestDisplay(this.secondaryWeapon)
+    }
+
+    get secondaryHasTest() {
+        return this._hasTest(this.secondaryWeapon)
     }
 
 }

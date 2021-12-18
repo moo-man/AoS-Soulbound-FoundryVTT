@@ -39,10 +39,13 @@ export default class SoulboundCounter extends Application {
 
     render(force=false, options={})
     {
-      let position = game.settings.get("age-of-sigmar-soulbound", "counterPosition")
-      options.top = position.top || window.innerHeight - 200;
-      options.left = position.left || 250;
-      super.render(force, options);
+      if (game.settings.get("age-of-sigmar-soulbound", "showCounter"))
+      {
+        let position = game.settings.get("age-of-sigmar-soulbound", "counterPosition")
+        options.top = position.top || window.innerHeight - 200;
+        options.left = position.left || 250;
+        super.render(force, options);
+      }
     }
 
     async _render(...args)

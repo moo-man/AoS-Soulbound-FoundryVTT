@@ -85,20 +85,18 @@
             <div class="segment-vertical wounds-list">
                 {{#each data.combat.wounds as |wound w|}}
                 <div class="table-element wound item" data-index="{{w}}">
-                    <div class="name">
-                        <div class="image-container">
-                            <div class="image" style="background-image: url('{{wound.img}}')"></div>
-                        </div>
-                        <select class="wound-edit">
-                            {{#select wound.type}}
-                            <option value=""></option>
-                            {{#each (config "woundType") as |type t|}}
-                            <option value="{{t}}">{{type}}</option>
-                            {{/each}}
-                            {{/select}}
-                        </select>
+                    <select class="wound-edit" data-edit-type="type">
+                        {{#select wound.type}}
+                        <option value=""></option>
+                        {{#each (config "woundType") as |type t|}}
+                        <option value="{{t}}">{{type}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                    <div class="wound-value">
+                        <input type="number" class="wound-edit" data-edit-type="value" value="{{wound.damage}}"/>
                     </div>
-                    <div class="damage">{{wound.damage}}</div>
+                        
                     <div class="button">
                         <a class="item-control wound-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
                     </div>

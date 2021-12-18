@@ -220,8 +220,8 @@ export class AgeOfSigmarItem extends Item {
         return this.effects.filter(i => !i.data.transfer)
     }
 
+    
     get equippable() { return hasProperty(this, "data.data.equipped") }
-
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }

@@ -1,3 +1,5 @@
+import SoulboundCounter from "./counter.js"
+
 export default class Reroller extends FormApplication
 {
     static get defaultOptions() {
@@ -11,8 +13,10 @@ export default class Reroller extends FormApplication
 
     
     async _updateObject(event) {
-        let dice = Array.from($(event.currentTarget).find(".die")).map(i => i.classList.contains("selected"))
+        let dice = Array.from($(event.currentTarget).find(".die")).sort((a, b) => a.dataset.index - b.dataset.index).map(i => i.classList.contains("selected"))
 
+        if (!game.user.isGM)
+            SoulboundCounter.changeCounter(-1, "soulfire")
         this.object.reroll(dice)
     }
 

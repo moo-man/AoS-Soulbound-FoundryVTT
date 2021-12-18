@@ -75,6 +75,15 @@ export default function registerHooks() {
         type: Object
       })
 
+      game.settings.register("age-of-sigmar-soulbound", "showCounter", {
+        name: "Show Counter",
+        hint: "Show the Soulfire / Doom Counter",
+        scope: "client",
+        config: true,
+        default: true,
+        type: Boolean
+      })
+
       game.settings.register('age-of-sigmar-soulbound', 'bugReportName', {
         name: 'Bug Report Name',
         scope: 'world',

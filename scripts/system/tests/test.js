@@ -15,7 +15,7 @@ export default class Test {
             },
             context : {
                 speaker : data.speaker,
-                targetSpeaker : data.targetSpeaker,
+                targetSpeakers : data.targetSpeakers,
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined
@@ -42,7 +42,10 @@ export default class Test {
         this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
         this.testData.roll = this.roll.toJSON()
         await this.roll.evaluate({async:true})  
-        this.data.result = this.computeResult()   
+        this.roll.dice[0].results.forEach((result, i) => {
+            result.index = i;
+        })
+        this.computeResult()   
     }
 
 
@@ -52,6 +55,7 @@ export default class Test {
         result.success = result.successes >= this.testData.dn.complexity
         result.degree = result.success ? result.successes - this.testData.dn.complexity : this.testData.dn.complexity - result.successes
         result.dn = this.testData.dn
+        this.data.result = result
         return result
     }
 
@@ -72,26 +76,28 @@ export default class Test {
         if (this.context.rerolled) 
         {
             let sortedReroll = Test._getSortedDiceFromRoll(this.rerolledDice);
-            sorted = sorted.map((die, index) => {
+            sorted = sorted.map((die) => {
+                let index = die.index
                 if (this.testData.shouldReroll[index])
-                    return sortedReroll[index]
+                    return sortedReroll.find(i => i.index == index)
                 else
-                    return sorted[index]
+                    return sorted.find(i => i.index == index)
             })
         }
 
 
         for(let i = 0; i < sorted.length; i++) {
                 let die = {
-                    value : this.context.maximized ? 6 : sorted[i],
+                    value : this.context.maximized ? 6 : sorted[i].result,
+                    index : sorted[i].index,
                     highlight : false,
                     success: false,
-                    rerolled : this.context.rerolled ? this.testData.shouldReroll[i] : false 
+                    rerolled : this.context.rerolled ? this.testData.shouldReroll[sorted[i].index] : false 
                 }
-                if (this.testData.allocation[i] > 0)
+                if (this.testData.allocation[die.index] > 0)
                 {
-                    die.value += this.testData.allocation[i]
-                    die.focus = this.testData.allocation[i]
+                    die.value += this.testData.allocation[die.index]
+                    die.focus = this.testData.allocation[die.index]
                     if (die.value > 6)
                         die.value = 6;
                     die.highlight = true;
@@ -125,7 +131,7 @@ export default class Test {
             return ui.notifications.error(game.i18n.localize("ERROR.NotEnoughFocus"))
         this.testData.allocation = allocation;
         this.context.focusAllocated = true;
-        this.data.result = this.computeResult();
+        this.computeResult();
         this.sendToChat();
     }
 
@@ -133,13 +139,16 @@ export default class Test {
     {
         this.testData.allocation = [];
         this.context.focusAllocated = false;
-        this.data.result = this.computeResult();
+        this.computeResult();
         this.sendToChat();
     }
 
     async reroll(shouldReroll)
     {
         this.rerolledDice = this.roll.reroll();
+        this.rerolledDice.dice[0].results.forEach((result, i) => {
+            result.index = i
+        })
         this.context.rerolled = true;
         this.testData.reroll = this.rerolledDice.toJSON()
         this.testData.shouldReroll = shouldReroll
@@ -147,20 +156,19 @@ export default class Test {
         if (game.dice3d)
         {
             let dsnRerollData = duplicate(this.testData.reroll);
-            dsnRerollData.terms[0].results = Test._getSortedDiceFromRoll(dsnRerollData).map(i => {return {result: i}})
-            dsnRerollData.terms[0].results = dsnRerollData.terms[0].results.filter((die, index) => this.testData.shouldReroll[index])
+            dsnRerollData.terms[0].results = dsnRerollData.terms[0].results.filter((die) => this.testData.shouldReroll[die.index])
             let dsnReroll = Roll.fromData    (dsnRerollData)
             await game.dice3d.showForRoll(dsnReroll)
         }
 
-        this.data.result = this.computeResult();
+        this.computeResult();
         this.sendToChat();
     }
 
     maximize()
     {
         this.context.maximized = true;
-        this.data.result = this.computeResult();
+        this.computeResult();
         this.sendToChat();
     }
 
@@ -178,6 +186,7 @@ export default class Test {
                 "age-of-sigmar-soulbound.rollData" : this.data
             }
         };
+        chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.data.token.name
         if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
             chatData.whisper = ChatMessage.getWhisperRecipients("GM");
         } else if (chatData.rollMode === "selfroll") {
@@ -204,8 +213,8 @@ export default class Test {
     static _getSortedDiceFromRoll(roll) {
         return roll.terms
                     .flatMap(term => term.results)
-                    .map(die => die.result)
-                    .sort((a, b) => b - a);
+                    .map(die => {return {result : die.result, index : die.index}})
+                    .sort((a, b) => b.result - a.result);
     }
 
     get testData() { return this.data.testData }
@@ -216,8 +225,12 @@ export default class Test {
         return game.aos.utility.getSpeaker(this.context.speaker)
     }
 
+    get targets() {
+        return this.context.targetSpeakers.map(speaker => game.aos.utility.getSpeaker(speaker))
+    }
+
     get target() {
-        return game.aos.utility.getSpeaker(this.context.targetSpeaker)
+        return this.targets[0]
     }
 
     get attribute() {
@@ -243,27 +256,44 @@ export default class Test {
     get message() {
         return game.messages.get(this.context.messageId);
     }
-
-    get effects() {
-        if(!this.item)
-            return []
-        return this.item.effects.filter(e => !e.data.transfer)
+    
+    get testEffects() {
+        return this._testEffects(this.item)
     }
 
     get itemTest() {
-        let DN = this.item.test.dn
-        if (DN.includes("S"))
-            DN = DN.replace("S", 1 + this.result.degree)
-        
-        return {dn : DN, attribute : this.item.test.attribute, skill : this.item.test.skill} 
+        return this._itemTest(this.item)
     }
 
     get ItemTestDisplay() {
-        let test = this.itemTest;
-        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+        return this._ItemTestDisplay(this.item)
     }
 
     get hasTest() {
-        return this.result.success && this.item?.hasTest
+        return this._hasTest(this.item)
     }
+
+    _testEffects(item) {
+        if(!item)
+            return []
+        return item.effects.filter(e => !e.data.transfer)
+    }
+
+    _itemTest(item) {
+        let DN = item.test.dn
+        if (DN.includes("S"))
+            DN = DN.replace("S", 1 + this.result.degree)
+        
+        return {dn : DN, attribute : item.test.attribute, skill : item.test.skill} 
+    }
+
+    _ItemTestDisplay(item) {
+        let test = this._itemTest(item);
+        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+    }
+
+    _hasTest(item) {
+        return this.result.success && item?.hasTest
+    }
+
 }

@@ -1,4 +1,5 @@
 import Reroller from "../apps/reroller.js";
+import SoulboundCounter from "../apps/counter.js";
 
 export default class SoulboundChat {
 
@@ -26,7 +27,7 @@ export default class SoulboundChat {
                 if (parseInt(c.text) > 0 || c.style.display != "none")
                     hasFocusCounter = true;
             })
-            return hasFocusCounter && message.isOwner           
+            return hasFocusCounter && message.isAuthor           
         }
 
         let canReroll = li => {
@@ -46,7 +47,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().result.damage; //is damage roll
+                && (message.getTest().result.damage || message.getTest().result.primary?.damage || message.getTest().result.secondary?.damage); //is damage roll
         };
 
         let canApplyCleave = li => {
@@ -54,7 +55,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().item?.traitList?.cleave
+                && (message.getTest().item?.traitList?.cleave || message.getTest().secondaryWeapon?.traitList?.cleave)
         };
 
         let canApplyBlast = li => {
@@ -62,7 +63,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().item?.traitList?.blast
+                && (message.getTest().item?.traitList?.blast || message.getTest().secondaryWeapon?.traitList?.blast)
         };
 
         let canApplyRend = li => {
@@ -70,7 +71,7 @@ export default class SoulboundChat {
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && message.getTest().item?.traitList?.rend
+                && (message.getTest().item?.traitList?.rend || message.getTest().secondaryWeapon?.traitList?.rend)
         };
 
         options.unshift(
@@ -96,6 +97,9 @@ export default class SoulboundChat {
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.getTest();
+
+                    if (!game.user.isGM)
+                        SoulboundCounter.changeCounter(-1, "soulfire")
                     test.maximize();
                 }
             }
@@ -135,7 +139,7 @@ export default class SoulboundChat {
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.getTest();
-                    test.allocateFocus(Array.from(li.find(".focus-counter")).map(i => parseInt(i.textContent) || 0))
+                    test.allocateFocus(Array.from(li.find(".focus-counter")).sort((a, b) => parseInt(a.parentElement.dataset.index) - parseInt(b.parentElement.dataset.index)).map(i => parseInt(i.textContent) || 0))
                 }
             }
         );
@@ -206,10 +210,57 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyChatCardDamage(li, multiplier, options={}) {
+    static async applyChatCardDamage(li, multiplier, options={}) {
+
         const message = game.messages.get(li.data("messageId"));
         let test = message.getTest();
-        let damage = test.result.damage.total
+        let damage
+        let item
+
+        if (test.result.primary?.damage && test.result.secondary?.damage) // If both primary and secondary, give choice
+        {
+            await new Promise((resolve) => {
+                new Dialog({
+                    title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
+                    content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
+                    buttons : {
+                        primary : {
+                            label : game.i18n.localize("DIALOG.PRIMARY"),
+                            callback : () => {
+                                damage = test.result.primary.damage.total
+                                item = test.item
+                                resolve()
+                            }
+                        },
+                        secondary : {
+                            label : game.i18n.localize("DIALOG.SECONDARY"),
+                            callback : () => {
+                                damage = test.result.secondary.damage.total
+                                item = test.secondaryWeapon
+                                resolve()
+                            }
+                        }
+                    }
+    
+                }).render(true)
+            })
+        }
+        else if (test.result.primary?.damage) // If only primary
+        {
+            damage = test.result.primary.damage.total
+            item = test.item
+        }
+        else if (test.result.secondary?.damage) // If only secondary
+        {
+            damage = test.result.secondary.damage.total
+            item = test.secondaryWeapon
+        }
+        else  // If normal test
+        {
+            damage = test.result.damage.total
+            item = test.item
+        }
+
         damage *= multiplier;
 
         options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
@@ -227,10 +278,57 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyCleaveDamage(li) {    
+    static async applyCleaveDamage(li) {    
         const message = game.messages.get(li.data("messageId"));
         let test = message.getTest();
-        let damage = test.result.triggers
+        let result
+        let item
+
+        if ((test.item?.traitList.cleave && test.result.primary.triggers) && (test.secondaryWeapon?.traitList.cleave && test.result.secondary.triggers)) // If both primary and secondary, give choice
+        {
+            await new Promise((resolve) => {
+                new Dialog({
+                    title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
+                    content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
+                    buttons : {
+                        primary : {
+                            label : game.i18n.localize("DIALOG.PRIMARY"),
+                            callback : () => {
+                                result = test.result.primary
+                                item = test.item
+                                resolve()
+                            }
+                        },
+                        secondary : {
+                            label : game.i18n.localize("DIALOG.SECONDARY"),
+                            callback : () => {
+                                result = test.result.secondary
+                                item = test.secondaryWeapon
+                                resolve()
+                            }
+                        }
+                    }
+    
+                }).render(true)
+            })
+        }
+        else if (test.item?.traitList.cleave && test.result.primary.triggers) // If only primary
+        {
+            result = test.result.primary
+            item = test.item
+        }
+        else if (test.secondaryWeapon?.traitList.cleave && test.result.secondary.triggers) // If only secondary
+        {
+            result = test.result.secondary
+            item = test.secondaryWeapon
+        }
+        else  // If normal test
+        {
+            result = test.result
+            item = test.item
+        }
+
+        let damage = result.triggers
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
@@ -242,10 +340,52 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyBlastDamage(li) {    
+    static async applyBlastDamage(li) {    
         const message = game.messages.get(li.data("messageId"));
         let test = message.getTest();
-        let damage = test.item.traitList.blast.rating
+
+        let item
+
+        if (test.item?.traitList?.blast?.rating && test.secondaryWeapon?.traitList?.blast?.rating) // If both primary and secondary, give choice
+        {
+            await new Promise((resolve) => {
+                new Dialog({
+                    title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
+                    content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
+                    buttons : {
+                        primary : {
+                            label : game.i18n.localize("DIALOG.PRIMARY"),
+                            callback : () => {
+                                item = test.item
+                                resolve()
+                            }
+                        },
+                        secondary : {
+                            label : game.i18n.localize("DIALOG.SECONDARY"),
+                            callback : () => {
+                                item = test.secondaryWeapon
+                                resolve()
+                            }
+                        }
+                    }
+    
+                }).render(true)
+            })
+        }
+        else if (test.item?.traitList?.blast?.rating) // If only primary
+        {
+            item = test.item
+        }
+        else if (test.secondaryWeapon?.traitList?.blast?.rating) // If only secondary
+        {
+            item = test.secondaryWeapon
+        }
+        else  // If normal test
+        {
+            item = test.item
+        }
+
+        let damage = item.traitList.blast.rating
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
@@ -257,14 +397,63 @@ export default class SoulboundChat {
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}
      */
-    static applyRend(li) {    
+    static async applyRend(li) {    
         const message = game.messages.get(li.data("messageId"));
         let test = message.getTest();
-        let damage = test.result.triggers
+
+        let result
+        let item
+
+        if ((test.item?.traitList.rend && test.result.primary.triggers) && (test.secondaryWeapon?.traitList.rend && test.result.secondary.triggers)) // If both primary and secondary, give choice
+        {
+            await new Promise((resolve) => {
+                new Dialog({
+                    title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
+                    content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
+                    buttons : {
+                        primary : {
+                            label : game.i18n.localize("DIALOG.PRIMARY"),
+                            callback : () => {
+                                result = test.result.primary
+                                item = test.item
+                                resolve()
+                            }
+                        },
+                        secondary : {
+                            label : game.i18n.localize("DIALOG.SECONDARY"),
+                            callback : () => {
+                                result = test.result.secondary
+                                item = test.secondaryWeapon
+                                resolve()
+                            }
+                        }
+                    }
+    
+                }).render(true)
+            })
+        }
+        else if (test.item?.traitList.rend && test.result.primary.triggers) // If only primary
+        {
+            result = test.result.primary
+            item = test.item
+        }
+        else if (test.secondaryWeapon?.traitList.rend && test.result.secondary.triggers) // If only secondary
+        {
+            result = test.result.secondary
+            item = test.secondaryWeapon
+        }
+        else  // If normal test
+        {
+            result = test.result
+            item = test.item
+        }
+
+
+        let damage = result.triggers
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
-            return a.applyRend(damage, {magicWeapon : test.item?.traitList?.magical});
+            return a.applyRend(damage, {magicWeapon : item?.traitList?.magical});
         }));
     }
 
@@ -348,7 +537,11 @@ export default class SoulboundChat {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
         let test = msg.getTest();
-        let [difficulty, complexity] = test.itemTest.dn.split(":").map(i=> parseInt(i))
+        let itemTest
+        if (ev.currentTarget.dataset.source == "secondary")
+            itemTest = test.secondaryItemTest
+
+        let [difficulty, complexity] = itemTest.dn.split(":").map(i=> parseInt(i))
         let chatTest
         if (canvas.tokens.controlled.length)
         {
@@ -404,6 +597,9 @@ export default class SoulboundChat {
         let msg = game.messages.get(id)
         let test = msg.getTest();
         let item = test.item
+        if (ev.currentTarget.dataset.source == "secondary")
+            item = test.secondaryWeapon
+
         let effect = item.effects.get(effectId).toObject()
         effect.origin = test.actor.uuid
         let duration = item.duration

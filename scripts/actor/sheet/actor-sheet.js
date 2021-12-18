@@ -454,10 +454,20 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _onWoundEdit(ev)
     {
+        let target = ev.currentTarget
+        let type = target.dataset["editType"]
         let wounds = duplicate(this.actor.combat.wounds)
         let index = $(ev.currentTarget).parents(".item").data("index")
-        wounds[index].type = ev.target.value
-        wounds[index].damage = game.aos.config.woundDamage[ev.target.value] || 0
+
+        if (type == "type")
+        {
+            wounds[index].type = ev.target.value
+            wounds[index].damage = game.aos.config.woundDamage[ev.target.value] || 0
+        }
+        else if (type == "value")
+        {
+            wounds[index].damage = parseInt(ev.currentTarget.value)
+        }
         return this.actor.update({"data.combat.wounds" : wounds})
     }
     

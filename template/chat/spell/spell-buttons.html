@@ -11,9 +11,9 @@
 </div>
 {{/if}}
 
-{{#if effects.length}}
+{{#if testEffects.length}}
 <div class="content-wrapper test-buttons">
-{{#each effects as |effect e|}}
+{{#each testEffects as |effect e|}}
     <button class="effect-button" title="Apply the effect to selected tokens or your assigned character" data-id="{{effect.id}}" type="button"><img src="{{effect.data.icon}}" width="25" height="25"> Apply {{effect.label}}</button>
 {{/each}}
 </div>

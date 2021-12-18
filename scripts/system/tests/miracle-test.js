@@ -13,7 +13,7 @@ export default class MiracleTest extends Test{
         {
             this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
             await this.roll.evaluate({async:true})  
-            this.data.result = this.computeResult()   
+            this.computeResult()   
         }
         else 
             this.roll = new Roll("")
@@ -50,6 +50,7 @@ export default class MiracleTest extends Test{
 
         result.duration = this.item.duration
 
+        this.data.result = result
         return result
     }
 
