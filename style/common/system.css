@@ -46,8 +46,8 @@
 }
 
 
-#scenes-popout .directory-list .directory-item .entity-name a,
-#sidebar #scenes .directory-list .directory-item .entity-name a {
+#scenes-popout .directory-list .directory-item .document-name a,
+#sidebar #scenes .directory-list .directory-item .document-name a {
     background: #000000d4;
     border-radius: 2px;
     border: 3px double #564d3a;
@@ -122,7 +122,7 @@
 }
 
 .directory-item .folder-header h3,
-    .directory-item .entity-name{
+    .directory-item .document-name{
     color: darkslategrey;
     font-family: Quadrant-Regular;
     text-transform: uppercase;

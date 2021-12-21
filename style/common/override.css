@@ -1,3 +1,12 @@
+:root {
+    --color-text-light-3: var(--color-header-blue)
+}
+
+
+.dark button {
+    background: url(../../asset/image/header-background-vertical.webp)
+}
+
 a:hover {
     text-shadow: 0 0 8px goldenrod
 }
@@ -93,10 +102,10 @@ li.directory-item.folder:not(.collapsed) {
     border-color: var(--color-active);
 }
 
-li.folder > .folder-header .create-folder,
+/* li.folder > .folder-header .create-folder,
  li.folder > .folder-header .create-entity {
     color: unset;
-}
+} */
 
 
 .block-popout li.folder > .folder-header h3 {
@@ -531,8 +540,8 @@ table tr:nth-child(even) {
 
 
 /* .placeable-hud .control-icon, */
-#controls .control-tool,
-    #controls .scene-control {
+#controls ol .control-tool,
+    #controls ol .scene-control {
         color: white;
     background: url(../../asset/image/header.webp) repeat;
     background-size: 50%;
@@ -549,16 +558,16 @@ table tr:nth-child(even) {
     font-family: var(--font-header)
 } */
 
-#controls .control-tool.active,
-#controls .scene-control.active {
+#controls ol .control-tool.active,
+#controls ol .scene-control.active {
     border: 1px solid var(--color-active);
     background: url(../../asset/image/background.webp) repeat;
     color: var(--color-header-blue);
     box-shadow: 0 0 10px var(--color-active)
 }
 
-#controls .control-tool:hover,
-#controls .scene-control:hover {
+#controls ol .control-tool:hover,
+#controls ol .scene-control:hover {
     border: 1px solid var(--color-active);
 }
 
