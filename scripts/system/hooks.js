@@ -195,7 +195,8 @@ export default function registerHooks() {
 
         CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
             let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
-            return game.aos.rollClass.Test.recreate(rollData)
+            if (rollData)
+                return game.aos.rollClass.Test.recreate(rollData)
         }
 
         for (let key in game.aos.config) {

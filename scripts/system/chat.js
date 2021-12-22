@@ -13,13 +13,13 @@ export default class SoulboundChat {
         let canResetFocus = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return test.context.focusAllocated && message.isAuthor
+            return test && test.context.focusAllocated && message.isAuthor
         }
 
         let canClearFocus = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            if(test.context.focusAllocated)
+            if(!test || test.context.focusAllocated)
                 return false
             let hasFocusCounter = false;
             let counters = Array.from(li.find(".focus-counter"))
@@ -33,45 +33,49 @@ export default class SoulboundChat {
         let canReroll = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return !(test.context.rerolled || test.context.maximized) && message.isAuthor
+            return test && !(test.context.rerolled || test.context.maximized) && message.isAuthor
         }
 
         let canMaximize = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest();
-            return !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isAuthor
+            return test && !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isAuthor
         }
 
         let canApplyDamage = li => {
             const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest()
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && (message.getTest().result.damage || message.getTest().result.primary?.damage || message.getTest().result.secondary?.damage); //is damage roll
+                && test && (test.result.damage || test.result.primary?.damage || test.result.secondary?.damage); //is damage roll
         };
 
         let canApplyCleave = li => {
             const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest()
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && (message.getTest().item?.traitList?.cleave || message.getTest().secondaryWeapon?.traitList?.cleave)
+                && test && (test.item?.traitList?.cleave || test.secondaryWeapon?.traitList?.cleave)
         };
 
         let canApplyBlast = li => {
             const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest()
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && (message.getTest().item?.traitList?.blast || message.getTest().secondaryWeapon?.traitList?.blast)
+                && test && (test.item?.traitList?.blast || test.secondaryWeapon?.traitList?.blast)
         };
 
         let canApplyRend = li => {
             const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest()
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
-                && (message.getTest().item?.traitList?.rend || message.getTest().secondaryWeapon?.traitList?.rend)
+                && test && (test.item?.traitList?.rend || test.secondaryWeapon?.traitList?.rend)
         };
 
         options.unshift(

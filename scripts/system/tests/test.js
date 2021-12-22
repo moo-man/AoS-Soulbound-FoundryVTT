@@ -145,7 +145,7 @@ export default class Test {
 
     async reroll(shouldReroll)
     {
-        this.rerolledDice = this.roll.reroll();
+        this.rerolledDice = await this.roll.reroll();
         this.rerolledDice.dice[0].results.forEach((result, i) => {
             result.index = i
         })
