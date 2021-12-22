@@ -1,3 +1,17 @@
+:root {
+    /*--color-text-light-3: var(--color-header-blue)*/
+}
+
+li.folder > .folder-header .create-folder, li.folder > .folder-header .create-document
+{
+    color: var(--color-header-blue)
+}
+
+
+.dark button {
+    background: url(../../asset/image/header-background-vertical.webp)
+}
+
 a:hover {
     text-shadow: 0 0 8px goldenrod
 }
@@ -91,11 +105,6 @@ li.directory-item.folder:not(.collapsed) {
 
 .directory .directory-list .directory-item.context, .directory .directory-list .directory-item.active {
     border-color: var(--color-active);
-}
-
-li.folder > .folder-header .create-folder,
- li.folder > .folder-header .create-entity {
-    color: unset;
 }
 
 
@@ -250,7 +259,8 @@ li.folder > .folder-header .create-folder,
     width: 100%
 }
 
-.roll-dialog .target-name {
+.chat .target-name,
+    .roll-dialog .target-name {
     font-size : 14px;
 }
 
@@ -296,7 +306,7 @@ li.folder > .folder-header .create-folder,
 
 .content-header{
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     color: var(--color-text);
     font-family: var(--font-text);
@@ -531,8 +541,8 @@ table tr:nth-child(even) {
 
 
 /* .placeable-hud .control-icon, */
-#controls .control-tool,
-    #controls .scene-control {
+#controls ol .control-tool,
+    #controls ol .scene-control {
         color: white;
     background: url(../../asset/image/header.webp) repeat;
     background-size: 50%;
@@ -549,16 +559,16 @@ table tr:nth-child(even) {
     font-family: var(--font-header)
 } */
 
-#controls .control-tool.active,
-#controls .scene-control.active {
+#controls ol .control-tool.active,
+#controls ol .scene-control.active {
     border: 1px solid var(--color-active);
     background: url(../../asset/image/background.webp) repeat;
     color: var(--color-header-blue);
     box-shadow: 0 0 10px var(--color-active)
 }
 
-#controls .control-tool:hover,
-#controls .scene-control:hover {
+#controls ol .control-tool:hover,
+#controls ol .scene-control:hover {
     border: 1px solid var(--color-active);
 }
 
@@ -685,25 +695,25 @@ button:disabled {
     line-height: 20px;
 }
 
-a.entity-link,
+a.content-link,
 a.inline-roll {
     background: none;
     border: 1px solid var(--color-header-gold);
     color: darkslategrey
 }
 
-a.entity-link i,
+a.content-link i,
 a.inline-roll i {
     color: darkslategrey;
     vertical-align: middle;
 }
-.editor .block a.entity-link i,
-.editor-content .block a.entity-link i {
+.editor .block a.content-link i,
+.editor-content .block a.content-link i {
     color: var(--color-active)
 } 
 
-.editor .block a.entity-link,
-.editor-content .block a.entity-link {
+.editor .block a.content-link,
+.editor-content .block a.content-link {
     color: white;
 }
 

@@ -291,22 +291,14 @@
   "Item": {
     "types": [
       "aethericDevice",
-      "ally",
       "armour",
-      "connection",
       "equipment",
-      "enemy",
-      "fear",
-      "goal",
       "miracle",
-      "resource",
       "rumour",
       "rune",
       "spell",
       "talent",
-      "threat",
       "weapon",
-      "wound",
       "partyItem"
     ],
     "templates": {
@@ -340,10 +332,6 @@
       "state": "other",
       "armour" : 0
     },
-    "ally": {
-      "description": "",
-      "state": true
-    },
     "armour": {
       "templates": [
         "equipped"
@@ -357,9 +345,6 @@
       "traits": [],
       "state": "other"
     },
-    "connection": {
-      "description": ""
-    },
     "equipment": {
       "templates": [
         "equipped"
@@ -368,19 +353,6 @@
       "cost": "",
       "availability": "",
       "state": "other"
-    },
-    "enemy": {
-      "description": "",
-      "state": true
-    },
-    "fear": {
-      "description": "",
-      "state": true
-    },
-    "goal": {
-      "description": "",
-      "type": "",
-      "completed": false
     },
     "miracle": {
       "templates" : [
@@ -393,14 +365,6 @@
       "description": "",
       "effect": "",
       "god": ""
-    },
-    "resource": {
-      "description": "",
-      "state": true
-    },
-    "rumour": {
-      "description": "",
-      "state": true
     },
     "rune": {
       "templates": [
@@ -431,10 +395,6 @@
       "effect": "",
       "requirement": ""
     },
-    "threat": {
-      "description": "",
-      "state": true
-    },
     "weapon": {
       "templates": [
         "equipped",
@@ -447,11 +407,6 @@
       "cost": "-",
       "traits": [],
       "state": "other"
-    },
-    "wound": {
-      "description": "",
-      "damage": 0,
-      "woundType" : ""
     },
     "partyItem" : {
       "description": "",

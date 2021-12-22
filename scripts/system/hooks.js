@@ -139,7 +139,7 @@ export default function registerHooks() {
         if (data.type == "Item") {
             let item = data.data
             let command = `game.macro.rollItemMacro("${item.name}", "${item.type}");`;
-            macro = game.macros.entities.find(m => (m.name === item.name) && (m.command === command));
+            macro = game.macros.contents.find(m => (m.name === item.name) && (m.command === command));
             if (!macro) {
                 macro = await Macro.create({
                     name: item.name,
@@ -195,7 +195,8 @@ export default function registerHooks() {
 
         CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
             let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
-            return game.aos.rollClass.Test.recreate(rollData)
+            if (rollData)
+                return game.aos.rollClass.Test.recreate(rollData)
         }
 
         for (let key in game.aos.config) {
@@ -238,22 +239,12 @@ export default function registerHooks() {
         }
     })
 
-
-    Hooks.on("renderDialog", (dialog, html) => {
-        Array.from(html.find("#entity-create option")).forEach(i => {
-            if (i.value == "wound" || i.value == "ally" || i.value == "connection" || i.value == "enemy" || i.value == "fear" || i.value == "goal" || i.value == "resource" || i.value == "rumour" || i.value == "threat")
-            {
-                i.remove()
-            }
-        })
-    })
-
       /**
    * Add right click option to actors to add all basic skills
    */
   Hooks.on("getActorDirectoryEntryContext", async (html, options) => {
     let canLink = li => {
-      let actor = game.actors.get(li.attr("data-entity-id"));
+      let actor = game.actors.get(li.attr("data-document-id"));
       return actor.type == "party"
     }
     options.push(
@@ -263,7 +254,7 @@ export default function registerHooks() {
         condition: game.user.isGM && canLink,
         icon: '<i class="fas fa-link"></i>',
         callback: async target => {
-          await game.settings.set('age-of-sigmar-soulbound', 'counterParty', target.attr('data-entity-id'))
+          await game.settings.set('age-of-sigmar-soulbound', 'counterParty', target.attr('data-document-id'))
           game.counter.render(true)
         }
       })

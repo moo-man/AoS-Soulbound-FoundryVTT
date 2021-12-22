@@ -21,7 +21,7 @@
 
     // Reset some fields to default values
     if ( "sort" in data ) data.sort = 0;
-    if ( "permissions" in data ) data.permissions = {[game.user.id]: CONST.ENTITY_PERMISSIONS.OWNER};
+    if ( "permissions" in data ) data.permissions = {[game.user.id]: CONST.DOCUMENT_PERMISSION_LEVELS.OWNER};
     return data;
   }
 

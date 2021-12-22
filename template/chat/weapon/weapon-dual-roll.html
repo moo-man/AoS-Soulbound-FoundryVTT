@@ -2,6 +2,9 @@
     <div class="content-box">
         <div class="content-header">
             <h2>DN {{result.primary.dn.difficulty}}:{{result.primary.dn.complexity}} {{result.primary.dn.name}} Test</h2>
+            {{#if testData.dualWieldingData.primary.name}}
+            <span class="target-name">{{testData.dualWieldingData.primary.name}}</span>
+            {{/if}}
         </div>
         {{> systems/age-of-sigmar-soulbound/template/chat/base/dice-container.html result=result.primary}}
         {{> systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-result.html result=result.primary}}
@@ -10,6 +13,9 @@
     <div class="content-box">
         <div class="content-header" style='border-top: none'>
             <h2>DN {{result.secondary.dn.difficulty}}:{{result.secondary.dn.complexity}} {{result.secondary.dn.name}} Test</h2>
+            {{#if testData.dualWieldingData.secondary.name}}
+            <span class="target-name">{{testData.dualWieldingData.secondary.name}}</span>
+            {{/if}}
         </div>
         {{> systems/age-of-sigmar-soulbound/template/chat/base/dice-container.html result=result.secondary}}
         {{> systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-result.html result=result.secondary}}

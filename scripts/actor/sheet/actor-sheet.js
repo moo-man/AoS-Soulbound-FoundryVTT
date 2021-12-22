@@ -81,20 +81,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         items.equipped = {}
 
         items.aethericDevices = this.actor.getItemTypes("aethericDevice")
-        items.allies = this.actor.getItemTypes("ally")
         items.armour = this.actor.getItemTypes("armour")
-        items.connections = this.actor.getItemTypes("connection")
         items.equipment = this.actor.getItemTypes("equipment")
-        items.enemies = this.actor.getItemTypes("enemy")
-        items.fears = this.actor.getItemTypes("fear")
         items.goals = this.actor.getItemTypes("partyItem").filter(i => i.category == "shortGoal" || i.category == "longGoal")
         items.miracles = this.actor.getItemTypes("miracle")
-        items.resources = this.actor.getItemTypes("resource")
-        items.rumours = this.actor.getItemTypes("rumour")
         items.runes = this.actor.getItemTypes("rune")
         items.spells = this.actor.getItemTypes("spell")
         items.talents = this.actor.getItemTypes("talent")
-        items.threats = this.actor.getItemTypes("threat")
         items.weapons = this.actor.getItemTypes("weapon")
         items.partyItems = this.actor.getItemTypes("partyItem")
 
@@ -103,57 +96,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
         items.attacks = items.equipped.weapons.concat(items.aethericDevices.filter(i => i.damage && i.equipped))
 
+        this._sortItemLists(items)
+
         sheetData.items = items;
-
-       // this.constructInventory(sheetData)
-    }
-
-    constructInventory(sheetData)
-    {
-        sheetData.inventory = {
-            weapons : {
-                header : "HEADER.WEAPON",
-                items : this.actor.getItemTypes("weapon"),
-                equippable : true,
-                quantity : true,
-                type : "weapon"
-            },
-            armour : {
-                header : "HEADER.ARMOUR",
-                items : this.actor.getItemTypes("armour"),
-                equippable : true,
-                quantity : true,
-                type : "armour"
-            },
-            gear : {
-                header : "HEADER.GEAR",
-                items : this.actor.getItemTypes("gear"),
-                equippable : false,
-                quantity : true,
-                type : "gear"
-            },
-            ammo : {
-                header : "HEADER.AMMO",
-                items : this.actor.getItemTypes("ammo"),
-                equippable : false,
-                quantity : true,
-                type : "ammo"
-            },
-            weaponUpgrades : {
-                header : "HEADER.WEAPON_UPGRADE",
-                items : this.actor.getItemTypes("weaponUpgrade"),
-                equippable : false,
-                quantity : false,
-                type : "weaponUpgrade"
-            },
-            augmentics : {
-                header : "HEADER.AUGMENTIC",
-                items : this.actor.getItemTypes("augmentic"),
-                equippable : false,
-                quantity : false,
-                type : "augmentic"
-            }
-        }
     }
 
     
@@ -175,6 +120,17 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         })
 
         sheetData.effects = effects;
+    }
+
+    _sortItemLists(items)
+    {
+        for(let list in items)
+        {
+            if (Array.isArray(items[list]))
+                items[list] = items[list].sort((a, b) => a.data.sort - b.data.sort)
+            else if (typeof items[list] == "object")
+               this._sortItemLists(items[list])
+        }
     }
 
     _getSubmitData(updateData = {}) {

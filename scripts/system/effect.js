@@ -34,7 +34,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         else if (this.data.origin && this.parent.documentName == "Actor") 
         {
             let origin = this.data.origin.split(".")
-            if (origin[1] == this.parent.id) // If origin ID is same as parent ID
+            if (this.parent.data && origin[1] == this.parent?.id) // If origin ID is same as parent ID
             {
                 if (origin[3])
                 {
