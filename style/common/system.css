@@ -256,3 +256,16 @@
 .counter .input-controls a.clicked {
     border: 1px inset var(--color-active);
 }
+
+
+.active-effect-sheet .change-flags {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.active-effect-sheet .change-flags .conditional-code {
+    flex: 0 0 20px;
+    margin: 5px;
+}

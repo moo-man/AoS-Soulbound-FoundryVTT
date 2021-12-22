@@ -44,6 +44,16 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
     }
 
+    get changeFlags() {
+        return {
+            "0" : {
+                "descrption" : "",
+                "condition" : ""
+            }
+
+        }
+    }
+
     get label() {
         return this.data.label
     }
