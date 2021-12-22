@@ -1,5 +1,10 @@
 :root {
-    --color-text-light-3: var(--color-header-blue)
+    /*--color-text-light-3: var(--color-header-blue)*/
+}
+
+li.folder > .folder-header .create-folder, li.folder > .folder-header .create-document
+{
+    color: var(--color-header-blue)
 }
 
 
@@ -101,11 +106,6 @@ li.directory-item.folder:not(.collapsed) {
 .directory .directory-list .directory-item.context, .directory .directory-list .directory-item.active {
     border-color: var(--color-active);
 }
-
-/* li.folder > .folder-header .create-folder,
- li.folder > .folder-header .create-entity {
-    color: unset;
-} */
 
 
 .block-popout li.folder > .folder-header h3 {
@@ -259,7 +259,8 @@ li.directory-item.folder:not(.collapsed) {
     width: 100%
 }
 
-.roll-dialog .target-name {
+.chat .target-name,
+    .roll-dialog .target-name {
     font-size : 14px;
 }
 
@@ -305,7 +306,7 @@ li.directory-item.folder:not(.collapsed) {
 
 .content-header{
     display:flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     color: var(--color-text);
     font-family: var(--font-text);
@@ -694,25 +695,25 @@ button:disabled {
     line-height: 20px;
 }
 
-a.entity-link,
+a.content-link,
 a.inline-roll {
     background: none;
     border: 1px solid var(--color-header-gold);
     color: darkslategrey
 }
 
-a.entity-link i,
+a.content-link i,
 a.inline-roll i {
     color: darkslategrey;
     vertical-align: middle;
 }
-.editor .block a.entity-link i,
-.editor-content .block a.entity-link i {
+.editor .block a.content-link i,
+.editor-content .block a.content-link i {
     color: var(--color-active)
 } 
 
-.editor .block a.entity-link,
-.editor-content .block a.entity-link {
+.editor .block a.content-link,
+.editor-content .block a.content-link {
     color: white;
 }
 

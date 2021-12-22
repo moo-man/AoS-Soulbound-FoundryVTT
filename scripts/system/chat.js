@@ -537,7 +537,7 @@ export default class SoulboundChat {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
         let test = msg.getTest();
-        let itemTest
+        let itemTest = test.itemTest
         if (ev.currentTarget.dataset.source == "secondary")
             itemTest = test.secondaryItemTest
 

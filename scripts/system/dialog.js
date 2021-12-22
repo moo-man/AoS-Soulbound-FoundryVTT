@@ -218,13 +218,15 @@ export class CombatDialog extends RollDialog {
                 primary : {
                     pool : parseInt(html.find(".primary .pool")[0].value),
                     defence : parseInt(html.find(".primary #defence")[0].value),
-                    armour : parseInt(html.find(".primary #armour")[0].value)
+                    armour : parseInt(html.find(".primary #armour")[0].value),
+                    name : html.find(".primary .target-name")[0].textContent
                 },
                 secondary: {
                     pool : parseInt(html.find(".secondary .pool")[0].value),
                     defence : parseInt(html.find(".secondary #defence")[0].value),
                     armour : parseInt(html.find(".secondary #armour")[0].value),
-                    itemId : html.find("#dual-weapon")[0].value
+                    itemId : html.find("#dual-weapon")[0].value,
+                    name : html.find(".secondary .target-name")[0].textContent
                 }
             }
         }

@@ -291,22 +291,14 @@
   "Item": {
     "types": [
       "aethericDevice",
-      "ally",
       "armour",
-      "connection",
       "equipment",
-      "enemy",
-      "fear",
-      "goal",
       "miracle",
-      "resource",
       "rumour",
       "rune",
       "spell",
       "talent",
-      "threat",
       "weapon",
-      "wound",
       "partyItem"
     ],
     "templates": {
