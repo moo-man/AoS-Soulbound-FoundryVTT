@@ -44,14 +44,21 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
     }
 
-    get changeFlags() {
-        return {
-            "0" : {
-                "descrption" : "",
-                "condition" : ""
-            }
+    getDialogChanges({target = false}={}) {
+        let allChanges = foundry.utils.deepClone(this.data.changes)
+        allChanges.forEach((c, i) => {
+            c.conditional = this.changeConditionals[i] || {}
+            c.index = i
+        })
+        let dialogChanges = allChanges.filter((c) => c.mode == (target ? 7 : 6)) // Targeter dialog is 7, self dialog is 6
+        dialogChanges.forEach((c, i) => {
+            c.target = !!target
+        })
+        return dialogChanges
+    }
 
-        }
+    get changeConditionals() {
+        return (getProperty(this.data, "flags.age-of-sigmar-soulbound.changeCondition") || {})
     }
 
     get label() {

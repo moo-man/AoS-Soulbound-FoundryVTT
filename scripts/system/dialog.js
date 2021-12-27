@@ -10,13 +10,31 @@ export class RollDialog extends Dialog {
         return options
     }
 
+    async _render(...args)
+    {
+        await super._render(...args)
+
+        let automatic = this.runChangeConditionals()
+        let select = this.element.find(".effect-select")[0]
+        let options = Array.from(select.children)
+        options.forEach((opt, i) => {
+            if (automatic[i])
+            {
+                opt.selected = true;
+                select.dispatchEvent(new Event("change"))
+            }
+        })
+    }
+
     static async create(data) {
         return new Promise(async (resolve, reject) => {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
             return new this({
                 title: data.title,
                 content: html,
-                effects : data.effects,
+                actor : data.actor,
+                targets : data.targets,
+                dialogData : data,
                 buttons: {
                     roll: {
                         icon: '<i class="fas fa-check"></i>',
@@ -57,8 +75,24 @@ export class RollDialog extends Dialog {
             difficulty : options.difficulty || 4,
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
-            effects : actor.effects.filter(i => i.hasRollEffect)
+            changes : actor.getDialogChanges()
         }
+    }
+
+    runChangeConditionals()
+    {
+        let results = this.data.dialogData.changes.map(c => {
+            try {
+                let func = new Function("dialogData", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets})
+                return (func(this.data.dialogData) == true) // Only accept true returns
+            }
+            catch (e)
+            {
+                console.error("Something went wrong when processing conditional dialog effect: " + e, c)
+                return false
+            }
+        })
+        return results
     }
 
     activateListeners(html)
@@ -126,8 +160,7 @@ export class RollDialog extends Dialog {
             "bonusDice" : null
         }
         
-        let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)]).map(i => i.clone())
-        let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
+        let changes = $(ev.currentTarget).val().map(i => this.data.dialogData.changes[parseInt(i)]).map(i => foundry.utils.deepClone(i))
         changes.forEach(c => {
             if (c.value.includes("@"))
                 c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
@@ -181,8 +214,8 @@ export class CombatDialog extends RollDialog {
                 title: data.title,
                 actor : data.actor,
                 targets : data.targets,
+                dialogData : data,
                 content: html,
-                effects : data.effects,
                 buttons: {
                     roll: {
                         icon: '<i class="fas fa-check"></i>',
@@ -444,7 +477,9 @@ export class SpellDialog extends RollDialog {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
             return new this({
                 title: data.title,
-                effects : data.effects,
+                dialogData : data,
+                actor : data.actor,
+                targets : data.targets,
                 content: html,
                 buttons: {
                     roll: {
@@ -479,33 +514,6 @@ export class SpellDialog extends RollDialog {
 }
 
 export class MiracleDialog extends RollDialog {
-    // static async create(data) {
-    //     return new Promise(async (resolve, reject) => {
-    //         const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
-    //         return new this({
-    //             title: data.title,
-    //             effects : data.effects,
-    //             content: html,
-    //             buttons: {
-    //                 roll: {
-    //                     icon: '<i class="fas fa-check"></i>',
-    //                     label: game.i18n.localize("BUTTON.ROLL"),
-    //                     callback: async (html) => {
-    //                         let testData = this.extractDialogData(html)
-    //                         testData.itemId = data.power.id
-    //                         testData.dn = {
-    //                             difficulty : parseInt(html.find("#difficulty")[0].value),
-    //                             complexity : parseInt(html.find("#complexity")[0].value),
-    //                             name : data.power.name
-    //                         }
-    //                         resolve(testData);
-    //                     },
-    //                 }
-    //             },
-    //             default: "roll"
-    //         }, {width: 450}).render(true)
-    //     })
-    // }
     
     static _dialogData(actor, power)
     {
