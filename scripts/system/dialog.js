@@ -75,6 +75,7 @@ export class RollDialog extends Dialog {
             difficulty : options.difficulty || 4,
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
+            changeList : actor.getDialogChanges({condense: true}),
             changes : actor.getDialogChanges()
         }
     }
@@ -160,7 +161,17 @@ export class RollDialog extends Dialog {
             "bonusDice" : null
         }
         
-        let changes = $(ev.currentTarget).val().map(i => this.data.dialogData.changes[parseInt(i)]).map(i => foundry.utils.deepClone(i))
+        let selectedIndices = []
+        
+        let changes = []
+        $(ev.currentTarget).val().map(i => {
+            let indices = i.split(",");
+
+            indices.forEach(changeIndex => {
+                changes.push(this.data.dialogData.changes[parseInt(changeIndex)])
+            })
+        })
+
         changes.forEach(c => {
             if (c.value.includes("@"))
                 c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))

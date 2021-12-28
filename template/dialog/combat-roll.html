@@ -173,7 +173,7 @@
         </div>
         <div class="content-row">
             <select class="effect-select" multiple>
-                {{#each changes as |change c|}}
+                {{#each changeList as |change c|}}
                 <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">{{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
                 {{/each}}
             </select>

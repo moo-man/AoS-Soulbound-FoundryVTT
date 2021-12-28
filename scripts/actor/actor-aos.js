@@ -484,15 +484,15 @@ export class AgeOfSigmarActor extends Actor {
         return (this.itemCategories || this.itemTypes)[type]
     }
 
-    getDialogChanges() {
+    getDialogChanges({condense = false}={}) {
 
         // Aggregate dialog changes from each effect
-        let changes =  this.effects.reduce((prev, current) => prev.concat(current.getDialogChanges()), [])
+        let changes =  this.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({condense})), [])
 
         if (game.user.targets.size > 0)
         {
             let target = Array.from(game.user.targets)[0].actor
-            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({target})), [])
+            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({target, condense, indexOffset : changes.length})), [])
             changes = changes.concat(targetChanges)
         }
 
