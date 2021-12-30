@@ -155,15 +155,23 @@ export class AgeOfSigmarItem extends Item {
         if (!this.traits || !Array.isArray(this.traits))
             return []
         this.traits.forEach(i => {
-            traits[i.name] = {
-                name : i.name,
-                display : game.aos.config.traits[i.name]
-            }
-            if (game.aos.config.traitsWithValue.includes(i.name))
+
+            if (i.custom) 
             {
-                traits[i.name].rating = i.value;
-                traits[i.name].display += ` (${i.value})`
+                traits[i.name] = duplicate(i)
             }
+            else 
+            {
+                traits[i.name] = {
+                    name : i.name,
+                    display : game.aos.config.traits[i.name]
+                }
+                if (game.aos.config.traitsWithValue.includes(i.name))
+                {
+                    traits[i.name].rating = i.value;
+                    traits[i.name].display += ` (${i.value})`
+                }
+            }   
         })
         return traits
     }

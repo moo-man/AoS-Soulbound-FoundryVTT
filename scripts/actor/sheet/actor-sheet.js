@@ -467,8 +467,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
         let text = ev.target.text.trim()
-        let key = Object.values(item.traitList).find(i => i.display == text)?.name
-        this._dropdown(ev, {text : game.aos.config.traitDescriptions[key]})
+        let trait = Object.values(item.traitList).find(i => i.display == text)
+        this._dropdown(ev, {text : trait.description || game.aos.config.traitDescriptions[trait.key]})
     }
 
 
