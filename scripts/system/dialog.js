@@ -76,7 +76,9 @@ export class RollDialog extends Dialog {
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
             changeList : actor.getDialogChanges({condense: true}),
-            changes : actor.getDialogChanges()
+            changes : actor.getDialogChanges(),
+            actor : actor,
+            targets : Array.from(game.user.targets)
         }
     }
 
@@ -84,7 +86,7 @@ export class RollDialog extends Dialog {
     {
         let results = this.data.dialogData.changes.map(c => {
             try {
-                let func = new Function("dialogData", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets})
+                let func = new Function("dialogData", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
                 return (func(this.data.dialogData) == true) // Only accept true returns
             }
             catch (e)
@@ -161,12 +163,9 @@ export class RollDialog extends Dialog {
             "bonusDice" : null
         }
         
-        let selectedIndices = []
-        
         let changes = []
         $(ev.currentTarget).val().map(i => {
             let indices = i.split(",");
-
             indices.forEach(changeIndex => {
                 changes.push(this.data.dialogData.changes[parseInt(changeIndex)])
             })
@@ -300,11 +299,9 @@ export class CombatDialog extends RollDialog {
 
         data.showDualWielding = actor.items.filter(i => i.isAttack && i.equipped).length >= 2
         data.weapon = weapon
-        data.actor = actor
         data.otherWeapons = actor.items.filter(i => i.isAttack && i.equipped && i.id != weapon.id)
-
-        let targets = Array.from(game.user.targets)
-        data.targets = targets
+        
+        let targets = data.targets
         const hasTarget = targets.length; // No additinal Input when target function is used
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
         data.targetSpeakers = targets.map(i => i.actor.speakerData)
