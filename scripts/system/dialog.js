@@ -24,6 +24,8 @@ export class RollDialog extends Dialog {
                 select.dispatchEvent(new Event("change"))
             }
         })
+        if (automatic.some(i => i))
+            select.focus()
     }
 
     static async create(data) {
@@ -51,7 +53,7 @@ export class RollDialog extends Dialog {
                     }
                 },
                 default: "roll"
-            }, {width: 450}).render(true)
+            }, {width: 600}).render(true)
         })
     }
     static extractDialogData(html) {
@@ -246,7 +248,7 @@ export class CombatDialog extends RollDialog {
                     }
                 },
                 default: "roll"
-            }, {width: 450}).render(true)
+            }, {width: 600}).render(true)
         })
     }
     static extractDialogData(html) {
@@ -506,7 +508,7 @@ export class SpellDialog extends RollDialog {
                     }
                 },
                 default: "roll"
-            }, {width: 450}).render(true)
+            }, {width: 600}).render(true)
         })
     }
     

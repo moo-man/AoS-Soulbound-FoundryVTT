@@ -241,9 +241,18 @@ li.directory-item.folder:not(.collapsed) {
     flex: 1
 }
 
-.roll-dialog .dialog-effects {
-    flex: 0.3;
+.roll-dialog .dialog-content .dialog{
+    flex: 0 0 340px
 }
+
+.roll-dialog .dialog-effects {
+    flex: 1
+}
+
+.roll-dialog .dialog-effects option{
+    white-space: normal;
+}
+
 
 .roll-dialog .dialog-effects .content-box{
     height: calc(100% - 15px);
