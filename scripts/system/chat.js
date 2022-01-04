@@ -1,5 +1,6 @@
 import Reroller from "../apps/reroller.js";
 import SoulboundCounter from "../apps/counter.js";
+import AgeOfSigmarEffect from "./effect.js";
 
 export default class SoulboundChat {
 
@@ -474,6 +475,8 @@ export default class SoulboundChat {
         html.on("click", ".test-button", SoulboundChat._onTestButtonClick.bind(this))
         html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick.bind(this))
         html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick.bind(this))
+        html.on("click", ".overcast-button", SoulboundChat._onOvercastButtonClick.bind(this))
+        html.on("click", ".overcast-reset", SoulboundChat._onOvercastResetClick.bind(this))
 
     }
 
@@ -605,21 +608,7 @@ export default class SoulboundChat {
             item = test.secondaryWeapon
 
         let effect = item.effects.get(effectId).toObject()
-        effect.origin = test.actor.uuid
-        let duration = item.duration
-        setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
-
-        if (duration)
-        {
-            if (duration.unit == "round")
-                effect.duration.rounds = parseInt(duration.value)
-            else if  (duration.unit == "minute")
-                effect.duration.seconds = parseInt(duration.value) * 60
-            else if (duration.unit == "hour")
-                effect.duration.seconds = parseInt(duration.value) * 60 * 60
-            else if (duration.unit == "day")
-                effect.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
-        }
+        AgeOfSigmarEffect.populateEffectData(effect, test, item)
 
         if (canvas.tokens.controlled.length)
         {
@@ -633,6 +622,23 @@ export default class SoulboundChat {
             return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToApply"))
 
    
+    }
+
+    static _onOvercastButtonClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let index = parseInt($(ev.currentTarget).parents(".overcast-group").attr("data-index"))
+        test.allocateOvercast(index)
+    }
+
+    static _onOvercastResetClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        test.resetOvercasts()
     }
 }
 

@@ -198,8 +198,6 @@
   "DIALOG.POOL_INPUT_ERROR" : "Input larger than pool size",
   "DIALOG.PRIMARY_SECONDARY_SELECT_TITLE" : "Primary or Secondary",
   "DIALOG.PRIMARY_SECONDARY_SELECT" : "Use Primary or Secondary Test?",
-  "DIALOG.PRIMARY" : "Primary",
-  "DIALOG.SECONDARY" : "Secondary",
 
 
   "EQUIPMENT.NAME": "Name",
@@ -431,6 +429,7 @@
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
   "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
   "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
+  "ERROR.NotEnoughSuccesses": "Not Enough Successes to Overcast",
 
   "CONFIGURE.LABEL" : "Configure",
   "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",

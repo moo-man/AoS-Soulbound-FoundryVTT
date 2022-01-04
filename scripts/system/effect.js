@@ -74,6 +74,53 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         return dialogChanges
     }
 
+    /**
+     * Takes a test object and returns effect data populated with the results and overcasts computed
+     * 
+     * @param {Test} test 
+     */
+    static populateEffectData(effectData, test, item)
+    {
+        effectData.origin = test.actor.uuid
+        setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.label.slugify())
+        
+        if(!item)  
+            item = test.item
+
+        let duration = test.result.duration || item.duration
+        if (duration)
+        {
+            if (duration.unit == "round")
+                effectData.duration.rounds = parseInt(duration.value)
+            else if  (duration.unit == "minute")
+                effectData.duration.seconds = parseInt(duration.value) * 60
+            else if (duration.unit == "hour")
+                effectData.duration.seconds = parseInt(duration.value) * 60 * 60
+            else if (duration.unit == "day")
+                effectData.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+        }
+
+        for(let change of effectData.changes)
+        {
+            let split = change.value.split(".")
+            // Remove @test and replace it with the value
+            let value = change.value
+            if (split[0] == "@test")
+            {
+                split.splice(0, 1)
+                value = split.join(".")
+                value = getProperty(test, value)
+                if (Number.isNumeric(value))
+                    change.value = parseInt(value)
+                else 
+                    change.value = 0
+            }
+        }
+        return effectData
+
+
+    }
+
     get changeConditionals() {
         return (getProperty(this.data, "flags.age-of-sigmar-soulbound.changeCondition") || {})
     }

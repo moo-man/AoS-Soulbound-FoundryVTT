@@ -386,6 +386,7 @@
       },
       "damage" : "",
       "overcast": "",
+      "overcasts" : [],
       "description": "",
       "effect": "",
       "lore": ""

@@ -88,6 +88,29 @@
                             <input title="{{data.overcast}}" name="data.overcast" type="text" value="{{data.overcast}}"/>
                         </div>
                     </div>
+
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.OVERCAST"}} <a class="overcast-create"><i class="fas fa-plus"></i></a></h3>
+                            <div class="entry-list">
+                                {{#each data.overcasts as |overcast index|}}
+                                <div class="entry-element overcasts" data-index="{{index}}">
+                                    <div class="ratio">
+                                        S
+                                        <input data-path="ratio.success" placeholder="S" title="Additional Successes" data-dtype="Number" type="number" value="{{overcast.ratio.success}}">
+                                        : V
+                                        <input data-path="ratio.value" title="Value" placeholder="V" data-dtype="Number" type="number" value="{{overcast.ratio.value}}">
+                                    </div>
+                                    <input type="number"  data-dtype="Number"  data-path="initial" placeholder="Initial" value="{{overcast.initial}}">
+                                    <input type="text" data-path="target" placeholder="Target" title="Example: 'damage.total' for Damage or 'duration.value' for Duration" value="{{overcast.target}}">
+                                    <input type="text" data-path="title" placeholder="Title" value="{{overcast.title}}">
+                                    <input type="text" data-path="description" placeholder="Description" value="{{overcast.description}}">
+                                    <a class="overcast-delete"><i class="fas fa-times"></i></a>
+                                </div>
+                                {{/each}}
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="content-box" style="height:100%">
                     <div class="content-header">

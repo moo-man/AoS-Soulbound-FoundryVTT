@@ -400,6 +400,45 @@ li.directory-item.folder:not(.collapsed) {
     flex: 0.5
 }
 
+.entry-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-list .entry-element {
+    display : flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+
+.entry-list .entry-element > *{
+    flex: 1
+}
+
+.entry-list .entry-element > a{
+    flex: unset;
+    margin: 0px 5px;
+}
+
+
+.entry-list .entry-element .ratio {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.entry-list .entry-element .ratio > * {
+    flex: unset
+}
+
+.entry-list .entry-element .ratio > input {
+    flex : 0 0 20px
+}
+
+
+
 
 .dialog-value {
     display:flex;

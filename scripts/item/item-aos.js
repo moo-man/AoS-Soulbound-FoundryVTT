@@ -288,6 +288,7 @@ export class AgeOfSigmarItem extends Item {
     get dn() { return this.data.data.dn }
     get test() { return this.data.data.test }
     get overcast() { return this.data.data.overcast }
+    get overcasts() { return this.data.data.overcasts }
     get lore() { return this.data.data.lore }
     get requirement() { return this.data.data.requirement }
     get category() { return this.data.data.category }

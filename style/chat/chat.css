@@ -161,7 +161,6 @@
     margin: 0 0 4px 4px;
 }
 
-
 .age-of-sigmar-soulbound.chat .test-buttons {
     display: flex;
     flex-direction: column;
@@ -178,3 +177,30 @@
     justify-content: center;
 }
 
+.age-of-sigmar-soulbound.chat .overcast-buttons {
+    display: flex;
+    flex-direction: column;
+}
+
+.age-of-sigmar-soulbound.chat .overcast-buttons .overcast-labels{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.chat .overcast-buttons .overcast-groups {
+    display: flex;
+    justify-content: space-around;
+}
+
+.age-of-sigmar-soulbound.chat .overcast-buttons .overcast-groups > *{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.chat .overcast-buttons .overcast-groups .overcast-group button {
+    margin: 10px;
+}
