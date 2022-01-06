@@ -7,7 +7,7 @@
     <div class="overcast-groups">
         {{#each result.overcasts.options as |option index|}}
         <div class="overcast-group" data-index={{index}}>
-            <button type="button" class="overcast-button">{{option.title}} {{#if option.total}}({{option.total}}){{/if}}</button>
+            <button type="button" class="overcast-button">{{option.title}} {{#if option.allocation}}({{option.allocation}}){{/if}}</button>
         </div>
         {{/each}}
     </div>

@@ -405,6 +405,10 @@ li.directory-item.folder:not(.collapsed) {
     flex-direction: column;
 }
 
+.entry-list .entry-content {
+    display: flex;
+}
+
 .entry-list .entry-element {
     display : flex;
     justify-content: space-around;
@@ -426,7 +430,7 @@ li.directory-item.folder:not(.collapsed) {
 .entry-list .entry-element .ratio {
     display: flex;
     align-items: center;
-    justify-content: space-around;
+    justify-content: center;
 }
 
 .entry-list .entry-element .ratio > * {
@@ -434,7 +438,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .entry-list .entry-element .ratio > input {
-    flex : 0 0 20px
+    flex : 0 0 30px
 }
 
 

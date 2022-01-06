@@ -45,16 +45,16 @@ export default class SpellTest extends Test{
         this.result.overcasts = this.testData.overcasts
         let overcasts = this.result.overcasts
 
+        // Start spent counter at 0
         overcasts.spent = 0
         for (let option of overcasts.options)
         {
             if (!option.allocation)
                 option.allocation = 0
 
-            option.total = 0
-            setProperty(this.result, option.target, (parseInt(getProperty(this.result, option.target)) || 0) + option.allocation * option.ratio.value + (option.initial || 0))
+            // Set overcast property to be (overcasts allocated * value per overcast + initial value)
+            setProperty(this.result, option.property, (parseInt(getProperty(this.result, option.property)) || 0) + option.allocation * option.ratio.value + (option.initial || 0))
             overcasts.spent += option.allocation * option.ratio.success
-            option.total = option.allocation
         }
     }
 

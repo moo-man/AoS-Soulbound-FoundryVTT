@@ -82,11 +82,14 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     static populateEffectData(effectData, test, item)
     {
         effectData.origin = test.actor.uuid
+
+        // Set statusId so that the icon shows on the token
         setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.label.slugify())
         
         if(!item)  
             item = test.item
 
+        // Prioritize test result duration over item duration (test result might be overcasted)
         let duration = test.result.duration || item.duration
         if (duration)
         {
@@ -100,6 +103,8 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
                 effectData.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
         }
 
+        // Some effects (e.g. Aethyric Armour) may need to take from test data to fill its change value (to match with possible overcasts)
+        // These effects have a change value of `@test.result.<some-property>`
         for(let change of effectData.changes)
         {
             let split = change.value.split(".")
@@ -107,6 +112,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
             let value = change.value
             if (split[0] == "@test")
             {
+                // Remove @test and get the property from the test (@test.result.damage.total -> result.damage.total -> actual value)
                 split.splice(0, 1)
                 value = split.join(".")
                 value = getProperty(test, value)

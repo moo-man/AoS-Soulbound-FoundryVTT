@@ -286,6 +286,7 @@
   "POWER.EFFECT": "Effect",
   "POWER.STATUS" : "Power Consumed: {consumed}/{capacity}",
 
+
   "RANGE.SPECIAL": "Special",
   "RANGE.SELF": "Self",
   "RANGE.CLOSE": "Close",
@@ -338,6 +339,15 @@
   "SPELL.DESCRIPTION": "Description",
   "SPELL.LORE": "Lore",
   "SPELL.EFFECT": "Effect",
+  "SPELL.OVERCAST_RATIO" : "S:V Ratio",
+  "SPELL.OVERCAST_RATIO_HELP" : "Success:Value Ratio - How many successes per overcast value",
+  "SPELL.OVERCAST_INITIAL" : "Initial",
+  "SPELL.OVERCAST_INITIAL_HELP" : "Initial value for the property being overcasted",
+  "SPELL.OVERCAST_PROPERTY" : "Property",
+  "SPELL.OVERCAST_PROPERTY_HELP" : "Property being overcasted, this property will be added to the result object of the test if it does not exist. Example: 'damage.total' for Damage or 'duration.value' for Duration",
+  "SPELL.OVERCAST_TITLE" : "Title",
+  "SPELL.OVERCAST_TITLE_HELP" : "Label for the Test's chat card button",
+  "SPELL.OVERCAST_DESCRIPTION" : "Description",
 
   "STATE.ALIVE": "Alive",
   "STATE.DEAD": "Dead",

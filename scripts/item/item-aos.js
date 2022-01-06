@@ -219,6 +219,26 @@ export class AgeOfSigmarItem extends Item {
             return game.aos.config.partyItemCategories[this.category]
     }
 
+    get OvercastString() {
+        let optionDescriptions = this.overcasts.map(i => i.description)
+        if (optionDescriptions.length >= 3)
+        {
+            let lastDescription = optionDescriptions[optionDescriptions.length - 1]
+            optionDescriptions.splice(optionDescriptions.length - 1, 1)
+            return optionDescriptions.join(", ") + ", or " + lastDescription
+        }
+        else if (optionDescriptions.length == 2)
+        {
+            return optionDescriptions.join(", or ")
+        }
+        else if (optionDescriptions.length == 1)
+        {
+            return optionDescriptions[0]
+        }
+        else 
+            return ""
+    }
+
     get difficultyNumber()
     {
         return game.aos.utility.DNToObject(this.dn)

@@ -8,8 +8,8 @@
     <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration.value}} {{result.duration.unit}} </p>
     {{/if}}
 
-    {{#if result.overcast}}
-    <p style="margin-top: 5px"><strong>{{localize "CHAT.OVERCAST"}} :</strong> {{result.overcast}}</p>
+    {{#if item.overcasts.length}}
+    <p style="margin-top: 5px"><strong>{{localize "CHAT.OVERCAST"}} :</strong> {{item.OvercastString}}</p>
     {{/if}}
 </div>
 
