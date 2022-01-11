@@ -8,6 +8,9 @@
         {{#each result.overcasts.options as |option index|}}
         <div class="overcast-group" data-index={{index}}>
             <button type="button" class="overcast-button">{{option.title}} {{#if option.allocation}}({{option.allocation}}){{/if}}</button>
+            
+            <h3> {{#if option.showTotal}} Total: {{lookup ../result option.property}} {{/if}}</h3>
+            
         </div>
         {{/each}}
     </div>

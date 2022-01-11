@@ -52,6 +52,15 @@ export default class SoulboundChat {
                 && test && (test.result.damage || test.result.primary?.damage || test.result.secondary?.damage); //is damage roll
         };
 
+        let canApplyHealing = li => {
+            const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest()
+            return message.isRoll
+                && message.isContentVisible //can be seen
+                && canvas.tokens?.controlled.length //has something selected
+                && test && (test.result.healing) //has healincg
+        }
+
         let canApplyCleave = li => {
             const message = game.messages.get(li.data("messageId"));
             let test = message.getTest()
@@ -207,6 +216,15 @@ export default class SoulboundChat {
                 callback: li => SoulboundChat.applyRend(li)
             }
         )
+
+        options.push(
+            {
+                name: "CHAT.APPLY_HEALING",
+                icon: '<i class="fas fa-plus"></i>',
+                condition: canApplyHealing,
+                callback: li => SoulboundChat.applyChatCardHealing(li, 1)
+            }
+        );
     
         return options;
     };
@@ -276,6 +294,23 @@ export default class SoulboundChat {
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
             return a.applyDamage(damage, options);
+        }));
+    }
+
+        /**
+     * @param {HTMLElement} messsage    The chat entry which contains the roll data
+     * @return {Promise}
+     */
+    static async applyChatCardHealing(li, multiplier, options={}) {
+
+        const message = game.messages.get(li.data("messageId"));
+        let test = message.getTest();
+        let healing = test.result.healing
+
+        // apply to any selected actors
+        return Promise.all(canvas.tokens.controlled.map(t => {
+            const a = t.actor;
+            return a.applyHealing(healing);
         }));
     }
 

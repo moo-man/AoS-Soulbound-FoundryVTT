@@ -55,6 +55,8 @@ export default class SpellTest extends Test{
             // Set overcast property to be (overcasts allocated * value per overcast + initial value)
             setProperty(this.result, option.property, (parseInt(getProperty(this.result, option.property)) || 0) + option.allocation * option.ratio.value + (option.initial || 0))
             overcasts.spent += option.allocation * option.ratio.success
+            if (option.property != "damage.total" && option.property != "duration.value")
+                option.showTotal = true
         }
     }
 

@@ -88,7 +88,7 @@ export class RollDialog extends Dialog {
     {
         let results = this.data.dialogData.changes.map(c => {
             try {
-                let func = new Function("dialogData", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
+                let func = new Function("data", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
                 return (func(this.data.dialogData) == true) // Only accept true returns
             }
             catch (e)

@@ -52,6 +52,23 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         existing: this.item.hasCondition(i.id)
       }
     })
+
+
+    // Lock "Initial" value for overcasts targeting damage or duration - already provided by the spell
+    if (this.item.type == "spell")
+    {
+      for(let oc of data.data.overcasts)
+      {
+        if (oc.property == "damage.total" || oc.property == "duration.value")
+        {
+          oc.initialDisabled = true;
+          oc.initial = ""
+        }
+
+      }
+    }
+
+
     return data;
   }
 
@@ -154,19 +171,6 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         value = parseInt(value)
 
       setProperty(overcasts[index], path, value)
-
-
-      // If damage or duration is being overcasted, disable the initial value as it's already defined by the spell
-      if (path == "property" && (value == "damage.total" || value == "duration.value"))
-      {
-        overcasts[index].initialDisabled = true;
-        overcasts[index].initial = ""
-      }
-      else
-      {
-        delete overcasts[index].initialDisabled
-      }
-
 
       this.item.update({"data.overcasts" : overcasts})
 

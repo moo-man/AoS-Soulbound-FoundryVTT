@@ -300,6 +300,12 @@ export default function registerHooks() {
         scene.data.update({gridDistance : 5, gridUnits : "ft"})
     })
 
+    Hooks.on("updateCombat", (combat) => {
+        let actor = combat.combatant.actor
+        if (actor.combat.mettle.value < actor.combat.mettle.max)
+            actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + 1})
+    })
+
 
 
     Hooks.on("preCreateJournalEntry", _keepID)

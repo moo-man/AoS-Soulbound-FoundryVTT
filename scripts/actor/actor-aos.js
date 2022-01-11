@@ -31,6 +31,27 @@ export class AgeOfSigmarActor extends Actor {
         this.data.update(initData)
     }
 
+    async _preUpdate(updateData, options, user) {
+        await super._preUpdate(updateData, options, user)
+
+        this.handleScrollingText(updateData)
+    }
+
+
+    handleScrollingText(data) {
+        try {
+
+            if (hasProperty(data, "data.combat.health.toughness.value"))
+                this._displayScrollingChange(getProperty(data, "data.combat.health.toughness.value") - this.combat.health.toughness.value);
+            if (hasProperty(data, "data.combat.mettle.value"))
+                this._displayScrollingChange(getProperty(data, "data.combat.mettle.value") - this.combat.mettle.value, { mettle: true });
+        }
+        catch (e) {
+            console.error("Error displaying scrolling text for", data, e)
+        }
+    }
+
+
     prepareData() {
         this.derivedEffects = [];
         this.postReadyEffects = []
@@ -367,6 +388,37 @@ export class AgeOfSigmarActor extends Actor {
         return ret;
     }
 
+    
+    /**
+     * applies healing to the actor
+     */
+    async applyHealing(healing) {
+
+        
+         // Update the Actor
+         const updates = {};
+
+        if (healing.toughness)
+            updates["data.combat.health.toughness.value"] =  Math.min(this.combat.health.toughness.value + healing.toughness, this.combat.health.toughness.max)
+        else return
+
+        // Delegate damage application to a hook
+        const allowed = Hooks.call("modifyTokenAttribute", {
+            attribute: "combat.health.toughness.value",
+            value: this.combat.health.toughness.value,
+            isDelta: false,
+            isBar: true
+        }, updates);
+
+        let ret = allowed !== false ? await this.update(updates) : this;
+
+        let note = game.i18n.format("NOTIFICATION.APPLY_HEALING", {toughness : healing.toughness, name : this.data.token.name});
+        ui.notifications.notify(note);
+
+        return ret;
+    }
+
+
     /**
      * creates and adds a wound based on how far the actors health has gone below zero
      * @param {int} remaining 
@@ -395,6 +447,7 @@ export class AgeOfSigmarActor extends Actor {
             damage = this.combat.health.wounds.max - this.combat.health.wounds.value
         }
 
+
         return this.addWound(type, damage)
     }
 
@@ -406,6 +459,9 @@ export class AgeOfSigmarActor extends Actor {
         
         let wounds = duplicate(this.combat.wounds)
         wounds.unshift({type, damage})
+
+        this._displayScrollingChange(-1, {wound : type})
+
         return this.update({"data.combat.wounds" : wounds})
     }
 
@@ -487,7 +543,7 @@ export class AgeOfSigmarActor extends Actor {
     getDialogChanges({condense = false}={}) {
 
         // Aggregate dialog changes from each effect
-        let changes =  this.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({condense})), [])
+        let changes =  this.effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
 
         if (game.user.targets.size > 0)
         {
@@ -497,6 +553,36 @@ export class AgeOfSigmarActor extends Actor {
         }
 
         return changes
+    }
+
+       /**
+     * Display changes to health as scrolling combat text.
+     * Adapt the font size relative to the Actor's HP total to emphasize more significant blows.
+     * @param {number} daamge
+     * @private
+     */
+    _displayScrollingChange(change, options={}) {
+        if ( !change ) return;
+        change = Number(change);
+        const tokens = this.isToken ? [this.token?.object] : this.getActiveTokens(true);
+        for ( let t of tokens ) {
+        if ( !t?.hud?.createScrollingText ) continue;  // This is undefined prior to v9-p2
+
+        
+        t.hud.createScrollingText(
+            options.wound ? // Display Wound text or number
+                game.aos.config.woundType[options.wound]
+                :
+                change.signedString(), 
+            {
+                anchor: CONST.TEXT_ANCHOR_POINTS.TOP,
+                fontSize: 30,
+                fill: options.mettle ? "0x6666FF" : (change < 0 || options.wound) ?  "0xFF0000" : "0x00FF00", // I regret nothing
+                stroke: 0x000000,
+                strokeThickness: 4,
+                jitter: 0.25
+            });
+        }
     }
 
     get autoCalc() {

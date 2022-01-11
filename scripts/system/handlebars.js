@@ -50,6 +50,11 @@ function registerHandlebarsHelpers() {
         return game.aos.config[obj][key]
     })
 
+    Handlebars.registerHelper("lookup", function (obj, key) {
+        return getProperty(obj, key)
+    })
+
+
     Handlebars.registerHelper("enrich", function (string) {
         return TextEditor.enrichHTML(string)
     })
