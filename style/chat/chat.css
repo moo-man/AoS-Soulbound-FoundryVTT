@@ -51,6 +51,36 @@
 }
 
 
+.age-of-sigmar-soulbound.chat .targets a.target-selector {
+    color: darkslategray;
+    font-size: 18px;
+}
+
+.age-of-sigmar-soulbound.chat .targets a.target-selector:hover {
+    cursor: pointer;
+}
+
+.age-of-sigmar-soulbound.chat .targets {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 3px;
+}
+
+
+.age-of-sigmar-soulbound.chat .targets .target {
+    border: 1px solid darkslategray;
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 2px;
+    margin: 2px;
+    padding: 2px 2px 1px 2px;
+    background-color: rgba(0, 0, 0, 0.05)
+}
+
 
 .age-of-sigmar-soulbound.chat .diceContainer {
 	display:flex;
@@ -144,6 +174,7 @@
     z-index: 1;
 }
 
+
 .age-of-sigmar-soulbound.chat .diceLabel {
 	padding: 8px 0 2px 0;
     font-family: var(--font-text);
@@ -204,3 +235,5 @@
 .age-of-sigmar-soulbound.chat .overcast-buttons .overcast-groups .overcast-group button {
     margin: 10px;
 }
+
+

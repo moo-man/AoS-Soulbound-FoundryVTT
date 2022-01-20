@@ -15,7 +15,7 @@ export default class Test {
             },
             context : {
                 speaker : data.speaker,
-                targetSpeakers : data.targetSpeakers,
+                targetSpeakers : data.targets || [],
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined
@@ -227,6 +227,10 @@ export default class Test {
 
     get targets() {
         return this.context.targetSpeakers.map(speaker => game.aos.utility.getSpeaker(speaker))
+    }
+
+    get targetTokens() {
+        return this.context.targetSpeakers.map(speaker => game.scenes.get(speaker.scene).tokens.get(speaker.token))
     }
 
     get target() {

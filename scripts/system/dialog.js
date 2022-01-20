@@ -80,7 +80,8 @@ export class RollDialog extends Dialog {
             changeList : actor.getDialogChanges({condense: true}),
             changes : actor.getDialogChanges(),
             actor : actor,
-            targets : Array.from(game.user.targets)
+            targets : Array.from(game.user.targets).map(i => i.actor.speakerData(i))
+
         }
     }
 
@@ -264,14 +265,16 @@ export class CombatDialog extends RollDialog {
                     pool : parseInt(html.find(".primary .pool")[0].value),
                     defence : parseInt(html.find(".primary #defence")[0].value),
                     armour : parseInt(html.find(".primary #armour")[0].value),
-                    name : html.find(".primary .target-name")[0].textContent
+                    name : html.find(".primary .target-name")[0].textContent,
+                    tokenId : html.find(".primary .target-name")[0].dataset.tokenId
                 },
                 secondary: {
                     pool : parseInt(html.find(".secondary .pool")[0].value),
                     defence : parseInt(html.find(".secondary #defence")[0].value),
                     armour : parseInt(html.find(".secondary #armour")[0].value),
                     itemId : html.find("#dual-weapon")[0].value,
-                    name : html.find(".secondary .target-name")[0].textContent
+                    name : html.find(".secondary .target-name")[0].textContent,
+                    tokenId : html.find(".secondary .target-name")[0].dataset.tokenId
                 }
             }
         }
@@ -303,10 +306,10 @@ export class CombatDialog extends RollDialog {
         data.weapon = weapon
         data.otherWeapons = actor.items.filter(i => i.isAttack && i.equipped && i.id != weapon.id)
         
-        let targets = data.targets
+        let targets = Array.from(game.user.targets)
         const hasTarget = targets.length; // No additinal Input when target function is used
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
-        data.targetSpeakers = targets.map(i => i.actor.speakerData)
+        data.targets = targets.map(i => i.actor.speakerData(i))
 
         data.primaryTarget = {
             defence : 3,
@@ -319,7 +322,8 @@ export class CombatDialog extends RollDialog {
             data.primaryTarget = {
                 name : targets[0].name,
                 defence : targets[0].actor.combat.defence.relative,
-                armour : targets[0].actor.combat.armour.value
+                armour : targets[0].actor.combat.armour.value,
+                tokenId : targets[0].id
             }
 
             if (targets[1])
@@ -327,12 +331,15 @@ export class CombatDialog extends RollDialog {
                 data.secondaryTarget = {
                     name : targets[1].name,
                     defence : targets[1].actor.combat.defence.relative,
-                    armour : targets[1].actor.combat.armour.value
+                    armour : targets[1].actor.combat.armour.value,
+                    tokenId : targets[1].id
                 }
             }
             else // Populate secondary target with the same as the primary target
                 data.secondaryTarget = duplicate(data.primaryTarget)
         }
+
+        game.user.updateTokenTargets([])
 
         return data
     }
@@ -519,6 +526,7 @@ export class SpellDialog extends RollDialog {
         let data = super._dialogData(actor, attribute, skill)
         mergeObject(data, spell.difficultyNumber)
         data.spell = spell
+        game.user.updateTokenTargets([])
         return data
     }    
 }

@@ -1,7 +1,7 @@
 export default class Migration {
 
     static async checkMigration() {
-        let migrationTarget = "4.2.2"
+        let migrationTarget = "4.3.0"
         let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
 
         if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) {
@@ -64,7 +64,10 @@ export default class Migration {
         effectData.changes.forEach((c, i) => {
             if (c.mode == 0)
             {
-                c.mode = 6
+                if (c.key.includes("target"))
+                    c.mode = 7
+                else 
+                    c.mode = 6
                 setProperty(effectData, `flags.age-of-sigmar-soulbound.changeCondition.${i}`, {description, script:""})
             }
         })

@@ -266,7 +266,8 @@ export class AgeOfSigmarActor extends Actor {
         let dialogData = RollDialog._dialogData(this, attribute, null, options)
         dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} Test`
         let testData = await RollDialog.create(dialogData);
-        testData.speaker = this.speakerData
+        testData.targets = dialogData.targets
+        testData.speaker = this.speakerData()
         return new Test(testData)
     }
 
@@ -275,7 +276,8 @@ export class AgeOfSigmarActor extends Actor {
         let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill, options)
         dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
         let testData = await RollDialog.create(dialogData);
-        testData.speaker = this.speakerData
+        testData.targets = dialogData.targets
+        testData.speaker = this.speakerData()
         return new Test(testData)
     }
 
@@ -287,7 +289,8 @@ export class AgeOfSigmarActor extends Actor {
         let dialogData = CombatDialog._dialogData(this, weapon, options)
         dialogData.title = `${weapon.name} Test`
         let testData = await CombatDialog.create(dialogData);
-        testData.speaker = this.speakerData
+        testData.targets = dialogData.targets
+        testData.speaker = this.speakerData()
         return new CombatTest(testData)
     }
 
@@ -299,7 +302,8 @@ export class AgeOfSigmarActor extends Actor {
         let dialogData = SpellDialog._dialogData(this, power)
         dialogData.title = `${power.name} Test`
         let testData = await SpellDialog.create(dialogData);
-        testData.speaker = this.speakerData
+        testData.targets = dialogData.targets
+        testData.speaker = this.speakerData()
         return new SpellTest(testData)
     }
 
@@ -317,7 +321,8 @@ export class AgeOfSigmarActor extends Actor {
         dialogData.complexity = game.aos.utility.DNToObject(power.test.dn).complexity || dialogData.complexity
         let testData = await RollDialog.create(dialogData);
         testData.itemId = power.id
-        testData.speaker = this.speakerData
+        testData.targets = dialogData.targets
+        testData.speaker = this.speakerData()
         return new MiracleTest(testData)
     }
 
@@ -594,12 +599,12 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
-    get speakerData() {
-        if (this.isToken)
+    speakerData(token) {
+        if (token || this.isToken)
         {
             return {
-                token : this.token.id,
-                scene : this.token.parent.id
+                token : (token?.document || this.token).id,
+                scene : (token?.document || this.token).parent.id
             }
         }
         else

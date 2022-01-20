@@ -113,7 +113,7 @@
     
     <div class="content-box dual primary" style="display: none">
         <div class="content-header">
-            <h1>{{localize "DIALOG.PRIMARY"}} <label class="target-name">{{#if primaryTarget.name}} ({{primaryTarget.name}}) {{/if}}</label></h1>
+            <h1>{{localize "DIALOG.PRIMARY"}} <label class="target-name" data-token-id="{{primaryTarget.tokenId}}">{{#if primaryTarget.name}} ({{primaryTarget.name}}) {{/if}}</label></h1>
         </div>
         <div class="content-row">
             <div class="entry-vertical">
@@ -139,7 +139,7 @@
 
     <div class="content-box dual secondary" style="display: none">
         <div class="content-header">
-            <h1>{{localize "DIALOG.SECONDARY"}} <label class="target-name">{{#if secondaryTarget.name}} ({{secondaryTarget.name}}) {{/if}}</label></h1>
+            <h1>{{localize "DIALOG.SECONDARY"}} <label class="target-name" data-token-id="{{secondaryTarget.tokenId}}">{{#if secondaryTarget.name}} ({{secondaryTarget.name}}) {{/if}}</label></h1>
         </div>
         <div class="content-row">
             <div class="entry-vertical">

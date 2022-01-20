@@ -512,6 +512,14 @@ export default class SoulboundChat {
         html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick.bind(this))
         html.on("click", ".overcast-button", SoulboundChat._onOvercastButtonClick.bind(this))
         html.on("click", ".overcast-reset", SoulboundChat._onOvercastResetClick.bind(this))
+        html.on("mouseover", ".target", SoulboundChat._onTargetHoverChange.bind(this))
+        html.on("mouseout", ".target", SoulboundChat._onTargetHoverChange.bind(this))
+        html.on("click", ".target", SoulboundChat._onTargetClick.bind(this))
+        html.on("mouseover", ".target-selector", SoulboundChat._onAllTargetHoverChange.bind(this))
+        html.on("mouseout", ".target-selector", SoulboundChat._onAllTargetHoverChange.bind(this))
+        html.on("click", ".target-selector", SoulboundChat._onAllTargetClick.bind(this))
+        
+
 
     }
 
@@ -626,7 +634,7 @@ export default class SoulboundChat {
         if (table)
         {
             let {roll, results} =  await table.roll({roll : tableRoll})
-            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.speakerData, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
+            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.context.speaker, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
         }
         else
             ui.notifications.error("No Table Found")
@@ -675,6 +683,60 @@ export default class SoulboundChat {
         let test = msg.getTest();
         test.resetOvercasts()
     }
+
+    static _onTargetHoverChange(ev){
+        let tokenId = ev.currentTarget.dataset["tokenId"]
+        this._toggleTokenHover([tokenId], {toggleIn : event.type == "mouseover", toggleOut : event.type == "mouseout"})
+    }
+
+    
+    static _onAllTargetHoverChange(ev){
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let tokenIds = test.targetTokens.map(i => i.id)
+        this._toggleTokenHover(tokenIds, {toggleIn : event.type == "mouseover", toggleOut : event.type == "mouseout"})
+    }
+
+    static _onTargetClick(ev){
+        let tokenId = ev.currentTarget.dataset["tokenId"]
+        if (ev.shiftKey)
+            this._toggleTokenControl([tokenId])
+        else 
+        {
+            let token = canvas.tokens.get(tokenId)
+            canvas.animatePan({x: token.x, y: token.y, scale: Math.max(1, canvas.stage.scale.x), duration: 100}); // double click
+        }
+    }
+
+    static _onAllTargetClick(ev){
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let tokenIds = test.targetTokens.map(i => i.id)
+        this._toggleTokenControl(tokenIds)
+    }
+
+    static _toggleTokenHover(tokenIds, {toggleIn=false, toggleOut=false}={})
+    {
+        tokenIds.map(t => canvas.tokens.get(t)).forEach(token => {
+            if (toggleOut)
+                token._onHoverOut({})
+            else if (toggleIn) 
+                token._onHoverIn({}, {hoverOutOthers: false})
+        })
+    }
+
+    static _toggleTokenControl(tokenIds)
+    {
+        tokenIds.map(t => canvas.tokens.get(t)).forEach(token => {
+            if (token._controlled)
+                token.release()
+            else
+                token.control({releaseOthers: false})
+        })
+    }
+
 }
 
 
