@@ -5,6 +5,11 @@
 <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{result.damage.total}}</p>
 {{/if}}
 
+{{#if result.healing.toughness}}
+<p style="margin-top: 5px"><strong>{{localize "CHAT.TOUGHNESS_HEALED"}} :</strong> {{result.healing.toughness}}</p>
+{{/if}}
+
+
 {{#if result.duration}}
 <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration.value}} {{result.duration.unit}} </p>
 {{/if}}
