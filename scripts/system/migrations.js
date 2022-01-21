@@ -50,7 +50,12 @@ export default class Migration {
     {   
         let updateData = {
             items: []
+        
         }
+
+        if (item.category == "range")
+            updateData["data.category"] = "ranged"
+
         updateData.effects = item.effects.map(this.migrateEffect)
 
         return updateData
