@@ -2,7 +2,7 @@
   "name": "age-of-sigmar-soulbound",
   "title": "Age of Sigmar : Soulbound",
   "description": "The first ever tabletop roleplaying game set in <b>Warhammer Age of Sigmar</b>. Take on the role of the Soulbound, explore and roleplay in the Mortal Realms, filled with gods, monsters, daemons, and demigods, and shape its future. ",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "minimumCoreVersion": "9",
   "compatibleCoreVersion": "9",
   "templateVersion": 2,
@@ -41,6 +41,6 @@
   "url": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT",
   "socket": true,
   "manifest": "https://raw.githubusercontent.com/moo-man/AoS-Soulbound-FoundryVTT/master/system.json",
-  "download": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/releases/download/4.2.0/age-of-sigmar-soulbound.zip",
+  "download": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/releases/download/4.3.0/age-of-sigmar-soulbound.zip",
   "license": "LICENSE.txt"
 }

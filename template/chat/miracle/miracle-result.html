@@ -2,10 +2,11 @@
 {{> systems/age-of-sigmar-soulbound/template/chat/base/base-result.html}}
 {{else}}
 <div class="content-wrapper">
-{{/if}}
-
+    {{/if}}
+    
     {{#if result.duration}}
     <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration}} </p>
     {{/if}}
 </div>
 
+{{> systems/age-of-sigmar-soulbound/template/chat/base/base-targets.html}}

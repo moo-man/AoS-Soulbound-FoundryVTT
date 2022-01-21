@@ -318,6 +318,7 @@
         "equipped",
         "test"
       ],
+      "category" : "",
       "description": "",
       "cost": "",
       "availability": "",
@@ -386,6 +387,7 @@
       },
       "damage" : "",
       "overcast": "",
+      "overcasts" : [],
       "description": "",
       "effect": "",
       "lore": ""

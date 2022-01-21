@@ -241,9 +241,18 @@ li.directory-item.folder:not(.collapsed) {
     flex: 1
 }
 
-.roll-dialog .dialog-effects {
-    flex: 0.3;
+.roll-dialog .dialog-content .dialog{
+    flex: 0 0 340px
 }
+
+.roll-dialog .dialog-effects {
+    flex: 1
+}
+
+.roll-dialog .dialog-effects option{
+    white-space: normal;
+}
+
 
 .roll-dialog .dialog-effects .content-box{
     height: calc(100% - 15px);
@@ -390,6 +399,49 @@ li.directory-item.folder:not(.collapsed) {
 .entry-inputs > input {
     flex: 0.5
 }
+
+.entry-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.entry-list .entry-content {
+    display: flex;
+}
+
+.entry-list .entry-element {
+    display : flex;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+}
+
+
+.entry-list .entry-element > *{
+    flex: 1
+}
+
+.entry-list .entry-element > a{
+    flex: unset;
+    margin: 0px 5px;
+}
+
+
+.entry-list .entry-element .ratio {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.entry-list .entry-element .ratio > * {
+    flex: unset
+}
+
+.entry-list .entry-element .ratio > input {
+    flex : 0 0 30px
+}
+
+
 
 
 .dialog-value {

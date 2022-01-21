@@ -85,8 +85,8 @@
         </div>
         <div class="content-row">
             <select class="effect-select" multiple>
-                {{#each effects as |effect e|}}
-                <option title="{{effect.label}}"value="{{e}}">{{effect.data.flags.age-of-sigmar-soulbound.description}}</option>
+                {{#each changeList as |change c|}}
+                <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">{{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
                 {{/each}}
             </select>
         </div>

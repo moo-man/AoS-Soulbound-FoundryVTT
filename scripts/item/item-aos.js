@@ -155,15 +155,23 @@ export class AgeOfSigmarItem extends Item {
         if (!this.traits || !Array.isArray(this.traits))
             return []
         this.traits.forEach(i => {
-            traits[i.name] = {
-                name : i.name,
-                display : game.aos.config.traits[i.name]
-            }
-            if (game.aos.config.traitsWithValue.includes(i.name))
+
+            if (i.custom) 
             {
-                traits[i.name].rating = i.value;
-                traits[i.name].display += ` (${i.value})`
+                traits[i.name] = duplicate(i)
             }
+            else 
+            {
+                traits[i.name] = {
+                    name : i.name,
+                    display : game.aos.config.traits[i.name]
+                }
+                if (game.aos.config.traitsWithValue.includes(i.name))
+                {
+                    traits[i.name].rating = i.value;
+                    traits[i.name].display += ` (${i.value})`
+                }
+            }   
         })
         return traits
     }
@@ -209,6 +217,26 @@ export class AgeOfSigmarItem extends Item {
             return game.aos.config.armourType[this.category]
         if (this.type == "partyItem")
             return game.aos.config.partyItemCategories[this.category]
+    }
+
+    get OvercastString() {
+        let optionDescriptions = this.overcasts.map(i => i.description)
+        if (optionDescriptions.length >= 3)
+        {
+            let lastDescription = optionDescriptions[optionDescriptions.length - 1]
+            optionDescriptions.splice(optionDescriptions.length - 1, 1)
+            return optionDescriptions.join(", ") + ", or " + lastDescription
+        }
+        else if (optionDescriptions.length == 2)
+        {
+            return optionDescriptions.join(", or ")
+        }
+        else if (optionDescriptions.length == 1)
+        {
+            return optionDescriptions[0]
+        }
+        else 
+            return ""
     }
 
     get difficultyNumber()
@@ -280,6 +308,7 @@ export class AgeOfSigmarItem extends Item {
     get dn() { return this.data.data.dn }
     get test() { return this.data.data.test }
     get overcast() { return this.data.data.overcast }
+    get overcasts() { return this.data.data.overcasts }
     get lore() { return this.data.data.lore }
     get requirement() { return this.data.data.requirement }
     get category() { return this.data.data.category }

@@ -149,13 +149,16 @@
   "CHAT.REROLL" : "Reroll (-1 Soulfire)",
   "CHAT.MAXIMIZE" : "Maximize Success (-1 Soulfire)",
   "CHAT.APPLY_DAMAGE" : "Apply Damage",
+  "CHAT.APPLY_HEALING" : "Apply Healing",
   "CHAT.APPLY_DAMAGE_IGNORE_ARMOUR" : "Apply Damage (Ignore Armour)",
   "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage",
   "CHAT.APPLY_CLEAVE_DAMAGE" : "Apply Cleave Damage",
   "CHAT.APPLY_REND_DAMAGE" : "Apply Rend to Armour",
   "CHAT.APPLY_BLAST_DAMAGE" : "Apply Blast Damage",
+  "CHAT.TOUGHNESS_HEALED" : "Toughness Healed",
 
   "NOTIFICATION.APPLY_DAMAGE": "{damage} Damage applied to {name}",
+  "NOTIFICATION.APPLY_HEALING": "{name} regains {toughness} Toughness",
   "NOTIFICATION.APPLY_REND": "{damage} Points of Armour reduced on {name}",
   "NOTIFICATION.REND_FAIL": "No applicable armour to Rend",
   "NOTIFICATION.MACRO_ITEM_NOT_FOUND": "Couldn't find the Item. You may not have a Token selected or the Actor doesn't posses the item",
@@ -198,8 +201,6 @@
   "DIALOG.POOL_INPUT_ERROR" : "Input larger than pool size",
   "DIALOG.PRIMARY_SECONDARY_SELECT_TITLE" : "Primary or Secondary",
   "DIALOG.PRIMARY_SECONDARY_SELECT" : "Use Primary or Secondary Test?",
-  "DIALOG.PRIMARY" : "Primary",
-  "DIALOG.SECONDARY" : "Secondary",
 
 
   "EQUIPMENT.NAME": "Name",
@@ -288,6 +289,7 @@
   "POWER.EFFECT": "Effect",
   "POWER.STATUS" : "Power Consumed: {consumed}/{capacity}",
 
+
   "RANGE.SPECIAL": "Special",
   "RANGE.SELF": "Self",
   "RANGE.CLOSE": "Close",
@@ -340,6 +342,15 @@
   "SPELL.DESCRIPTION": "Description",
   "SPELL.LORE": "Lore",
   "SPELL.EFFECT": "Effect",
+  "SPELL.OVERCAST_RATIO" : "S:V Ratio",
+  "SPELL.OVERCAST_RATIO_HELP" : "Success:Value Ratio - How many successes per overcast value",
+  "SPELL.OVERCAST_INITIAL" : "Initial",
+  "SPELL.OVERCAST_INITIAL_HELP" : "Initial value for the property being overcasted",
+  "SPELL.OVERCAST_PROPERTY" : "Property",
+  "SPELL.OVERCAST_PROPERTY_HELP" : "Property being overcasted, this property will be added to the result object of the test if it does not exist. Example: 'damage.total' for Damage or 'duration.value' for Duration",
+  "SPELL.OVERCAST_TITLE" : "Title",
+  "SPELL.OVERCAST_TITLE_HELP" : "Label for the Test's chat card button",
+  "SPELL.OVERCAST_DESCRIPTION" : "Description",
 
   "STATE.ALIVE": "Alive",
   "STATE.DEAD": "Dead",
@@ -431,6 +442,7 @@
   "WARN.NoActorsToTest" : "Tokens must be selected or a character must be assigned to roll a Test.",
   "WARN.NoActorsToApply" : "Tokens must be selected or a character must be assigned to apply an Effect.",
   "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
+  "ERROR.NotEnoughSuccesses": "Not Enough Successes to Overcast",
 
   "CONFIGURE.LABEL" : "Configure",
   "CONFIGURE.AUTO_CALC_TOUGHNESS": "Automatically Calculate Toughness",

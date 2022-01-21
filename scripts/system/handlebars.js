@@ -16,6 +16,7 @@ function preloadHandlebarsTemplates() {
         "systems/age-of-sigmar-soulbound/template/sheet/tab/party-members.html",
         "systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.html",
         "systems/age-of-sigmar-soulbound/template/chat/base/base-result.html",
+        "systems/age-of-sigmar-soulbound/template/chat/base/base-targets.html",
         "systems/age-of-sigmar-soulbound/template/chat/base/dice-container.html",
         "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-result.html",
         "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-buttons.html",
@@ -49,6 +50,11 @@ function registerHandlebarsHelpers() {
     Handlebars.registerHelper("configLookup", function (obj, key) {
         return game.aos.config[obj][key]
     })
+
+    Handlebars.registerHelper("lookup", function (obj, key) {
+        return getProperty(obj, key)
+    })
+
 
     Handlebars.registerHelper("enrich", function (string) {
         return TextEditor.enrichHTML(string)

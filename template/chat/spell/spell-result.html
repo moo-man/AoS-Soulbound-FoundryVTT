@@ -1,15 +1,22 @@
 {{> systems/age-of-sigmar-soulbound/template/chat/base/base-result.html}}
 
-    {{#if result.damage.total}}
-    <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{result.damage.total}}</p>
-    {{/if}}
 
-    {{#if result.duration}}
-    <p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration.value}} {{result.duration.unit}} </p>
-    {{/if}}
+{{#if result.damage.total}}
+<p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{result.damage.total}}</p>
+{{/if}}
 
-    {{#if result.overcast}}
-    <p style="margin-top: 5px"><strong>{{localize "CHAT.OVERCAST"}} :</strong> {{result.overcast}}</p>
-    {{/if}}
+{{#if result.healing.toughness}}
+<p style="margin-top: 5px"><strong>{{localize "CHAT.TOUGHNESS_HEALED"}} :</strong> {{result.healing.toughness}}</p>
+{{/if}}
+
+
+{{#if result.duration}}
+<p style="margin-top: 5px"><strong>{{localize "CHAT.DURATION"}} :</strong> {{result.duration.value}} {{result.duration.unit}} </p>
+{{/if}}
+
+{{#if item.overcasts.length}}
+<p style="margin-top: 5px"><strong>{{localize "CHAT.OVERCAST"}} :</strong> {{item.OvercastString}}</p>
+{{/if}}
 </div>
+{{> systems/age-of-sigmar-soulbound/template/chat/base/base-targets.html}}
 

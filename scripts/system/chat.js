@@ -1,5 +1,6 @@
 import Reroller from "../apps/reroller.js";
 import SoulboundCounter from "../apps/counter.js";
+import AgeOfSigmarEffect from "./effect.js";
 
 export default class SoulboundChat {
 
@@ -50,6 +51,15 @@ export default class SoulboundChat {
                 && canvas.tokens?.controlled.length //has something selected
                 && test && (test.result.damage || test.result.primary?.damage || test.result.secondary?.damage); //is damage roll
         };
+
+        let canApplyHealing = li => {
+            const message = game.messages.get(li.data("messageId"));
+            let test = message.getTest()
+            return message.isRoll
+                && message.isContentVisible //can be seen
+                && canvas.tokens?.controlled.length //has something selected
+                && test && (test.result.healing) //has healincg
+        }
 
         let canApplyCleave = li => {
             const message = game.messages.get(li.data("messageId"));
@@ -206,6 +216,15 @@ export default class SoulboundChat {
                 callback: li => SoulboundChat.applyRend(li)
             }
         )
+
+        options.push(
+            {
+                name: "CHAT.APPLY_HEALING",
+                icon: '<i class="fas fa-plus"></i>',
+                condition: canApplyHealing,
+                callback: li => SoulboundChat.applyChatCardHealing(li, 1)
+            }
+        );
     
         return options;
     };
@@ -275,6 +294,23 @@ export default class SoulboundChat {
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
             return a.applyDamage(damage, options);
+        }));
+    }
+
+        /**
+     * @param {HTMLElement} messsage    The chat entry which contains the roll data
+     * @return {Promise}
+     */
+    static async applyChatCardHealing(li, multiplier, options={}) {
+
+        const message = game.messages.get(li.data("messageId"));
+        let test = message.getTest();
+        let healing = test.result.healing
+
+        // apply to any selected actors
+        return Promise.all(canvas.tokens.controlled.map(t => {
+            const a = t.actor;
+            return a.applyHealing(healing);
         }));
     }
 
@@ -474,6 +510,16 @@ export default class SoulboundChat {
         html.on("click", ".test-button", SoulboundChat._onTestButtonClick.bind(this))
         html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick.bind(this))
         html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick.bind(this))
+        html.on("click", ".overcast-button", SoulboundChat._onOvercastButtonClick.bind(this))
+        html.on("click", ".overcast-reset", SoulboundChat._onOvercastResetClick.bind(this))
+        html.on("mouseover", ".target", SoulboundChat._onTargetHoverChange.bind(this))
+        html.on("mouseout", ".target", SoulboundChat._onTargetHoverChange.bind(this))
+        html.on("click", ".target", SoulboundChat._onTargetClick.bind(this))
+        html.on("mouseover", ".target-selector", SoulboundChat._onAllTargetHoverChange.bind(this))
+        html.on("mouseout", ".target-selector", SoulboundChat._onAllTargetHoverChange.bind(this))
+        html.on("click", ".target-selector", SoulboundChat._onAllTargetClick.bind(this))
+        
+
 
     }
 
@@ -588,7 +634,7 @@ export default class SoulboundChat {
         if (table)
         {
             let {roll, results} =  await table.roll({roll : tableRoll})
-            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.speakerData, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
+            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.context.speaker, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
         }
         else
             ui.notifications.error("No Table Found")
@@ -605,21 +651,7 @@ export default class SoulboundChat {
             item = test.secondaryWeapon
 
         let effect = item.effects.get(effectId).toObject()
-        effect.origin = test.actor.uuid
-        let duration = item.duration
-        setProperty(effect, "flags.core.statusId", getProperty(effect, "flags.core.statusId") || effect.label.slugify())
-
-        if (duration)
-        {
-            if (duration.unit == "round")
-                effect.duration.rounds = parseInt(duration.value)
-            else if  (duration.unit == "minute")
-                effect.duration.seconds = parseInt(duration.value) * 60
-            else if (duration.unit == "hour")
-                effect.duration.seconds = parseInt(duration.value) * 60 * 60
-            else if (duration.unit == "day")
-                effect.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
-        }
+        AgeOfSigmarEffect.populateEffectData(effect, test, item)
 
         if (canvas.tokens.controlled.length)
         {
@@ -634,6 +666,77 @@ export default class SoulboundChat {
 
    
     }
+
+    static _onOvercastButtonClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let index = parseInt($(ev.currentTarget).parents(".overcast-group").attr("data-index"))
+        test.allocateOvercast(index)
+    }
+
+    static _onOvercastResetClick(ev)
+    {
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        test.resetOvercasts()
+    }
+
+    static _onTargetHoverChange(ev){
+        let tokenId = ev.currentTarget.dataset["tokenId"]
+        this._toggleTokenHover([tokenId], {toggleIn : event.type == "mouseover", toggleOut : event.type == "mouseout"})
+    }
+
+    
+    static _onAllTargetHoverChange(ev){
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let tokenIds = test.targetTokens.map(i => i.id)
+        this._toggleTokenHover(tokenIds, {toggleIn : event.type == "mouseover", toggleOut : event.type == "mouseout"})
+    }
+
+    static _onTargetClick(ev){
+        let tokenId = ev.currentTarget.dataset["tokenId"]
+        if (ev.shiftKey)
+            this._toggleTokenControl([tokenId])
+        else 
+        {
+            let token = canvas.tokens.get(tokenId)
+            canvas.animatePan({x: token.x, y: token.y, scale: Math.max(1, canvas.stage.scale.x), duration: 100}); // double click
+        }
+    }
+
+    static _onAllTargetClick(ev){
+        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
+        let msg = game.messages.get(id)
+        let test = msg.getTest();
+        let tokenIds = test.targetTokens.map(i => i.id)
+        this._toggleTokenControl(tokenIds)
+    }
+
+    static _toggleTokenHover(tokenIds, {toggleIn=false, toggleOut=false}={})
+    {
+        tokenIds.map(t => canvas.tokens.get(t)).forEach(token => {
+            if (toggleOut)
+                token._onHoverOut({})
+            else if (toggleIn) 
+                token._onHoverIn({}, {hoverOutOthers: false})
+        })
+    }
+
+    static _toggleTokenControl(tokenIds)
+    {
+        tokenIds.map(t => canvas.tokens.get(t)).forEach(token => {
+            if (token._controlled)
+                token.release()
+            else
+                token.control({releaseOthers: false})
+        })
+    }
+
 }
 
 

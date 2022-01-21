@@ -1,5 +1,6 @@
 {{> systems/age-of-sigmar-soulbound/template/chat/base/base-result.html}}
 
+
 {{#if result.damage.total}}
 <p style="margin-top: 5px"><strong>{{localize "CHAT.DAMAGE"}} :</strong> {{result.damage.total}}</p>
 {{/if}}
@@ -23,8 +24,9 @@
         {{#if effect.isPlain}}
         <li>{{effect.text}}</li>
         {{/if}}
-
+        
         {{/each}}
     </ul>
 </div>
 {{/if}}
+{{> systems/age-of-sigmar-soulbound/template/chat/base/base-targets.html}}

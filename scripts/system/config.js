@@ -197,12 +197,16 @@ CONFIG.statusEffects = [
         label : "CONDITION.BLINDED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
-            {key: "difficulty", mode : 0, value : 2},
+            {key: "difficulty", mode : 6, value : 2},
             {key: "data.combat.melee.bonus", mode : 2, value : -1},
             {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
             {key: "data.combat.defence.bonus", mode : 2, value : -1}
         ],
-        flags : { "age-of-sigmar-soulbound.description" : "Difficulty of Mind (Awareness) Tests that rely on sight are increased by 2"}
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
+            }
+        }
     },
     {
         id : "charmed",
@@ -213,15 +217,23 @@ CONFIG.statusEffects = [
         id : "deafened",
         label : "CONDITION.DEAFENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
-        changes : [{key: "bonusDice", mode : 0, value : -1}],
-        flags : { "age-of-sigmar-soulbound.description" : "The dice pool for any Tests that require hearing is reduced by 1"}
+        changes : [{key: "bonusDice", mode : 6, value : -1}],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Requires Hearing", script : ""}
+            }
+        }
     },
     {
         id : "frightened",
         label : "CONDITION.FRIGHTENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
-        changes : [{key: "bonusDice", mode : 0, value : -1}],
-        flags : { "age-of-sigmar-soulbound.description" : "While the source of fear is within line of sight, roll one less die for all Tests"}
+        changes : [{key: "bonusDice", mode : 6, value : -1}],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Within line of sight of the source of fear", script : ""}
+            }
+        }
     },
     {
         id : "incapacitated",
@@ -232,8 +244,12 @@ CONFIG.statusEffects = [
         id : "poisoned",
         label : "CONDITION.POISONED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
-        changes : [{key: "bonusDice", mode : 0, value : -1}],
-        flags : { "age-of-sigmar-soulbound.description" : "The dice pool for all Tests are reduced by 1"}
+        changes : [{key: "bonusDice", mode : 6, value : -1}],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "All Tests", script : "return true"}
+            }
+        }
     },
     {
         id : "prone",

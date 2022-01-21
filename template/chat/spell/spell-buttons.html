@@ -1,4 +1,23 @@
-{{log result}}
+{{#if canOvercast}}
+<div class="content-wrapper overcast-buttons">
+    <div class="overcast-labels">
+        <h3>Overcasts  <a class="overcast-reset"><i class="fas fa-redo"></i></a></h3>
+        <label>Spent: {{result.overcasts.spent}}/{{result.degree}}</label>
+    </div>
+    <div class="overcast-groups">
+        {{#each result.overcasts.options as |option index|}}
+        <div class="overcast-group" data-index={{index}}>
+            <button type="button" class="overcast-button">{{option.title}} {{#if option.allocation}}({{option.allocation}}){{/if}}</button>
+            
+            <h3> {{#if option.showTotal}} Total: {{lookup ../result option.property}} {{/if}}</h3>
+            
+        </div>
+        {{/each}}
+    </div>
+</div>
+{{/if}}
+
+
 {{#unless result.success}}
 <div class="content-wrapper test-buttons">
     <button class="spell-fail-button" type="button">The Price of Failure</button>

@@ -10,13 +10,33 @@ export class RollDialog extends Dialog {
         return options
     }
 
+    async _render(...args)
+    {
+        await super._render(...args)
+
+        let automatic = this.runChangeConditionals()
+        let select = this.element.find(".effect-select")[0]
+        let options = Array.from(select.children)
+        options.forEach((opt, i) => {
+            if (automatic[i])
+            {
+                opt.selected = true;
+                select.dispatchEvent(new Event("change"))
+            }
+        })
+        if (automatic.some(i => i))
+            select.focus()
+    }
+
     static async create(data) {
         return new Promise(async (resolve, reject) => {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
             return new this({
                 title: data.title,
                 content: html,
-                effects : data.effects,
+                actor : data.actor,
+                targets : data.targets,
+                dialogData : data,
                 buttons: {
                     roll: {
                         icon: '<i class="fas fa-check"></i>',
@@ -33,7 +53,7 @@ export class RollDialog extends Dialog {
                     }
                 },
                 default: "roll"
-            }, {width: 450}).render(true)
+            }, {width: 600}).render(true)
         })
     }
     static extractDialogData(html) {
@@ -57,8 +77,28 @@ export class RollDialog extends Dialog {
             difficulty : options.difficulty || 4,
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
-            effects : actor.effects.filter(i => i.hasRollEffect)
+            changeList : actor.getDialogChanges({condense: true}),
+            changes : actor.getDialogChanges(),
+            actor : actor,
+            targets : Array.from(game.user.targets).map(i => i.actor.speakerData(i))
+
         }
+    }
+
+    runChangeConditionals()
+    {
+        let results = this.data.dialogData.changes.map(c => {
+            try {
+                let func = new Function("data", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
+                return (func(this.data.dialogData) == true) // Only accept true returns
+            }
+            catch (e)
+            {
+                console.error("Something went wrong when processing conditional dialog effect: " + e, c)
+                return false
+            }
+        })
+        return results
     }
 
     activateListeners(html)
@@ -126,8 +166,14 @@ export class RollDialog extends Dialog {
             "bonusDice" : null
         }
         
-        let selectedEffects = $(ev.currentTarget).val().map(i => this.data.effects[parseInt(i)]).map(i => i.clone())
-        let changes = selectedEffects.reduce((prev, current) => prev = prev.concat(current.data.changes), []).filter(i => i.mode == 0)
+        let changes = []
+        $(ev.currentTarget).val().map(i => {
+            let indices = i.split(",");
+            indices.forEach(changeIndex => {
+                changes.push(this.data.dialogData.changes[parseInt(changeIndex)])
+            })
+        })
+
         changes.forEach(c => {
             if (c.value.includes("@"))
                 c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
@@ -181,8 +227,8 @@ export class CombatDialog extends RollDialog {
                 title: data.title,
                 actor : data.actor,
                 targets : data.targets,
+                dialogData : data,
                 content: html,
-                effects : data.effects,
                 buttons: {
                     roll: {
                         icon: '<i class="fas fa-check"></i>',
@@ -203,7 +249,7 @@ export class CombatDialog extends RollDialog {
                     }
                 },
                 default: "roll"
-            }, {width: 450}).render(true)
+            }, {width: 600}).render(true)
         })
     }
     static extractDialogData(html) {
@@ -219,14 +265,16 @@ export class CombatDialog extends RollDialog {
                     pool : parseInt(html.find(".primary .pool")[0].value),
                     defence : parseInt(html.find(".primary #defence")[0].value),
                     armour : parseInt(html.find(".primary #armour")[0].value),
-                    name : html.find(".primary .target-name")[0].textContent
+                    name : html.find(".primary .target-name")[0].textContent,
+                    tokenId : html.find(".primary .target-name")[0].dataset.tokenId
                 },
                 secondary: {
                     pool : parseInt(html.find(".secondary .pool")[0].value),
                     defence : parseInt(html.find(".secondary #defence")[0].value),
                     armour : parseInt(html.find(".secondary #armour")[0].value),
                     itemId : html.find("#dual-weapon")[0].value,
-                    name : html.find(".secondary .target-name")[0].textContent
+                    name : html.find(".secondary .target-name")[0].textContent,
+                    tokenId : html.find(".secondary .target-name")[0].dataset.tokenId
                 }
             }
         }
@@ -256,14 +304,12 @@ export class CombatDialog extends RollDialog {
 
         data.showDualWielding = actor.items.filter(i => i.isAttack && i.equipped).length >= 2
         data.weapon = weapon
-        data.actor = actor
         data.otherWeapons = actor.items.filter(i => i.isAttack && i.equipped && i.id != weapon.id)
-
+        
         let targets = Array.from(game.user.targets)
-        data.targets = targets
         const hasTarget = targets.length; // No additinal Input when target function is used
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
-        data.targetSpeakers = targets.map(i => i.actor.speakerData)
+        data.targets = targets.map(i => i.actor.speakerData(i))
 
         data.primaryTarget = {
             defence : 3,
@@ -276,7 +322,8 @@ export class CombatDialog extends RollDialog {
             data.primaryTarget = {
                 name : targets[0].name,
                 defence : targets[0].actor.combat.defence.relative,
-                armour : targets[0].actor.combat.armour.value
+                armour : targets[0].actor.combat.armour.value,
+                tokenId : targets[0].id
             }
 
             if (targets[1])
@@ -284,12 +331,15 @@ export class CombatDialog extends RollDialog {
                 data.secondaryTarget = {
                     name : targets[1].name,
                     defence : targets[1].actor.combat.defence.relative,
-                    armour : targets[1].actor.combat.armour.value
+                    armour : targets[1].actor.combat.armour.value,
+                    tokenId : targets[1].id
                 }
             }
             else // Populate secondary target with the same as the primary target
                 data.secondaryTarget = duplicate(data.primaryTarget)
         }
+
+        game.user.updateTokenTargets([])
 
         return data
     }
@@ -444,7 +494,9 @@ export class SpellDialog extends RollDialog {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
             return new this({
                 title: data.title,
-                effects : data.effects,
+                dialogData : data,
+                actor : data.actor,
+                targets : data.targets,
                 content: html,
                 buttons: {
                     roll: {
@@ -463,7 +515,7 @@ export class SpellDialog extends RollDialog {
                     }
                 },
                 default: "roll"
-            }, {width: 450}).render(true)
+            }, {width: 600}).render(true)
         })
     }
     
@@ -474,38 +526,12 @@ export class SpellDialog extends RollDialog {
         let data = super._dialogData(actor, attribute, skill)
         mergeObject(data, spell.difficultyNumber)
         data.spell = spell
+        game.user.updateTokenTargets([])
         return data
     }    
 }
 
 export class MiracleDialog extends RollDialog {
-    // static async create(data) {
-    //     return new Promise(async (resolve, reject) => {
-    //         const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
-    //         return new this({
-    //             title: data.title,
-    //             effects : data.effects,
-    //             content: html,
-    //             buttons: {
-    //                 roll: {
-    //                     icon: '<i class="fas fa-check"></i>',
-    //                     label: game.i18n.localize("BUTTON.ROLL"),
-    //                     callback: async (html) => {
-    //                         let testData = this.extractDialogData(html)
-    //                         testData.itemId = data.power.id
-    //                         testData.dn = {
-    //                             difficulty : parseInt(html.find("#difficulty")[0].value),
-    //                             complexity : parseInt(html.find("#complexity")[0].value),
-    //                             name : data.power.name
-    //                         }
-    //                         resolve(testData);
-    //                     },
-    //                 }
-    //             },
-    //             default: "roll"
-    //         }, {width: 450}).render(true)
-    //     })
-    // }
     
     static _dialogData(actor, power)
     {
