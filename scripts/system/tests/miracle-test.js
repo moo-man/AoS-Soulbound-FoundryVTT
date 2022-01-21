@@ -11,8 +11,11 @@ export default class MiracleTest extends Test{
     async rollTest() {
         if (this.item.test.opposed)
         {
-            this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
+            this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);
             await this.roll.evaluate({async:true})  
+            this.roll.dice[0].results.forEach((result, i) => {
+                result.index = i;
+            })  
             this.computeResult()   
         }
         else 
