@@ -20,5 +20,9 @@ export default class AgeOfSigmarEffectSheet extends ActiveEffectConfig {
             let index = parseInt($(ev.currentTarget).parents(".effect-change").attr("data-index"))
             new EffectScriptConfig({effect : this.object, index}).render(true)
         })
+
+        html.find(".mode select").change(ev => {
+                this.submit({preventClose: true})
+        })
     }
 }
