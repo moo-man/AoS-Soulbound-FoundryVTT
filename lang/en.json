@@ -333,6 +333,9 @@
   "SKILL.SURVIVAL": "Survival",
   "SKILL.THEOLOGY": "Theology",
   "SKILL.WEAPON_SKILL": "Weapon Skill",
+  "SKILL.TRAINING_ABBR": "T",
+  "SKILL.POOL_ABBR": "P",
+  "SKILL.FOCUS_ABBR": "F",
 
   "SPELL.NAME": "Name",
   "SPELL.DN": "DN",
