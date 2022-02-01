@@ -7,6 +7,7 @@ export default class EffectScriptConfig extends FormApplication {
             height: 400,
             width: 500,
             title: "Effect Script Config",
+            editable : game.user.isGM,
             resizable: true
 
         })

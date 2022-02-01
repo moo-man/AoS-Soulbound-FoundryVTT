@@ -4,7 +4,7 @@ export default class ItemTraits extends FormApplication {
             id: "item-traits",
             template: "systems/age-of-sigmar-soulbound/template/apps/item-traits.html",
             height: "auto",
-            width: "auto",
+            width: 285,
             title: "Item Traits",
             resizable : true
         })
@@ -73,6 +73,10 @@ export default class ItemTraits extends FormApplication {
     constructCustomString(traits)
     {
         let customString = ``
+
+        if (typeof traits == "string")
+            return customString
+
         let customTraits = traits.filter(i => i.custom)
         customTraits.forEach(t => {
             customString += `${t.display} : ${t.description} |`

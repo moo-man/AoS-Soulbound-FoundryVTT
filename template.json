@@ -318,6 +318,7 @@
         "equipped",
         "test"
       ],
+      "category" : "",
       "description": "",
       "cost": "",
       "availability": "",
