@@ -283,6 +283,11 @@ CONFIG.statusEffects = [
         id : "unconscious",
         label : "CONDITION.UNCONSCIOUS",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
+    },
+    {       
+        id: "dead",
+        label: "EFFECT.StatusDead", // Foundry Default Text Key
+        icon: "systems/age-of-sigmar-soulbound/asset/icons/dead.svg"
     }
 ]
 

@@ -2,17 +2,18 @@
 
   <div class="condition-list">
     {{#each effects.conditions as |effect e|}}
-    <div class="condition" title={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
-      <a class="condition-click" title="{{{effect.tooltip}}}"><img src="{{effect.img}}" /></a>
-      <a class="condition-toggle">
-        {{#if effect.existing}}
-        <i class="far fa-check-square"></i>
-        {{else}}
-        <i class="far fa-square"></i>
-        {{/if}}
-      </a>
-
-    </div>
+      {{#unless (isStatusDead effect.key)}}
+      <div class="condition" title={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
+        <a class="condition-click" title="{{{effect.tooltip}}}"><img src="{{effect.img}}" /></a>
+        <a class="condition-toggle">
+          {{#if effect.existing}}
+          <i class="far fa-check-square"></i>
+          {{else}}
+          <i class="far fa-square"></i>
+          {{/if}}
+        </a>
+      </div>
+      {{/unless}}
     {{/each}}
   </div>
 
