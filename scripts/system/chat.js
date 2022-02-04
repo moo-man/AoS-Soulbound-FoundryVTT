@@ -324,7 +324,7 @@ export default class SoulboundChat {
         let result
         let item
 
-        if ((test.item?.traitList.cleave && test.result.primary.triggers) && (test.secondaryWeapon?.traitList.cleave && test.result.secondary.triggers)) // If both primary and secondary, give choice
+        if ((test.item?.traitList.cleave && test.result.primary?.triggers) && (test.secondaryWeapon?.traitList.cleave && test.result.secondary?.triggers)) // If both primary and secondary, give choice
         {
             await new Promise((resolve) => {
                 new Dialog({
@@ -352,12 +352,12 @@ export default class SoulboundChat {
                 }).render(true)
             })
         }
-        else if (test.item?.traitList.cleave && test.result.primary.triggers) // If only primary
+        else if (test.item?.traitList.cleave && test.result.primary?.triggers) // If only primary
         {
             result = test.result.primary
             item = test.item
         }
-        else if (test.secondaryWeapon?.traitList.cleave && test.result.secondary.triggers) // If only secondary
+        else if (test.secondaryWeapon?.traitList.cleave && test.result.secondary?.triggers) // If only secondary
         {
             result = test.result.secondary
             item = test.secondaryWeapon
@@ -444,7 +444,7 @@ export default class SoulboundChat {
         let result
         let item
 
-        if ((test.item?.traitList.rend && test.result.primary.triggers) && (test.secondaryWeapon?.traitList.rend && test.result.secondary.triggers)) // If both primary and secondary, give choice
+        if ((test.item?.traitList?.rend && test.result.primary?.triggers) && (test.secondaryWeapon?.traitList?.rend && test.result.secondary?.triggers)) // If both primary and secondary, give choice
         {
             await new Promise((resolve) => {
                 new Dialog({
@@ -472,12 +472,12 @@ export default class SoulboundChat {
                 }).render(true)
             })
         }
-        else if (test.item?.traitList.rend && test.result.primary.triggers) // If only primary
+        else if (test.item?.traitList.rend && test.result.primary?.triggers) // If only primary
         {
             result = test.result.primary
             item = test.item
         }
-        else if (test.secondaryWeapon?.traitList.rend && test.result.secondary.triggers) // If only secondary
+        else if (test.secondaryWeapon?.traitList.rend && test.result.secondary?.triggers) // If only secondary
         {
             result = test.result.secondary
             item = test.secondaryWeapon
