@@ -170,6 +170,15 @@ export default class SoulboundChat {
 
         options.push(
             {
+                name: "CHAT.APPLY_HALF_DAMAGE",
+                icon: '<i class="fas fa-user-minus"></i>',
+                condition: canApplyDamage,
+                callback: li => SoulboundChat.applyChatCardHalfDamage(li, 1)
+            }
+        );
+        
+        options.push(
+            {
                 name: "CHAT.APPLY_DAMAGE_IGNORE_ARMOUR",
                 icon: '<i class="fas fa-user-minus"></i>',
                 condition: canApplyDamage,
@@ -289,7 +298,10 @@ export default class SoulboundChat {
         options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
         options.ineffective = test.item?.traitList?.ineffective
         options.restraining = test.item?.traitList?.restraining
-
+        options.crushing = test.item?.traitList?.crushing
+        options.piercing = test.item?.traitList?.piercing
+        options.slashing = test.item?.traitList?.slashing
+        
         // apply to any selected actors
         return Promise.all(canvas.tokens.controlled.map(t => {
             const a = t.actor;
@@ -297,6 +309,71 @@ export default class SoulboundChat {
         }));
     }
 
+static async applyChatCardHalfDamage(li, multiplier, options={}) {
+
+        const message = game.messages.get(li.data("messageId"));
+        let test = message.getTest();
+        let damage
+        let item
+
+        if (test.result.primary?.damage && test.result.secondary?.damage) // If both primary and secondary, give choice
+        {
+            await new Promise((resolve) => {
+                new Dialog({
+                    title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
+                    content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
+                    buttons : {
+                        primary : {
+                            label : game.i18n.localize("DIALOG.PRIMARY"),
+                            callback : () => {
+                                damage = Math.ceil(test.result.primary.damage.total/2)
+                                item = test.item
+                                resolve()
+                            }
+                        },
+                        secondary : {
+                            label : game.i18n.localize("DIALOG.SECONDARY"),
+                            callback : () => {
+                                damage = Math.ceil(test.result.secondary.damage.total/2)
+                                item = test.secondaryWeapon
+                                resolve()
+                            }
+                        }
+                    }
+    
+                }).render(true)
+            })
+        }
+        else if (test.result.primary?.damage) // If only primary
+        {
+            damage = Math.ceil(test.result.primary.damage.total/2)
+            item = test.item
+        }
+        else if (test.result.secondary?.damage) // If only secondary
+        {
+            damage = Math.ceil(test.result.secondary.damage.total/2)
+            item = test.secondaryWeapon
+        }
+        else  // If normal test
+        {
+            damage = Math.ceil(test.result.damage.total/2)
+            item = test.item
+        }
+
+        damage *= multiplier;
+
+        options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
+        options.ineffective = test.item?.traitList?.ineffective
+        options.restraining = test.item?.traitList?.restraining
+        options.crushing = test.item?.traitList?.crushing
+        options.piercing = test.item?.traitList?.piercing
+        options.slashing = test.item?.traitList?.slashing
+        // apply to any selected actors
+        return Promise.all(canvas.tokens.controlled.map(t => {
+            const a = t.actor;
+            return a.applyDamage(damage, options);
+        }));
+    }
         /**
      * @param {HTMLElement} messsage    The chat entry which contains the roll data
      * @return {Promise}

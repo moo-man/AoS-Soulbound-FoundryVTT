@@ -21,6 +21,10 @@
         {{#if effect.isCleave}}
         <li><span class="cleave-value">{{effect.text}}</span></li>
         {{/if}}
+
+                {{#if effect.isPiercing}}
+        <li><span class="piercing-value">{{effect.text}}</span></li>
+        {{/if}}
         {{#if effect.isPlain}}
         <li>{{effect.text}}</li>
         {{/if}}
