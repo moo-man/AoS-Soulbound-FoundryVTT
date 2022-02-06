@@ -305,6 +305,8 @@
   "SETTING.INIT_DEFAULT": "Highest to Lowest Initative",
   "SETTING.INIT_ROLL2d": "Roll 2d6 + Initiative, higher go first",
   "SETTING.INIT_ROLL1d": "Roll 1d6 + Initiative, higher go first",
+  "SETTING.TARGET_RULE" : "Untarget after Attack",
+  "SETTING.TARGET_HINT" : "After making an Attack your Target will be cleared.",
 
   "SKILL.ARCANA": "Arcana",
   "SKILL.ATHLETICS": "Athletics",

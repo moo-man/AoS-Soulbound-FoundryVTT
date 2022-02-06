@@ -67,7 +67,7 @@ function registerHandlebarsHelpers() {
             return array.join(", ")
     })
 
-    Handlebars.registerHelper("isStatusDead", function(string) {
-        return string ==="dead";
+    Handlebars.registerHelper("isNoneSystemCondition", function(string) {
+        return string === "dead";
     })
 }
