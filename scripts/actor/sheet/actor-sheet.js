@@ -52,9 +52,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _orderSkills(sheetData)
     {
-        let middle = Object.values(sheetData.data.skills).length / 2;
+        let skills = Object.values(sheetData.data.skills);4        
+        skills.forEach(x => x.label = game.i18n.localize(x.label))
+        skills.sort((x, y) => x.label.localeCompare(y.label, game.i18n.lang));
+
+        let middle = skills.length / 2;
         let i = 0;
-        for (let skill of Object.values(sheetData.data.skills)) {
+        for (let skill of skills) {
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
             i++;
