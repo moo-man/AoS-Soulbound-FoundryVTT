@@ -350,14 +350,13 @@ export class AgeOfSigmarActor extends Actor {
     async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false}={}) {
         let armour = this.combat.armour.value
         
-        if (armour > 0)
-            armour -= penetrating
+        armour -= penetrating;
+        
+        if(armour < 0) { armour = 0; }            
 
-        if (ineffective) armour *= 2
+        if (ineffective) armour *= 2;
 
-        damage = ignoreArmour ? damage : damage - armour
-
-
+        damage = ignoreArmour ? damage : damage - armour;
 
         if (damage < 0)
             damage = 0

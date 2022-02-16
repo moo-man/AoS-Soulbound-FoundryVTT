@@ -92,7 +92,7 @@ export default function registerHooks() {
         type: String,
       });
 
-      game.settings.register("age-of-sigmar-soulbound", "looseTarget", {
+      game.settings.register("age-of-sigmar-soulbound", "loseTarget", {
         name: "SETTING.TARGET_RULE",
         hint: "SETTING.TARGET_HINT",
         scope: "client",
