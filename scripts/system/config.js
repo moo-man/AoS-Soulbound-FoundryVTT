@@ -130,12 +130,12 @@ AOS.ratings = {
 }
 
 AOS.durations = {
-    "instant" : "Instant",
-    "round"  : "Round",
-    "minute" :  "Minute",
-    "hour" : "Hour",
-    "day" : "Day",
-    "permanent" : "Permanent"
+    "instant" : "DURATION.INSTANT",
+    "round"  : "DURATION.ROUND",
+    "minute" :  "DURATION.MINUTE",
+    "hour" : "DURATION.HOUR",
+    "day" : "DURATION.DAY",
+    "permanent" : "DURATION.PERMANENT"
 }
 
 AOS.partyItemCategories = {
@@ -159,30 +159,29 @@ AOS.partyItemCategoryLabels = {
     threat : "PARTY.ACTIVE",
 }
 
-
 AOS.traits = {
-    aetheric : "Aetheric",
-    blast : "Blast",
-    cleave : "Cleave",
-    close : "Close",
-    crushing : "Crushing",
-    defensive : "Defensive",
-    ineffective : "Ineffective",
-    loud : "Loud",
-    magical : "Magical",
-    penetrating : "Penetrating",
-    piercing : "Piercing",
-    range : "Range",
-    reach : "Reach",
-    reload : "Reload",
-    rend : "Rend",
-    restraining : "Restraining",
-    sigmarite : "Sigmarite",
-    slashing : "Slashing",
-    spread : "Spread",
-    subtle : "Subtle",
-    thrown : "Thrown",
-    twohanded : "Two-handed"
+    aetheric : "TRAITS.AETHERIC",
+    blast : "TRAITS.BLAST",
+    cleave : "TRAITS.CLEAVE",
+    close : "TRAITS.CLOSE",
+    crushing : "TRAITS.CRUSHING",
+    defensive : "TRAITS.DEFENSIVE",
+    ineffective : "TRAITS.INEFFECTIVE",
+    loud : "TRAITS.LOUD",
+    magical : "TRAITS.MAGICAL",
+    penetrating : "TRAITS.PENETRATING",
+    piercing : "TRAITS.PIERCING",
+    range : "TRAITS.RANGE",
+    reach : "TRAITS.REACH",
+    reload : "TRAITS.RELOAD",
+    rend : "TRAITS.REND",
+    restraining : "TRAITS.RESTRAINING",
+    sigmarite : "TRAITS.SIGMARITE",
+    slashing : "TRAITS.SLASHING",
+    spread : "TRAITS.SPREAD",
+    subtle : "TRAITS.SUBTLE",
+    thrown : "TRAITS.THROWN",
+    twohanded : "TRAITS.TWOHANDED"
 }
 
 AOS.dicePath = "systems/age-of-sigmar-soulbound/asset/image"
