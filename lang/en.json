@@ -78,6 +78,7 @@
   "ARMOUR.BENEFIT": "Benefit",
   "ARMOUR.TRAITS": "Traits",
   "ARMOUR.COST": "Cost",
+  "ARMOUR.ARMOUR": "Armour",
 
   "ATTRIBUTE.BODY": "Body",
   "ATTRIBUTE.MIND": "Mind",
@@ -207,6 +208,7 @@
   "EQUIPMENT.COST": "Cost",
   "EQUIPMENT.AVAILABILITY": "Availability",
   "EQUIPMENT.DESCRIPTION": "Description",
+  "EQUIPMENT.EQUIPPED": "Eqp.",
 
   "EXPERIENCE.EXPERIENCE": "Experience",
   "EXPERIENCE.XP": "XP",
@@ -283,6 +285,7 @@
   "POWER.NAME": "Name",
   "POWER.DN": "DN",
   "POWER.DN_COST": "DN / Cost",
+  "POWER.DAMAGE": "Damage",
   "POWER.TARGET": "Target",
   "POWER.RANGE": "Range",
   "POWER.DURATION": "Duration",
@@ -330,6 +333,9 @@
   "SKILL.SURVIVAL": "Survival",
   "SKILL.THEOLOGY": "Theology",
   "SKILL.WEAPON_SKILL": "Weapon Skill",
+  "SKILL.TRAINING_ABBR": "T",
+  "SKILL.POOL_ABBR": "P",
+  "SKILL.FOCUS_ABBR": "F",
 
   "SPELL.NAME": "Name",
   "SPELL.DN": "DN",

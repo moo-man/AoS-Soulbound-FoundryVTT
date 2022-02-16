@@ -111,9 +111,9 @@
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.WEAPONS"}}</h1>
         <div class="header-columns">
-            <div class="item-property item-name">Name</div>
-            <div class="item-property">Damage</div>
-            <div class="item-property flex">Traits</div>
+            <div class="item-property item-name">{{localize "WEAPON.NAME"}}</div>
+            <div class="item-property">{{localize "WEAPON.DAMAGE"}}</div>
+            <div class="item-property flex">{{localize "WEAPON.TRAITS"}}</div>
             <div class="item-controls"></div>
         </div>
     </div>
@@ -176,11 +176,11 @@
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.POWERS"}}</h1>
         <div class="header-columns">
-            <div class="item-property item-name">Name</div>
-            <div class="item-property">Damage</div>
+            <div class="item-property item-name">{{localize "POWER.NAME"}}</div>
+            <div class="item-property">{{localize "POWER.DAMAGE"}}</div>
             <div class="item-property long">{{localize "POWER.TARGET"}}</div>
             <div class="item-property long">{{localize "POWER.DURATION"}}</div>
-            <div class="item-property">DN / Cost</div>
+            <div class="item-property">{{localize "POWER.DN_COST"}}</div>
             <div class="item-controls"></div>
         </div>
     </div>
@@ -196,7 +196,7 @@
                 <div class="item-property">{{item.Damage}}</div>
                 <div class="item-property long">{{item.target}}</div>
                 <div class="item-property long">{{item.Duration}}</div>
-                <div class="item-property">DN {{item.dn}}</div>
+                <div class="item-property">{{localize "POWER.DN"}} {{item.dn}}</div>
                 <div class="item-controls">
                     <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                 </div>
@@ -218,7 +218,7 @@
                 <div class="item-property">{{item.Damage}}</div>
                 <div class="item-property long">{{item.target}}</div>
                 <div class="item-property long">{{item.Duration}}</div>
-                <div class="item-property">{{item.cost}} Mettle</div>
+                <div class="item-property">{{item.cost}} {{localize "HEADER.METTLE"}}</div>
                 <div class="item-controls">
                     <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
                 </div>
