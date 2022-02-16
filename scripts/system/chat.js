@@ -176,7 +176,15 @@ export default class SoulboundChat {
                 callback: li => SoulboundChat.applyChatCardDamage(li, 1,  {ignoreArmour : true})
             }
         );
-    
+
+        options.push(
+            {
+                name: "CHAT.APPLY_HALF_DAMAGE",
+                icon: '<i class="fas fa-user-minus"></i>',
+                condition: canApplyDamage,
+                callback: li => SoulboundChat.applyChatCardDamage(li, 0.5)
+            }
+        );    
 
         options.push(
             {
@@ -284,7 +292,7 @@ export default class SoulboundChat {
             item = test.item
         }
 
-        damage *= multiplier;
+        damage = Math.ceil(damage * multiplier);
 
         options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
         options.ineffective = test.item?.traitList?.ineffective

@@ -349,21 +349,18 @@ export class AgeOfSigmarActor extends Actor {
      */
     async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false}={}) {
         let armour = this.combat.armour.value
+        
+        armour -= penetrating;
+        
+        if(armour < 0) { armour = 0; }            
 
-        armour -= penetrating
+        if (ineffective) armour *= 2;
 
-        if (ineffective) armour *= 2
-
-        damage = ignoreArmour ? damage : damage - armour
-
-
+        damage = ignoreArmour ? damage : damage - armour;
 
         if (damage < 0)
             damage = 0
         let remaining = this.combat.health.toughness.value - damage;
-
-        if (ineffective)
-            remaining = -1 // ineffective can only cause minor wounds
 
          // Update the Actor
          const updates = {
@@ -387,7 +384,9 @@ export class AgeOfSigmarActor extends Actor {
         ui.notifications.notify(note);
 
         // Doing this here because foundry throws an error if wounds are added before the update
-        if(remaining < 0 && this.combat.health.wounds.max > 0) {          
+        if(remaining < 0 && this.combat.health.wounds.max > 0) {
+            if (ineffective)
+                remaining = -1 // ineffective can only cause minor wounds          
             this.computeNewWound(remaining);
         }
         return ret;

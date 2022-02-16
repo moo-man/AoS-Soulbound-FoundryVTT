@@ -153,6 +153,7 @@
   "CHAT.APPLY_HEALING" : "Apply Healing",
   "CHAT.APPLY_DAMAGE_IGNORE_ARMOUR" : "Apply Damage (Ignore Armour)",
   "CHAT.APPLY_DOUBLE_DAMAGE" : "Apply Double Damage",
+  "CHAT.APPLY_HALF_DAMAGE" : "Apply Half Damage",
   "CHAT.APPLY_CLEAVE_DAMAGE" : "Apply Cleave Damage",
   "CHAT.APPLY_REND_DAMAGE" : "Apply Rend to Armour",
   "CHAT.APPLY_BLAST_DAMAGE" : "Apply Blast Damage",
@@ -314,6 +315,8 @@
   "SETTING.INIT_DEFAULT": "Highest to Lowest Initative",
   "SETTING.INIT_ROLL2d": "Roll 2d6 + Initiative, higher go first",
   "SETTING.INIT_ROLL1d": "Roll 1d6 + Initiative, higher go first",
+  "SETTING.TARGET_RULE" : "Untarget after Attack",
+  "SETTING.TARGET_HINT" : "After making an Attack your Target will be cleared.",
 
   "SKILL.ARCANA": "Arcana",
   "SKILL.ATHLETICS": "Athletics",
