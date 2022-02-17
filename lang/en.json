@@ -280,6 +280,17 @@
   "PARTY.SOULFIRE": "Soulfire",
   "PARTY.DOOM": "Doom",
 
+ "ARCHETYPE.SPECIES" : "Species",
+ "ARCHETYPE.BODY" : "Body",
+ "ARCHETYPE.MIND" : "Mind",
+ "ARCHETYPE.SOUL" : "Soul",
+ "ARCHETYPE.CORE_SKILL" : "Core",
+ "ARCHETYPE.SKILLS" : "Skills",
+ "ARCHETYPE.TALENTS" : "Talents",
+ "ARCHETYPE.CORE_TALENTS" : "Core",
+ "ARCHETYPE.CHOOSE" : "Choose",
+ "ARCHETYPE.EQUIPMENT" : "Equipment",
+
   "POWER.NAME": "Name",
   "POWER.DN": "DN",
   "POWER.DN_COST": "DN / Cost",

@@ -14,7 +14,8 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
           contentSelector: ".sheet-body",
           initial: "description",
         },
-      ]
+      ],
+      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }]
     });
   }
 
@@ -22,6 +23,22 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     return `systems/age-of-sigmar-soulbound/template/sheet/${this.item.type}.html`
   }
 
+  _onDrop(ev) {
+    let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
+    let dropItem = game.items.get(dragData.id)
+
+    if (this.item.type === "archetype")
+    {
+      let list = duplicate(this.item.talents.list)
+      let obj = {
+        id : dragData.id,
+        name : dropItem.name,
+        diff : {}
+      }
+      list.push(obj)
+      this.item.update({"data.talents.list" : list})
+    } 
+  }
 
   activateListeners(html) {
     super.activateListeners(html);

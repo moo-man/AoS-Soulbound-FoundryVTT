@@ -299,7 +299,8 @@
       "spell",
       "talent",
       "weapon",
-      "partyItem"
+      "partyItem",
+      "archetype"
     ],
     "templates": {
       "equipped" : {
@@ -414,6 +415,43 @@
       "description": "",
       "category": "resource",
       "state": true
+    },
+    "archetype" : {
+      "journal" : "",
+      "species" : "",
+      "attributes" : {
+        "body" : 0,
+        "mind" : 0,
+        "soul" : 0
+      },
+      "skills": {
+        "core" : "",
+        "cost" : 0,
+        "list" : []
+      },
+      "talents" : {
+        "core" : [
+          {
+          "name" : "",
+          "id" : "",
+          "diff" : {}
+        }],
+        "list" : [
+        {
+          "name" : "",
+          "id" : "",
+          "diff" : {}
+        }],
+        "number" : 0
+      },
+      "equipment" : [
+        {
+          "name" : "",
+          "id" : "",
+          "diff" : {}
+        }
+      ]
+
     }
   }
 }
