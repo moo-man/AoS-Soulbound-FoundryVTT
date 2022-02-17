@@ -339,7 +339,9 @@ export class CombatDialog extends RollDialog {
                 data.secondaryTarget = duplicate(data.primaryTarget)
         }
 
-        game.user.updateTokenTargets([])
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+            game.user.updateTokenTargets([])
+        }
 
         return data
     }
@@ -526,7 +528,9 @@ export class SpellDialog extends RollDialog {
         let data = super._dialogData(actor, attribute, skill)
         mergeObject(data, spell.difficultyNumber)
         data.spell = spell
-        game.user.updateTokenTargets([])
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+            game.user.updateTokenTargets([])
+        }
         return data
     }    
 }

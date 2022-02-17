@@ -27,7 +27,7 @@
             {{#each data.skills as |skill key|}}
                 {{#if skill.isLeft}}
                     <div class="content-row" style="align-items: center;">
-                        <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{localize skill.label}}</a>
+                        <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{skill.label}}</a>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
                         <div class="sheet-table-value">({{skill.value}})</div>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
@@ -38,14 +38,14 @@
         <div class="content-column">
             <div class="content-row">
                 <div class="sheet-table-name bold">{{localize "HEADER.NAME"}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.TRAINING'}}">T</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">P</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">F</div>
+                <div class="sheet-table-value bold" title="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}</div>
+                <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
+                <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
             </div>
             {{#each data.skills as |skill key|}}
                 {{#if skill.isRight}}
                     <div class="content-row" style="align-items: center;">
-                        <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{localize skill.label}}</a>
+                        <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{skill.label}}</a>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
                         <div class="sheet-table-value">({{skill.value}})</div>
                         <div class="sheet-table-value"><input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>

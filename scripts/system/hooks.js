@@ -73,7 +73,7 @@ export default function registerHooks() {
         config: false,
         default: undefined,
         type: Object
-      })
+      });
 
       game.settings.register("age-of-sigmar-soulbound", "showCounter", {
         name: "Show Counter",
@@ -82,7 +82,7 @@ export default function registerHooks() {
         config: true,
         default: true,
         type: Boolean
-      })
+      });
 
       game.settings.register('age-of-sigmar-soulbound', 'bugReportName', {
         name: 'Bug Report Name',
@@ -90,6 +90,15 @@ export default function registerHooks() {
         config: false,
         default: "",
         type: String,
+      });
+
+      game.settings.register("age-of-sigmar-soulbound", "loseTarget", {
+        name: "SETTING.TARGET_RULE",
+        hint: "SETTING.TARGET_HINT",
+        scope: "client",
+        config: true,
+        default: true,
+        type: Boolean
       });
 
 
