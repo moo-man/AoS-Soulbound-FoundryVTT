@@ -314,7 +314,11 @@ export class AgeOfSigmarItem extends Item {
     get category() { return this.data.data.category }
     get equipped() { return this.data.data.equipped }
     get armour() { return this.data.data.armour }
-
+    get attributes() {return this.data.data.attributes}
+    get species() {return this.data.data.species}
+    get skills() {return this.data.data.skills}
+    get talents() {return this.data.data.talents}
+    get equipment() {return this.data.data.equipment}
 
 
 

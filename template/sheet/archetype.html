@@ -1,0 +1,116 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+    </div>
+    <div class="sheet-body">
+        <div class="sheet-header">
+            <h1><input name="name" type="text" value="{{item.name}}" /></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <h3>{{localize "ARCHETYPE.SPECIES"}}</h3>
+            <input name="data.cost" type="text" value="{{data.cost}}" />
+        </div>
+        <hr>
+        <div class="sheet-content">
+            <div class="content-box">
+                <div class="content-header">
+                    <h1>{{localize "TITLE.STATS"}}</h1>
+                </div>
+                <div class="content-row">
+                    <div class="entry-vertical">
+                        <h3>{{localize "ARCHETYPE.BODY"}}</h3>
+                        <input name="data.attributes.body" type="number" value="{{data.attributes.body}}"
+                            data-dtype="Number" />
+                    </div>
+                    <div class="entry-vertical">
+                        <h3>{{localize "ARCHETYPE.MIND"}}</h3>
+                        <input name="data.attributes.mind" type="number" value="{{data.attributes.mind}}"
+                            data-dtype="Number" />
+                    </div>
+                    <div class="entry-vertical">
+                        <h3>{{localize "ARCHETYPE.SOUL"}}</h3>
+                        <input name="data.attributes.soul" type="number" value="{{data.attributes.soul}}"
+                            data-dtype="Number" />
+                    </div>
+                </div>
+                <div class="content-row skills">
+                    <div class="skill-header">
+                        <div class="core">
+                            <label>
+                                {{localize "ARCHETYPE.CORE_SKILL"}}: 
+                            </label>
+                            <select name="data.skills.core">
+                                <option>Arcana</option>
+                            </select>
+                        </div>
+
+                        <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
+                        <div class="cost">
+                            <input type="number" value="{{data.skills.cost}}" name="data.skills.cost"
+                                data-dtype="Number" />
+                            <label>
+                                XP
+                            </label>
+                        </div>
+                    </div>
+                    <div class="skill-selection">
+                        {{#each (config "skills") as |skill sk|}}
+                        <div class="skill-group">
+                            <input type="checkbox" data-skill="{{sk}}" checked="???" />
+                            <label class="skill-label">
+                                {{skill}}
+                            </label>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+                <div class="content-row talent">
+                    <div class="entry-vertical">
+                        <h3>{{localize "ARCHETYPE.TALENTS"}}</h3>
+                        <div class="entry-list">
+                            <h4>{{localize "ARCHETYPE.CORE_TALENTS"}}</h4>
+                            {{#each data.talents.core as |talent index|}}
+                            <div class="entry-content">
+                                <div class="entry-element talents" data-index="{{index}}">
+                                    {{talent.name}}
+                                    <a class="talent-edit"><i class="fas fa-edit"></i></a>
+                                    <a class="talent-delete"><i class="fas fa-times"></i></a>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                        <hr>
+                        <div class="entry-list">
+                            <h4>{{localize "ARCHETYPE.CHOOSE"}} <input type="number" name="data.talents.choose" value="{{data.talents.choose}}"></h4>
+                            {{#each data.talents.list as |talent index|}}
+                            <div class="entry-content">
+                                <div class="entry-element talents" data-index="{{index}}">
+                                {{talent.name}}
+                                    <a class="talent-edit"><i class="fas fa-edit"></i></a>
+                                    <a class="talent-delete"><i class="fas fa-times"></i></a>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+                <div class="content-row equipment">
+                    <div class="entry-vertical">
+                        <h3>{{localize "ARCHETYPE.EQUIPMENT"}}</h3>
+                        <div class="entry-list">
+                            {{#each data.equipment as |equipment index|}}
+                            <div class="entry-content">
+                                <div class="entry-element talents" data-index="{{index}}">
+                                    {{equipment.name}}
+                                    <a class="equipment-edit"><i class="fas fa-edit"></i></a>
+                                    <a class="equipment-delete"><i class="fas fa-times"></i></a>
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
