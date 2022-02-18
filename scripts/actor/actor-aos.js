@@ -67,6 +67,10 @@ export class AgeOfSigmarActor extends Actor {
         }
         if (this.type==="npc")
             this._sizeToken()
+
+        if(this.type === "player") {
+            this.computeSpentExperience();
+        }
     }
 
 
@@ -235,6 +239,33 @@ export class AgeOfSigmarActor extends Actor {
         if(this.autoCalc.mettle) {
             this.combat.mettle.max += Math.ceil(this.attributes.soul.value / 2) + this.combat.mettle.bonus;
         }
+    }
+
+    computeSpentExperience() {
+        let total = 0;
+        let costs = game.aos.config.Expcost;
+
+        for(let attribute of Object.values(this.attributes))
+        {
+            let index = attribute.value >= 1 && attribute.value <= 8 ? attribute.value-1 : 0;
+            total += costs.attributes[index];
+        }
+
+        for(let skill of Object.values(this.skills)) {
+            total += this.getSkillCost(costs, skill.training);            
+            total += this.getSkillCost(costs, skill.focus);
+        }
+
+        let tam = this.items.filter(x => x.isTalent || x.isMiracle);
+
+        total += tam.length * costs.talentsAndMiracles;
+
+        this.experience.spent = total;
+    }
+
+    getSkillCost(costs, val) {
+        let index = val >= 1 && val <= 3 ? val : 0;
+        return costs.skillAndFokus[index];
     }
 
     applyDerivedEffects() {

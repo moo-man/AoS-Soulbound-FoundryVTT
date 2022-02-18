@@ -256,7 +256,9 @@
         "eyeType": "",
         "connections" : ""
       },
-      "experience": 0,
+      "experience": {
+        "current" : 0 
+      },
       "notes": ""
     },
     "npc": {

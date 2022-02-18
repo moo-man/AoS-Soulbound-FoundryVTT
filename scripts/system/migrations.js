@@ -42,6 +42,7 @@ export default class Migration {
     static async migrateActor(actor) {
         let updateData = {}
         updateData.effects = actor.effects.map(this.migrateEffect)
+        updateData.experience = { current :  actor.experience };
 
         return updateData
     }

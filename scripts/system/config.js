@@ -138,6 +138,12 @@ AOS.durations = {
     "permanent" : "DURATION.PERMANENT"
 }
 
+AOS.Expcost = {
+    talentsAndMiracles : 2,
+    attributes : [0, 2, 7, 14, 23, 34, 47, 62],
+    skillAndFokus : [0, 1, 3, 8]
+}
+
 AOS.partyItemCategories = {
     longGoal : "PARTY.LONG_TERM_GOAL",
     shortGoal : "PARTY.SHORT_TERM_GOAL",
