@@ -403,6 +403,7 @@ li.directory-item.folder:not(.collapsed) {
 .entry-list {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .entry-list .entry-content {
@@ -416,9 +417,28 @@ li.directory-item.folder:not(.collapsed) {
     text-align: center;
 }
 
+.entry-list .inline-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.entry-list .inline-list > *{
+    margin: 3px;
+    border: 1px solid darkslategray;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+
 
 .entry-list .entry-element > *{
     flex: 1
+}
+
+.entry-list .entry-element > .entry-controls{
+    flex: 0 0 60px;
 }
 
 .entry-list .entry-element > a{
@@ -440,6 +460,14 @@ li.directory-item.folder:not(.collapsed) {
 .entry-list .entry-element .ratio > input {
     flex : 0 0 30px
 }
+
+.entry-list .entry-element.equipment:hover,
+    .entry-list .entry-element.talents:hover {
+    cursor: pointer;
+    text-shadow: 0 0 8px goldenrod
+    
+}
+
 
 
 

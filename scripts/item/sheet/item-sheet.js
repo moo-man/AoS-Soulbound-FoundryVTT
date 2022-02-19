@@ -15,7 +15,8 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
           initial: "description",
         },
       ],
-      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }]
+      dragDrop: [{ dragSelector: ".item-list .item", dropSelector: null }],
+      scrollY: [".sheet-content"]
     });
   }
 
@@ -29,14 +30,51 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     if (this.item.type === "archetype")
     {
-      let list = duplicate(this.item.talents.list)
+      let list;
+      let path; 
       let obj = {
         id : dragData.id,
         name : dropItem.name,
         diff : {}
       }
-      list.push(obj)
-      this.item.update({"data.talents.list" : list})
+      if (dropItem.type == "talent")
+      {
+        new Dialog({
+          title : "Core Talent?",
+          content : "",
+          buttons : {
+            core : {
+              label : "Core",
+              callback : () => {
+                let core = duplicate(this.item.talents.core)
+                core.push(obj)
+                this.item.update({"data.talents.core" : core})
+              }
+            },
+            normal : {
+              label : "Normal",
+              callback : () => {
+                let list = duplicate(this.item.talents.list)
+                list.push(obj)
+                this.item.update({"data.talents.list" : list})
+              }
+            }
+
+          }
+        }).render(true)
+
+      }
+      else if (["weapon", "armour", "equipment", "aethericDevice", "rune"].includes(dropItem.type))
+      {
+        let list = duplicate(this.item.equipment)
+        let obj = {
+          id : dragData.id,
+          name : dropItem.name,
+          diff : {}
+        }
+        list.push(obj)
+        this.item.update({"data.equipment" : list})
+      }
     } 
   }
 
@@ -168,13 +206,13 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     })
 
-    html.find(".overcast-delete").click(ev => {
+    html.find(".entry-delete").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".entry-element").attr("data-index"))
-      let overcasts = foundry.utils.deepClone(this.item.overcasts)
-      overcasts.splice(index, 1)
+      let path = $(ev.currentTarget).parents(".entry-element").attr("data-path")
+      let array = duplicate(getProperty(this.item.data, path))
+      array.splice(index, 1)
 
-      return this.item.update({"data.overcasts" : overcasts})
-
+      return this.item.update({[`${path}`] : array})
     })
 
     html.find(".overcasts input").change(ev => {
@@ -191,6 +229,40 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
       this.item.update({"data.overcasts" : overcasts})
 
+    })
+
+    html.find(".entry-element.talents,.entry-element.equipment").mousedown(ev => {
+      let path = ev.currentTarget.dataset.path
+      let index = Number(ev.currentTarget.dataset.index)
+      let array = duplicate(getProperty(this.item.data, path));
+
+      let obj = array[index];
+
+      if (obj)
+      {
+        if (ev.button == 0)
+          game.items.get(obj.id).sheet.render(true, {editable: false})
+        else 
+        {
+          new Dialog({
+            title : "Delete Item?",
+            content : "Do you want to remove this item from the Archetype?",
+            buttons : {
+              yes : {
+                label : "Yes",
+                callback : () => {
+                  array.splice(index, 1)
+                  this.item.update({[`${path}`] : array})
+                }
+              },
+              no : {
+                label : "No",
+                callback : () => {}
+              }
+            }
+          }).render(true)
+        }
+      }
     })
   }
 }

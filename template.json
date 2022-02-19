@@ -296,7 +296,6 @@
       "armour",
       "equipment",
       "miracle",
-      "rumour",
       "rune",
       "spell",
       "talent",
@@ -428,7 +427,7 @@
       },
       "skills": {
         "core" : "",
-        "cost" : 0,
+        "xp" : 0,
         "list" : []
       },
       "talents" : {
@@ -444,7 +443,7 @@
           "id" : "",
           "diff" : {}
         }],
-        "number" : 0
+        "choose" : 0
       },
       "equipment" : [
         {

@@ -80,6 +80,13 @@
 .age-of-sigmar-soulbound.sheet.item h4 {
     color: unset;
     display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.age-of-sigmar-soulbound.sheet.item .content-row.talent .entry-list h4 input {
+    width: 25px;
+    margin-left: 5px;
 }
 
 .item .content-row.skills {
