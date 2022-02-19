@@ -18,12 +18,18 @@ export default class Migration {
 
     static async migrateExperience() {
         console.log(`Applying AOS:Soulbound System Migration for version ${game.system.data.version}. Please be patient and do not close your game or shut down your server.`);
-        let updateData = {}
+        
         let players = game.actors.contents.filter(x => x.type === "player");
         for(let player of players) {
             try {
+                let updateData = {}
                 console.log(`Migrating Actor ${player.name}`);
-                updateData["data.experience"] = { total : player.experience || 0 };
+                let current = player.experience || 0; // keep for later, expecting this to be unspent XP
+                updateData["data.experience"] = { total : 0 };
+                await player.update(updateData); // update to new datastructure
+                
+                // After the upate use calculated data to combine spent and current xp
+                updateData["data.experience"] = { total : current + player.experience.spent };
                 await player.update(updateData);
             } catch (e) {
                 console.error(`Failed migration for Actor ${player.name}: ${e.message}`);

@@ -242,7 +242,7 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     computeSpentExperience() {
-        if(!this.experience.total) return;
+        if(this.experience.total === undefined) return;
 
         let spent = 0;
         let costs = game.aos.config.Expcost;
