@@ -242,25 +242,28 @@ export class AgeOfSigmarActor extends Actor {
     }
 
     computeSpentExperience() {
-        let total = 0;
+        if(!this.experience.total) return;
+
+        let spent = 0;
         let costs = game.aos.config.Expcost;
 
         for(let attribute of Object.values(this.attributes))
         {
             let index = attribute.value >= 1 && attribute.value <= 8 ? attribute.value-1 : 0;
-            total += costs.attributes[index];
+            spent += costs.attributes[index];
         }
 
         for(let skill of Object.values(this.skills)) {
-            total += this.getSkillCost(costs, skill.training);            
-            total += this.getSkillCost(costs, skill.focus);
+            spent += this.getSkillCost(costs, skill.training);            
+            spent += this.getSkillCost(costs, skill.focus);
         }
 
         let tam = this.items.filter(x => x.isTalent || x.isMiracle);
 
-        total += tam.length * costs.talentsAndMiracles;
+        spent += tam.length * costs.talentsAndMiracles;
 
-        this.experience.spent = total;
+        this.experience.spent = spent;
+        this.experience.outstanding = this.experience.total - spent;
     }
 
     getSkillCost(costs, val) {
@@ -365,14 +368,8 @@ export class AgeOfSigmarActor extends Actor {
             skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
             swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
         }
-
-
     }
-
-
     //#endregion
-
-
 
     /**
      * applies Damage to the actor
