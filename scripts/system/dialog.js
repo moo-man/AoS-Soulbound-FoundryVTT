@@ -190,11 +190,11 @@ export class RollDialog extends Dialog {
         {
             if (AgeOfSigmarEffect.numericTypes.includes(c.key))
                 this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
-            else if (c.key === "double-training" || c.key === "double-focus" || c.key === "triggerToDamage")
+            else if (c.key == "double-training" || c.key == "double-focus" || c.key == "triggerToDamage")
             {
-                if (c.value === "true")
+                if (c.value == "true")
                     this.effectValues[c.key] = true
-                else if (c.value === "false")
+                else if (c.value == "false")
                     this.effectValues[c.key] = false
             }
         }
