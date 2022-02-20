@@ -274,24 +274,9 @@ export class AgeOfSigmarActor extends Actor {
     applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
-            const modes = CONST.ACTIVE_EFFECT_MODES;
-            switch ( change.mode ) {
-                case modes.CUSTOM:
-                return change.effect._applyCustom(this, change);
-                case modes.ADD:
-                return change.effect._applyAdd(this, change);
-                case modes.MULTIPLY:
-                return change.effect._applyMultiply(this, change);
-                case modes.OVERRIDE:
-                return change.effect._applyOverride(this, change);
-                case modes.UPGRADE:
-                case modes.DOWNGRADE:
-                return change.effect._applyUpgrade(this, change);
-            }
+            change.effect.apply(this, change);
         })
     }
-
-
 
     //#region Rolling Setup
     async setupAttributeTest(attribute, options={}) 
@@ -358,16 +343,6 @@ export class AgeOfSigmarActor extends Actor {
         testData.targets = dialogData.targets
         testData.speaker = this.speakerData()
         return new MiracleTest(testData)
-    }
-
-    _getCombatData(weapon) {
-        let data = {
-            melee: this.actor.combat.melee.relative,
-            accuracy: this.actor.combat.accuracy.relative,
-            attribute: "body" ,
-            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
-            swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
-        }
     }
     //#endregion
 

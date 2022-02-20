@@ -61,9 +61,9 @@ export class RollDialog extends Dialog {
         const skill = html.find("#skill")[0].value;
         const doubleTraining = html.find("#double-training")[0].checked;
         const doubleFocus = html.find("#double-focus")[0].checked;
-        const allocation = []//html.find("#allocation")[0].value;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
-        return { attribute, skill, doubleTraining, doubleFocus, allocation, bonusDice }
+        const triggerToDamage = html.find("#triggerToDamage")[0].value;
+        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage }
     }
 
     
@@ -111,6 +111,7 @@ export class RollDialog extends Dialog {
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
+            "triggerToDamage" : null
         }
         
 
@@ -142,7 +143,6 @@ export class RollDialog extends Dialog {
             this.applyEffects()
         })[0]
 
-
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
 
         this.userEntry = {
@@ -163,7 +163,8 @@ export class RollDialog extends Dialog {
             "complexity" : null,
             "double-training" : null,
             "double-focus" : null,
-            "bonusDice" : null
+            "bonusDice" : null,
+            "triggerToDamage" : null
         }
         
         let changes = []
@@ -182,11 +183,11 @@ export class RollDialog extends Dialog {
         {
             if (AgeOfSigmarEffect.numericTypes.includes(c.key))
                 this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
-            else if (c.key == "double-training" || c.key == "double-focus")
+            else if (c.key === "double-training" || c.key === "double-focus" || c.key === "triggerToDamage")
             {
-                if (c.value == "true")
+                if (c.value === "true")
                     this.effectValues[c.key] = true
-                else if (c.value == "false")
+                else if (c.value === "false")
                     this.effectValues[c.key] = false
             }
         }
@@ -315,9 +316,7 @@ export class CombatDialog extends RollDialog {
             defence : 3,
             armour : 0
         }
-        data.secondaryTarget = duplicate(data.primaryTarget)
 
-        
         if (hasTarget) {
             data.primaryTarget = {
                 name : targets[0].name,

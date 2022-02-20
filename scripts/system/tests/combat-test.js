@@ -21,12 +21,8 @@ export default class CombatTest extends Test {
         {
             this.result.primary = this.computeDualResult("primary")
             this.result.secondary = this.computeDualResult("secondary")
-
         }
-        else 
-        {
-            super.computeResult()
-            if (this.result.success)
+        else if (this.result.success) {
                 this.result.damage = this.computeDamage()
         }
         return this.result
@@ -106,15 +102,13 @@ export default class CombatTest extends Test {
             effect.isPlain = true;
             effect.text = game.i18n.localize("TRAIT.INEFFECTIVE_EFFECT");
             damage.traitEffects.push(effect);
-            damage.armour *= 2;
         }
     
         if(damage.armour > 0 && weapon.traitList.penetrating) {
             effect = this._createTraitEffect();
             effect.isPlain = true;
             effect.text = game.i18n.localize("TRAIT.PENETRATING_EFFECT");
-            damage.traitEffects.push(effect);
-            damage.armour -= 1;        
+            damage.traitEffects.push(effect);     
         }
     
         if(weapon.traitList.cleave) {
@@ -132,17 +126,21 @@ export default class CombatTest extends Test {
         }
     
         if (addSuccess) {
-            damage.total = damageValue + result.successes// - damage.armour;
+            damage.total = damageValue + result.successes;
         } else {
-            damage.total = damageValue// - damage.armour;
+            damage.total = damageValue;
+        }
+
+        if(result.triggerToDamage) {
+            damage.total += result.triggers; 
         }
        
-        damage.total += this.testData.combat.bonusDamage || 0
+        damage.total += this.testData.combat.bonusDamage || 0;
        
         if(damage.total < 0) {
             damage.total = 0;
         }
-        return damage
+        return damage;
     }
 
     // TODO Deprecate in favor of trait objects
