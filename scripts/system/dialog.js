@@ -63,7 +63,9 @@ export class RollDialog extends Dialog {
         const doubleFocus = html.find("#double-focus")[0].checked;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
         const triggerToDamage = html.find("#triggerToDamage")[0].value;
-        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage }
+        const allocation = [];
+
+        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage, allocation }
     }
 
     
@@ -142,6 +144,10 @@ export class RollDialog extends Dialog {
             this.userEntry.bonusDice = parseInt(ev.target.value)
             this.applyEffects()
         })[0]
+        this.inputs.triggerToDamage = html.find('#triggerToDamage').change(ev => {
+            this.userEntry.triggerToDamage = ev.target.value
+            this.applyEffects()
+        })[0]
 
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
 
@@ -151,6 +157,7 @@ export class RollDialog extends Dialog {
             "double-training" : this.inputs["double-training"].checked,
             "double-focus" : this.inputs["double-focus"].checked,
             "bonusDice" : parseInt(this.inputs.bonusDice.value),
+            "triggerToDamage" : this.inputs["triggerToDamage"].value
         }
 
     }
