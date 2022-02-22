@@ -323,6 +323,7 @@ export class CombatDialog extends RollDialog {
             defence : 3,
             armour : 0
         }
+        data.secondaryTarget = duplicate(data.primaryTarget)
 
         if (hasTarget) {
             data.primaryTarget = {
