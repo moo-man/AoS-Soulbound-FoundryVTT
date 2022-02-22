@@ -26,10 +26,10 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
 
     fillDerivedData(actor, change) {
         let data = eval(Roll.replaceFormulaData(change.value, actor.getRollData()))
-        //Foundry Expects to find a String anothing but Strings 
+        //Foundry Expects to find a String for numbers
         //Raw Numbers don't work anymore
-        if(Number.isInteger(data)) {
-            change.value = "" + data;
+        if(typeof data === "number") {
+            change.value = data.toString();
         } else {
             change.value = data;
         }
