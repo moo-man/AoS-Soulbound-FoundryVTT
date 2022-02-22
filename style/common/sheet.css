@@ -105,14 +105,32 @@
 .item .content-row .skill-header {
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .item .content-row .skill-header .core,
-    .item .content-row .skill-header .cost {
+    .item .content-row .skill-header .xp {
     display: flex;
-    width: 100px;
     align-items: center;
     padding: 3px;
+    flex: 1
+}
+
+.item .content-row .skill-header .xp {
+    justify-content: center;
+}
+
+    .item .content-row .skill-header .xp  input{
+        width: 30px;
+}
+
+
+.item .content-row .skill-header .core  select{
+    width: 80%
+}
+
+    .item .content-row .skill-header h3 {
+        flex: unset
 }
 .item .content-row .skill-header .core select {
     margin-left: 5px;

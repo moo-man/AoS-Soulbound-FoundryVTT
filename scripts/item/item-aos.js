@@ -1,6 +1,17 @@
 import SoulboundUtility from "../system/utility.js";
 
 export class AgeOfSigmarItem extends Item {
+    
+
+    constructor(data, context)
+    {
+        super(data, context)
+        if (context && context.archetype) // Embedded Power
+        {
+            this.archetype = context.archetype.item;
+            this.equipmentIndex = context.archetype.index;
+        }
+    }
 
   // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
   async _preCreate(data, options, user) {

@@ -1,4 +1,5 @@
 import ItemTraits from "../../apps/item-traits.js";
+import { AgeOfSigmarItem } from "../item-aos.js";
 
 export class AgeOfSigmarItemSheet extends ItemSheet {
 
@@ -23,40 +24,79 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
   get template() {
     return `systems/age-of-sigmar-soulbound/template/sheet/${this.item.type}.html`
   }
+  async _updateObject(event, formData) {
+
+
+    // If this item is from an archetype entry, update the diff instead of the actual item
+    // I would like to have done this is the item's _preCreate but the item seems to lose 
+    // its "archetype" reference so it has to be done here
+    // TODO: Current Issue - changing a property, then changing back to the original value
+    // does not work due to `diffObject()`
+
+    if (this.item.archetype) {
+      // Get the archetype's equipment, find the corresponding object, add to its diff
+      let list = duplicate(this.item.archetype.equipment)
+      let equipmentObj = list[this.item.equipmentIndex];
+      mergeObject( // Merge current diff with new diff
+        equipmentObj.diff, 
+        diffObject(this.item.toObject(), expandObject(formData)), 
+        {overwrite : true})
+
+      // If the diff includes the item's name, change the name stored in the archetype
+      if (equipmentObj.diff.name)
+        equipmentObj.name = equipmentObj.diff.name
+      else 
+        equipmentObj.name = this.item.name
+
+      this.item.archetype.update({ "data.equipment": list })
+      return
+    }
+
+    // Special processing for archetype items to parse a list of skills available to spend exp on from the checkboxes
+    if (this.item.type == "archetype") {
+      let skills = []
+      this.element.find(".skill-checkbox").each((i, cb) => {
+        if (cb.checked)
+          skills.push(cb.dataset.skill)
+      });
+
+      // Add skills array to form data
+      formData["data.skills.list"] = skills
+    }
+    return super._updateObject(event, formData)
+  }
 
   _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
     let dropItem = game.items.get(dragData.id)
 
-    if (this.item.type === "archetype")
-    {
+    if (this.item.type === "archetype") {
       let list;
-      let path; 
+      let path;
       let obj = {
-        id : dragData.id,
-        name : dropItem.name,
-        diff : {}
+        id: dragData.id,
+        name: dropItem.name,
+        diff: {}
       }
-      if (dropItem.type == "talent")
-      {
+      if (dropItem.type == "talent") {
         new Dialog({
-          title : "Core Talent?",
-          content : "",
-          buttons : {
-            core : {
-              label : "Core",
-              callback : () => {
+          title: "Core Talent?",
+          content: "",
+          buttons: {
+            core: {
+              label: "Core",
+              callback: () => {
                 let core = duplicate(this.item.talents.core)
                 core.push(obj)
-                this.item.update({"data.talents.core" : core})
+                this.item.update({ "data.talents.core": core })
               }
             },
-            normal : {
-              label : "Normal",
-              callback : () => {
+            normal: {
+              label: "Normal",
+              callback: () => {
                 let list = duplicate(this.item.talents.list)
                 list.push(obj)
-                this.item.update({"data.talents.list" : list})
+                this.item.update({ "data.talents.list": list })
               }
             }
 
@@ -64,18 +104,17 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         }).render(true)
 
       }
-      else if (["weapon", "armour", "equipment", "aethericDevice", "rune"].includes(dropItem.type))
-      {
+      else if (["weapon", "armour", "equipment", "aethericDevice", "rune"].includes(dropItem.type)) {
         let list = duplicate(this.item.equipment)
         let obj = {
-          id : dragData.id,
-          name : dropItem.name,
-          diff : {}
+          id: dragData.id,
+          name: dropItem.name,
+          diff: {}
         }
         list.push(obj)
-        this.item.update({"data.equipment" : list})
+        this.item.update({ "data.equipment": list })
       }
-    } 
+    }
   }
 
   activateListeners(html) {
@@ -98,6 +137,14 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
   getData() {
     const data = super.getData();
+
+    if (this.item.archetype) {
+      let list = duplicate(this.item.archetype.equipment)
+      let equipmentObj = list[this.item.equipmentIndex];
+      mergeObject(data.data, equipmentObj.diff, {overwrite : true}) // Merge archetype diff with item data
+      data.name = equipmentObj.diff.name || data.item.name
+    }
+
     data.data = data.data.data; // project system data so that handlebars has the same name and value paths
     data.conditions = CONFIG.statusEffects.map(i => {
       return {
@@ -108,14 +155,10 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       }
     })
 
-
     // Lock "Initial" value for overcasts targeting damage or duration - already provided by the spell
-    if (this.item.type == "spell")
-    {
-      for(let oc of data.data.overcasts)
-      {
-        if (oc.property == "damage.total" || oc.property == "duration.value")
-        {
+    if (this.item.type == "spell") {
+      for (let oc of data.data.overcasts) {
+        if (oc.property == "damage.total" || oc.property == "duration.value") {
           oc.initialDisabled = true;
           oc.initial = ""
         }
@@ -123,6 +166,13 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       }
     }
 
+    // Create an easily accessible object for handlebars to check if a skill is included (used in checked property of skill list)
+    if (this.item.type == "archetype") {
+      data.skills = {}
+      data.data.skills.list.forEach(s => {
+        data.skills[s] = true;
+      })
+    }
 
     return data;
   }
@@ -202,7 +252,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       let overcasts = foundry.utils.deepClone(this.item.overcasts)
       overcasts.push(overcast)
 
-      return this.item.update({"data.overcasts" : overcasts})
+      return this.item.update({ "data.overcasts": overcasts })
 
     })
 
@@ -212,7 +262,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       let array = duplicate(getProperty(this.item.data, path))
       array.splice(index, 1)
 
-      return this.item.update({[`${path}`] : array})
+      return this.item.update({ [`${path}`]: array })
     })
 
     html.find(".overcasts input").change(ev => {
@@ -221,43 +271,41 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       let path = ev.currentTarget.dataset.path
 
       let value = ev.target.value
-      
+
       if (Number.isNumeric(value))
         value = parseInt(value)
 
       setProperty(overcasts[index], path, value)
 
-      this.item.update({"data.overcasts" : overcasts})
+      this.item.update({ "data.overcasts": overcasts })
 
     })
 
-    html.find(".entry-element.talents,.entry-element.equipment").mousedown(ev => {
+    html.find(".entry-element.talents,.entry-element.equipment").mouseup(ev => {
       let path = ev.currentTarget.dataset.path
       let index = Number(ev.currentTarget.dataset.index)
       let array = duplicate(getProperty(this.item.data, path));
 
       let obj = array[index];
 
-      if (obj)
-      {
+      if (obj) {
         if (ev.button == 0)
-          game.items.get(obj.id).sheet.render(true, {editable: false})
-        else 
-        {
+          new AgeOfSigmarItem(game.items.get(obj.id).toObject(), { archetype: { item: this.item, index } }).sheet.render(true)
+        else {
           new Dialog({
-            title : "Delete Item?",
-            content : "Do you want to remove this item from the Archetype?",
-            buttons : {
-              yes : {
-                label : "Yes",
-                callback : () => {
+            title: "Delete Item?",
+            content: "Do you want to remove this item from the Archetype?",
+            buttons: {
+              yes: {
+                label: "Yes",
+                callback: () => {
                   array.splice(index, 1)
-                  this.item.update({[`${path}`] : array})
+                  this.item.update({ [`${path}`]: array })
                 }
               },
-              no : {
-                label : "No",
-                callback : () => {}
+              no: {
+                label: "No",
+                callback: () => { }
               }
             }
           }).render(true)

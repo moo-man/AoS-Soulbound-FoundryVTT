@@ -8,7 +8,7 @@
         </div>
         <div class="sheet-subHeader">
             <h3>{{localize "ARCHETYPE.SPECIES"}}</h3>
-            <input name="data.cost" type="text" value="{{data.cost}}" />
+            <input name="data.species" type="text" value="{{data.species}}" />
         </div>
         <hr>
         <div class="sheet-content">
@@ -34,34 +34,43 @@
                     </div>
                 </div>
                 <div class="content-row skills">
-                    <div class="skill-header">
-                        <div class="core">
-                            <label>
-                                {{localize "ARCHETYPE.CORE_SKILL"}}: 
-                            </label>
-                            <select name="data.skills.core">
-                                <option>Arcana</option>
-                            </select>
+                    <div class="entry-vertical">
+                        <div class="skill-header">
+                            <div class="core">
+                                <label>
+                                    {{localize "ARCHETYPE.CORE_SKILL"}}: 
+                                </label>
+                                <select name="data.skills.core">
+                                    <option value=""></option>
+                                    {{#select data.skills.core}}
+                                    {{#each (config "skills") as |skill sk|}}
+                                    {{#if (lookup ../skills sk)}}
+                                    <option value="{{sk}}">{{skill}}</option>
+                                    {{/if}}
+                                    {{/each}}
+                                    {{/select}}
+                                </select>
+                            </div>
+    
+                            <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
+                            <div class="xp">
+                                <input type="number" value="{{data.skills.xp}}" name="data.skills.xp"
+                                    data-dtype="Number" />
+                                <label>
+                                    XP
+                                </label>
+                            </div>
                         </div>
-
-                        <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
-                        <div class="cost">
-                            <input type="number" value="{{data.skills.cost}}" name="data.skills.cost"
-                                data-dtype="Number" />
-                            <label>
-                                XP
-                            </label>
+                        <div class="skill-selection">
+                            {{#each (config "skills") as |skill sk|}}
+                            <div class="skill-group">
+                                <input type="checkbox" class="skill-checkbox" data-skill="{{sk}}" {{checked (lookup ../skills sk)}}/>
+                                <label class="skill-label">
+                                    {{skill}}
+                                </label>
+                            </div>
+                            {{/each}}
                         </div>
-                    </div>
-                    <div class="skill-selection">
-                        {{#each (config "skills") as |skill sk|}}
-                        <div class="skill-group">
-                            <input type="checkbox" data-skill="{{sk}}" checked="???" />
-                            <label class="skill-label">
-                                {{skill}}
-                            </label>
-                        </div>
-                        {{/each}}
                     </div>
                 </div>
                 <div class="content-row talent">
