@@ -5,11 +5,37 @@ export default class Migration {
         let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
 
         if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) {
-            this.migrateWorld()
+            this.migrateWorld();
+        }
+
+        migrationTarget = "4.3.1" // change to applicable version
+
+        if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) {
+            this.migrateExperience();
         }
         game.settings.set("age-of-sigmar-soulbound", "systemMigrationVersion", game.system.data.version)
     }
 
+    static async migrateExperience() {
+        console.log(`Applying AOS:Soulbound System Migration for version ${game.system.data.version}. Please be patient and do not close your game or shut down your server.`);
+        
+        let players = game.actors.contents.filter(x => x.type === "player");
+        for(let player of players) {
+            try {
+                let updateData = {}
+                console.log(`Migrating Actor ${player.name}`);
+                let current = player.experience || 0; // keep for later, expecting this to be unspent XP
+                updateData["data.experience"] = { total : 0 };
+                await player.update(updateData); // update to new datastructure
+                
+                // After the upate use calculated data to combine spent and current xp
+                updateData["data.experience"] = { total : current + player.experience.spent };
+                await player.update(updateData);
+            } catch (e) {
+                console.error(`Failed migration for Actor ${player.name}: ${e.message}`);
+            }
+        }
+    }
 
     static async migrateWorld() {
         console.log(`Applying AOS:Soulbound System Migration for version ${game.system.data.version}. Please be patient and do not close your game or shut down your server.`)
@@ -49,8 +75,7 @@ export default class Migration {
     static migrateItem(item)
     {   
         let updateData = {
-            items: []
-        
+            items: []        
         }
 
         if (item.category == "range")

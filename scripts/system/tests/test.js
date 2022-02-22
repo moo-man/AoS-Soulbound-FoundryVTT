@@ -11,7 +11,8 @@ export default class Test {
                 allocation: data.allocation,
                 itemId : data.itemId,
                 doubleTraining : data.doubleTraining || false,
-                doubleFocus : data.doubleFocus || false
+                doubleFocus : data.doubleFocus || false,
+                triggerToDamage: data.triggerToDamage || false
             },
             context : {
                 speaker : data.speaker,
@@ -64,7 +65,8 @@ export default class Test {
         {
             triggers : 0,
             dice : [],
-            focus : this.skill?.focus || 0
+            focus : this.skill?.focus || 0,
+            triggerToDamage : this.testData.triggerToDamage || false
         }
         result.focus = this.testData.doubleFocus ? result.focus * 2 : result.focus
         let dn = this.testData.dn

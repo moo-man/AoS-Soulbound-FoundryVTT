@@ -67,6 +67,10 @@ export class AgeOfSigmarActor extends Actor {
         }
         if (this.type==="npc")
             this._sizeToken()
+
+        if(this.type === "player") {
+            this.computeSpentExperience();
+        }
     }
 
 
@@ -237,27 +241,42 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
+    computeSpentExperience() {
+        if(this.experience.total === undefined) return;
+
+        let spent = 0;
+        let costs = game.aos.config.Expcost;
+
+        for(let attribute of Object.values(this.attributes))
+        {
+            let index = attribute.value >= 1 && attribute.value <= 8 ? attribute.value-1 : 0;
+            spent += costs.attributes[index];
+        }
+
+        for(let skill of Object.values(this.skills)) {
+            spent += this.getSkillCost(costs, skill.training);            
+            spent += this.getSkillCost(costs, skill.focus);
+        }
+
+        let tam = this.items.filter(x => x.isTalent || x.isMiracle);
+
+        spent += tam.length * costs.talentsAndMiracles;
+
+        this.experience.spent = spent;
+        this.experience.outstanding = this.experience.total - spent;
+    }
+
+    getSkillCost(costs, val) {
+        let index = val >= 1 && val <= 3 ? val : 0;
+        return costs.skillAndFokus[index];
+    }
+
     applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
-            const modes = CONST.ACTIVE_EFFECT_MODES;
-            switch ( change.mode ) {
-                case modes.CUSTOM:
-                return change.effect._applyCustom(this, change);
-                case modes.ADD:
-                return change.effect._applyAdd(this, change);
-                case modes.MULTIPLY:
-                return change.effect._applyMultiply(this, change);
-                case modes.OVERRIDE:
-                return change.effect._applyOverride(this, change);
-                case modes.UPGRADE:
-                case modes.DOWNGRADE:
-                return change.effect._applyUpgrade(this, change);
-            }
+            change.effect.apply(this, change);
         })
     }
-
-
 
     //#region Rolling Setup
     async setupAttributeTest(attribute, options={}) 
@@ -325,23 +344,7 @@ export class AgeOfSigmarActor extends Actor {
         testData.speaker = this.speakerData()
         return new MiracleTest(testData)
     }
-
-    _getCombatData(weapon) {
-        let data = {
-            melee: this.actor.combat.melee.relative,
-            accuracy: this.actor.combat.accuracy.relative,
-            attribute: "body" ,
-            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
-            swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
-        }
-
-
-    }
-
-
     //#endregion
-
-
 
     /**
      * applies Damage to the actor

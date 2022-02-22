@@ -34,8 +34,13 @@ export default class SpellTest extends Test{
 
     computeDamage(result) {
         let damage = {}
-        if (result.success)
+        if (result.success) {
             damage.total = parseInt(this.item.damage)
+        }
+        
+        if(result.triggerToDamage) {
+            damage.total += result.triggers; 
+        }
             
         return damage
     }

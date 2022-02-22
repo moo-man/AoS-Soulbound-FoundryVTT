@@ -219,6 +219,9 @@
 
   "EXPERIENCE.EXPERIENCE": "Experience",
   "EXPERIENCE.XP": "XP",
+  "EXPERIENCE.OUTSTANDING": "Outstanding Experience Points",
+  "EXPERIENCE.SPENT": "Spent Experience Points",
+  "EXPERIENCE.TOTAL": "Total Experience Points",
 
   "GOAL.NAME": "Name",
   "GOAL.DESCRIPTION": "Description",

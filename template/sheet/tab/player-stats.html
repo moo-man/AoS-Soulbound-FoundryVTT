@@ -62,28 +62,27 @@
         <a class="item-create absolute" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
     </div>
     {{#each items.talents as |item|}}
-                <div class="item" data-item-id="{{item.id}}">
-                    <div class="item-content">
-                        <div class="item-property item-name">
-                            <div class="item-image">
-                                <img src={{item.data.img}} />
-                            </div>
-                            <a class="">{{item.name}}</a>
-                        </div>
-                        {{#if item.nonTransferEffects.length}}
-                        <div class="item-property">
-                            <a title="Transfer effects to selected tokens" class="transfer-effect"><i class="fas fa-crosshairs"></i></a>
-                        </div>
-                        {{/if}}
-                        <div class="item-controls">
-                            <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
-                            <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
-                        </div>
+        <div class="item" data-item-id="{{item.id}}">
+            <div class="item-content">
+                <div class="item-property item-name">
+                    <div class="item-image">
+                        <img src={{item.data.img}} />
                     </div>
-                    <div class="item-content">
-                        <div class="item-property description dropdown-target">{{{enrich item.description}}}</div>
-
-                    </div>
+                    <a class="">{{item.name}}</a>
                 </div>
+                {{#if item.nonTransferEffects.length}}
+                    <div class="item-property">
+                        <a title="Transfer effects to selected tokens" class="transfer-effect"><i class="fas fa-crosshairs"></i></a>
+                    </div>
+                {{/if}}
+                <div class="item-controls">
+                    <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
+                    <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                </div>
+            </div>
+            <div class="item-content">
+                <div class="item-property description dropdown-target">{{{enrich item.description}}}</div>
+            </div>
+        </div>
     {{/each}}
 </div>
