@@ -157,6 +157,8 @@ export class AgeOfSigmarItem extends Item {
         }
     }
 
+    
+
     get Traits () {
         return Object.values(this.traitList).map(i => i.display)
     }
@@ -250,6 +252,10 @@ export class AgeOfSigmarItem extends Item {
             return ""
     }
 
+    get Journal() {
+        return game.journal.get(this.journal)
+    }
+
     get difficultyNumber()
     {
         return game.aos.utility.DNToObject(this.dn)
@@ -330,6 +336,8 @@ export class AgeOfSigmarItem extends Item {
     get skills() {return this.data.data.skills}
     get talents() {return this.data.data.talents}
     get equipment() {return this.data.data.equipment}
+    get groups() {return this.data.data.groups}
+    get journal() {return this.data.data.journal}
 
 
 

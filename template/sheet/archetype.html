@@ -19,27 +19,22 @@
                 <div class="content-row">
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.BODY"}}</h3>
-                        <input name="data.attributes.body" type="number" value="{{data.attributes.body}}"
-                            data-dtype="Number" />
+                        <input name="data.attributes.body" type="number" value="{{data.attributes.body}}" data-dtype="Number" />
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.MIND"}}</h3>
-                        <input name="data.attributes.mind" type="number" value="{{data.attributes.mind}}"
-                            data-dtype="Number" />
+                        <input name="data.attributes.mind" type="number" value="{{data.attributes.mind}}" data-dtype="Number" />
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.SOUL"}}</h3>
-                        <input name="data.attributes.soul" type="number" value="{{data.attributes.soul}}"
-                            data-dtype="Number" />
+                        <input name="data.attributes.soul" type="number" value="{{data.attributes.soul}}" data-dtype="Number" />
                     </div>
                 </div>
                 <div class="content-row skills">
                     <div class="entry-vertical">
                         <div class="skill-header">
                             <div class="core">
-                                <label>
-                                    {{localize "ARCHETYPE.CORE_SKILL"}}: 
-                                </label>
+                                <label>{{localize "ARCHETYPE.CORE_SKILL"}}:</label>
                                 <select name="data.skills.core">
                                     <option value=""></option>
                                     {{#select data.skills.core}}
@@ -51,23 +46,18 @@
                                     {{/select}}
                                 </select>
                             </div>
-    
+
                             <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
                             <div class="xp">
-                                <input type="number" value="{{data.skills.xp}}" name="data.skills.xp"
-                                    data-dtype="Number" />
-                                <label>
-                                    XP
-                                </label>
+                                <input type="number" value="{{data.skills.xp}}" name="data.skills.xp" data-dtype="Number" />
+                                <label>XP</label>
                             </div>
                         </div>
                         <div class="skill-selection">
                             {{#each (config "skills") as |skill sk|}}
                             <div class="skill-group">
-                                <input type="checkbox" class="skill-checkbox" data-skill="{{sk}}" {{checked (lookup ../skills sk)}}/>
-                                <label class="skill-label">
-                                    {{skill}}
-                                </label>
+                                <input type="checkbox" class="skill-checkbox" data-skill="{{sk}}" {{checked (lookup ../skills sk)}} />
+                                <label class="skill-label">{{skill}}</label>
                             </div>
                             {{/each}}
                         </div>
@@ -107,10 +97,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-row equipment">
+                <div class="content-row equipment-list">
                     <div class="entry-vertical">
-                        <h3>{{localize "ARCHETYPE.EQUIPMENT"}}</h3>
-                        <div class="entry-list">
+                        <h3>{{localize "ARCHETYPE.EQUIPMENT"}}
+                            <a class="configure-groups"><i class="fas fa-cog"></i></a>
+                            <a class="add-generic" title="Add Generic"><i class="fas fa-filter"></i></a>
+                        </h3>
+                        {{{equipmentHTML}}}
+                        <!-- <div class="entry-list">
                             <div class="inline-list">
                                 {{#each data.equipment as |equipment index|}}
                                 <div class="entry-content">
@@ -122,7 +116,7 @@
                                 </div>
                                 {{/each}}
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

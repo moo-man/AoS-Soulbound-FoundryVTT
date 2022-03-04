@@ -275,3 +275,65 @@
     height: calc(100% - 100px);
     resize: none;
 }
+
+.age-of-sigmar-soulbound.sheet .group-wrapper,
+#archetype-groups .group-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+#archetype-groups .group-wrapper:nth-child(even){
+    background-color: #00000010;
+ }
+
+#archetype-groups .group
+{
+    margin: 3px;
+    border: 1px solid darkslategray;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 2px;
+    display: flex;
+}
+
+.age-of-sigmar-soulbound.sheet .group-wrapper .group
+{
+    padding: 2px;
+    display: flex;
+}
+
+.age-of-sigmar-soulbound.sheet .group-wrapper .group-list,
+#archetype-groups .group-list
+{
+    display: flex;
+    flex: 1;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#archetype-groups .group .equipment
+{
+    margin: 3px;
+    padding: 2px;
+    width: fit-content;
+    font-weight: bold;
+    color: darkslategrey
+}
+
+.age-of-sigmar-soulbound.sheet .group .equipment {
+    width: fit-content;
+    font-weight: bold;
+    color: darkslategrey
+}
+
+.age-of-sigmar-soulbound.sheet .group span {
+    margin: 0px 5px
+}
+
+
+.age-of-sigmar-soulbound.sheet .group .equipment:hover,
+#archetype-groups .group .equipment:hover
+{   
+    cursor: pointer;
+    text-shadow: 0 0 8px goldenrod
+}
