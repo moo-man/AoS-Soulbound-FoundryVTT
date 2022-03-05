@@ -49,8 +49,8 @@ export default class ArchetypeGeneric extends FormApplication {
         else 
             equipment.push(generic)
 
-        let groups = duplicate(this.object.item.groups)
-        groups.items = this.object.item.groups.items.concat([{type : "item", index : (equipment.length - 1 || 0)}]) // Add new index to groups (last index + 1)
+          // Add new index to groups (last index + 1)
+        let groups = this.object.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
 
         this.object.item.update({"data.equipment" : equipment, "data.groups" : groups})
     }
@@ -66,8 +66,8 @@ export default class ArchetypeGeneric extends FormApplication {
             let generic = equipment[this.object.index || 0]
             generic.filters.push({test : "", property: ""})
 
-            let groups = duplicate(this.object.item.groups)
-            groups.items = this.object.item.groups.items.concat([{type : "item", index : (equipment.length - 1 || 0)}]) // Add new index to groups (last index + 1)
+             // Add new index to groups (last index + 1)
+            let groups = this.object.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
             
             this.object.item.update({"data.equipment" : equipment, "data.groups" : groups})
             this.render(true);

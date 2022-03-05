@@ -419,6 +419,7 @@
     "archetype": {
       "journal": "",
       "species": "",
+      "aqua" : 0,
       "attributes": {
         "body": 0,
         "mind": 0,
@@ -437,7 +438,8 @@
       "equipment": [],
       "groups": {
         "type": "and",
-        "items": []
+        "items": [],
+        "groupId" : "root"
       }
     }
   }

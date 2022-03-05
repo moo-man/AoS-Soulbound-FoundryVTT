@@ -99,26 +99,22 @@
                 </div>
                 <div class="content-row equipment-list">
                     <div class="entry-vertical">
-                        <h3>{{localize "ARCHETYPE.EQUIPMENT"}}
+                        <h3>
+                            {{localize "ARCHETYPE.EQUIPMENT"}}
                             <a class="configure-groups"><i class="fas fa-cog"></i></a>
                             <a class="add-generic" title="Add Generic"><i class="fas fa-filter"></i></a>
+                            <a class="reset" title="Reset Groups"><i class="fas fa-redo"></i></a>
                         </h3>
                         {{{equipmentHTML}}}
-                        <!-- <div class="entry-list">
-                            <div class="inline-list">
-                                {{#each data.equipment as |equipment index|}}
-                                <div class="entry-content">
-                                    <div class="entry-element equipment" data-path="data.equipment" data-index="{{index}}">
-                                        <div class="entry-name">
-                                            {{equipment.name}}
-                                        </div>
-                                    </div>
-                                </div>
-                                {{/each}}
-                            </div>
-                        </div> -->
                     </div>
                 </div>
+                <div class="content-row">
+                    <div class="entry-vertical">
+                        <h3>{{localize "ARCHETYPE.AQUA_GHYRANIS"}}</h3>
+                        <input type="number" name="data.aqua" value="{{data.aqua}}" data-dtype="Number">
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

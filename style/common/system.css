@@ -323,10 +323,11 @@
 .age-of-sigmar-soulbound.sheet .group .equipment {
     width: fit-content;
     font-weight: bold;
-    color: darkslategrey
+    color: darkslategrey;
+    margin: 0px 5px
 }
 
-.age-of-sigmar-soulbound.sheet .group span {
+.age-of-sigmar-soulbound.sheet .group a {
     margin: 0px 5px
 }
 

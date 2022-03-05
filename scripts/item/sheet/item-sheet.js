@@ -122,9 +122,9 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         }
 
         list.push(obj)
-        let groups = duplicate(this.item.groups)
-        groups.items = this.item.groups.items.concat([{type : "item", index : (list.length - 1 || 0)}]) // Add new index to groups (last index + 1)
-        
+
+        // Add new index to groups (last index + 1)
+        let groups = this.item.addToGroup({type : "item", index : (list.length - 1 || 0)})
         this.item.update({ "data.equipment": list, "data.groups": groups })
       }
     }
@@ -325,6 +325,10 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       new ArchetypeGeneric({item: this.item}).render(true)
     })
 
+    html.find(".reset").click(ev => {
+      this.item.resetGroups();
+    })
+
     html.find(".entry-element.talents,.equipment").mouseup(ev => {
       let path = ev.currentTarget.dataset.path
       let index = Number(ev.currentTarget.dataset.index)
@@ -343,7 +347,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         else {
           new Dialog({
             title: "Delete Item?",
-            content: "Do you want to remove this item from the Archetype? This will reset the item groupings.",
+            content: "Do you want to remove this item from the Archetype?",
             buttons: {
               yes: {
                 label: "Yes",
@@ -351,8 +355,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
                   array.splice(index, 1)
                   await this.item.update({ [`${path}`]: array })
                   if (path.includes("equipment")) {
-                    let groups = this.item.equipment.map((item, i) => i)
-                    this.item.update({ "data.groups": {type: "and", items : groups.map(i => {return {type: "item", index : i}})} }) // Reset item groupings
+                    this.item.resetGroups();
                   }
                 }
               },

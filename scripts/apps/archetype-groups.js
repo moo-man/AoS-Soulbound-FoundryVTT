@@ -62,10 +62,8 @@ export default class ArchetypeGroups extends Application {
 
     getData() {
         let data = super.getData();
-        data.equipment = this.object.equipment;
-        data.groups = this.object.groups
 
-        data.groupHtml = this._constructHTML(data.displayGroups)
+        data.groupHtml = this._constructHTML()
         return data
     }
 
@@ -79,24 +77,27 @@ export default class ArchetypeGroups extends Application {
         return ArchetypeGroups.constructHTML(this.object)
     }
 
-    
+
 
     // Recursive function to convert group index arrays into their corresponding objects objects
+    // Also assigns a temporary ID to easily handle moving groups around
     static groupIndexToObjects(groupObject, item) {
             if (["and", "or"].includes(groupObject.type))
             {
                 return {
                     type: groupObject.type, 
-                    items : groupObject.items.map(i => this.groupIndexToObjects(i, item))
+                    items : groupObject.items.map(i => this.groupIndexToObjects(i, item)),
+                    groupId: groupObject.groupId
                 }
             }
             
             // Base case
             else if (["item", "generic"].includes(groupObject.type))
             {
-                return mergeObject(item.equipment[groupObject.index], {index : groupObject.index})
+                return mergeObject(item.equipment[groupObject.index], {index : groupObject.index, groupId : groupObject.groupId})
             }
         }
+
     /**
      * Construct html to display the groups in a readable format
      * 
@@ -113,12 +114,12 @@ export default class ArchetypeGroups extends Application {
             let html = ``
             if (["and", "or"].includes(groupObject.type))
             {
-                html += `<div class="group">`
-                html += `<div class="group-list">${parentheses ? "<span class='parentheses'> ( </span>" : "" }${groupObject.items.map(groupToHtml).join(`<span> ${groupObject.type.toUpperCase()} </span>`)}${parentheses ? " <span class='parentheses'> ) </span> " : ""}</div>`
+                html += `<div class="group" >`
+                html += `<div class="group-list" data-id="${groupObject.groupId}">${parentheses ? "<span class='parentheses'> ( </span>" : "" }${groupObject.items.map(groupToHtml).join(`<a class="connector">  ${groupObject.type.toUpperCase()} </a>`)}${parentheses ? " <span class='parentheses'> ) </span> " : ""}</div>`
                 html += `</div>`
             }
             else
-                html += `<div class="equipment" draggable=true data-path="data.equipment" data-index="${groupObject.index}" data-id="${groupObject.id}">${groupObject.name}</div>`
+                html += `<div class="equipment" draggable=true data-path="data.equipment" data-index="${groupObject.index}" data-id="${groupObject.groupId}">${groupObject.name}</div>`
             return html
         }
 
@@ -129,12 +130,142 @@ export default class ArchetypeGroups extends Application {
         return html
     }
 
+    _onDragStart(ev) {
+        ev.dataTransfer.setData("text/plain", ev.target.dataset.id)
+    }
 
-    static parseGroupString(string)
+    _onDrop(ev) {
+        let dropID = ev.target.dataset.id
+        let dragID= ev.dataTransfer.getData("text/plain")
+
+        if (dropID && dragID && dropID != dragID)
+        {
+            this.moveObject(dragID, dropID)
+        }
+
+
+    }
+
+    async moveObject(moveID, destID)
     {
-        string = "(0 AND 1 AND 2 AND (3 OR 4)) AND (5 OR 6 OR (7 AND 8))"
+        let groups = duplicate(this.object.groups)
+
+        let objectToMove = this.search(moveID, groups)
+        this.delete(moveID, groups)
+        this.insert(objectToMove, destID, groups)
+        this.clean(groups)
+        await this.object.update({"data.groups" : groups})
+        this.render(true)
+
+    }
 
 
+    // search groups object for ID
+    search(id, groups)
+    {
+        // base case
+        if (groups.groupId == id)
+            return groups
+
+        if (["and", "or"].includes(groups.type))
+        {
+            for(let item of groups.items)
+            {
+                let innerSearch = this.search(id, item)
+                if (innerSearch)
+                    return innerSearch
+            }
+        }
+    }
+
+    delete(id, groups)
+    {
+            // base case
+            if (groups.groupId == id)
+                return groups
+    
+            if (["and", "or"].includes(groups.type))
+            {
+                for(let [index, item] of groups.items.entries())
+                {
+                    let innerSearch = this.delete(id, item)
+                    if (innerSearch)
+                    {
+                        groups.items.splice(index, 1)
+                        if (groups.items.length == 1)
+                            groups = groups.items[0]
+                    }
+                }
+            }
+    }
+
+    // Inserts obj into the dest, if dest is an item, create an or container for both of them, if it's a container, simply add it to the list
+    insert(obj, dest, groups)
+    {
+            // base case
+        if (groups.groupId == dest)
+        {
+            if (dest == "root") // Special case where root is the destination
+                groups.items.push(obj)
+            return groups
+        }
+
+        if (["and", "or"].includes(groups.type))
+        {
+            for(let [index, item] of groups.items.entries())
+            {
+                let innerSearch = this.insert(obj, dest, item)
+                if (innerSearch?.items) // if object is a collection: easy, just add to collection
+                {
+                    innerSearch.items.push(obj)
+                }   
+                else if(innerSearch) // If destination is another item, create a collection for that item and the one being added
+                {
+                    groups.items[index] = {type : 'or', items: [groups.items[index], obj], groupId : randomID()}
+                }
+            }
+        }
+    }
+
+
+    // Removes empty container objects (and/or with 0 items) and changes container objects that have 1 item to simply be that element
+    clean(groups) {
+        if (["and", "or"].includes(groups.type))
+        {
+            if (groups.items.length == 1)
+            {
+                groups = groups.items[0]
+                return "single"
+            }
+            else if (groups.items.length == 0 && groups.groupId != "root")
+                return "remove"
+            
+            for (let [index,item] of groups.items.entries())
+            {
+                let action = this.clean(item)
+                if (action == "remove")
+                    groups.items.splice(index, 1)
+                if (action == "single")
+                    groups.items[index] = groups.items[index].items[0]
+            }
+        }
+        return "keep"
+    }
+
+
+    activateListeners(html)
+    {
+        super.activateListeners(html)
+
+
+        html.find(".connector").click(async ev => {
+            let id = $(ev.currentTarget).parents(".group-list").attr("data-id")
+            let groups = duplicate(this.object.groups);
+            let obj = this.search(id, groups);
+            obj.type = obj.type == "and" ? "or" : "and"; // flip and/or
+            await this.object.update({"data.groups" : groups})
+            this.render(true);
+        })
     }
 
 }
