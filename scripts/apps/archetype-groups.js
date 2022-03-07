@@ -231,15 +231,7 @@ export default class ArchetypeGroups extends Application {
     // Removes empty container objects (and/or with 0 items) and changes container objects that have 1 item to simply be that element
     clean(groups) {
         if (["and", "or"].includes(groups.type))
-        {
-            if (groups.items.length == 1)
-            {
-                groups = groups.items[0]
-                return "single"
-            }
-            else if (groups.items.length == 0 && groups.groupId != "root")
-                return "remove"
-            
+        {          
             for (let [index,item] of groups.items.entries())
             {
                 let action = this.clean(item)
@@ -248,6 +240,13 @@ export default class ArchetypeGroups extends Application {
                 if (action == "single")
                     groups.items[index] = groups.items[index].items[0]
             }
+            if (groups.items.length == 1)
+            {
+                groups = groups.items[0]
+                return "single"
+            }
+            else if (groups.items.length == 0 && groups.groupId != "root")
+                return "remove"
         }
         return "keep"
     }
@@ -265,6 +264,18 @@ export default class ArchetypeGroups extends Application {
             obj.type = obj.type == "and" ? "or" : "and"; // flip and/or
             await this.object.update({"data.groups" : groups})
             this.render(true);
+        })
+
+        html.on("dragenter", ".group-list,.equipment", ev => {
+            ev.currentTarget.classList.add("dragenter")
+            $(ev.currentTarget).parents(".dragenter").each((i, e) => e.classList.remove("dragenter"))
+        })
+
+        html.on("dragleave", ".group-list,.equipment", ev => {
+            ev.currentTarget.classList.remove("dragenter")
+            let parent = $(ev.currentTarget).parents(".group-list")[0]
+            if (parent)
+                parent.classList.add("dragenter")
         })
     }
 

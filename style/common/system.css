@@ -338,3 +338,9 @@
     cursor: pointer;
     text-shadow: 0 0 8px goldenrod
 }
+
+
+#archetype-groups .dragenter
+{   
+    outline: 1px dotted darkslategrey;
+}
