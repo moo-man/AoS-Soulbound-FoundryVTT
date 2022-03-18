@@ -6,7 +6,7 @@ export class AgeOfSigmarItem extends Item {
     constructor(data, context)
     {
         super(data, context)
-        if (context && context.archetype) // Embedded Power
+        if (context && context.archetype)
         {
             this.archetype = context.archetype.item;
             this.equipmentIndex = context.archetype.index;

@@ -332,6 +332,10 @@
 }
 
 
+.age-of-sigmar-soulbound.sheet .comma{
+    margin-left: -4px;
+}
+
 .age-of-sigmar-soulbound.sheet .group .equipment:hover,
 #archetype-groups .group .equipment:hover
 {   

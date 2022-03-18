@@ -104,7 +104,7 @@ export default class ArchetypeGroups extends Application {
      * @param {Object} displayGroups Group object that has been processed with actual items (gone through groupIndexToObjects)
      * @returns 
      */
-    static constructHTML(item, parentheses=false) {
+    static constructHTML(item, {parentheses=false, commas=false, draggable=true}={}) {
         let displayGroups = this.groupIndexToObjects(item.groups, item)
         let html = `
         <div class="group-wrapper">
@@ -112,14 +112,30 @@ export default class ArchetypeGroups extends Application {
 
         let groupToHtml = (groupObject) => {
             let html = ``
-            if (["and", "or"].includes(groupObject.type))
+            if (["and", "or"].includes(groupObject.type)) // If is group collection, create group html and recursively call this function on items within
             {
-                html += `<div class="group" >`
-                html += `<div class="group-list" data-id="${groupObject.groupId}">${parentheses ? "<span class='parentheses'> ( </span>" : "" }${groupObject.items.map(groupToHtml).join(`<a class="connector">  ${groupObject.type.toUpperCase()} </a>`)}${parentheses ? " <span class='parentheses'> ) </span> " : ""}</div>`
+                html += `<div class="group">`
+                html += `<div class="group-list" data-id="${groupObject.groupId}">
+                ${parentheses // Denote groups with parenthes or not
+                    ? "<span class='parentheses'> ( </span>" 
+                    : "" }
+
+                ${groupObject.items.map(groupToHtml).join( // Join subgroups and items with "connector", that being AND or OR (comma can be substituted for AND)
+                
+                commas && groupObject.type == "and" // If group type is AND with comma option, use comma, otherwise, use AND or OR
+                ? `<span class="comma">,</span>`
+                :  `<a class="connector">${groupObject.type.toUpperCase()}</a>
+                `)}
+
+                ${parentheses // End group with parentheses if option is present
+                    ? " <span class='parentheses'> ) </span> " 
+                    : ""}
+                </div>`
+
                 html += `</div>`
             }
             else
-                html += `<div class="equipment" draggable=true data-path="data.equipment" data-index="${groupObject.index}" data-id="${groupObject.groupId}">${groupObject.name}</div>`
+                html += `<div class="equipment" draggable=${draggable} data-path="data.equipment" data-index="${groupObject.index}" data-id="${groupObject.groupId}">${groupObject.name}</div>`
             return html
         }
 

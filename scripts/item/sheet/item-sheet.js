@@ -26,9 +26,9 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
   get template() {
     return `systems/age-of-sigmar-soulbound/template/sheet/${this.item.type}.html`
   }
+
+  
   async _updateObject(event, formData) {
-
-
     // If this item is from an archetype entry, update the diff instead of the actual item
     // I would like to have done this is the item's _preCreate but the item seems to lose 
     // its "archetype" reference so it has to be done here
@@ -67,7 +67,6 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     }
     return super._updateObject(event, formData)
   }
-
   _onDrop(ev) {
     console.log(ev)
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
@@ -201,7 +200,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       })
 
 
-      let element = $(ArchetypeGroups.constructHTML(data.item, true))
+      let element = $(ArchetypeGroups.constructHTML(data.item, {parentheses : true, commas: true, draggable: false}))
       // Remove unnecessary outside parentheses
       let parentheses = Array.from(element.find(".parentheses"))
       parentheses[0].remove();
@@ -347,7 +346,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         else {
           new Dialog({
             title: "Delete Item?",
-            content: "Do you want to remove this item from the Archetype?",
+            content: "Do you want to remove this item from the Archetype? This will reset the groupings.",
             buttons: {
               yes: {
                 label: "Yes",

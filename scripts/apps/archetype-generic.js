@@ -42,15 +42,17 @@ export default class ArchetypeGeneric extends FormApplication {
         Array.from($(event.target).find(".property")).map((p, i) => filters[i].property = p.value)
 
         filters = filters.filter(f => f.property)
-
+        let groups = this.object.item.groups
         let generic = {type: "generic", name : formData.name, filters}
         if (this.object.index)
             equipment[this.object.index] = generic
         else 
+        {
             equipment.push(generic)
+            // Add new index to groups (last index + 1)
+            groups = this.object.item.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
+        }
 
-          // Add new index to groups (last index + 1)
-        let groups = this.object.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
 
         this.object.item.update({"data.equipment" : equipment, "data.groups" : groups})
     }
@@ -66,10 +68,10 @@ export default class ArchetypeGeneric extends FormApplication {
             let generic = equipment[this.object.index || 0]
             generic.filters.push({test : "", property: ""})
 
-             // Add new index to groups (last index + 1)
-            let groups = this.object.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
+            //  // Add new index to groups (last index + 1)
+            // let groups = this.object.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
             
-            this.object.item.update({"data.equipment" : equipment, "data.groups" : groups})
+            await this.object.item.update({"data.equipment" : equipment})
             this.render(true);
         })
     }
