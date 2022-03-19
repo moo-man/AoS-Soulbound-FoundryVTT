@@ -28,8 +28,9 @@ export default class CharacterCreation extends FormApplication {
     {
         this.character = new AgeOfSigmarActor({type: "player", name : this.object.actor.name}) // Temporary actor 
 
-        this.character.skills[this.archetype.skills.core].training = 1;
-        this.character.skills[this.archetype.skills.core].focus = 1;
+
+        this.character.data.update({[`data.skills.${this.archetype.skills.core}.training`] : 1})
+        this.character.data.update({[`data.skills.${this.archetype.skills.core}.focus`] : 1})
 
         this.character.prepareData();
 
@@ -112,6 +113,73 @@ export default class CharacterCreation extends FormApplication {
         super.activateListeners(html);
 
 
+
+        html.find(".skill-button button").click(ev => {
+            let direction = ev.target.dataset.type;
+            let type = ev.target.parentElement.dataset.type;
+            let skill = $(ev.currentTarget).parents(".skill").attr("data-skill")
+
+            if (direction == "inc")
+            {
+                if (this.character.skills[skill][type] >= 3)
+                    return
+
+                this.character.data.update({[`data.skills.${skill}.${type}`] : this.character.skills[skill][type] + 1});
+            }
+            else
+            {
+                if (this.character.skills[skill][type] <= 0)
+                    return
+                if (this.archetype.skills.core == skill && this.character.skills[skill][type] <= 1)
+                    return 
+
+                this.character.data.update({[`data.skills.${skill}.${type}`] : this.character.skills[skill][type] - 1});
+            }
+
+            ev.target.parentElement.querySelector(".skill-value").textContent = this.character.skills[skill][type]
+
+            this.updateExperience()
+        })
+        
+        html.find(".talent input").change(ev => {
+            let parent = $(ev.currentTarget).parents(".talents")
+            let counter = parent.find(".talent-count input")[0];
+            let counterValue = Number(counter.value)
+
+
+            // Checked
+            if (ev.target.checked)
+            {
+                // counter is 0, prevent check
+                if (!counterValue)
+                {
+                    ev.target.checked = false;
+                    return
+                }
+
+                counterValue--;
+            }
+            // Unchecked
+            else if (!ev.target.checked)
+            {
+                counterValue++;
+            }
+
+            counter.value = counterValue
+
+            // If counter is now 0, disable other talents, otherwise, enable them
+            if (!counterValue)
+                parent.find(".talent:not('.core')").each((i, e) => {
+                    if(!$(e).find("input")[0].checked)
+                    {
+                        e.classList.add("disabled")
+                    }
+                })
+            else 
+                parent.find(".disabled").each((i, e) => e.classList.remove("disabled"))
+        })
+
+
         html.find(".equipment-selector").click(ev => {
 
             if (this.isDisabled(ev.currentTarget))
@@ -166,8 +234,13 @@ export default class CharacterCreation extends FormApplication {
     updateExperience()
     {
         this.character.prepareData();
-        let talentXP = this.addedTalents.reduce((prev, current) => prev + current.data.cost, 0)
-        this.element.find(".xp input")[0].value = this.character.experience.spent + talentXP;
+        let availableXP = parseInt(this.element.find(".xp-total")[0].value)
+        let spentInput = this.element.find(".xp-spent")[0];
+        spentInput.value = this.character.experience.spent - 2; // -2 to account for the core skill already advanced
+        if (parseInt(spentInput.value) > availableXP)
+            spentInput.classList.add("error")
+        else
+            spentInput.classList.remove("error")
     }
 
     //#region equipment 

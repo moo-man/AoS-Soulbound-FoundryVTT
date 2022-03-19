@@ -555,6 +555,47 @@
   border-bottom: 1px solid var(--color-header-blue)
 }
 
-#character-creation .equipment .disabled {
+#character-creation .disabled {
   opacity: 0.5
 }
+
+#character-creation .talent-count,
+#character-creation .aqua-ghyranis,
+    #character-creation .xp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#character-creation .talent-count input,
+#character-creation .xp input{
+    width: 30px;
+    margin: 3px;
+    text-align: center;
+}
+
+#character-creation .aqua-ghyranis input {
+    width: 60px;
+    margin: 5px;
+}
+
+#character-creation input.error {
+    border: 1px solid darkred;
+    color: darkred;
+}
+
+
+
+.filter-results {
+    height: calc(100% - 30px);
+  }
+  
+  #filter-results form ,
+    .filter-results .directory .directory-list,
+    .filter-results .directory{
+    height: 100%
+  }
+  
+  #filter-results .document.active {
+    box-shadow: inset 0 0 10px var(--color-header-blue);
+  }

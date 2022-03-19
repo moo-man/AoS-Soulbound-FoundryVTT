@@ -8,7 +8,7 @@ export default class FilterResults extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "filter-results",
             title: "Filter Results",
-            template: "systems/wrath-and-glory/template/apps/filter-results.html",
+            template: "systems/age-of-sigmar-soulbound/template/apps/filter-results.html",
             width: 300,
             height: 800,
             resizable: true
@@ -17,10 +17,9 @@ export default class FilterResults extends FormApplication {
 
     async getData() {
         let data = super.getData();
-        let filters = this.object.wargear.filters
+        let filters = this.object.equipment.filters
         let items = await this.getAllItems();
         items = this.applyFilters(items, filters)
-        console.log(items)
         data.items = items;
         return data
     }
@@ -32,7 +31,7 @@ export default class FilterResults extends FormApplication {
 
         if (choice)
         {
-            this.object.app.chooseWargear(this.object.wargear, choiceId)
+            this.object.app.chooseEquipment(this.object.equipment, choiceId)
         }
     }
 
@@ -56,7 +55,7 @@ export default class FilterResults extends FormApplication {
                 let test = f.test
                 
                 // Convert rarity to a number so that ranges of rarities can be used
-                if (f.property == "data.rarity")
+                if (f.property == "data.availability")
                 {
                     propValue = this.rarityNumber[propValue]
                     testValue = this.rarityNumber[testValue]
@@ -82,11 +81,10 @@ export default class FilterResults extends FormApplication {
 
     get rarityNumber() {
         return {
-            "common": 0,
-            "uncommon": 1,
+            "common": 1,
             "rare": 2,
-            "very-rare": 3,
-            "unique": 4
+            "exotic-rare": 3,
+            "special": 4
         }
     }
 

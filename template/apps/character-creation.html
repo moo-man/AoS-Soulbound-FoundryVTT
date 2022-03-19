@@ -6,21 +6,26 @@
         <div class="sheet-body">
             <div class="attributes">
                 <div class="attribute">
-                    <input type="text" class="attribute-input">
+                    <input type="text" class="attribute-input" value="{{archetype.attributes.body}}">
                     <label>Body</label>
                 </div>
                 <div class="attribute">
-                    <input type="text" class="attribute-input">
+                    <input type="text" class="attribute-input" value="{{archetype.attributes.mind}}">
                     <label>Mind</label>
                 </div>
                 <div class="attribute">
-                    <input type="text" class="attribute-input">
+                    <input type="text" class="attribute-input" value="{{archetype.attributes.soul}}">
                     <label>Soul</label>
                 </div>
             </div>
             <div class="cc-columns">
                 <div class="skills">
                     <h3>Skills</h3>
+                    <div class="xp">
+                        XP Spent
+                        <input type="number" disabled class="xp-spent" value="0">
+                        <input type="number" class="xp-total" value="{{archetype.skills.xp}}">
+                    </div>
                     <div class="skill-header skill">
                         <span>Skill</span>
                         <span>T</span>
@@ -30,22 +35,22 @@
                     <div class="skill" data-skill="{{skill}}">
                         <span>{{configLookup "skills" skill}}</span>
                         <span class="skill-button" data-type="training">
-                            <button data-type="dec">-</button>
+                            <button type="button" data-type="dec">-</button>
                             {{#if (eq ../archetype.skills.core skill)}}
-                            1
+                            <span class="skill-value">1</span>
                             {{else}}
-                            0
+                            <span class="skill-value">0</span>
                             {{/if}}
-                            <button data-type="inc">+</button>
+                            <button type="button" data-type="inc">+</button>
                         </span>
                         <span class="skill-button" data-type="focus">
-                            <button data-type="dec">-</button>
+                            <button type="button" data-type="dec">-</button>
                             {{#if (eq ../archetype.skills.core skill)}}
-                            1
+                            <span class="skill-value">1</span>
                             {{else}}
-                            0
+                            <span class="skill-value">0</span>
                             {{/if}}
-                            <button data-type="inc">+</button>
+                            <button type="button" data-type="inc">+</button>
                         </span>
                     </div>
                     {{/each}}
@@ -53,8 +58,12 @@
                 </div>
                 <div class="talents">
                     <h3>Talents</h3>
+                    <div class="talent-count">
+                        <label>Choose</label>
+                        <input disabled type="number" value="{{archetype.talents.choose}}">
+                    </div>
                     {{#each coreTalents as |talent t|}}
-                    <div class="talent">
+                    <div class="core talent">
                         <div class="talent-header">
                             <img src="{{talent.data.img}}">
                             <label>{{talent.name}}</label>
@@ -81,6 +90,11 @@
 
                 </div>
                 <div class="equipment">
+                    <h3>Equipment</h3>
+                    <div class="aqua-ghyranis">
+                        <label>Aqua Ghyranis</label>
+                        <input type="number" value="{{archetype.data.data.aqua}}">
+                    </div>
                     {{{equipmentHTML}}}
                 </div>
             </div>

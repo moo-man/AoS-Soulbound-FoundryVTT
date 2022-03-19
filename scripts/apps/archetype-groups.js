@@ -177,7 +177,7 @@ export default class ArchetypeGroups extends Application {
 
 
     // search groups object for ID
-    search(id, groups)
+    static search(id, groups)
     {
         // base case
         if (groups.groupId == id)
@@ -187,7 +187,7 @@ export default class ArchetypeGroups extends Application {
         {
             for(let item of groups.items)
             {
-                let innerSearch = this.search(id, item)
+                let innerSearch = ArchetypeGroups.search(id, item)
                 if (innerSearch)
                     return innerSearch
             }
