@@ -17,20 +17,22 @@ export default class CharacterCreation extends FormApplication {
             id: "character-creation",
             title: "Character Creation",
             template: "systems/age-of-sigmar-soulbound/template/apps/character-creation.html",
+            closeOnSubmit: false,
             width: 1400,
             height: 800,
             resizable: true
-    })
+        })
     }
 
 
-    initializeCharacter()
-    {
-        this.character = new AgeOfSigmarActor({type: "player", name : this.object.actor.name}) // Temporary actor 
+    initializeCharacter() {
+        this.character = new AgeOfSigmarActor({ type: "player", name: this.object.actor.name }) // Temporary actor 
 
 
-        this.character.data.update({[`data.skills.${this.archetype.skills.core}.training`] : 1})
-        this.character.data.update({[`data.skills.${this.archetype.skills.core}.focus`] : 1})
+        // Only apply skills to calculate skill EXP correctly, apply attributes on submit
+        this.character.data.update({ [`data.skills.${this.archetype.skills.core}.training`]: 1 })
+        this.character.data.update({ [`data.skills.${this.archetype.skills.core}.focus`]: 1 })
+        this.character.data.update({ "data.bio.archetype": this.archetype.name })
 
         this.character.prepareData();
 
@@ -50,13 +52,127 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    async _updateObject(event, formData) {
-        this.object.update(formData)
+    async _updateObject(ev, formData) {
+
+
+        let proceed = await this.validateForm()
+        if (!proceed) {
+            return
+        }
+
+        this.character.data.update({ [`data.attributes.body.value`]: this.archetype.attributes.body })
+        this.character.data.update({ [`data.attributes.mind.value`]: this.archetype.attributes.mind })
+        this.character.data.update({ [`data.attributes.soul.value`]: this.archetype.attributes.soul })
+
+        this.character.data.update({ "token": this.actor.data.token })
+
+        this.character.data.update({
+            "img": this.actor.data.img,
+            "name": formData.name,
+            "token.name": formData.name,
+            "data.currencies.drops": Number(formData.aqua)
+        })
+
+
+        let equipment = this.retrieveChosenEquipment();
+        let talents = this.archetype.talents.core.map(t => game.items.get(t.id))
+
+        $(ev.currentTarget).find(".talent input").each((i, e) => {
+            if (e.checked)
+                talents.push(game.items.get(e.dataset.id))
+        })
+
+        let items = talents.concat(equipment).map(i => i.toObject())
+
+        this.actor.update(mergeObject(this.character.toObject(), { items }, { overwrite: true }))
+        this.close();
+    }
+
+    validateForm() {
+        return new Promise((resolve) => {
+            // SKILLS
+            let errors = [];
+            let availableXP = parseInt(this.element.find(".xp-total")[0].value)
+            let spentXP = parseInt(this.element.find(".xp-spent")[0].value)
+
+            if (availableXP < spentXP)
+                errors.push("Spent XP exceeds Available XP");
+
+
+            // TALENTS
+            let talentCount = parseInt(this.element.find(".talent-count input")[0].value);
+
+            if (talentCount > 0)
+                errors.push("More talents can be selected");
+            else if (talentCount < 0)
+                errors.push("Too many talents selected");
+
+
+            let unresolvedGenerics = false;
+            // EQUIPMENT
+            this.element.find(".equipment-item.generic").each((i, e) => {
+                if (!this.isDisabled(e)) {
+                    let id = e.dataset.id
+                    let group = ArchetypeGroups.search(id, this.archetype.groups)
+                    let equipment = this.archetype.equipment[group.index]
+                    if (equipment.filters.length)
+                        unresolvedGenerics = true;
+                }
+            })
+            if (unresolvedGenerics)
+                errors.push("Unresolved Generic Items")
+
+
+            if (errors.length) {
+                new Dialog({
+                    label: "Errors",
+                    content: `<p>The following errors have been detected.</p>
+                  <ul>
+                  <li>${errors.join("</li><li>")}</li>
+                  </ul>
+                  <p>Proceed anyway?</p>
+                  `,
+                    buttons: {
+                        confirm: {
+                            label: "Confirm",
+                            callback: () => resolve(true)
+                        },
+                        cancel: {
+                            label: "Cancel",
+                            callbacK: () => resolve(false)
+                        }
+                    }
+                }).render(true)
+            }
+            else resolve(true)
+        })
+    }
+
+
+    // Take the equipment of the archetype, check if it has the disabled class in the form (if it was not chosen), create a temporary item
+    retrieveChosenEquipment() {
+        let equipment = this.archetype.equipment;
+        // Filter equipment by whether it has a disabled ancestor, if not, add to actor
+        return equipment.filter(e => {
+            let element = this.element.find(`.equipment-item[data-id='${e.groupId}']`)
+            let enabled = element.parents(".disabled").length == 0
+            return enabled
+        }).map(e => {
+            let item;
+            // If chosen item is still generic, create a basic item for it
+            if (e.type == "generic") {
+                item = new AgeOfSigmarItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
+            }
+            else {
+                // Create a temp item and incorporate the diff
+                item = new AgeOfSigmarItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
+            }
+            return item
+        });
     }
 
     constructEquipmentHTML() {
         let html = ""
-
 
         let groupToHTML = (group, { selector = false } = {}) => {
             let html = ""
@@ -91,15 +207,13 @@ export default class CharacterCreation extends FormApplication {
      * @param {Object} filter Filter details (to replace with object)
      * @param {String} id ID of item chosen
      */
-    chooseEquipment(filter, id)
-    {
+    chooseEquipment(filter, id) {
         let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
         let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
         let equipmentObject = this.archetype.equipment[group.index]
         let item = game.items.get(id)
-        
-        if (element && item) 
-        {
+
+        if (element && item) {
             element.classList.remove("generic")
             element.textContent = item.name
 
@@ -119,28 +233,26 @@ export default class CharacterCreation extends FormApplication {
             let type = ev.target.parentElement.dataset.type;
             let skill = $(ev.currentTarget).parents(".skill").attr("data-skill")
 
-            if (direction == "inc")
-            {
+            if (direction == "inc") {
                 if (this.character.skills[skill][type] >= 3)
                     return
 
-                this.character.data.update({[`data.skills.${skill}.${type}`] : this.character.skills[skill][type] + 1});
+                this.character.data.update({ [`data.skills.${skill}.${type}`]: this.character.skills[skill][type] + 1 });
             }
-            else
-            {
+            else {
                 if (this.character.skills[skill][type] <= 0)
                     return
                 if (this.archetype.skills.core == skill && this.character.skills[skill][type] <= 1)
-                    return 
+                    return
 
-                this.character.data.update({[`data.skills.${skill}.${type}`] : this.character.skills[skill][type] - 1});
+                this.character.data.update({ [`data.skills.${skill}.${type}`]: this.character.skills[skill][type] - 1 });
             }
 
             ev.target.parentElement.querySelector(".skill-value").textContent = this.character.skills[skill][type]
 
             this.updateExperience()
         })
-        
+
         html.find(".talent input").change(ev => {
             let parent = $(ev.currentTarget).parents(".talents")
             let counter = parent.find(".talent-count input")[0];
@@ -148,11 +260,9 @@ export default class CharacterCreation extends FormApplication {
 
 
             // Checked
-            if (ev.target.checked)
-            {
+            if (ev.target.checked) {
                 // counter is 0, prevent check
-                if (!counterValue)
-                {
+                if (!counterValue) {
                     ev.target.checked = false;
                     return
                 }
@@ -160,8 +270,7 @@ export default class CharacterCreation extends FormApplication {
                 counterValue--;
             }
             // Unchecked
-            else if (!ev.target.checked)
-            {
+            else if (!ev.target.checked) {
                 counterValue++;
             }
 
@@ -170,12 +279,11 @@ export default class CharacterCreation extends FormApplication {
             // If counter is now 0, disable other talents, otherwise, enable them
             if (!counterValue)
                 parent.find(".talent:not('.core')").each((i, e) => {
-                    if(!$(e).find("input")[0].checked)
-                    {
+                    if (!$(e).find("input")[0].checked) {
                         e.classList.add("disabled")
                     }
                 })
-            else 
+            else
                 parent.find(".disabled").each((i, e) => e.classList.remove("disabled"))
         })
 
@@ -191,11 +299,10 @@ export default class CharacterCreation extends FormApplication {
             // Cannot uncheck that which has checked descendents ( >1 to exclude self, kinda gross but whatever)
             if (!this.isDisabled(ev.currentTarget) && parent.find(".on").length > 1)
                 return
-                
+
             let isChecked = this.toggleSelector(ev.currentTarget);
 
-            if (isChecked)
-            {
+            if (isChecked) {
                 // Select all ancestors
                 parent.parents(".equipment-selection").each((i, e) => {
                     $(e).children(".equipment-selector").each((j, selector) => {
@@ -221,18 +328,16 @@ export default class CharacterCreation extends FormApplication {
             let group = ArchetypeGroups.search(id, this.archetype.groups)
             let equipment = this.archetype.equipment[group.index]
 
-            if (equipment.type == "generic")
-            {
-                new FilterResults({equipment, app: this}).render(true)
+            if (equipment.type == "generic" && equipment.filters.length) {
+                new FilterResults({ equipment, app: this }).render(true)
             }
             else
-              new AgeOfSigmarItem(game.items.get(equipment.id).toObject()).sheet.render(true, {editable: false})
+                new AgeOfSigmarItem(game.items.get(equipment.id).toObject()).sheet.render(true, { editable: false })
         })
     }
 
 
-    updateExperience()
-    {
+    updateExperience() {
         this.character.prepareData();
         let availableXP = parseInt(this.element.find(".xp-total")[0].value)
         let spentInput = this.element.find(".xp-spent")[0];
@@ -253,21 +358,19 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    disableElements(element) 
-    {
+    disableElements(element) {
         element.classList.add("disabled")
         $(element).find(".equipment-selector").each((i, el) => {
             this.setSelector(el, "off")
         })
     }
 
-    disableSiblingChoices(element)
-    {
+    disableSiblingChoices(element) {
         let parent = $(element).closest(".equipment-selection");
         let group = parent.find(".equipment-group,.equipment-item")
         let groupId = group.attr("data-id")
         let choice = parent.closest(".choice")
-        
+
         // Disable siblings
         choice.children().each((i, e) => {
             if (e.dataset.id != groupId) {
@@ -277,29 +380,24 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    enableElements(element)
-    {
+    enableElements(element) {
         element.classList.remove("disabled")
     }
 
-    toggleSelector(element)
-    {
+    toggleSelector(element) {
         if (this.isOn(element))
             return this.setSelector(element, "off")
-        else if(!this.isOn(element))
+        else if (!this.isOn(element))
             return this.setSelector(element, "on")
     }
 
-    setSelector(element, value)
-    {
-        if (value == "on")
-        {
+    setSelector(element, value) {
+        if (value == "on") {
             element.classList.add(value)
             element.classList.remove("off")
-            
+
         }
-        else if (value == "off")
-        {
+        else if (value == "off") {
             element.classList.add(value)
             element.classList.remove("on")
         }
@@ -309,26 +407,21 @@ export default class CharacterCreation extends FormApplication {
         return value == "on" // return true if on, otherwise false
     }
 
-    isOn(element)
-    {
+    isOn(element) {
         return element.classList.contains("on")
     }
 
-    isDisabled(element)
-    {
+    isDisabled(element) {
         return $(element).parents(".disabled").length
     }
 
-    _setFAIcon(element, value)
-    {
+    _setFAIcon(element, value) {
         let fa = element.children[0];
-        if (value == "on")
-        {
+        if (value == "on") {
             fa.classList.remove("fa-circle")
             fa.classList.add("fa-check-circle")
         }
-        else if (value == "off")
-        {
+        else if (value == "off") {
             fa.classList.remove("fa-check-circle")
             fa.classList.add("fa-circle")
         }

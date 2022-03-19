@@ -6,15 +6,15 @@
         <div class="sheet-body">
             <div class="attributes">
                 <div class="attribute">
-                    <input type="text" class="attribute-input" value="{{archetype.attributes.body}}">
+                    <input type="text" disabled class="attribute-input" value="{{archetype.attributes.body}}">
                     <label>Body</label>
                 </div>
                 <div class="attribute">
-                    <input type="text" class="attribute-input" value="{{archetype.attributes.mind}}">
+                    <input type="text" disabled class="attribute-input" value="{{archetype.attributes.mind}}">
                     <label>Mind</label>
                 </div>
                 <div class="attribute">
-                    <input type="text" class="attribute-input" value="{{archetype.attributes.soul}}">
+                    <input type="text" disabled class="attribute-input" value="{{archetype.attributes.soul}}">
                     <label>Soul</label>
                 </div>
             </div>
@@ -28,8 +28,8 @@
                     </div>
                     <div class="skill-header skill">
                         <span>Skill</span>
-                        <span>T</span>
-                        <span>F</span>
+                        <span>Training</span>
+                        <span>Focus</span>
                     </div>
                     {{#each archetype.skills.list as |skill sk|}}
                     <div class="skill" data-skill="{{skill}}">
@@ -69,7 +69,9 @@
                             <label>{{talent.name}}</label>
                         </div>
                         <div class="talent-description">
-                            <b>Requirement:</b> {{talent.requirement}}
+                            {{#if talent.requirement}}
+                            <b>Requirement:</b> {{talent.requirement}}<br>
+                            {{/if}}
                             {{{enrich talent.description}}}
                         </div>
                     </div>
@@ -82,7 +84,9 @@
                             <input type="checkbox" data-id="{{talent.id}}">
                         </div>
                         <div class="talent-description">
-                            <b>Requirement:</b> {{talent.requirement}}
+                            {{#if talent.requirement}}
+                            <b>Requirement:</b> {{talent.requirement}}<br>
+                            {{/if}}
                             {{{enrich talent.description}}}
                         </div>
                     </div>
@@ -93,11 +97,12 @@
                     <h3>Equipment</h3>
                     <div class="aqua-ghyranis">
                         <label>Aqua Ghyranis</label>
-                        <input type="number" value="{{archetype.data.data.aqua}}">
+                        <input type="number" name="aqua" value="{{archetype.data.data.aqua}}">
                     </div>
                     {{{equipmentHTML}}}
                 </div>
             </div>
         </div>
     </div>
+    <button type="submit">Submit</button>
 </form>

@@ -361,7 +361,7 @@
 
 
 #character-creation .character-creation{
-    height: 100%;
+    height: calc(100% - 30px);
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -399,7 +399,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    height: calc(100% - 70px)
+    height: calc(100% - 80px)
   }
   
   .character-creation .sheet-body .attributes {
@@ -446,7 +446,7 @@
 
 
 .character-creation .sheet-body .cc-columns .skills{
-    flex: 0.5
+    flex: 1
 } 
 
 .character-creation h3 {

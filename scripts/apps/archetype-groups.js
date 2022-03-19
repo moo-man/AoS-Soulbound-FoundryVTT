@@ -98,6 +98,12 @@ export default class ArchetypeGroups extends Application {
             }
         }
 
+    // Given a group ID, get the equipment object
+    static groupIDToObject(id, archetype) {
+        let group = ArchetypeGroups.search(id, archetype.groups)
+        return this.archetype.equipment[group.index]
+    }
+
     /**
      * Construct html to display the groups in a readable format
      * 
@@ -166,7 +172,7 @@ export default class ArchetypeGroups extends Application {
     {
         let groups = duplicate(this.object.groups)
 
-        let objectToMove = this.search(moveID, groups)
+        let objectToMove = ArchetypeGroups.search(moveID, groups)
         this.delete(moveID, groups)
         this.insert(objectToMove, destID, groups)
         this.clean(groups)
@@ -276,7 +282,7 @@ export default class ArchetypeGroups extends Application {
         html.find(".connector").click(async ev => {
             let id = $(ev.currentTarget).parents(".group-list").attr("data-id")
             let groups = duplicate(this.object.groups);
-            let obj = this.search(id, groups);
+            let obj = ArchetypeGroups.search(id, groups);
             obj.type = obj.type == "and" ? "or" : "and"; // flip and/or
             await this.object.update({"data.groups" : groups})
             this.render(true);

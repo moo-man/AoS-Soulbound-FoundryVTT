@@ -50,7 +50,13 @@ export default class FilterResults extends FormApplication {
     applyFilters(items, filters) {
         filters.forEach(f => {
             items = items.filter(i => {
-                let propValue = getProperty(i.data, f.property)
+                let itemData = i.toObject();
+                itemData.hasTrait = duplicate(game.aos.config.traits)
+                for(let trait in itemData.hasTrait)
+                {
+                    itemData.hasTrait[trait] = i.traitList[trait] ? true : false
+                }
+                let propValue = getProperty(itemData, f.property)
                 let testValue = f.value;
                 let test = f.test
                 
@@ -83,7 +89,7 @@ export default class FilterResults extends FormApplication {
         return {
             "common": 1,
             "rare": 2,
-            "exotic-rare": 3,
+            "exotic": 3,
             "special": 4
         }
     }
