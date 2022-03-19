@@ -117,6 +117,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         let obj = {
           id: dragData.id,
           name: dropItem.name,
+          type : "item",
           diff: {}
         }
 

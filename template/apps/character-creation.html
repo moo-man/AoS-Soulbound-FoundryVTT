@@ -1,0 +1,89 @@
+<form>
+    <div class="character-creation">
+        <header class="header">
+            <input type="text" name="name" value="{{actor.name}}" placeholder="Name">
+        </header>
+        <div class="sheet-body">
+            <div class="attributes">
+                <div class="attribute">
+                    <input type="text" class="attribute-input">
+                    <label>Body</label>
+                </div>
+                <div class="attribute">
+                    <input type="text" class="attribute-input">
+                    <label>Mind</label>
+                </div>
+                <div class="attribute">
+                    <input type="text" class="attribute-input">
+                    <label>Soul</label>
+                </div>
+            </div>
+            <div class="cc-columns">
+                <div class="skills">
+                    <h3>Skills</h3>
+                    <div class="skill-header skill">
+                        <span>Skill</span>
+                        <span>T</span>
+                        <span>F</span>
+                    </div>
+                    {{#each archetype.skills.list as |skill sk|}}
+                    <div class="skill" data-skill="{{skill}}">
+                        <span>{{configLookup "skills" skill}}</span>
+                        <span class="skill-button" data-type="training">
+                            <button data-type="dec">-</button>
+                            {{#if (eq ../archetype.skills.core skill)}}
+                            1
+                            {{else}}
+                            0
+                            {{/if}}
+                            <button data-type="inc">+</button>
+                        </span>
+                        <span class="skill-button" data-type="focus">
+                            <button data-type="dec">-</button>
+                            {{#if (eq ../archetype.skills.core skill)}}
+                            1
+                            {{else}}
+                            0
+                            {{/if}}
+                            <button data-type="inc">+</button>
+                        </span>
+                    </div>
+                    {{/each}}
+
+                </div>
+                <div class="talents">
+                    <h3>Talents</h3>
+                    {{#each coreTalents as |talent t|}}
+                    <div class="talent">
+                        <div class="talent-header">
+                            <img src="{{talent.data.img}}">
+                            <label>{{talent.name}}</label>
+                        </div>
+                        <div class="talent-description">
+                            <b>Requirement:</b> {{talent.requirement}}
+                            {{{enrich talent.description}}}
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{#each chooseTalents as |talent t|}}
+                    <div class="talent">
+                        <div class="talent-header">
+                            <img src="{{talent.data.img}}">
+                            <label>{{talent.name}}</label>
+                            <input type="checkbox" data-id="{{talent.id}}">
+                        </div>
+                        <div class="talent-description">
+                            <b>Requirement:</b> {{talent.requirement}}
+                            {{{enrich talent.description}}}
+                        </div>
+                    </div>
+                    {{/each}}
+
+                </div>
+                <div class="equipment">
+                    {{{equipmentHTML}}}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

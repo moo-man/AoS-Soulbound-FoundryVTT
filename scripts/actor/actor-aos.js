@@ -4,6 +4,7 @@ import CombatTest from "../system/tests/combat-test.js";
 import SpellTest from "../system/tests/spell-test.js";
 import MiracleTest from "../system/tests/miracle-test.js";
 import SoulboundUtility from "../system/utility.js";
+import CharacterCreation from "../apps/character-creation.js";
 
 export class AgeOfSigmarActor extends Actor {
 
@@ -276,6 +277,26 @@ export class AgeOfSigmarActor extends Actor {
             change.effect.fillDerivedData(this, change)
             change.effect.apply(this, change);
         })
+    }
+
+    characterCreation(archetype)
+    {
+        new Dialog({
+            title : "Character Creation",
+            content : "<p>Begin Character Creation?</p>",
+            buttons : {
+                yes : {
+                    label: "Yes",
+                    callback: () => {
+                        new CharacterCreation({actor: this, archetype}).render(true)
+                    }
+                },
+                no : {
+                    label : "No",
+                    callback: () => {}
+                }
+            }
+        }).render(true)
     }
 
     //#region Rolling Setup
