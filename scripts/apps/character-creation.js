@@ -30,8 +30,12 @@ export default class CharacterCreation extends FormApplication {
 
 
         // Only apply skills to calculate skill EXP correctly, apply attributes on submit
-        this.character.data.update({ [`data.skills.${this.archetype.skills.core}.training`]: 1 })
-        this.character.data.update({ [`data.skills.${this.archetype.skills.core}.focus`]: 1 })
+
+        if (this.archetype.skills.core)
+        {
+            this.character.data.update({ [`data.skills.${this.archetype.skills.core}.training`]: 1 })
+            this.character.data.update({ [`data.skills.${this.archetype.skills.core}.focus`]: 1 })
+        }
         this.character.data.update({ "data.bio.archetype": this.archetype.name })
 
         this.character.prepareData();
@@ -45,8 +49,8 @@ export default class CharacterCreation extends FormApplication {
         data.actor = this.actor;
         data.character = this.character
         data.archetype = this.archetype;
-        data.coreTalents = this.archetype.talents.core.map(t => game.items.get(t.id))
-        data.chooseTalents = this.archetype.talents.list.map(t => game.items.get(t.id))
+        data.coreTalents = this.archetype.talents.core.map(t => new AgeOfSigmarItem(mergeObject(game.items.get(t.id).toObject(), t.diff, {overwrite : true} )))
+        data.chooseTalents = this.archetype.talents.list.map(t => new AgeOfSigmarItem(mergeObject(game.items.get(t.id).toObject(), t.diff, {overwrite : true} )))
         data.equipmentHTML = this.constructEquipmentHTML();
         return data
     }
@@ -83,6 +87,8 @@ export default class CharacterCreation extends FormApplication {
         })
 
         let items = talents.concat(equipment).map(i => i.toObject())
+
+        items.push(this.archetype.toObject());
 
         this.actor.update(mergeObject(this.character.toObject(), { items }, { overwrite: true }))
         this.close();
@@ -341,7 +347,7 @@ export default class CharacterCreation extends FormApplication {
         this.character.prepareData();
         let availableXP = parseInt(this.element.find(".xp-total")[0].value)
         let spentInput = this.element.find(".xp-spent")[0];
-        spentInput.value = this.character.experience.spent - 2; // -2 to account for the core skill already advanced
+        spentInput.value = this.character.experience.spent - (this.archetype.skills.core ? 2 : 0); // -2 to account for the core skill already advanced
         if (parseInt(spentInput.value) > availableXP)
             spentInput.classList.add("error")
         else

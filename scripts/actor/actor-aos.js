@@ -293,7 +293,10 @@ export class AgeOfSigmarActor extends Actor {
                 },
                 no : {
                     label : "No",
-                    callback: () => {}
+                    callback: () => {
+                        this.update({"data.bio.archetype" : archetype.name, })
+                        this.createEmbeddedDocuments("Item", [archetype.toObject()])
+                    }
                 }
             }
         }).render(true)

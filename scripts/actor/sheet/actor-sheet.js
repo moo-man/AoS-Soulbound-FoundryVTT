@@ -155,7 +155,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
           else if (data.type == "Item")
           {
               let item = game.items.get(data.id);
-              if (item.type == "archetype")
+              if (item.type == "archetype" && this.actor.type == "player")
                   return this.actor.characterCreation(item)
           }
           super._onDrop(ev)
