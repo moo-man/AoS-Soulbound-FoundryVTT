@@ -35,6 +35,12 @@ export class AgeOfSigmarActor extends Actor {
     async _preUpdate(updateData, options, user) {
         await super._preUpdate(updateData, options, user)
 
+            // Treat the custom default token as a true default token
+        // If you change the actor image from the default token, it will automatically set the same image to be the token image
+        if (this.data.token.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img) {
+            updateData["token.img"] = updateData.img;
+        }
+
         this.handleScrollingText(updateData)
     }
 

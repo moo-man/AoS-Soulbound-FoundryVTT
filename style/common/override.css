@@ -621,34 +621,24 @@ table tr:nth-child(even) {
 
 
 /* .placeable-hud .control-icon, */
-#controls ol .control-tool,
-    #controls ol .scene-control {
+#controls ol.control-tools > li,
+    #controls ol.scene-controls > li {
         color: white;
     background: url(../../asset/image/header.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
-/* .placeable-hud .control-icon.active {
-    border: 1px solid var(--color-active);
-}
 
-.placeable-hud input[type="text"]
-{
-    background: url(../../asset/image/background.webp) repeat;
-    color: black;
-    font-family: var(--font-header)
-} */
-
-#controls ol .control-tool.active,
-#controls ol .scene-control.active {
+#controls ol.control-tools > li.active,
+#controls ol.scene-controls > li.active {
     border: 1px solid var(--color-active);
     background: url(../../asset/image/background.webp) repeat;
     color: var(--color-header-blue);
     box-shadow: 0 0 10px var(--color-active)
 }
 
-#controls ol .control-tool:hover,
-#controls ol .scene-control:hover {
+#controls ol.control-tools  > li:hover,
+#controls ol.scene-controls > li:hover {
     border: 1px solid var(--color-active);
 }
 

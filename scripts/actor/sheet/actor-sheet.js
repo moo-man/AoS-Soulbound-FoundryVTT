@@ -144,7 +144,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return data
       }
 
-      _onDrop(ev)
+      async _onDrop(ev)
       {
           let data = ev.dataTransfer.getData("text/plain")
           data = JSON.parse(data)
@@ -154,7 +154,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
           }
           else if (data.type == "Item")
           {
-              let item = game.items.get(data.id);
+              let item = await Item.implementation.fromDropData(data);
               if (item.type == "archetype" && this.actor.type == "player")
                   return this.actor.characterCreation(item)
           }

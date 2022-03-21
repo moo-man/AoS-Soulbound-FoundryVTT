@@ -1,3 +1,4 @@
+{{#if (eq actor.type "player") }}
 <div class="content-box">
     <div class="content-header">
         <h1>{{localize "EXPERIENCE.EXPERIENCE"}}</h1>
@@ -18,6 +19,7 @@
     </div>
 </div>
 <hr>
+{{/if}}
 <div class="content-box" style="flex-grow:1">
     <div class="content-header">
         <h1>{{localize "TITLE.NOTES"}}</h1>

@@ -61,6 +61,7 @@ export default class CharacterCreation extends FormApplication {
 
         let proceed = await this.validateForm()
         if (!proceed) {
+            this._submitting = false;
             return
         }
 
@@ -81,7 +82,7 @@ export default class CharacterCreation extends FormApplication {
         let equipment = this.retrieveChosenEquipment();
         let talents = this.archetype.talents.core.map(t => game.items.get(t.id))
 
-        $(ev.currentTarget).find(".talent input").each((i, e) => {
+        $(this.form).find(".talent input").each((i, e) => {
             if (e.checked)
                 talents.push(game.items.get(e.dataset.id))
         })
@@ -141,11 +142,15 @@ export default class CharacterCreation extends FormApplication {
                     buttons: {
                         confirm: {
                             label: "Confirm",
-                            callback: () => resolve(true)
+                            callback: () => {
+                                resolve(true)
+                            }
                         },
                         cancel: {
                             label: "Cancel",
-                            callbacK: () => resolve(false)
+                            callback: () => {
+                                resolve(false)
+                            }
                         }
                     }
                 }).render(true)
