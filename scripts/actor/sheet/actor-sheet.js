@@ -152,11 +152,12 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
           {
               return this.actor.createEmbeddedDocuments("Item", [data.payload])
           }
-          else if (data.type == "Item")
-          {
+          else if (data.type == "Item") {
               let item = await Item.implementation.fromDropData(data);
               if (item.type == "archetype" && this.actor.type == "player")
                   return this.actor.characterCreation(item)
+              if (item.type == "archetype" && this.actor.type == "npc")
+                  return this.actor.applyArchetype(item)
           }
           super._onDrop(ev)
 

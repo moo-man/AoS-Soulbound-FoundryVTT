@@ -37,7 +37,7 @@ export class AgeOfSigmarActor extends Actor {
 
             // Treat the custom default token as a true default token
         // If you change the actor image from the default token, it will automatically set the same image to be the token image
-        if (this.data.token.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img) {
+        if (this.data.token.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img && !updateData.token?.img) {
             updateData["token.img"] = updateData.img;
         }
 
@@ -306,6 +306,47 @@ export class AgeOfSigmarActor extends Actor {
                 }
             }
         }).render(true)
+    }
+
+    async applyArchetype(archetype) {
+
+        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+
+        let items = [];
+        let actorData = this.toObject();
+
+        actorData.data.bio.faction = archetype.species
+
+        actorData.data.attributes.body.value = archetype.attributes.body
+        actorData.data.attributes.mind.value = archetype.attributes.mind
+        actorData.data.attributes.soul.value = archetype.attributes.soul
+
+        archetype.skills.list.forEach(skill => {
+            actorData.data.skills[skill].training = 1
+            actorData.data.skills[skill].focus = 1
+        })
+
+        actorData.data.skills[archetype.skills.core].training = 2
+        actorData.data.skills[archetype.skills.core].focus = 2
+
+        items = items.concat(archetype.ArchetypeItems);
+
+        // Remove IDs so items work within the update method
+        items.forEach(i => delete i._id)
+
+        actorData.data.bio.type = 3; // Champion
+
+        // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
+        actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
+        actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
+
+        actorData.img = archetype.data.img
+        actorData.token.img = archetype.data.img.replace("images", "tokens")
+
+        await this.update(actorData)
+
+        // Add items separately so active effects get added seamlessly
+        this.createEmbeddedDocuments("Item", items)
     }
 
     //#region Rolling Setup
