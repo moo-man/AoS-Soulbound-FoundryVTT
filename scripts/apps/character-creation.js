@@ -91,7 +91,8 @@ export default class CharacterCreation extends FormApplication {
 
         items.push(this.archetype.toObject());
 
-        this.actor.update(mergeObject(this.character.toObject(), { items }, { overwrite: true }))
+        await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
+        this.actor.createEmbeddedDocuments("Item", items);
         this.close();
     }
 
