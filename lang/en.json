@@ -40,6 +40,7 @@
   "ITEM.TypeWeapon" : "Weapon",
   "ITEM.TypeWound" : "Wound",
   "ITEM.TypePartyitem" : "Party Item",
+  "ITEM.TypeArchetype" : "Archetype",
 
   "ABILITIES.POOR": "Poor",
   "ABILITIES.AVERAGE": "Average",
