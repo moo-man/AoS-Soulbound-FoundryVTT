@@ -1,6 +1,18 @@
 import SoulboundUtility from "../system/utility.js";
 
 export class AgeOfSigmarItem extends Item {
+    
+
+    constructor(data, context)
+    {
+        super(data, context)
+        if (context && context.archetype)
+        {
+            this.archetype = context.archetype.item;
+            this.archetypeItemIndex = context.archetype.index;
+            this.archetypeItemPath = context.archetype.path
+        }
+    }
 
   // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
   async _preCreate(data, options, user) {
@@ -28,6 +40,39 @@ export class AgeOfSigmarItem extends Item {
                     updateData.data.damage = 0;
             }
         }
+    }
+
+    /**
+     * Override update to account for archetype parent
+     */
+    async update(data={}, context={}) 
+    {
+        // If this item is from an archetype entry, update the diff instead of the actual item
+        // I would like to have done this is the item's _preCreate but the item seems to lose 
+        // its "archetype" reference so it has to be done here
+        // TODO: Current Issue - changing a property, then changing back to the original value
+        // does not work due to `diffObject()`
+
+        if (this.archetype) {
+            // Get the archetype's equipment, find the corresponding object, add to its diff
+
+            let list = duplicate(getProperty(this.archetype.data, this.archetypeItemPath))
+            let item = list[this.archetypeItemIndex];
+            mergeObject( // Merge current diff with new diff
+            item.diff,
+            diffObject(this.toObject(), data),
+            { overwrite: true })
+    
+            // If the diff includes the item's name, change the name stored in the archetype
+            if (item.diff.name)
+            item.name = item.diff.name
+            else
+            item.name = this.name
+
+            this.archetype.update({ [`${this.archetypeItemPath}`]: list })
+            data={}
+        }
+        return super.update(data, context)
     }
 
     prepareData() {
@@ -101,6 +146,21 @@ export class AgeOfSigmarItem extends Item {
 
 
 
+    addToGroup(object)
+    {
+        let groups = duplicate(this.groups)
+        object.groupId = randomID()
+        groups.items.push(object)
+        return groups
+    }
+
+    resetGroups()
+    {
+        this.update({ "data.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+    }
+
+
+
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this.data._source);
         if (item.data.img.includes("/unknown")) {
@@ -145,6 +205,8 @@ export class AgeOfSigmarItem extends Item {
                 return game.i18n.localize("HEADER.STATE");
         }
     }
+
+    
 
     get Traits () {
         return Object.values(this.traitList).map(i => i.display)
@@ -219,6 +281,28 @@ export class AgeOfSigmarItem extends Item {
             return game.aos.config.partyItemCategories[this.category]
     }
 
+    get ArchetypeItems() {
+        let items = [];
+        // Get all archetype talents, merge with diff
+        let talents = this.talents.core.concat(this.talents.list)
+        items = items.concat(talents.map(t => {
+            let item = game.items.get(t.id)?.toObject();
+            if (item)
+                mergeObject(item, t.diff, {overwrite : true})
+            return item
+        }))
+
+        // Get all archetype talents, merge with diff
+        items = items.concat(this.equipment.map(i => {
+            let item = game.items.get(i.id)?.toObject();
+            if (item)
+                mergeObject(item, i.diff, {overwrite : true})
+            return item
+        }))
+
+        return items.filter(i => i);
+    }
+
     get OvercastString() {
         let optionDescriptions = this.overcasts.map(i => i.description)
         if (optionDescriptions.length >= 3)
@@ -237,6 +321,10 @@ export class AgeOfSigmarItem extends Item {
         }
         else 
             return ""
+    }
+
+    get Journal() {
+        return game.journal.get(this.journal)
     }
 
     get difficultyNumber()
@@ -314,7 +402,13 @@ export class AgeOfSigmarItem extends Item {
     get category() { return this.data.data.category }
     get equipped() { return this.data.data.equipped }
     get armour() { return this.data.data.armour }
-
+    get attributes() {return this.data.data.attributes}
+    get species() {return this.data.data.species}
+    get skills() {return this.data.data.skills}
+    get talents() {return this.data.data.talents}
+    get equipment() {return this.data.data.equipment}
+    get groups() {return this.data.data.groups}
+    get journal() {return this.data.data.journal}
 
 
 

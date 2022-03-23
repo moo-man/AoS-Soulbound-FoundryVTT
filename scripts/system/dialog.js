@@ -61,9 +61,11 @@ export class RollDialog extends Dialog {
         const skill = html.find("#skill")[0].value;
         const doubleTraining = html.find("#double-training")[0].checked;
         const doubleFocus = html.find("#double-focus")[0].checked;
-        const allocation = []//html.find("#allocation")[0].value;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
-        return { attribute, skill, doubleTraining, doubleFocus, allocation, bonusDice }
+        const triggerToDamage = html.find("#triggerToDamage")[0].value;
+        const allocation = [];
+
+        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage, allocation }
     }
 
     
@@ -111,6 +113,7 @@ export class RollDialog extends Dialog {
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
+            "triggerToDamage" : null
         }
         
 
@@ -141,7 +144,10 @@ export class RollDialog extends Dialog {
             this.userEntry.bonusDice = parseInt(ev.target.value)
             this.applyEffects()
         })[0]
-
+        this.inputs.triggerToDamage = html.find('#triggerToDamage').change(ev => {
+            this.userEntry.triggerToDamage = ev.target.value
+            this.applyEffects()
+        })[0]
 
         html.find(".effect-select").change(this._onEffectSelect.bind(this))
 
@@ -151,6 +157,7 @@ export class RollDialog extends Dialog {
             "double-training" : this.inputs["double-training"].checked,
             "double-focus" : this.inputs["double-focus"].checked,
             "bonusDice" : parseInt(this.inputs.bonusDice.value),
+            "triggerToDamage" : this.inputs["triggerToDamage"].value
         }
 
     }
@@ -163,7 +170,8 @@ export class RollDialog extends Dialog {
             "complexity" : null,
             "double-training" : null,
             "double-focus" : null,
-            "bonusDice" : null
+            "bonusDice" : null,
+            "triggerToDamage" : null
         }
         
         let changes = []
@@ -175,14 +183,14 @@ export class RollDialog extends Dialog {
         })
 
         changes.forEach(c => {
-            if (c.value.includes("@"))
+            if (typeof c.value == "string" && c.value.includes("@"))
                 c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
         })
         for (let c of changes)
         {
             if (AgeOfSigmarEffect.numericTypes.includes(c.key))
                 this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
-            else if (c.key == "double-training" || c.key == "double-focus")
+            else if (c.key == "double-training" || c.key == "double-focus" || c.key == "triggerToDamage")
             {
                 if (c.value == "true")
                     this.effectValues[c.key] = true
@@ -317,7 +325,6 @@ export class CombatDialog extends RollDialog {
         }
         data.secondaryTarget = duplicate(data.primaryTarget)
 
-        
         if (hasTarget) {
             data.primaryTarget = {
                 name : targets[0].name,
@@ -339,7 +346,9 @@ export class CombatDialog extends RollDialog {
                 data.secondaryTarget = duplicate(data.primaryTarget)
         }
 
-        game.user.updateTokenTargets([])
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+            game.user.updateTokenTargets([])
+        }
 
         return data
     }
@@ -526,7 +535,9 @@ export class SpellDialog extends RollDialog {
         let data = super._dialogData(actor, attribute, skill)
         mergeObject(data, spell.difficultyNumber)
         data.spell = spell
-        game.user.updateTokenTargets([])
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+            game.user.updateTokenTargets([])
+        }
         return data
     }    
 }

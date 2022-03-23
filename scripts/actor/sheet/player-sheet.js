@@ -16,6 +16,15 @@ export class PlayerSheet extends AgeOfSigmarActorSheet {
 
     activateListeners(html) {
         super.activateListeners(html);
+
+        html.find(".archetype-input").click(ev => {
+            let archetype = this.actor.getItemTypes("archetype").find(i => i.name == ev.currentTarget.value);
+
+            if (archetype)
+                archetype.sheet.render(true)
+            else   
+                ui.notifications.error("No Archetype Item found.")
+        })
     }
 
     _getHeaderButtons() {

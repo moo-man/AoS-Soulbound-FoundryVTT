@@ -4,6 +4,7 @@ import CombatTest from "../system/tests/combat-test.js";
 import SpellTest from "../system/tests/spell-test.js";
 import MiracleTest from "../system/tests/miracle-test.js";
 import SoulboundUtility from "../system/utility.js";
+import CharacterCreation from "../apps/character-creation.js";
 
 export class AgeOfSigmarActor extends Actor {
 
@@ -33,6 +34,12 @@ export class AgeOfSigmarActor extends Actor {
 
     async _preUpdate(updateData, options, user) {
         await super._preUpdate(updateData, options, user)
+
+            // Treat the custom default token as a true default token
+        // If you change the actor image from the default token, it will automatically set the same image to be the token image
+        if (this.data.token.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img && !updateData.token?.img) {
+            updateData["token.img"] = updateData.img;
+        }
 
         this.handleScrollingText(updateData)
     }
@@ -67,6 +74,10 @@ export class AgeOfSigmarActor extends Actor {
         }
         if (this.type==="npc")
             this._sizeToken()
+
+        if(this.type === "player") {
+            this.computeSpentExperience();
+        }
     }
 
 
@@ -237,27 +248,106 @@ export class AgeOfSigmarActor extends Actor {
         }
     }
 
+    computeSpentExperience() {
+        if(this.experience.total === undefined) return;
+
+        let spent = 0;
+        let costs = game.aos.config.Expcost;
+
+        for(let attribute of Object.values(this.attributes))
+        {
+            let index = attribute.value >= 1 && attribute.value <= 8 ? attribute.value-1 : 0;
+            spent += costs.attributes[index];
+        }
+
+        for(let skill of Object.values(this.skills)) {
+            spent += this.getSkillCost(costs, skill.training);            
+            spent += this.getSkillCost(costs, skill.focus);
+        }
+
+        let tam = this.items.filter(x => x.isTalent || x.isMiracle);
+
+        spent += tam.length * costs.talentsAndMiracles;
+
+        this.experience.spent = spent;
+        this.experience.outstanding = this.experience.total - spent;
+    }
+
+    getSkillCost(costs, val) {
+        let index = val >= 1 && val <= 3 ? val : 0;
+        return costs.skillAndFokus[index];
+    }
+
     applyDerivedEffects() {
         this.derivedEffects.forEach(change => {
             change.effect.fillDerivedData(this, change)
-            const modes = CONST.ACTIVE_EFFECT_MODES;
-            switch ( change.mode ) {
-                case modes.CUSTOM:
-                return change.effect._applyCustom(this, change);
-                case modes.ADD:
-                return change.effect._applyAdd(this, change);
-                case modes.MULTIPLY:
-                return change.effect._applyMultiply(this, change);
-                case modes.OVERRIDE:
-                return change.effect._applyOverride(this, change);
-                case modes.UPGRADE:
-                case modes.DOWNGRADE:
-                return change.effect._applyUpgrade(this, change);
-            }
+            change.effect.apply(this, change);
         })
     }
 
+    characterCreation(archetype)
+    {
+        new Dialog({
+            title : "Character Creation",
+            content : "<p>Begin Character Creation?</p>",
+            buttons : {
+                yes : {
+                    label: "Yes",
+                    callback: () => {
+                        new CharacterCreation({actor: this, archetype}).render(true)
+                    }
+                },
+                no : {
+                    label : "No",
+                    callback: () => {
+                        this.update({"data.bio.archetype" : archetype.name, })
+                        this.createEmbeddedDocuments("Item", [archetype.toObject()])
+                    }
+                }
+            }
+        }).render(true)
+    }
 
+    async applyArchetype(archetype) {
+
+        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+
+        let items = [];
+        let actorData = this.toObject();
+
+        actorData.data.bio.faction = archetype.species
+
+        actorData.data.attributes.body.value = archetype.attributes.body
+        actorData.data.attributes.mind.value = archetype.attributes.mind
+        actorData.data.attributes.soul.value = archetype.attributes.soul
+
+        archetype.skills.list.forEach(skill => {
+            actorData.data.skills[skill].training = 1
+            actorData.data.skills[skill].focus = 1
+        })
+
+        actorData.data.skills[archetype.skills.core].training = 2
+        actorData.data.skills[archetype.skills.core].focus = 2
+
+        items = items.concat(archetype.ArchetypeItems);
+
+        // Remove IDs so items work within the update method
+        items.forEach(i => delete i._id)
+
+        actorData.data.bio.type = 3; // Champion
+
+        // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
+        actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
+        actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
+
+        actorData.img = archetype.data.img
+        actorData.token.img = archetype.data.img.replace("images", "tokens")
+
+        await this.update(actorData)
+
+        // Add items separately so active effects get added seamlessly
+        this.createEmbeddedDocuments("Item", items)
+    }
 
     //#region Rolling Setup
     async setupAttributeTest(attribute, options={}) 
@@ -325,23 +415,7 @@ export class AgeOfSigmarActor extends Actor {
         testData.speaker = this.speakerData()
         return new MiracleTest(testData)
     }
-
-    _getCombatData(weapon) {
-        let data = {
-            melee: this.actor.combat.melee.relative,
-            accuracy: this.actor.combat.accuracy.relative,
-            attribute: "body" ,
-            skill: weapon.category === "melee" ? "weaponSkill" : "ballisticSkill",
-            swarmDice: this.actor.type === "npc" && this.actor.isSwarm ? this.actor.combat.health.toughness.value : 0, 
-        }
-
-
-    }
-
-
     //#endregion
-
-
 
     /**
      * applies Damage to the actor
@@ -349,21 +423,18 @@ export class AgeOfSigmarActor extends Actor {
      */
     async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false}={}) {
         let armour = this.combat.armour.value
+        
+        armour -= penetrating;
+        
+        if(armour < 0) { armour = 0; }            
 
-        armour -= penetrating
+        if (ineffective) armour *= 2;
 
-        if (ineffective) armour *= 2
-
-        damage = ignoreArmour ? damage : damage - armour
-
-
+        damage = ignoreArmour ? damage : damage - armour;
 
         if (damage < 0)
             damage = 0
         let remaining = this.combat.health.toughness.value - damage;
-
-        if (ineffective)
-            remaining = -1 // ineffective can only cause minor wounds
 
          // Update the Actor
          const updates = {
@@ -387,7 +458,9 @@ export class AgeOfSigmarActor extends Actor {
         ui.notifications.notify(note);
 
         // Doing this here because foundry throws an error if wounds are added before the update
-        if(remaining < 0 && this.combat.health.wounds.max > 0) {          
+        if(remaining < 0 && this.combat.health.wounds.max > 0) {
+            if (ineffective)
+                remaining = -1 // ineffective can only cause minor wounds          
             this.computeNewWound(remaining);
         }
         return ret;

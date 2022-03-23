@@ -103,7 +103,7 @@
                                     </div>
                                     {{#each data.overcasts as |overcast index|}}
                                     <div class="entry-content">
-                                        <div class="entry-element overcasts" data-index="{{index}}">
+                                        <div class="entry-element overcasts" data-path="data.overcasts" data-index="{{index}}">
                                             <div class="ratio">
                                                 <input data-path="ratio.success" placeholder="S" data-dtype="Number" type="number" value="{{overcast.ratio.success}}">
                                                 :
@@ -114,7 +114,7 @@
 
                                             <input type="text" data-path="property" placeholder='{{localize "SPELL.OVERCAST_PROPERTY"}}' value="{{overcast.property}}">
                                             <input type="text" data-path="title" placeholder='{{localize "SPELL.OVERCAST_TITLE"}}' value="{{overcast.title}}">
-                                            <a class="overcast-delete"><i class="fas fa-times"></i></a>
+                                            <a class="entry-delete"><i class="fas fa-times"></i></a>
                                         </div>
                                     </div>
                                     <div class="entry-description">

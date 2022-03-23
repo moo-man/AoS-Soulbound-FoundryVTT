@@ -5,7 +5,6 @@
       "npc",
       "party"
     ],
-    
     "templates": {
       "attributes": {
         "attributes": {
@@ -28,145 +27,145 @@
           "arcana": {
             "label": "SKILL.ARCANA",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "athletics": {
             "label": "SKILL.ATHLETICS",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "awareness": {
             "label": "SKILL.AWARENESS",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "ballisticSkill": {
             "label": "SKILL.BALLISTIC_SKILL",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "beastHandling": {
             "label": "SKILL.BEAST_HANDLING",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "channelling": {
             "label": "SKILL.CHANNELLING",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "crafting": {
             "label": "SKILL.CRAFTING",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "determination": {
             "label": "SKILL.DETERMINATION",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "devotion": {
             "label": "SKILL.DEVOTION",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "dexterity": {
             "label": "SKILL.DEXTERITY",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "entertain": {
             "label": "SKILL.ENTERTAIN",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "fortitude": {
             "label": "SKILL.FORTITUDE",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "guile": {
             "label": "SKILL.GUILE",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "intimidation": {
             "label": "SKILL.INTIMIDATION",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "intuition": {
             "label": "SKILL.INTUITION",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "lore": {
             "label": "SKILL.LORE",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "medicine": {
             "label": "SKILL.MEDICINE",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "might": {
             "label": "SKILL.MIGHT",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "nature": {
             "label": "SKILL.NATURE",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "reflexes": {
             "label": "SKILL.REFLEXES",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "stealth": {
             "label": "SKILL.STEALTH",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "survival": {
             "label": "SKILL.SURVIVAL",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "theology": {
             "label": "SKILL.THEOLOGY",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           },
           "weaponSkill": {
             "label": "SKILL.WEAPON_SKILL",
             "training": 0,
-            "bonus" : 0,
+            "bonus": 0,
             "focus": 0
           }
         }
@@ -216,13 +215,13 @@
             "bonus": 0
           },
           "speeds": {
-            "foot" : "normal",
-            "flight" : "none",
-            "swim" : "none"
+            "foot": "normal",
+            "flight": "none",
+            "swim": "none"
           },
           "speed": "normal",
           "flight": "none",
-          "wounds" : []
+          "wounds": []
         }
       },
       "power": {
@@ -254,9 +253,11 @@
         "faction": "",
         "subfaction": "",
         "eyeType": "",
-        "connections" : ""
+        "connections": ""
       },
-      "experience": 0,
+      "experience": {
+        "total": 35
+      },
       "notes": ""
     },
     "npc": {
@@ -282,9 +283,9 @@
         "max": 0
       },
       "doom": {
-        "value" : 0
+        "value": 0
       },
-      "members" : [],
+      "members": [],
       "notes": ""
     }
   },
@@ -294,22 +295,22 @@
       "armour",
       "equipment",
       "miracle",
-      "rumour",
       "rune",
       "spell",
       "talent",
       "weapon",
-      "partyItem"
+      "partyItem",
+      "archetype"
     ],
     "templates": {
-      "equipped" : {
-        "equipped" : false
+      "equipped": {
+        "equipped": false
       },
-      "test" : {
+      "test": {
         "test": {
-          "attribute" : "",
-          "skill" : "",
-          "dn" : ""
+          "attribute": "",
+          "skill": "",
+          "dn": ""
         }
       }
     },
@@ -318,7 +319,7 @@
         "equipped",
         "test"
       ],
-      "category" : "",
+      "category": "",
       "description": "",
       "cost": "",
       "availability": "",
@@ -331,7 +332,7 @@
       "damage": "",
       "traits": [],
       "state": "other",
-      "armour" : 0
+      "armour": 0
     },
     "armour": {
       "templates": [
@@ -356,9 +357,9 @@
       "state": "other"
     },
     "miracle": {
-      "templates" : [
+      "templates": [
         "test"
-      ],                                  
+      ],
       "cost": 0,
       "target": "",
       "range": "self",
@@ -375,19 +376,19 @@
       "state": "other"
     },
     "spell": {
-      "templates" : [
+      "templates": [
         "test"
       ],
       "dn": "",
       "target": "",
       "range": "you",
       "duration": {
-        "value" : null,
-        "unit" : "instant"
+        "value": null,
+        "unit": "instant"
       },
-      "damage" : "",
+      "damage": "",
       "overcast": "",
-      "overcasts" : [],
+      "overcasts": [],
       "description": "",
       "effect": "",
       "lore": ""
@@ -410,10 +411,36 @@
       "traits": [],
       "state": "other"
     },
-    "partyItem" : {
+    "partyItem": {
       "description": "",
       "category": "resource",
       "state": true
+    },
+    "archetype": {
+      "journal": "",
+      "species": "",
+      "aqua" : 0,
+      "attributes": {
+        "body": 0,
+        "mind": 0,
+        "soul": 0
+      },
+      "skills": {
+        "core": "",
+        "xp": 0,
+        "list": []
+      },
+      "talents": {
+        "core": [],
+        "list": [],
+        "choose": 0
+      },
+      "equipment": [],
+      "groups": {
+        "type": "and",
+        "items": [],
+        "groupId" : "root"
+      }
     }
   }
 }

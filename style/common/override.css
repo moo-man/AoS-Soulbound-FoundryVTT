@@ -403,6 +403,7 @@ li.directory-item.folder:not(.collapsed) {
 .entry-list {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .entry-list .entry-content {
@@ -416,9 +417,28 @@ li.directory-item.folder:not(.collapsed) {
     text-align: center;
 }
 
+.entry-list .inline-list{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+.entry-list .inline-list > *{
+    margin: 3px;
+    border: 1px solid darkslategray;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 5px;
+    padding: 2px;
+}
+
+
 
 .entry-list .entry-element > *{
     flex: 1
+}
+
+.entry-list .entry-element > .entry-controls{
+    flex: 0 0 60px;
 }
 
 .entry-list .entry-element > a{
@@ -440,6 +460,14 @@ li.directory-item.folder:not(.collapsed) {
 .entry-list .entry-element .ratio > input {
     flex : 0 0 30px
 }
+
+.entry-list .entry-element.equipment:hover,
+    .entry-list .entry-element.talents:hover {
+    cursor: pointer;
+    text-shadow: 0 0 8px goldenrod
+    
+}
+
 
 
 
@@ -593,34 +621,24 @@ table tr:nth-child(even) {
 
 
 /* .placeable-hud .control-icon, */
-#controls ol .control-tool,
-    #controls ol .scene-control {
+#controls ol.control-tools > li,
+    #controls ol.scene-controls > li {
         color: white;
     background: url(../../asset/image/header.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
-/* .placeable-hud .control-icon.active {
-    border: 1px solid var(--color-active);
-}
 
-.placeable-hud input[type="text"]
-{
-    background: url(../../asset/image/background.webp) repeat;
-    color: black;
-    font-family: var(--font-header)
-} */
-
-#controls ol .control-tool.active,
-#controls ol .scene-control.active {
+#controls ol.control-tools > li.active,
+#controls ol.scene-controls > li.active {
     border: 1px solid var(--color-active);
     background: url(../../asset/image/background.webp) repeat;
     color: var(--color-header-blue);
     box-shadow: 0 0 10px var(--color-active)
 }
 
-#controls ol .control-tool:hover,
-#controls ol .scene-control:hover {
+#controls ol.control-tools  > li:hover,
+#controls ol.scene-controls > li:hover {
     border: 1px solid var(--color-active);
 }
 

@@ -69,6 +69,7 @@
                 <input id="double-focus" type="checkbox" value="active" />
             </div>
         </div>
+        <input name="triggerToDamage" id="triggerToDamage" type="hidden" />
         <div class="content-row">
             <div class="entry-horizontal">
                 <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
@@ -86,7 +87,7 @@
         <div class="content-row">
             <select class="effect-select" multiple>
                 {{#each changeList as |change c|}}
-                <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">{{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
+                <option title="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">&#8226; {{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
                 {{/each}}
             </select>
         </div>

@@ -52,9 +52,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _orderSkills(sheetData)
     {
-        let middle = Object.values(sheetData.data.skills).length / 2;
+        let skills = Object.values(sheetData.data.skills);        
+        skills.forEach(x => x.label = game.i18n.localize(x.label));
+        skills.sort((x, y) => x.label.localeCompare(y.label, game.i18n.lang));
+
+        let middle = skills.length / 2;
         let i = 0;
-        for (let skill of Object.values(sheetData.data.skills)) {
+        for (let skill of skills) {
             skill.isLeft = i < middle;
             skill.isRight = i >= middle;
             i++;
@@ -140,17 +144,23 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         return data
       }
 
-      _onDrop(ev)
+      async _onDrop(ev)
       {
           let data = ev.dataTransfer.getData("text/plain")
-          if (data)
+          data = JSON.parse(data)
+          if (data.type == "itemDrop")
           {
-              data = JSON.parse(data)
-              if (data.type == "itemDrop")
-                  this.actor.createEmbeddedDocuments("Item", [data.payload])
-              else
-                  super._onDrop(ev)
+              return this.actor.createEmbeddedDocuments("Item", [data.payload])
           }
+          else if (data.type == "Item") {
+              let item = await Item.implementation.fromDropData(data);
+              if (item.type == "archetype" && this.actor.type == "player")
+                  return this.actor.characterCreation(item)
+              if (item.type == "archetype" && this.actor.type == "npc")
+                  return this.actor.applyArchetype(item)
+          }
+          super._onDrop(ev)
+
       }
     
 
