@@ -54,7 +54,7 @@ export class AgeOfSigmarActor extends Actor {
                 this._displayScrollingChange(getProperty(data, "data.combat.mettle.value") - this.combat.mettle.value, { mettle: true });
         }
         catch (e) {
-            console.error("Error displaying scrolling text for", data, e)
+            console.error(game.i18n.localize("ERROR.ScrollingText"), data, e)
         }
     }
 
@@ -288,17 +288,17 @@ export class AgeOfSigmarActor extends Actor {
     characterCreation(archetype)
     {
         new Dialog({
-            title : "Character Creation",
-            content : "<p>Begin Character Creation?</p>",
+            title : game.i18n.localize("HEADER.CHARGEN"),
+            content : `<p>${game.i18n.localize("CHARGEN.PROMPT")}</p>`,
             buttons : {
                 yes : {
-                    label: "Yes",
+                    label: game.i18n.localize("BUTTON.YES"),
                     callback: () => {
                         new CharacterCreation({actor: this, archetype}).render(true)
                     }
                 },
                 no : {
-                    label : "No",
+                    label : game.i18n.localize("BUTTON.NO"),
                     callback: () => {
                         this.update({"data.bio.archetype" : archetype.name, })
                         this.createEmbeddedDocuments("Item", [archetype.toObject()])
@@ -310,7 +310,7 @@ export class AgeOfSigmarActor extends Actor {
 
     async applyArchetype(archetype) {
 
-        ui.notifications.notify(`Applying ${archetype.name} Archetype`)
+        ui.notifications.notify(`${game.i18n.localize("CHARGEN.APPLYING")} ${archetype.name} ${game.i18n.localize("BIO.ARCHETYPE")}`)
 
         let items = [];
         let actorData = this.toObject();
@@ -354,7 +354,7 @@ export class AgeOfSigmarActor extends Actor {
     {
         console.log(options)
         let dialogData = RollDialog._dialogData(this, attribute, null, options)
-        dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} Test`
+        dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} ${game.i18n.localize("SKILL.TEST")}`
         let testData = await RollDialog.create(dialogData);
         testData.targets = dialogData.targets
         testData.speaker = this.speakerData()
@@ -364,7 +364,7 @@ export class AgeOfSigmarActor extends Actor {
     async setupSkillTest(skill, attribute, options={}) 
     {
         let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill, options)
-        dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} Test`
+        dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} ${game.i18n.localize("SKILL.TEST")}`
         let testData = await RollDialog.create(dialogData);
         testData.targets = dialogData.targets
         testData.speaker = this.speakerData()
@@ -377,7 +377,7 @@ export class AgeOfSigmarActor extends Actor {
             weapon = this.items.get(weapon)
 
         let dialogData = CombatDialog._dialogData(this, weapon, options)
-        dialogData.title = `${weapon.name} Test`
+        dialogData.title = `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
         let testData = await CombatDialog.create(dialogData);
         testData.targets = dialogData.targets
         testData.speaker = this.speakerData()
@@ -390,7 +390,7 @@ export class AgeOfSigmarActor extends Actor {
             power = this.items.get(power)
 
         let dialogData = SpellDialog._dialogData(this, power)
-        dialogData.title = `${power.name} Test`
+        dialogData.title = `${power.name} ${game.i18n.localize("SPELL.TEST")}`
         let testData = await SpellDialog.create(dialogData);
         testData.targets = dialogData.targets
         testData.speaker = this.speakerData()
@@ -403,10 +403,10 @@ export class AgeOfSigmarActor extends Actor {
             power = this.items.get(power)
 
         if (power.cost > this.combat.mettle.value)
-            return ui.notifications.error("Not enough Mettle!")
+            return ui.notifications.error(game.i18n.localize("ERROR.NotEnoughMettle"))
 
         let dialogData = RollDialog._dialogData(this, "soul", "devotion")
-        dialogData.title = `${power.name} Test`
+        dialogData.title = `${power.name} ${game.i18n.localize("POWER.TEST")}`
         dialogData.difficulty = game.aos.utility.DNToObject(power.test.dn).difficulty || dialogData.difficulty
         dialogData.complexity = game.aos.utility.DNToObject(power.test.dn).complexity || dialogData.complexity
         let testData = await RollDialog.create(dialogData);

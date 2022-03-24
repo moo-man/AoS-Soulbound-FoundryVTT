@@ -6,7 +6,7 @@ export default class EffectScriptConfig extends FormApplication {
             template: "systems/age-of-sigmar-soulbound/template/apps/effect-script.html",
             height: 400,
             width: 500,
-            title: "Effect Script Config",
+            title: game.i18n.localize("HEADER.EFFECT_SCRIPT_CONFIG"),
             editable : game.user.isGM,
             resizable: true
 

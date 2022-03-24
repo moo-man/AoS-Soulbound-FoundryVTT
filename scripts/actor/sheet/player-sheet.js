@@ -23,7 +23,7 @@ export class PlayerSheet extends AgeOfSigmarActorSheet {
             if (archetype)
                 archetype.sheet.render(true)
             else   
-                ui.notifications.error("No Archetype Item found.")
+                ui.notifications.error(game.i18n.localize("ERROR.NoArchetypeItem"))
         })
     }
 

@@ -20,9 +20,9 @@
         <div class="content-column">
             <div class="content-row">
                 <div class="sheet-table-name bold">{{localize "HEADER.NAME"}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.TRAINING'}}">T</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">P</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">F</div>
+                <div class="sheet-table-value bold" title="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}</div>
+                <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
+                <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
             </div>
             {{#each data.skills as |skill key|}}
                 {{#if skill.isLeft}}

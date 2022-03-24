@@ -54,7 +54,7 @@ export default class ArchetypeGroups extends Application {
             template: "systems/age-of-sigmar-soulbound/template/apps/archetype-groups.html",
             height: "auto",
             width: 285,
-            title: "Archetype Groups",
+            title: game.i18n.localize("HEADER.ARCHETYPE_GROUPS"),
             resizable: true,
             dragDrop: [{ dragSelector: ".equipment", dropSelector: ".group", permissions: { dragstart: true, drop: true } }]
         })
