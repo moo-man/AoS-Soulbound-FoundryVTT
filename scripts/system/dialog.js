@@ -62,7 +62,7 @@ export class RollDialog extends Dialog {
         const doubleTraining = html.find("#double-training")[0].checked;
         const doubleFocus = html.find("#double-focus")[0].checked;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
-        const triggerToDamage = html.find("#triggerToDamage")[0].value;
+        const triggerToDamage = html.find("#triggerToDamage")[0]?.value;
         const allocation = [];
 
         return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage, allocation }
@@ -157,7 +157,7 @@ export class RollDialog extends Dialog {
             "double-training" : this.inputs["double-training"].checked,
             "double-focus" : this.inputs["double-focus"].checked,
             "bonusDice" : parseInt(this.inputs.bonusDice.value),
-            "triggerToDamage" : this.inputs["triggerToDamage"].value
+            "triggerToDamage" : this.inputs["triggerToDamage"]?.value
         }
 
     }
