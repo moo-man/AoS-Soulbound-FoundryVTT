@@ -1,22 +1,22 @@
 <div class="dialog-fields">
     <div class="quick-effect">
         <div>
-            <label>Label</label>
+            <label>{{localize "QUICKEFFECT.LABEL"}}</label>
             <div class="form-fields">
                 <input type="text" class="label" name="label" value="{{label}}">
             </div>
         </div>
 
         <div>
-            <label>Change</label>
+            <label>{{localize "QUICKEFFECT.CHANGE"}}</label>
             <select class="key" name="key">
                 <option value="">-</option>
-                <optgroup label="Attributes">
+                <optgroup label="{{localize 'TITLE.ATTRIBUTES'}}">
                     <option value="data.attributes.body.value">{{localize "ATTRIBUTE.BODY"}}</option>
                     <option value="data.attributes.mind.value">{{localize "ATTRIBUTE.MIND"}}</option>
                     <option value="data.attributes.soul.value">{{localize "ATTRIBUTE.SOUL"}}</option>
                 </optgroup>
-                <optgroup label="Skills">
+                <optgroup label="{{localize 'TITLE.SKILLS'}}">
                     <option value="data.skills.arcana.bonus">{{localize "SKILL.ARCANA"}}</option>
                     <option value="data.skills.athletics.bonus">{{localize "SKILL.ATHLETICS"}}</option>
                     <option value="data.skills.awareness.bonus">{{localize "SKILL.AWARENESS"}}</option>
@@ -42,7 +42,7 @@
                     <option value="data.skills.theology.bonus">{{localize "SKILL.THEOLOGY"}}</option>
                     <option value="data.skills.weaponSkill.bonus">{{localize "SKILL.WEAPON_SKILL"}}</option>
                 </optgroup>
-                <optgroup label="Combat">
+                <optgroup label="{{localize 'TAB.COMBAT'}}">
                     <option value="data.combat.melee.bonus">{{localize "HEADER.MELEE"}}</option>
                     <option value="data.combat.accuracy.bonus">{{localize "HEADER.ACCURACY"}}</option>
                     <option value="data.combat.defence.bonus">{{localize "HEADER.DEFENCE"}}</option>
@@ -57,7 +57,7 @@
         </div>
 
         <div>
-            <label>Modifier</label>
+            <label>{{localize "QUICKEFFECT.MODIFIER"}}</label>
             <div class="form-fields">
                 <input type="number" class="modifier" name="modifier" value="0">
             </div>

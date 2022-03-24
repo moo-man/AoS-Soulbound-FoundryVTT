@@ -13,7 +13,7 @@ export default class ModuleUpdater extends Dialog {
             {
               update:
               {
-                label: game.i18n.localize("Update"),
+                label: game.i18n.localize("BUTTON.UPDATE"),
                 callback: html => {
                     if (!game.settings.get(module.data.name, "initialized"))
                         return ui.notifications.notify(game.i18n.localize("UPDATER.Error"))

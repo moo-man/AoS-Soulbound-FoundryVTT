@@ -219,7 +219,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let header = event.currentTarget.dataset
         
         let data = {
-             name : `New ${game.i18n.localize(CONFIG.Item.typeLabels[header.type])}`,
+             name : `${game.i18n.localize("ITEM.NEW")} ${game.i18n.localize(CONFIG.Item.typeLabels[header.type])}`,
              type : header.type
         };
 
@@ -244,17 +244,17 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
         new Dialog({
             title : game.i18n.localize("DIALOG.ITEM_DELETE"),
-            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}`,
+            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}</p>`,
             buttons : {
                 "yes" : {
-                    label : game.i18n.localize("Yes"),
+                    label : game.i18n.localize("BUTTON.YES"),
                     callback: () => {
                         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
                         div.slideUp(200, () => this.render(false));
                     }
                 },
                 "cancel" : {
-                    label : game.i18n.localize("Cancel"),
+                    label : game.i18n.localize("BUTTON.CANCEL"),
                     callback : () => {}
                 },
             },
@@ -281,18 +281,18 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     async _onEffectCreate(ev) {
         let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { label: "New Effect" , icon: "icons/svg/aura.svg"}
+        let effectData = { label: game.i18n.localize("QUICKEFFECT.NEW") , icon: "icons/svg/aura.svg"}
         if (type == "temporary") {
             effectData["duration.rounds"] = 1;
           }
 
         let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html")
         let dialog = new Dialog({
-            title : "Quick Effect",
+            title : game.i18n.localize("QUICKEFFECT.TITLE"),
             content : html,
             buttons : {
                 "create" : {
-                    label : "Create",
+                    label : game.i18n.localize("BUTTON.CREATE"),
                     callback : html => {
                         let mode = 2
                         let label = html.find(".label").val()
@@ -304,7 +304,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                     }
                 },
                 "skip" : {
-                    label : "Skip",
+                    label : game.i18n.localize("BUTTON.SKIP"),
                     callback : () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
                 }
             }

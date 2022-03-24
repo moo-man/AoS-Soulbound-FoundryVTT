@@ -50,7 +50,7 @@
                             <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
                             <div class="xp">
                                 <input type="number" value="{{data.skills.xp}}" name="data.skills.xp" data-dtype="Number" />
-                                <label>XP</label>
+                                <label>{{localize "EXPERIENCE.XP"}}</label>
                             </div>
                         </div>
                         <div class="skill-selection">
@@ -102,8 +102,8 @@
                         <h3>
                             {{localize "ARCHETYPE.EQUIPMENT"}}
                             <a class="configure-groups"><i class="fas fa-cog"></i></a>
-                            <a class="add-generic" title="Add Generic"><i class="fas fa-filter"></i></a>
-                            <a class="reset" title="Reset Groups"><i class="fas fa-redo"></i></a>
+                            <a class="add-generic" title="{{localize 'ARCHETYPE.ITEM.ADD_GENERIC'}}"><i class="fas fa-filter"></i></a>
+                            <a class="reset" title="{{localize 'ARCHETYPE.ITEM.RESET_GROUPS'}}"><i class="fas fa-redo"></i></a>
                         </h3>
                         {{{equipmentHTML}}}
                     </div>

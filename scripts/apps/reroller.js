@@ -5,7 +5,7 @@ export default class Reroller extends FormApplication
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "reroller",
-            title : "Reroller",
+            title : game.i18n.localize("HEADER.REROLLER"),
             template : "systems/age-of-sigmar-soulbound/template/apps/reroller.html",
             width:420
         })
