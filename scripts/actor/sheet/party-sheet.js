@@ -51,13 +51,13 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         let header = event.currentTarget.dataset
         
         let data = {
-             name : `New ${game.i18n.localize(CONFIG.Item.typeLabels[header.type])}`,
+             name : `${game.i18n.localize("ITEM.NEW")} ${game.i18n.localize(CONFIG.Item.typeLabels[header.type])}`,
              type : header.type
         };
         if (header.category)
             data["data.category"] = header.category
         
-        data.name = `New ${game.aos.config.partyItemCategories[header.category]}`
+        data.name = `${game.i18n.localize("ITEM.NEW")} ${game.aos.config.partyItemCategories[header.category]}`
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
 

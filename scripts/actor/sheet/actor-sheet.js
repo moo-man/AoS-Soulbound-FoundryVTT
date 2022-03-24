@@ -244,17 +244,17 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
         new Dialog({
             title : game.i18n.localize("DIALOG.ITEM_DELETE"),
-            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}`,
+            content : `<p>${game.i18n.localize("DIALOG.ITEM_DELETE_PROMPT")}</p>`,
             buttons : {
                 "yes" : {
-                    label : game.i18n.localize("Yes"),
+                    label : game.i18n.localize("BUTTON.YES"),
                     callback: () => {
                         this.actor.deleteEmbeddedDocuments("Item", [div.data("itemId")]);
                         div.slideUp(200, () => this.render(false));
                     }
                 },
                 "cancel" : {
-                    label : game.i18n.localize("Cancel"),
+                    label : game.i18n.localize("BUTTON.CANCEL"),
                     callback : () => {}
                 },
             },

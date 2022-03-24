@@ -13,7 +13,7 @@ export default class ArchetypeGeneric extends FormApplication {
             template: "systems/age-of-sigmar-soulbound/template/apps/archetype-generic.html",
             height: "auto",
             width: 285,
-            title: game.i18n.localize("ARCHETYPE.ITEM.GENERIC"),
+            title: game.i18n.localize("HEADER.ARCHETYPE_GENERIC"),
             resizable: true,
         })
     }

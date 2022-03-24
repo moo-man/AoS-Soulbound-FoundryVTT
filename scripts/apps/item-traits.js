@@ -5,7 +5,7 @@ export default class ItemTraits extends FormApplication {
             template: "systems/age-of-sigmar-soulbound/template/apps/item-traits.html",
             height: "auto",
             width: 285,
-            title: "Item Traits",
+            title: game.i18n.localize("HEADER.ITEM_TRAITS"),
             resizable : true
         })
     }
