@@ -8,29 +8,29 @@
             <div class="attributes">
                 <div class="attribute">
                     <input type="text" disabled class="attribute-input" value="{{archetype.attributes.body}}">
-                    <label>Body</label>
+                    <label>{{localize "ATTRIBUTE.BODY"}}</label>
                 </div>
                 <div class="attribute">
                     <input type="text" disabled class="attribute-input" value="{{archetype.attributes.mind}}">
-                    <label>Mind</label>
+                    <label>{{localize "ATTRIBUTE.MIND"}}</label>
                 </div>
                 <div class="attribute">
                     <input type="text" disabled class="attribute-input" value="{{archetype.attributes.soul}}">
-                    <label>Soul</label>
+                    <label>{{localize "ATTRIBUTE.SOUL"}}</label>
                 </div>
             </div>
             <div class="cc-columns">
                 <div class="skills">
-                    <h3>Skills</h3>
+                    <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
                     <div class="xp">
-                        XP Spent
+                        {{localize "CHARGEN.XP_SPENT"}}
                         <input type="number" disabled class="xp-spent" value="0">
                         <input type="number" class="xp-total" value="{{archetype.skills.xp}}">
                     </div>
                     <div class="skill-header skill">
-                        <span>Skill</span>
-                        <span>Training</span>
-                        <span>Focus</span>
+                        <span>{{localize "ARCHETYPE.SKILL"}}</span>
+                        <span>{{localize "HEADER.TRAINING"}}</span>
+                        <span>{{localize "HEADER.FOCUS"}}</span>
                     </div>
                     {{#each archetype.skills.list as |skill sk|}}
                     <div class="skill" data-skill="{{skill}}">
@@ -58,9 +58,9 @@
 
                 </div>
                 <div class="talents">
-                    <h3>Talents</h3>
+                    <h3>{{localize "ARCHETYPE.TALENTS"}}</h3>
                     <div class="talent-count">
-                        <label>Choose</label>
+                        <label>{{localize "ARCHETYPE.CHOOSE"}}</label>
                         <input disabled type="number" value="{{archetype.talents.choose}}">
                     </div>
                     {{#each coreTalents as |talent t|}}
@@ -71,7 +71,7 @@
                         </div>
                         <div class="talent-description">
                             {{#if talent.requirement}}
-                            <b>Requirement:</b> {{talent.requirement}}<br>
+                            <b>{{localize "ARCHETYPE.REQUIREMENT"}}:</b> {{talent.requirement}}<br>
                             {{/if}}
                             {{{enrich talent.description}}}
                         </div>
@@ -86,7 +86,7 @@
                         </div>
                         <div class="talent-description">
                             {{#if talent.requirement}}
-                            <b>Requirement:</b> {{talent.requirement}}<br>
+                            <b>{{localize "ARCHETYPE.REQUIREMENT"}}:</b> {{talent.requirement}}<br>
                             {{/if}}
                             {{{enrich talent.description}}}
                         </div>
@@ -95,9 +95,9 @@
 
                 </div>
                 <div class="equipment">
-                    <h3>Equipment</h3>
+                    <h3>{{localize "ARCHETYPE.EQUIPMENT"}}</h3>
                     <div class="aqua-ghyranis">
-                        <label>Aqua Ghyranis</label>
+                        <label>{{localize "ARCHETYPE.AQUA_GHYRANIS"}}</label>
                         <input type="number" name="aqua" value="{{archetype.data.data.aqua}}">
                     </div>
                     {{{equipmentHTML}}}
@@ -105,5 +105,5 @@
             </div>
         </div>
     </div>
-    <button type="submit">Submit</button>
+    <button type="submit">{{localize "BUTTON.SUBMIT"}}</button>
 </form>

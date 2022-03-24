@@ -6,7 +6,7 @@ export default class SpeedConfig extends FormApplication
             template : "systems/age-of-sigmar-soulbound/template/apps/speed-config.html",
             height : "auto",
             width : "auto",
-            title : "Speed Configuration"
+            title : game.i18n.localize("HEADER.SPEED_CONFIG"),
             
         })
     }

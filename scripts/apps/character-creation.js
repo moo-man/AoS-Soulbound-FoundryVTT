@@ -15,7 +15,7 @@ export default class CharacterCreation extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "character-creation",
-            title: "Character Creation",
+            title: game.i18n.localize("HEADER.CHARGEN"),
             template: "systems/age-of-sigmar-soulbound/template/apps/character-creation.html",
             closeOnSubmit: false,
             width: 1400,
@@ -91,7 +91,8 @@ export default class CharacterCreation extends FormApplication {
 
         items.push(this.archetype.toObject());
 
-        this.actor.update(mergeObject(this.character.toObject(), { items }, { overwrite: true }))
+        await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
+        this.actor.createEmbeddedDocuments("Item", items);
         this.close();
     }
 
@@ -103,16 +104,16 @@ export default class CharacterCreation extends FormApplication {
             let spentXP = parseInt(this.element.find(".xp-spent")[0].value)
 
             if (availableXP < spentXP)
-                errors.push("Spent XP exceeds Available XP");
+                errors.push(game.i18n.localize("CHARGEN.ERROR.XP_EXCEEDS"));
 
 
             // TALENTS
             let talentCount = parseInt(this.element.find(".talent-count input")[0].value);
 
             if (talentCount > 0)
-                errors.push("More talents can be selected");
+                errors.push(game.i18n.localize("CHARGEN.ERROR.MORE_TALENTS"));
             else if (talentCount < 0)
-                errors.push("Too many talents selected");
+                errors.push(game.i18n.localize("CHARGEN.ERROR.TOO_MANY_TALENTS"));
 
 
             let unresolvedGenerics = false;
@@ -127,27 +128,27 @@ export default class CharacterCreation extends FormApplication {
                 }
             })
             if (unresolvedGenerics)
-                errors.push("Unresolved Generic Items")
+                errors.push(game.i18n.localize("CHARGEN.ERROR.UNRESOLVED_ITEMS"))
 
 
             if (errors.length) {
                 new Dialog({
-                    label: "Errors",
-                    content: `<p>The following errors have been detected.</p>
+                    label: game.i18n.localize("CHARGEN.ERROR.HEADER"),
+                    content: `<p>${game.i18n.localize("CHARGEN.ERROR.ERRORS_DETECTED")}</p>
                   <ul>
                   <li>${errors.join("</li><li>")}</li>
                   </ul>
-                  <p>Proceed anyway?</p>
+                  <p>${game.i18n.localize("CHARGEN.ERROR.PROMPT")}</p>
                   `,
                     buttons: {
                         confirm: {
-                            label: "Confirm",
+                            label: game.i18n.localize("BUTTON.CONFIRM"),
                             callback: () => {
                                 resolve(true)
                             }
                         },
                         cancel: {
-                            label: "Cancel",
+                            label: game.i18n.localize("BUTTON.CANCEL"),
                             callback: () => {
                                 resolve(false)
                             }
