@@ -25,7 +25,16 @@
         <div class="entry-vertical">
             <h3>{{localize "HEADER.TOUGHNESS"}}</h3>
             <div class="segment-horizontal">
-                <div class="sheet-table-valueMain"><input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" /></div> / <div class="sheet-table-valueMain"><input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled /></div>
+                <div class="sheet-table-valueMain">
+                    <input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" />
+                </div> / 
+                <div class="sheet-table-valueMain">
+                    {{#unless (eq data.bio.type 0)}}
+                        <input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled />
+                    {{else}}
+                        <input name="data.combat.health.toughness.max" type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" />
+                    {{/unless}}
+                </div>
             </div>
             <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="data.combat.health.toughness.bonus" type="number" value="{{data.combat.health.toughness.bonus}}" data-dtype="Number" /></div></div>
         </div>

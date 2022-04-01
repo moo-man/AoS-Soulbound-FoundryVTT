@@ -103,7 +103,8 @@ export class AgeOfSigmarActor extends Actor {
         this.combat.defence.total = 0;
         this.combat.defence.relative = 0;
         this.combat.armour.value = 0;
-        this.combat.health.toughness.max = 0;        
+        if(!this.isSwarm) //Wenn set to Swarm max is editable don't reset it
+            this.combat.health.toughness.max = 0;        
         this.combat.health.wounds.value = 0;
         this.combat.health.wounds.max = 0;
         this.combat.initiative.total = 0;
@@ -234,7 +235,9 @@ export class AgeOfSigmarActor extends Actor {
         
         if(this.autoCalc.toughness) {
             this.combat.health.toughness.max += this.attributes.body.value + this.attributes.mind.value + this.attributes.soul.value + this.combat.health.toughness.bonus;
-        } else if(!this.isSwarm) {
+        } else if(this.isSwarm) {
+            this.combat.health.toughness.max += this.combat.health.toughness.bonus;            
+        } else {
             this.combat.health.toughness.max = 1;
         }
         
