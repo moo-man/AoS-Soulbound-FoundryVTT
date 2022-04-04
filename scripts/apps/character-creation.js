@@ -49,8 +49,8 @@ export default class CharacterCreation extends FormApplication {
         data.actor = this.actor;
         data.character = this.character
         data.archetype = this.archetype;
-        data.coreTalents = this.archetype.talents.core.map(t => new AgeOfSigmarItem(mergeObject(game.items.get(t.id).toObject(), t.diff, {overwrite : true} )))
-        data.chooseTalents = this.archetype.talents.list.map(t => new AgeOfSigmarItem(mergeObject(game.items.get(t.id).toObject(), t.diff, {overwrite : true} )))
+        data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new AgeOfSigmarItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new AgeOfSigmarItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
         data.equipmentHTML = this.constructEquipmentHTML();
         return data
     }
@@ -79,13 +79,15 @@ export default class CharacterCreation extends FormApplication {
         })
 
 
-        let equipment = this.retrieveChosenEquipment();
-        let talents = this.archetype.talents.core.map(t => game.items.get(t.id))
+        let equipment = await Promise.all(this.retrieveChosenEquipment());
+        let talents = this.archetype.talents.core.map(t => game.aos.utility.findItem(t.id, "talent"))
 
         $(this.form).find(".talent input").each((i, e) => {
             if (e.checked)
-                talents.push(game.items.get(e.dataset.id))
+                talents.push(game.aos.utility.findItem(e.dataset.id, "talent"))
         })
+
+        talents = await Promise.all(talents);
 
         let items = talents.concat(equipment).map(i => i.toObject())
 
@@ -153,6 +155,10 @@ export default class CharacterCreation extends FormApplication {
                                 resolve(false)
                             }
                         }
+                    },
+                    close : () => resolve(false),
+                    render : (html) => {
+                        html.parents(".dialog").find("header a").remove()
                     }
                 }).render(true)
             }
@@ -169,15 +175,24 @@ export default class CharacterCreation extends FormApplication {
             let element = this.element.find(`.equipment-item[data-id='${e.groupId}']`)
             let enabled = element.parents(".disabled").length == 0
             return enabled
-        }).map(e => {
+        }).map(async e => {
             let item;
             // If chosen item is still generic, create a basic item for it
             if (e.type == "generic") {
                 item = new AgeOfSigmarItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
             }
             else {
+
+                let document = await game.aos.utility.findItem(e.id)
+
                 // Create a temp item and incorporate the diff
-                item = new AgeOfSigmarItem(mergeObject(game.items.get(e.id).toObject(), e.diff, { overwrite: true }))
+                if (document)
+                    item = new AgeOfSigmarItem(mergeObject(document.toObject(), e.diff, { overwrite: true }))
+                else 
+                {
+                    ui.notifications.warn(`Could not find ${e.name}, creating generic`)
+                    item = new AgeOfSigmarItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
+                }
             }
             return item
         });
@@ -201,7 +216,7 @@ export default class CharacterCreation extends FormApplication {
                 html += "</div>"
                 return html
             }
-            else if (group.type == "item") {
+            else if (group.type == "item" || (group.type == "generic" && group.filters.length == 0)) {
                 return `<div class="equipment-item" data-id='${group.groupId}'>${group.name}</div>`
             }
             else if (group.type == "generic") {
@@ -219,11 +234,11 @@ export default class CharacterCreation extends FormApplication {
      * @param {Object} filter Filter details (to replace with object)
      * @param {String} id ID of item chosen
      */
-    chooseEquipment(filter, id) {
+    async chooseEquipment(filter, id) {
         let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
         let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
         let equipmentObject = this.archetype.equipment[group.index]
-        let item = game.items.get(id)
+        let item = await game.aos.utility.findItem(id)
 
         if (element && item) {
             element.classList.remove("generic")
@@ -343,8 +358,8 @@ export default class CharacterCreation extends FormApplication {
             if (equipment.type == "generic" && equipment.filters.length) {
                 new FilterResults({ equipment, app: this }).render(true)
             }
-            else
-                new AgeOfSigmarItem(game.items.get(equipment.id).toObject()).sheet.render(true, { editable: false })
+            else if (equipment.type == "item")
+                new AgeOfSigmarItem((await game.aos.utility.findItem(equipment.id)).toObject()).sheet.render(true, { editable: false })
         })
     }
 

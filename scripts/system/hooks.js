@@ -201,6 +201,7 @@ export default function registerHooks() {
         Migration.checkMigration()
         FoundryOverrides()
         game.counter.render(true)
+        game.aos.tags.createTags()
 
         CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
             let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")

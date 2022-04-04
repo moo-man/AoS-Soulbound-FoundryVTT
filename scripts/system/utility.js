@@ -68,4 +68,28 @@ export default class SoulboundUtility {
         return false
       }
     }
+
+    static findItem(id, type) {
+      if (game.items.has(id))
+        return game.items.get(id)
+  
+      let packs = game.aos.tags.getPacksWithTag(type)
+      for (let pack of packs) {
+        if (pack.index.has(id)) {
+          return pack.getDocument(id)
+        }
+      }
+    }
+  
+    static findJournal(id) {
+      if (game.journal.has(id))
+        return game.journal.get(id)
+  
+      let packs = game.packs.filter(i => i.metadata.type == "JournalEntry")
+      for (let pack of packs) {
+        if (pack.index.has(id)) {
+          return pack.getDocument(id)
+        }
+      }
+    }
 }

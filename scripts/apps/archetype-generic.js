@@ -50,7 +50,7 @@ export default class ArchetypeGeneric extends FormApplication {
         filters = filters.filter(f => f.property)
         let groups = this.object.item.groups
         let generic = {type: "generic", name : formData.name, filters}
-        if (this.object.index)
+        if (Number.isNumeric(this.object.index))
             equipment[this.object.index] = generic
         else 
         {
