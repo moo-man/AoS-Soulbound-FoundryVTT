@@ -25,9 +25,16 @@
         <div class="entry-vertical">
             <h3>{{localize "HEADER.TOUGHNESS"}}</h3>
             <div class="segment-horizontal">
-                <div class="sheet-table-valueMain"><input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" /></div> / <div class="sheet-table-valueMain"><input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled /></div>
+                <div class="sheet-table-valueMain"><input name="data.combat.health.toughness.value" type="number" value="{{data.combat.health.toughness.value}}" data-dtype="Number" /></div> 
+                {{#unless actor.isSwarm}}
+                /
+                <div class="sheet-table-valueMain"><input type="number" value="{{data.combat.health.toughness.max}}" data-dtype="Number" disabled /></div>
             </div>
             <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="data.combat.health.toughness.bonus" type="number" value="{{data.combat.health.toughness.bonus}}" data-dtype="Number" /></div></div>
+            {{else}}
+            </div>
+            <div class="segment-horizontal"></div>
+            {{/unless}}
         </div>
         <div class="entry-vertical">
             <h3>{{localize "HEADER.WOUND"}}</h3>
