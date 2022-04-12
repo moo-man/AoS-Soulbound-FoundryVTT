@@ -313,7 +313,7 @@ export default function registerHooks() {
     Hooks.on("updateCombat", (combat) => {
         let actor = combat.combatant.actor
         if (actor.combat.mettle.value < actor.combat.mettle.max)
-            actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + 1})
+            actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
     })
 
 

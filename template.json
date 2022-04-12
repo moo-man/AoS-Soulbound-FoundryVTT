@@ -181,7 +181,8 @@
         "combat": {
           "mettle": {
             "value": 0,
-            "bonus": 0
+            "bonus": 0,
+            "regain" : 1
           },
           "health": {
             "toughness": {

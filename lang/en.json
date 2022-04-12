@@ -258,6 +258,7 @@
   "HEADER.TOTAL": "Total",
   "HEADER.TOUGHNESS": "Toughness",
   "HEADER.METTLE": "Mettle",
+  "HEADER.METTLE_REGAIN": "Mettle (Regain)",
   "HEADER.MELEE": "Melee",
   "HEADER.ACCURACY": "Accuracy",
   "HEADER.DEFENCE": "Defence",

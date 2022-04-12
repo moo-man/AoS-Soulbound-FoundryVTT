@@ -43,10 +43,9 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     }
     return super._updateObject(event, formData)
   }
-  _onDrop(ev) {
-    console.log(ev)
+  async _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-    let dropItem = game.items.get(dragData.id)
+    let dropItem = await Item.implementation.fromDropData(dragData);
 
     if (this.item.type === "archetype") {
       let list;
