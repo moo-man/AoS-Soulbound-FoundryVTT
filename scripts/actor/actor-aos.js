@@ -545,11 +545,13 @@ export class AgeOfSigmarActor extends Actor {
         return this.update({"data.combat.wounds" : wounds})
     }
 
-    async addCondition(effect) {
+    async addCondition(effect, options) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
         if (!effect)
           return "No Effect Found"
+        else 
+            effect = duplicate(effect)
     
         if (!effect.id)
           return "Conditions require an id field"
@@ -560,6 +562,7 @@ export class AgeOfSigmarActor extends Actor {
         if (!existing) {
           effect.label = game.i18n.localize(effect.label)
           effect["flags.core.statusId"] = effect.id;
+          effect.origin = options.origin || ""
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
@@ -567,9 +570,11 @@ export class AgeOfSigmarActor extends Actor {
     
       async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
         if (!effect)
           return "No Effect Found"
+        else
+            effect = duplicate(effect)
     
         if (!effect.id)
           return "Conditions require an id field"
@@ -633,6 +638,47 @@ export class AgeOfSigmarActor extends Actor {
         }
 
         return changes
+    }
+
+
+
+    async onEnterDrawing(drawing)
+    {
+        let flags = drawing.data.flags["age-of-sigmar-soulbound"]
+
+        let cover = flags.cover
+        let hazard = flags.hazard
+        let obscured = flags.obscured
+        let difficult = flags.difficult
+        let options = {origin : drawing.uuid}
+
+        if (cover)
+            await this.addCondition(cover, options)
+        if (hazard)
+            await this.addCondition(hazard, options)
+        if (obscured)
+            await this.addCondition(obscured, options)
+        if (difficult)
+            await this.addCondition("difficult", options)
+    }
+
+    async onLeaveDrawing(drawing)
+    {
+        let flags = drawing.data.flags["age-of-sigmar-soulbound"]
+
+        let cover = flags.cover
+        let hazard = flags.hazard
+        let obscured = flags.obscured
+        let difficult = flags.difficult
+
+        if (cover)
+            await this.removeCondition(cover)
+        if (hazard)
+            await this.removeCondition(hazard)
+        if (obscured)
+            await this.removeCondition(obscured)
+        if (difficult)
+            await this.removeCondition("difficult")
     }
 
        /**

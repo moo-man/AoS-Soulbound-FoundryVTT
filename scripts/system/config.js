@@ -138,6 +138,35 @@ AOS.durations = {
     "permanent" : "DURATION.PERMANENT"
 }
 
+AOS.zoneCover = {
+    "partial" : "ZONE.PARTIAL",
+    "total" : "ZONE.TOTAL",
+}
+
+AOS.zoneCoverBenefit = {
+    "partial" : 1,
+    "total" : 2
+}
+
+AOS.zoneHazard = {
+    "minor" : "ZONE.MINOR",
+    "major" : "ZONE.MAJOR",
+    "deadly" : "ZONE.DEADLY",
+}
+
+AOS.zoneHazardDamage = {
+    "minor" : 1,
+    "major" : 3,
+    "deadly" : 5
+}
+
+
+AOS.zoneObscured = {
+    "light" : "ZONE.LIGHTLY_OBSCURED",
+    "heavy" : "ZONE.HEAVILY_OBSCURED",
+}
+
+
 AOS.Expcost = {
     talentsAndMiracles : 2,
     attributes : [0, 2, 7, 14, 23, 34, 47, 62],
@@ -195,6 +224,75 @@ AOS.traitDescriptions = {}
 AOS.conditionDescriptions = {}
 
 AOS.traitsWithValue = ["range", "thrown", "blast"]
+
+AOS.systemEffects = {
+    "partial" : {
+        id : "partial",
+        label : "Partial Cover",
+        icon : "icons/svg/tower.svg",
+        changes : [
+            {key: "", mode : 2, value : 0}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "", script : ""}
+            }
+        }
+    },
+    "total" : {
+        id : "total",
+        label : "Total Cover",
+        icon : "icons/svg/tower.svg",
+        changes : [
+            {key: "", mode : 2, value : 0}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "", script : ""}
+            }
+        }
+    },
+    "light" : {
+        id : "light",
+        label : "Lightly Obscured",
+        icon : "icons/svg/blind.svg",
+        changes : [
+            {key: "", mode : 2, value : 0}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "", script : ""}
+            }
+        }
+    },
+    "heavy" : {
+        id : "heavy",
+        label : "Heavily Obscured",
+        icon : "icons/svg/blind.svg",
+        changes : [
+            {key: "", mode : 2, value : 0}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "", script : ""}
+            }
+        }
+    },
+    "difficult" : {
+        id : "difficult",
+        label : "Difficult Terrain",
+        icon : "icons/svg/downgrade.svg",
+        changes : [
+            {key: "", mode : 2, value : 0}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "", script : ""}
+            }
+        }
+    },
+}
+
 
 CONFIG.statusEffects = [
     {

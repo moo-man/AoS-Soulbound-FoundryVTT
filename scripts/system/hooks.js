@@ -314,6 +314,42 @@ export default function registerHooks() {
         let actor = combat.combatant.actor
         if (actor.combat.mettle.value < actor.combat.mettle.max)
             actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
+        
+        let zones = game.aos.utility.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
+        zones.forEach(z => {
+            let hazard = z.getFlag("age-of-sigmar-soulbound", "hazard")
+            let ignoreArmour = z.getFlag("age-of-sigmar-soulbound", "ignoreArmour")
+            let damage = game.aos.config.zoneHazardDamage[hazard]
+            actor.applyDamage(damage, {ignoreArmour})
+        })
+    })
+
+    Hooks.on("preUpdateToken", (token, updateData) => {
+        if(Number.isNumeric(updateData.x) || Number.isNumeric(updateData.y))
+        {
+            let newX = updateData.x || token.data.x;
+            let newY = updateData.y || token.data.y;
+
+            let oldX = token.data.x;
+            let oldY = token.data.y;
+
+            if (token.parent?.drawings)
+            {
+                for(let drawing of token.parent.drawings.contents)
+                {
+                    if (drawing.object.bounds.contains(newX, newY) && !drawing.object.bounds.contains(oldX, oldY))
+                    {
+                        token.actor.onEnterDrawing(drawing)
+                    }
+                    else if (!drawing.object.bounds.contains(newX, newY) && drawing.object.bounds.contains(oldX, oldY))
+                    {
+                        token.actor.onLeaveDrawing(drawing)
+                    }
+                }
+            }
+
+        }
+
     })
 
 

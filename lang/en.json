@@ -287,6 +287,7 @@
   "HEADER.EFFECT_SCRIPT_CONFIG": "Effect Script Config",
   "HEADER.FILTER_RESULTS": "Filter Results",
   "HEADER.ITEM_TRAITS": "Item Traits",
+  "HEADER.ZONE_CONFIG": "Zone Config",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",
@@ -440,6 +441,7 @@
   "TAB.MAIN": "MAIN",
   "TAB.MEMBERS": "MEMBERS",
   "TAB.EFFECTS": "EFFECTS",
+  "TAB.PROPERTIES": "PROPERTIES",
 
   "TALENT.NAME": "Name",
   "TALENT.EFFECT": "Effect",
@@ -568,6 +570,21 @@
   "EFFECT.DELETE": "Delete Effect",
   "EFFECT.ENABLE": "Enable Effect",
   "EFFECT.DISABLE": "Disable Effect",
+
+
+  "ZONE.DIFFICULT_TERRAIN" : "Difficult Terrain",
+  "ZONE.COVER" : "Cover",
+  "ZONE.HAZARD" : "Hazard",
+  "ZONE.HAZARD_IGNORE_ARMOUR" : "Ignore Armour",
+  "ZONE.OBSCURED" : "Obscured",
+  "ZONE.PARTIAL" : "Partial",
+  "ZONE.TOTAL" : "Total",
+  "ZONE.MINOR" : "Minor",
+  "ZONE.MAJOR" : "Major",
+  "ZONE.DEADLY" : "Deadly",
+  "ZONE.LIGHTLY_OBSCURED" : "Lightly Obscured",
+  "ZONE.HEAVILY_OBSCURED" : "Heavily Obscured",
+
 
   "QUICKEFFECT.CHANGE": "Change",
   "QUICKEFFECT.LABEL": "Label",

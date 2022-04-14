@@ -20,6 +20,7 @@ import SoulboundCounter from "./scripts/apps/counter.js";
 import ModuleUpdater from "./scripts/apps/module-updater.js";
 import ModuleInitializer from "./scripts/apps/module-initialization.js";
 import TagManager from "./scripts/system/tag-manager.js";
+import ZoneConfig from "./scripts/apps/zone-config.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -47,7 +48,8 @@ Hooks.once("init", () => {
         apps: {
             ItemTraits,
             ModuleUpdater,
-            ModuleInitializer
+            ModuleInitializer,
+            ZoneConfig
         },
         tags: new TagManager()
     };

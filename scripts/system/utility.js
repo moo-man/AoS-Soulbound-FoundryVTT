@@ -92,4 +92,18 @@ export default class SoulboundUtility {
         }
       }
     }
+
+    static tokensInDrawing(drawing) {
+      let scene = drawing.parent
+      let tokens = scene.tokens.contents
+
+      return tokens.filter(t => drawing.object.bounds.contains(t.data.x, t.data.y))
+    }
+
+    static withinDrawings(token) {
+      let scene = token.parent
+      let drawings = scene.drawings.contents
+
+      return drawings.filter(d => d.object.bounds.contains(token.data.x, token.data.y))
+    }
 }
