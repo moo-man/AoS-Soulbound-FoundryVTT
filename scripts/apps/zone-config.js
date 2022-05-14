@@ -24,6 +24,10 @@ export default class ZoneConfig extends FormApplication
 
     activateListeners(html) {
         super.activateListeners(html);
+
+        html.find(".effect-create").on("click", ev => {
+            ui.notifications.error("Custom Effects on Zones are not supported yet")
+        })
     }
 }
 
