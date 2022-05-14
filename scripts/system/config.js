@@ -232,11 +232,13 @@ AOS.systemEffects = {
         label : "Partial Cover",
         icon : "icons/svg/tower.svg",
         changes : [
-            {key: "", mode : 2, value : 0}
+            {key: "defence", mode : 7, value : 1},
+            {key: "difficulty", mode : 6, value : -1}
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "", script : ""}
+                0 : {description : "Ranged Attacks", script : "return data.weapon && data.weapon.traitList.range"},
+                1 : {description : "Being Detected", script : ""}
             }
         }
     },
@@ -245,11 +247,13 @@ AOS.systemEffects = {
         label : "Total Cover",
         icon : "icons/svg/tower.svg",
         changes : [
-            {key: "", mode : 2, value : 0}
+            {key: "defence", mode : 7, value : 2},
+            {key: "difficulty", mode : 6, value : -2}
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "", script : ""}
+                0 : {description : "Ranged Attacks", script : "return !!(data.weapon && data.weapon.traitList.range)"},
+                1 : {description : "Being Detected", script : ""}
             }
         }
     },
@@ -258,11 +262,11 @@ AOS.systemEffects = {
         label : "Lightly Obscured",
         icon : "icons/svg/blind.svg",
         changes : [
-            {key: "", mode : 2, value : 0}
+            {key: "difficulty", mode : 6, value : 1},
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "", script : ""}
+                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
             }
         }
     },
@@ -271,11 +275,14 @@ AOS.systemEffects = {
         label : "Heavily Obscured",
         icon : "icons/svg/blind.svg",
         changes : [
-            {key: "", mode : 2, value : 0}
+            {key: "difficulty", mode : 6, value : 2},
+            {key: "data.combat.melee.bonus", mode : 2, value : -1},
+            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "data.combat.defence.bonus", mode : 2, value : -1}
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "", script : ""}
+                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
             }
         }
     },
@@ -284,11 +291,11 @@ AOS.systemEffects = {
         label : "Difficult Terrain",
         icon : "icons/svg/downgrade.svg",
         changes : [
-            {key: "", mode : 2, value : 0}
+            {key: "difficulty", mode : 6, value : 1}
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "", script : ""}
+                0 : {description : "Body (Reflexes) Tests", script : "return data.skillKey == 'reflexes'"}
             }
         }
     },

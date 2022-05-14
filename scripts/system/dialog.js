@@ -115,6 +115,10 @@ export class RollDialog extends Dialog {
             "bonusDice" : null,
             "triggerToDamage" : null
         }
+
+        this.bounds = {
+            "difficulty" : [2, 6]
+        }
         
 
         this.inputs = {}
@@ -212,7 +216,13 @@ export class RollDialog extends Dialog {
                 if (this.inputs[input].type == "checkbox")
                     this.inputs[input].checked = this.effectValues[input]
                 else if (Number.isNumeric(this.effectValues[input]))
-                    this.inputs[input].value = this.userEntry[input] + this.effectValues[input]
+                {
+                    let newVal = this.userEntry[input] + this.effectValues[input]
+                    if (this.bounds[input])
+                        this.inputs[input].value = Math.clamped(newVal, this.bounds[input][0], this.bounds[input][1])
+                    else 
+                        this.inputs[input].value = newVal
+                }
                 else 
                     this.inputs[input].value = this.effectValues[input]
             }
@@ -223,6 +233,8 @@ export class RollDialog extends Dialog {
                 else
                     this.inputs[input].value = this.userEntry[input]
             }
+
+
         }
     }
 }
@@ -367,6 +379,9 @@ export class CombatDialog extends RollDialog {
         this.effectValues["defence"] = null
         this.effectValues["armour"] = null
         this.effectValues["attack"] = null
+
+        this.bounds["defence"] = [1, 6]
+        this.bounds["attack"] = [1, 6]
 
         this.inputs.bonusDamage = html.find('#bonusDamage').change(ev => {
             this.userEntry.bonusDamage = parseInt(ev.target.value)
