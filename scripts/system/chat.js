@@ -637,7 +637,7 @@ export default class SoulboundChat {
         let test = msg.getTest();
         let diceNum = test.testData.dn.complexity - test.result.successes;
         let formula  = `${diceNum}d6`
-        let tableRoll = new Roll(formula).roll()
+        let tableRoll = new Roll(formula)
         let table = game.tables.getName("The Price of Failure")
         if (table)
         {

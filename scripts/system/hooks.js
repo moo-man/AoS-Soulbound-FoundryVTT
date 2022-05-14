@@ -333,15 +333,20 @@ export default function registerHooks() {
             let oldX = token.data.x;
             let oldY = token.data.y;
 
+            newX += canvas.grid.size / 2
+            newY += canvas.grid.size / 2
+            oldX += canvas.grid.size / 2
+            oldY += canvas.grid.size / 2
+
             if (token.parent?.drawings)
             {
                 for(let drawing of token.parent.drawings.contents)
                 {
-                    if (drawing.object.bounds.contains(newX, newY) && !drawing.object.bounds.contains(oldX, oldY))
+                    if (SoulboundUtility.pointInDrawing({x : newX, y: newY}, drawing) && !SoulboundUtility.pointInDrawing({x : oldX, y: oldY}, drawing))
                     {
                         token.actor.onEnterDrawing(drawing)
                     }
-                    else if (!drawing.object.bounds.contains(newX, newY) && drawing.object.bounds.contains(oldX, oldY))
+                    else if (!SoulboundUtility.pointInDrawing({x : newX, y : newY}, drawing) && SoulboundUtility.pointInDrawing({x : oldX, y : oldY}, drawing))
                     {
                         token.actor.onLeaveDrawing(drawing)
                     }

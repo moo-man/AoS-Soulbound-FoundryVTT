@@ -229,6 +229,7 @@
   "DURATION.HOUR": "Hour",
   "DURATION.DAY": "Day",
   "DURATION.PERMANENT": "Permanent",
+  "DURATION.SPECIAL": "Special",
 
   "EQUIPMENT.NAME": "Name",
   "EQUIPMENT.COST": "Cost",

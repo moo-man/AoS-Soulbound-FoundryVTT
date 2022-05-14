@@ -16,7 +16,7 @@ export default class Test {
             },
             context : {
                 speaker : data.speaker,
-                targetSpeakers : data.targets || [],
+                targetSpeakers : data.targets.map(t => t.actor.speakerData(t))|| [],
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined

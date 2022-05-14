@@ -82,7 +82,7 @@ export class RollDialog extends Dialog {
             changeList : actor.getDialogChanges({condense: true}),
             changes : actor.getDialogChanges(),
             actor : actor,
-            targets : Array.from(game.user.targets).map(i => i.actor.speakerData(i))
+            targets : Array.from(game.user.targets)
 
         }
     }
@@ -317,7 +317,7 @@ export class CombatDialog extends RollDialog {
         let targets = Array.from(game.user.targets)
         const hasTarget = targets.length; // No additinal Input when target function is used
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
-        data.targets = targets.map(i => i.actor.speakerData(i))
+        data.targets = targets
 
         data.primaryTarget = {
             defence : 3,
@@ -346,7 +346,7 @@ export class CombatDialog extends RollDialog {
                 data.secondaryTarget = duplicate(data.primaryTarget)
         }
 
-        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget") && canvas.scene) {
             game.user.updateTokenTargets([])
         }
 

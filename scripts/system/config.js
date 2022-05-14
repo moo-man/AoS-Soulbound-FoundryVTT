@@ -135,7 +135,8 @@ AOS.durations = {
     "minute" :  "DURATION.MINUTE",
     "hour" : "DURATION.HOUR",
     "day" : "DURATION.DAY",
-    "permanent" : "DURATION.PERMANENT"
+    "permanent" : "DURATION.PERMANENT",
+    "special" : "DURATION.SPECIAL"
 }
 
 AOS.zoneCover = {
