@@ -265,7 +265,7 @@ export class AgeOfSigmarActor extends Actor {
             spent += this.getSkillCost(costs, skill.focus);
         }
 
-        let tam = this.items.filter(x => x.isTalent || x.isMiracle);
+        let tam = this.items.filter(x =>(x.isTalent && x.isMiracle && !x.free))
 
         spent += tam.length * costs.talentsAndMiracles;
 

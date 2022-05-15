@@ -448,6 +448,8 @@
   "TALENT.EFFECT": "Effect",
   "TALENT.DESCRIPTION": "Description",
   "TALENT.REQUIREMENT": "Requirement",
+  "TALENT.FREE": "Free",
+  "TALENT.FREE_TT": "Exclude this Talent in experience calculation ",
 
   "TITLE.PHYSICAL": "PHYSICAL",
   "TITLE.GOALS": "GOALS",
@@ -565,6 +567,12 @@
   "CONDITION.RESTRAINED": "Restrained",
   "CONDITION.STUNNED": "Stunned",
   "CONDITION.UNCONSCIOUS": "Unconscious",
+
+  "EFFECT.PartialCover" : "Partial Cover",
+  "EFFECT.TotalCover" : "Total Cover",
+  "EFFECT.LightlyObscured" : "Lightly Obscured",
+  "EFFECT.HeavilyObscured" : "Heavily Obscured",
+  "EFFECT.DifficultTerrain" : "Difficult Terrain",
 
   "EFFECT.RequiresEquip": "Requires Equip",
   "EFFECT.CREATE": "Create Effect",

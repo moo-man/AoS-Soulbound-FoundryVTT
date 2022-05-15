@@ -229,7 +229,7 @@ AOS.traitsWithValue = ["range", "thrown", "blast"]
 AOS.systemEffects = {
     "partial" : {
         id : "partial",
-        label : "Partial Cover",
+        label : "EFFECT.PartialCover",
         icon : "icons/svg/tower.svg",
         changes : [
             {key: "defence", mode : 7, value : 1},
@@ -244,7 +244,7 @@ AOS.systemEffects = {
     },
     "total" : {
         id : "total",
-        label : "Total Cover",
+        label : "EFFECT.TotalCover",
         icon : "icons/svg/tower.svg",
         changes : [
             {key: "defence", mode : 7, value : 2},
@@ -259,7 +259,7 @@ AOS.systemEffects = {
     },
     "light" : {
         id : "light",
-        label : "Lightly Obscured",
+        label : "EFFECT.LightlyObscured",
         icon : "icons/svg/blind.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 1},
@@ -272,7 +272,7 @@ AOS.systemEffects = {
     },
     "heavy" : {
         id : "heavy",
-        label : "Heavily Obscured",
+        label : "EFFECT.HeavilyObscured",
         icon : "icons/svg/blind.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 2},
@@ -288,7 +288,7 @@ AOS.systemEffects = {
     },
     "difficult" : {
         id : "difficult",
-        label : "Difficult Terrain",
+        label : "EFFECT.DifficultTerrain",
         icon : "icons/svg/downgrade.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 1}

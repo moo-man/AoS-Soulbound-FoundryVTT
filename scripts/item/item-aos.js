@@ -409,6 +409,7 @@ export class AgeOfSigmarItem extends Item {
     get equipment() {return this.data.data.equipment}
     get groups() {return this.data.data.groups}
     get journal() {return this.data.data.journal}
+    get free() {return this.data.data.free}
 
 
 

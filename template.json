@@ -397,7 +397,8 @@
     "talent": {
       "description": "",
       "effect": "",
-      "requirement": ""
+      "requirement": "",
+      "free" : false
     },
     "weapon": {
       "templates": [
