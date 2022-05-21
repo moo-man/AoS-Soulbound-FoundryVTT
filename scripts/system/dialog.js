@@ -62,10 +62,11 @@ export class RollDialog extends Dialog {
         const doubleTraining = html.find("#double-training")[0].checked;
         const doubleFocus = html.find("#double-focus")[0].checked;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
+        const bonusFocus = parseInt(html.find("#bonusFocus")[0].value);
         const triggerToDamage = html.find("#triggerToDamage")[0]?.value;
         const allocation = [];
 
-        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage, allocation }
+        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, bonusFocus, triggerToDamage, allocation }
     }
 
     
@@ -79,6 +80,7 @@ export class RollDialog extends Dialog {
             difficulty : options.difficulty || 4,
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
+            bonusFocus: options.bonusFocus || 0,
             changeList : actor.getDialogChanges({condense: true}),
             changes : actor.getDialogChanges(),
             actor : actor,
@@ -113,6 +115,7 @@ export class RollDialog extends Dialog {
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
+            "bonusFocus" : null,
             "triggerToDamage" : null
         }
 
@@ -148,6 +151,10 @@ export class RollDialog extends Dialog {
             this.userEntry.bonusDice = parseInt(ev.target.value)
             this.applyEffects()
         })[0]
+        this.inputs.bonusFocus = html.find('#bonusFocus').change(ev => {
+            this.userEntry.bonusFocus = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
         this.inputs.triggerToDamage = html.find('#triggerToDamage').change(ev => {
             this.userEntry.triggerToDamage = ev.target.value
             this.applyEffects()
@@ -161,6 +168,7 @@ export class RollDialog extends Dialog {
             "double-training" : this.inputs["double-training"].checked,
             "double-focus" : this.inputs["double-focus"].checked,
             "bonusDice" : parseInt(this.inputs.bonusDice.value),
+            "bonusFocus" : parseInt(this.inputs.bonusFocus.value),
             "triggerToDamage" : this.inputs["triggerToDamage"]?.value
         }
 
@@ -175,6 +183,7 @@ export class RollDialog extends Dialog {
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
+            "bonusFocus" : null,
             "triggerToDamage" : null
         }
         

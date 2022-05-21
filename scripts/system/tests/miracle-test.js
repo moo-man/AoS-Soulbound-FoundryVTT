@@ -66,4 +66,9 @@ export default class MiracleTest extends Test{
         return this.item?.hasTest
     }
 
+    _ItemTestDisplay(item) {
+        return `DN 4:1 ${game.aos.config.attributes[item.test.attribute]} (${game.aos.config.skills[item.test.skill]})`
+    }
+
+
 }

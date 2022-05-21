@@ -62,6 +62,8 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         dialogChanges.forEach((c, i) => {
             c.target = !!target
             c.index = [i + indexOffset]
+            if (this.parent?.documentName == "Actor")
+                this.fillDerivedData(this.parent, c)
         })
 
         // changes with the same description as under the same condition (use the first ones' script)
@@ -191,6 +193,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         return ["difficulty",
             "complexity",
             "bonusDice",
+            "bonusFocus",
             "bonusDamage",
             "armour",
             "defence",

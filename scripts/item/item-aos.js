@@ -367,7 +367,9 @@ export class AgeOfSigmarItem extends Item {
     get isEquipment() { return this.type === "equipment" }
 
     get hasTest() {
-        if (!this.test || !this.test.dn || !this.test.dn.includes(":"))
+        if (this.type == "miracle" && (!this.test.attribute || !this.test.skill))
+            return false
+        else if (this.type != "miracle" && (!this.test || !this.test.dn || !this.test.dn.includes(":"))) 
             return false;
         if (!game.aos.config.attributes[this.test.attribute])
             return false;

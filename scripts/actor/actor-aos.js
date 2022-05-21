@@ -368,7 +368,6 @@ export class AgeOfSigmarActor extends Actor {
     //#region Rolling Setup
     async setupAttributeTest(attribute, options={}) 
     {
-        console.log(options)
         let dialogData = RollDialog._dialogData(this, attribute, null, options)
         dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} ${game.i18n.localize("SKILL.TEST")}`
         let testData = await RollDialog.create(dialogData);
