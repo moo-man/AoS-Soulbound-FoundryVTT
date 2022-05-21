@@ -218,7 +218,8 @@
           "speeds": {
             "foot": "normal",
             "flight": "none",
-            "swim": "none"
+            "swim": "none",
+            "modifier" : 0
           },
           "speed": "normal",
           "flight": "none",

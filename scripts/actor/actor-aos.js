@@ -93,6 +93,8 @@ export class AgeOfSigmarActor extends Actor {
             this._computeSkillTotals();
             this._computeSecondary();
         }
+
+        this._computeSpeedModifier();
     }
 
     _initializeData() {
@@ -199,6 +201,31 @@ export class AgeOfSigmarActor extends Actor {
     {
         if(item.traitList.defensive)
             this.combat.defence.total += 2;
+    }
+
+    _computeSpeedModifier() 
+    {
+        let speed = this.combat.speeds
+        speed.foot = this._applySpeedModifier(speed.foot, speed.modifier)
+        speed.flight = this._applySpeedModifier(speed.flight, speed.modifier)
+        speed.swim = this._applySpeedModifier(speed.swim, speed.modifier)
+    }
+
+    _applySpeedModifier(value, modifier=0)
+    {
+        const speedNum = {
+            "none" : 0,
+            "slow" : 1,
+            "normal" : 2,
+            "fast" : 3
+        }
+
+        let valueNum = speedNum[value] || 0;
+        if (valueNum != 0)
+            valueNum = Math.clamped(valueNum + modifier, 1, 3)
+        else return value
+
+        return game.aos.utility.findKey(valueNum, speedNum)
 
     }
 

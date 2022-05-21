@@ -21,6 +21,7 @@
   "ACTOR.SPEED_SLOW": "Slow",
   "ACTOR.SPEED_NORMAL": "Normal",
   "ACTOR.SPEED_FAST": "Fast",
+  "ACTOR.SPEED_MODIFIER": "Speed (Modifier)",
 
   "ITEM.TypeAethericdevice": "Aetheric Device",
   "ITEM.TypeAlly": "Ally",
