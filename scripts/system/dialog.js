@@ -82,8 +82,8 @@ export class RollDialog extends Dialog {
             changeList : actor.getDialogChanges({condense: true}),
             changes : actor.getDialogChanges(),
             actor : actor,
-            targets : Array.from(game.user.targets)
-
+            targets : Array.from(game.user.targets),
+            resist: options.resist
         }
     }
 

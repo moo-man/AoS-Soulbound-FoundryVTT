@@ -606,9 +606,9 @@ export default class SoulboundChat {
             for (let t of canvas.tokens.controlled)
             {
                 if (test.itemTest.skill)
-                    chatTest = await t.actor.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
+                    chatTest = await t.actor.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity, resist : test.item?.type})            
                 else 
-                    chatTest = await t.actor.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})  
+                    chatTest = await t.actor.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity, resist : test.item?.type})  
                     
                 await chatTest.rollTest()
                 chatTest.sendToChat()     
@@ -617,9 +617,9 @@ export default class SoulboundChat {
         else if (game.user.character)
         {
             if (test.itemTest.skill)
-                chatTest = await game.user.character.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity})            
+                chatTest = await game.user.character.setupSkillTest(test.itemTest.skill, test.itemTest.attribute, {difficulty, complexity, resist : test.item?.type})            
             else 
-                chatTest = await game.user.character.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity})       
+                chatTest = await game.user.character.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity, resist : test.item?.type})       
                 
             await chatTest.rollTest()
             chatTest.sendToChat()     
