@@ -265,7 +265,7 @@ export class AgeOfSigmarActor extends Actor {
             spent += this.getSkillCost(costs, skill.focus);
         }
 
-        let tam = this.items.filter(x =>(x.isTalent && x.isMiracle && !x.free))
+        let tam = this.items.filter(x =>((x.isTalent || x.isMiracle) && !x.free))
 
         spent += tam.length * costs.talentsAndMiracles;
 
@@ -285,70 +285,57 @@ export class AgeOfSigmarActor extends Actor {
         })
     }
 
-    characterCreation(archetype)
-    {
-        new Dialog({
-            title : game.i18n.localize("HEADER.CHARGEN"),
-            content : `<p>${game.i18n.localize("CHARGEN.PROMPT")}</p>`,
-            buttons : {
-                yes : {
-                    label: game.i18n.localize("BUTTON.YES"),
-                    callback: () => {
-                        new CharacterCreation({actor: this, archetype}).render(true)
-                    }
-                },
-                no : {
-                    label : game.i18n.localize("BUTTON.NO"),
-                    callback: () => {
-                        this.update({"data.bio.archetype" : archetype.name, })
-                        this.createEmbeddedDocuments("Item", [archetype.toObject()])
-                    }
-                }
-            }
-        }).render(true)
-    }
-
-    async applyArchetype(archetype) {
-
-        ui.notifications.notify(`${game.i18n.localize("CHARGEN.APPLYING")} ${archetype.name} ${game.i18n.localize("BIO.ARCHETYPE")}`)
-
-        let items = [];
-        let actorData = this.toObject();
-
-        actorData.data.bio.faction = archetype.species
-
-        actorData.data.attributes.body.value = archetype.attributes.body
-        actorData.data.attributes.mind.value = archetype.attributes.mind
-        actorData.data.attributes.soul.value = archetype.attributes.soul
-
-        archetype.skills.list.forEach(skill => {
-            actorData.data.skills[skill].training = 1
-            actorData.data.skills[skill].focus = 1
-        })
-
-        actorData.data.skills[archetype.skills.core].training = 2
-        actorData.data.skills[archetype.skills.core].focus = 2
-
-        items = items.concat(archetype.ArchetypeItems);
-
-        // Remove IDs so items work within the update method
-        items.forEach(i => delete i._id)
-
-        actorData.data.bio.type = 3; // Champion
-
-        // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
-        actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
-        actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
-
-        actorData.img = archetype.data.img
-        actorData.token.img = archetype.data.img.replace("images", "tokens")
-        actorData.token.img = archetype.data.img.replace("actors", "tokens")
+    async applyArchetype(archetype, apply) {
 
 
-        await this.update(actorData)
+        if (this.type == "player" && apply)
+        {
+            new CharacterCreation({actor: this, archetype}).render(true)
+        }
+        else if (this.type == "player")
+        {
+            this.update({"data.bio.archetype" : archetype.name, "data.bio.species" : archetype.species })
+            this.createEmbeddedDocuments("Item", [archetype.toObject()])
+        }
+        else if (this.type == "npc" && apply)
+        {
+            ui.notifications.notify(`${game.i18n.localize("CHARGEN.APPLYING")} ${archetype.name} ${game.i18n.localize("BIO.ARCHETYPE")}`)
 
-        // Add items separately so active effects get added seamlessly
-        this.createEmbeddedDocuments("Item", items)
+            let items = [];
+            let actorData = this.toObject();
+    
+            actorData.data.bio.faction = archetype.species
+    
+            actorData.data.attributes.body.value = archetype.attributes.body
+            actorData.data.attributes.mind.value = archetype.attributes.mind
+            actorData.data.attributes.soul.value = archetype.attributes.soul
+    
+            archetype.skills.list.forEach(skill => {
+                actorData.data.skills[skill].training = 1
+                actorData.data.skills[skill].focus = 1
+            })
+    
+            actorData.data.skills[archetype.skills.core].training = 2
+            actorData.data.skills[archetype.skills.core].focus = 2
+    
+            items = items.concat(await archetype.GetArchetypeItems());
+    
+            actorData.data.bio.type = 3; // Champion
+    
+            // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
+            actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
+            actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
+    
+            actorData.img = archetype.data.img
+            actorData.token.img = archetype.data.img.replace("images", "tokens")
+            actorData.token.img = archetype.data.img.replace("actors", "tokens")
+    
+    
+            await this.update(actorData)
+    
+            // Add items separately so active effects get added seamlessly
+            this.createEmbeddedDocuments("Item", items)
+        }
     }
 
     //#region Rolling Setup

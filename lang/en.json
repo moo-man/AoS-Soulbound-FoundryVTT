@@ -283,6 +283,7 @@
   "HEADER.DISABLED_EFFECTS": "DISABLED EFFECTS",
   "HEADER.REROLLER": "Reroller",
   "HEADER.CHARGEN": "Character Creation",
+  "HEADER.ARCHETYPE_APPLY": "Apply Archetype",
   "HEADER.ARCHETYPE_GROUPS": "Archetype Groups",
   "HEADER.ARCHETYPE_GENERIC": "Archetype Item Generic",
   "HEADER.EFFECT_SCRIPT_CONFIG": "Effect Script Config",
@@ -344,6 +345,7 @@
   "ARCHETYPE.ITEM.ADD_FILTER": "Add Filter",
   "ARCHETYPE.ITEM.ADD_GENERIC": "Add Generic",
   "ARCHETYPE.ITEM.RESET_GROUPS": "Reset Groups",
+  "ARCHETYPE.PROMPT": "Apply Archetype data to this Actor?",
 
   "POWER.NAME": "Name",
   "POWER.DN": "DN",

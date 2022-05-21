@@ -281,26 +281,26 @@ export class AgeOfSigmarItem extends Item {
             return game.aos.config.partyItemCategories[this.category]
     }
 
-    get ArchetypeItems() {
+    async GetArchetypeItems() {
         let items = [];
         // Get all archetype talents, merge with diff
         let talents = this.talents.core.concat(this.talents.list)
-        items = items.concat(talents.map(t => {
-            let item = game.items.get(t.id)?.toObject();
+        items = items.concat(talents.map(async t => {
+            let item = (await game.aos.utility.findItem(t.id, "talent"))?.toObject();
             if (item)
                 mergeObject(item, t.diff, {overwrite : true})
             return item
         }))
 
         // Get all archetype talents, merge with diff
-        items = items.concat(this.equipment.map(i => {
-            let item = game.items.get(i.id)?.toObject();
+        items = items.concat(this.equipment.map( async i => {
+            let item = (await game.aos.utility.findItem(i.id, "equipment"))?.toObject();
             if (item)
                 mergeObject(item, i.diff, {overwrite : true})
             return item
         }))
 
-        return items.filter(i => i);
+        return (await Promise.all(items)).filter(i => i);
     }
 
     get OvercastString() {
