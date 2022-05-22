@@ -205,10 +205,8 @@ export class RollDialog extends Dialog {
                 this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
             else if (c.key == "double-training" || c.key == "double-focus" || c.key == "triggerToDamage")
             {
-                if (c.value == "true")
-                    this.effectValues[c.key] = true
-                else if (c.value == "false")
-                    this.effectValues[c.key] = false
+                let value = typeof c.value == "boolean" ? c.value : c.value == "true"
+                this.effectValues[c.key] = value
             }
         }
         this.applyEffects()
