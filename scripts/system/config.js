@@ -135,8 +135,38 @@ AOS.durations = {
     "minute" :  "DURATION.MINUTE",
     "hour" : "DURATION.HOUR",
     "day" : "DURATION.DAY",
-    "permanent" : "DURATION.PERMANENT"
+    "permanent" : "DURATION.PERMANENT",
+    "special" : "DURATION.SPECIAL"
 }
+
+AOS.zoneCover = {
+    "partial" : "ZONE.PARTIAL",
+    "total" : "ZONE.TOTAL",
+}
+
+AOS.zoneCoverBenefit = {
+    "partial" : 1,
+    "total" : 2
+}
+
+AOS.zoneHazard = {
+    "minor" : "ZONE.MINOR",
+    "major" : "ZONE.MAJOR",
+    "deadly" : "ZONE.DEADLY",
+}
+
+AOS.zoneHazardDamage = {
+    "minor" : 1,
+    "major" : 3,
+    "deadly" : 5
+}
+
+
+AOS.zoneObscured = {
+    "light" : "ZONE.LIGHTLY_OBSCURED",
+    "heavy" : "ZONE.HEAVILY_OBSCURED",
+}
+
 
 AOS.Expcost = {
     talentsAndMiracles : 2,
@@ -195,6 +225,82 @@ AOS.traitDescriptions = {}
 AOS.conditionDescriptions = {}
 
 AOS.traitsWithValue = ["range", "thrown", "blast"]
+
+AOS.systemEffects = {
+    "partial" : {
+        id : "partial",
+        label : "EFFECT.PartialCover",
+        icon : "icons/svg/tower.svg",
+        changes : [
+            {key: "defence", mode : 7, value : 1},
+            {key: "difficulty", mode : 6, value : -1}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Ranged Attacks", script : "return data.weapon && data.weapon.traitList.range"},
+                1 : {description : "Being Detected", script : ""}
+            }
+        }
+    },
+    "total" : {
+        id : "total",
+        label : "EFFECT.TotalCover",
+        icon : "icons/svg/tower.svg",
+        changes : [
+            {key: "defence", mode : 7, value : 2},
+            {key: "difficulty", mode : 6, value : -2}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Ranged Attacks", script : "return !!(data.weapon && data.weapon.traitList.range)"},
+                1 : {description : "Being Detected", script : ""}
+            }
+        }
+    },
+    "light" : {
+        id : "light",
+        label : "EFFECT.LightlyObscured",
+        icon : "icons/svg/blind.svg",
+        changes : [
+            {key: "difficulty", mode : 6, value : 1},
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
+            }
+        }
+    },
+    "heavy" : {
+        id : "heavy",
+        label : "EFFECT.HeavilyObscured",
+        icon : "icons/svg/blind.svg",
+        changes : [
+            {key: "difficulty", mode : 6, value : 2},
+            {key: "data.combat.melee.bonus", mode : 2, value : -1},
+            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
+            }
+        }
+    },
+    "difficult" : {
+        id : "difficult",
+        label : "EFFECT.DifficultTerrain",
+        icon : "icons/svg/downgrade.svg",
+        changes : [
+            {key: "difficulty", mode : 6, value : 1}
+        ],
+        flags : { 
+            "age-of-sigmar-soulbound.changeCondition" : { 
+                0 : {description : "Body (Reflexes) Tests", script : "return data.skillKey == 'reflexes'"}
+            }
+        }
+    },
+}
+
 
 CONFIG.statusEffects = [
     {

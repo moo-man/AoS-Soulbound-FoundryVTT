@@ -62,10 +62,11 @@ export class RollDialog extends Dialog {
         const doubleTraining = html.find("#double-training")[0].checked;
         const doubleFocus = html.find("#double-focus")[0].checked;
         const bonusDice = parseInt(html.find("#bonusDice")[0].value);
+        const bonusFocus = parseInt(html.find("#bonusFocus")[0].value);
         const triggerToDamage = html.find("#triggerToDamage")[0]?.value;
         const allocation = [];
 
-        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, triggerToDamage, allocation }
+        return { attribute, skill, doubleTraining, doubleFocus, bonusDice, bonusFocus, triggerToDamage, allocation }
     }
 
     
@@ -79,11 +80,12 @@ export class RollDialog extends Dialog {
             difficulty : options.difficulty || 4,
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
+            bonusFocus: options.bonusFocus || 0,
             changeList : actor.getDialogChanges({condense: true}),
             changes : actor.getDialogChanges(),
             actor : actor,
-            targets : Array.from(game.user.targets).map(i => i.actor.speakerData(i))
-
+            targets : Array.from(game.user.targets),
+            resist: options.resist
         }
     }
 
@@ -113,7 +115,12 @@ export class RollDialog extends Dialog {
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
+            "bonusFocus" : null,
             "triggerToDamage" : null
+        }
+
+        this.bounds = {
+            "difficulty" : [2, 6]
         }
         
 
@@ -144,6 +151,10 @@ export class RollDialog extends Dialog {
             this.userEntry.bonusDice = parseInt(ev.target.value)
             this.applyEffects()
         })[0]
+        this.inputs.bonusFocus = html.find('#bonusFocus').change(ev => {
+            this.userEntry.bonusFocus = parseInt(ev.target.value)
+            this.applyEffects()
+        })[0]
         this.inputs.triggerToDamage = html.find('#triggerToDamage').change(ev => {
             this.userEntry.triggerToDamage = ev.target.value
             this.applyEffects()
@@ -157,6 +168,7 @@ export class RollDialog extends Dialog {
             "double-training" : this.inputs["double-training"].checked,
             "double-focus" : this.inputs["double-focus"].checked,
             "bonusDice" : parseInt(this.inputs.bonusDice.value),
+            "bonusFocus" : parseInt(this.inputs.bonusFocus.value),
             "triggerToDamage" : this.inputs["triggerToDamage"]?.value
         }
 
@@ -171,6 +183,7 @@ export class RollDialog extends Dialog {
             "double-training" : null,
             "double-focus" : null,
             "bonusDice" : null,
+            "bonusFocus" : null,
             "triggerToDamage" : null
         }
         
@@ -192,10 +205,8 @@ export class RollDialog extends Dialog {
                 this.effectValues[c.key] = (this.effectValues[c.key] || 0) + parseInt(c.value)
             else if (c.key == "double-training" || c.key == "double-focus" || c.key == "triggerToDamage")
             {
-                if (c.value == "true")
-                    this.effectValues[c.key] = true
-                else if (c.value == "false")
-                    this.effectValues[c.key] = false
+                let value = typeof c.value == "boolean" ? c.value : c.value == "true"
+                this.effectValues[c.key] = value
             }
         }
         this.applyEffects()
@@ -212,7 +223,13 @@ export class RollDialog extends Dialog {
                 if (this.inputs[input].type == "checkbox")
                     this.inputs[input].checked = this.effectValues[input]
                 else if (Number.isNumeric(this.effectValues[input]))
-                    this.inputs[input].value = this.userEntry[input] + this.effectValues[input]
+                {
+                    let newVal = this.userEntry[input] + this.effectValues[input]
+                    if (this.bounds[input])
+                        this.inputs[input].value = Math.clamped(newVal, this.bounds[input][0], this.bounds[input][1])
+                    else 
+                        this.inputs[input].value = newVal
+                }
                 else 
                     this.inputs[input].value = this.effectValues[input]
             }
@@ -223,6 +240,8 @@ export class RollDialog extends Dialog {
                 else
                     this.inputs[input].value = this.userEntry[input]
             }
+
+
         }
     }
 }
@@ -317,7 +336,7 @@ export class CombatDialog extends RollDialog {
         let targets = Array.from(game.user.targets)
         const hasTarget = targets.length; // No additinal Input when target function is used
         data.attackRating = weapon.category === "melee" ? data.combat.melee : data.combat.accuracy
-        data.targets = targets.map(i => i.actor.speakerData(i))
+        data.targets = targets
 
         data.primaryTarget = {
             defence : 3,
@@ -346,7 +365,7 @@ export class CombatDialog extends RollDialog {
                 data.secondaryTarget = duplicate(data.primaryTarget)
         }
 
-        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget") && canvas.scene) {
             game.user.updateTokenTargets([])
         }
 
@@ -367,6 +386,9 @@ export class CombatDialog extends RollDialog {
         this.effectValues["defence"] = null
         this.effectValues["armour"] = null
         this.effectValues["attack"] = null
+
+        this.bounds["defence"] = [1, 6]
+        this.bounds["attack"] = [1, 6]
 
         this.inputs.bonusDamage = html.find('#bonusDamage').change(ev => {
             this.userEntry.bonusDamage = parseInt(ev.target.value)

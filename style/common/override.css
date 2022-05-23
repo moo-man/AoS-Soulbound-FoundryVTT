@@ -400,6 +400,10 @@ li.directory-item.folder:not(.collapsed) {
     flex: 0.5
 }
 
+.entry-inputs > input[type="checkbox"] {
+    flex:1
+}
+
 .entry-list {
     display: flex;
     flex-direction: column;

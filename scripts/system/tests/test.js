@@ -7,6 +7,7 @@ export default class Test {
                 attribute : data.attribute,
                 skill : data.skill,
                 bonusDice : data.bonusDice,
+                bonusFocus : data.bonusFocus,
                 dn : data.dn,
                 allocation: data.allocation,
                 itemId : data.itemId,
@@ -16,7 +17,7 @@ export default class Test {
             },
             context : {
                 speaker : data.speaker,
-                targetSpeakers : data.targets || [],
+                targetSpeakers : data.targets.map(t => t.actor.speakerData(t))|| [],
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined
@@ -68,7 +69,7 @@ export default class Test {
             focus : this.skill?.focus || 0,
             triggerToDamage : this.testData.triggerToDamage || false
         }
-        result.focus = this.testData.doubleFocus ? result.focus * 2 : result.focus
+        result.focus = (this.testData.doubleFocus ? result.focus * 2 : result.focus) + this.testData.bonusFocus
         let dn = this.testData.dn
         
         // Sorted to effiencently apply success not filtered since we would need 

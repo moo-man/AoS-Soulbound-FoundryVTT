@@ -17,7 +17,7 @@ export default class SoulboundUtility {
     static findKey(value, obj, options = {}) {
         if (!value || !obj)
           return undefined;
-    
+
         if (options.caseInsensitive) {
           for (let key in obj) {
             if (obj[key].toLowerCase() == value.toLowerCase())
@@ -49,14 +49,14 @@ export default class SoulboundUtility {
         let compendium = !!document.pack
         let world = !compendium
         let collection
-  
+
         if (compendium) {
           let pack = game.packs.get(document.pack)
           collection = pack.index
         }
         else if (world)
           collection = document.collection
-  
+
         if (collection.has(id)) {
           ui.notifications.notify(`${game.i18n.format("ERROR.ID", {name: document.name})}`)
           return false
@@ -68,4 +68,90 @@ export default class SoulboundUtility {
         return false
       }
     }
+
+    static findItem(id, type) {
+      if (game.items.has(id))
+        return game.items.get(id)
+
+      let packs = game.aos.tags.getPacksWithTag(type)
+      for (let pack of packs) {
+        if (pack.index.has(id)) {
+          return pack.getDocument(id)
+        }
+      }
+    }
+
+    static findJournal(id) {
+      if (game.journal.has(id))
+        return game.journal.get(id)
+
+      let packs = game.packs.filter(i => i.metadata.type == "JournalEntry")
+      for (let pack of packs) {
+        if (pack.index.has(id)) {
+          return pack.getDocument(id)
+        }
+      }
+    }
+
+    static tokensInDrawing(drawing) {
+      let scene = drawing.parent
+
+      return SoulboundUtility.containedTokenIds(drawing).map(t => scene.tokens.get(t))
+    }
+
+    static withinDrawings(token) {
+      let scene = token.parent
+      let drawings = scene.drawings.contents
+
+      return drawings.filter(d => SoulboundUtility.containedTokenIds(d).includes(token.id))
+    }
+
+    static tokenIsInDrawing(token, drawing)
+    {
+      return SoulboundUtility.tokensInDrawing(drawing).find(t => t.id == token.id)
+    }
+
+    static pointInDrawing({x, y}, drawing)
+    {
+      let points = []
+
+      // Polygon
+      if (drawing.data.type == "p")
+      {
+        points = drawing.data.points.map(i => {return {x: i[0] + drawing.data.x , y: i[1] + drawing.data.y}})
+      }
+
+      // Rectangle
+      else if (drawing.data.type == "r")
+      {
+        points = [
+          {x : drawing.data.x, y: drawing.data.y}, 
+          {x : drawing.data.x + drawing.data.width, y : drawing.data.y}, 
+          {x : drawing.data.x + drawing.data.width, y: drawing.data.y + drawing.data.height}, 
+          {x : drawing.data.x, y: drawing.data.y + drawing.data.height}
+        ]
+      }
+        
+      let poly
+
+      // Ellipse
+      if (drawing.data.type == "e")
+        poly = new PIXI.Ellipse(drawing.data.x + drawing.data.width /2 , drawing.data.y + drawing.data.height / 2, drawing.data.width/2, drawing.data.height/2 )
+      else
+        poly  = new PIXI.Polygon(points);
+
+      return poly.contains(x, y);
+    }
+
+    static containedTokenIds(drawing) {
+
+      let ids = [];
+      for (let token of canvas.tokens.placeables)
+      {
+        if(SoulboundUtility.pointInDrawing(token.center, drawing))
+          ids.push(token.document.id)
+      }
+      return ids
+    }
+
 }

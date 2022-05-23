@@ -21,6 +21,7 @@
   "ACTOR.SPEED_SLOW": "Slow",
   "ACTOR.SPEED_NORMAL": "Normal",
   "ACTOR.SPEED_FAST": "Fast",
+  "ACTOR.SPEED_MODIFIER": "Speed (Modifier)",
 
   "ITEM.TypeAethericdevice": "Aetheric Device",
   "ITEM.TypeAlly": "Ally",
@@ -211,6 +212,7 @@
   "DIALOG.ARMOUR": "Target Armour",
   "DIALOG.BONUSDICE": "Bonus Dice",
   "DIALOG.BONUSDAMAGE": "Bonus Damage",
+  "DIALOG.BONUSFOCUS": "Bonus Focus",
   "DIALOG.EFFECTS": "Effects",
   "DIALOG.FOCUSALLOCATION": "Focus Allocation",
   "DIALOG.MANUAL": "Manual",
@@ -229,6 +231,7 @@
   "DURATION.HOUR": "Hour",
   "DURATION.DAY": "Day",
   "DURATION.PERMANENT": "Permanent",
+  "DURATION.SPECIAL": "Special",
 
   "EQUIPMENT.NAME": "Name",
   "EQUIPMENT.COST": "Cost",
@@ -258,6 +261,7 @@
   "HEADER.TOTAL": "Total",
   "HEADER.TOUGHNESS": "Toughness",
   "HEADER.METTLE": "Mettle",
+  "HEADER.METTLE_REGAIN": "Mettle (Regain)",
   "HEADER.MELEE": "Melee",
   "HEADER.ACCURACY": "Accuracy",
   "HEADER.DEFENCE": "Defence",
@@ -281,11 +285,13 @@
   "HEADER.DISABLED_EFFECTS": "DISABLED EFFECTS",
   "HEADER.REROLLER": "Reroller",
   "HEADER.CHARGEN": "Character Creation",
+  "HEADER.ARCHETYPE_APPLY": "Apply Archetype",
   "HEADER.ARCHETYPE_GROUPS": "Archetype Groups",
   "HEADER.ARCHETYPE_GENERIC": "Archetype Item Generic",
   "HEADER.EFFECT_SCRIPT_CONFIG": "Effect Script Config",
   "HEADER.FILTER_RESULTS": "Filter Results",
   "HEADER.ITEM_TRAITS": "Item Traits",
+  "HEADER.ZONE_CONFIG": "Zone Config",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",
@@ -341,6 +347,7 @@
   "ARCHETYPE.ITEM.ADD_FILTER": "Add Filter",
   "ARCHETYPE.ITEM.ADD_GENERIC": "Add Generic",
   "ARCHETYPE.ITEM.RESET_GROUPS": "Reset Groups",
+  "ARCHETYPE.PROMPT": "Apply Archetype data to this Actor?",
 
   "POWER.NAME": "Name",
   "POWER.DN": "DN",
@@ -439,11 +446,14 @@
   "TAB.MAIN": "MAIN",
   "TAB.MEMBERS": "MEMBERS",
   "TAB.EFFECTS": "EFFECTS",
+  "TAB.PROPERTIES": "PROPERTIES",
 
   "TALENT.NAME": "Name",
   "TALENT.EFFECT": "Effect",
   "TALENT.DESCRIPTION": "Description",
   "TALENT.REQUIREMENT": "Requirement",
+  "TALENT.FREE": "Free",
+  "TALENT.FREE_TT": "Exclude this Talent in experience calculation ",
 
   "TITLE.PHYSICAL": "PHYSICAL",
   "TITLE.GOALS": "GOALS",
@@ -562,11 +572,32 @@
   "CONDITION.STUNNED": "Stunned",
   "CONDITION.UNCONSCIOUS": "Unconscious",
 
+  "EFFECT.PartialCover" : "Partial Cover",
+  "EFFECT.TotalCover" : "Total Cover",
+  "EFFECT.LightlyObscured" : "Lightly Obscured",
+  "EFFECT.HeavilyObscured" : "Heavily Obscured",
+  "EFFECT.DifficultTerrain" : "Difficult Terrain",
+
   "EFFECT.RequiresEquip": "Requires Equip",
   "EFFECT.CREATE": "Create Effect",
   "EFFECT.DELETE": "Delete Effect",
   "EFFECT.ENABLE": "Enable Effect",
   "EFFECT.DISABLE": "Disable Effect",
+
+
+  "ZONE.DIFFICULT_TERRAIN" : "Difficult Terrain",
+  "ZONE.COVER" : "Cover",
+  "ZONE.HAZARD" : "Hazard",
+  "ZONE.HAZARD_IGNORE_ARMOUR" : "Ignore Armour",
+  "ZONE.OBSCURED" : "Obscured",
+  "ZONE.PARTIAL" : "Partial",
+  "ZONE.TOTAL" : "Total",
+  "ZONE.MINOR" : "Minor",
+  "ZONE.MAJOR" : "Major",
+  "ZONE.DEADLY" : "Deadly",
+  "ZONE.LIGHTLY_OBSCURED" : "Lightly Obscured",
+  "ZONE.HEAVILY_OBSCURED" : "Heavily Obscured",
+
 
   "QUICKEFFECT.CHANGE": "Change",
   "QUICKEFFECT.LABEL": "Label",

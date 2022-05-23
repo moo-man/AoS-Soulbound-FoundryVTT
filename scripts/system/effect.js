@@ -62,6 +62,8 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         dialogChanges.forEach((c, i) => {
             c.target = !!target
             c.index = [i + indexOffset]
+            if (this.parent?.documentName == "Actor")
+                this.fillDerivedData(this.parent, c)
         })
 
         // changes with the same description as under the same condition (use the first ones' script)
@@ -158,12 +160,25 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         let data = this.data.origin.split(".")
 
         if (data.length == 4) {
+
+            if (this.data.origin.includes("Drawing"))
+            {
+                let scene = game.scenes.get(data[1])
+                let drawing = scene.drawings.get(data[3])
+                let zone = drawing?.data?.text
+                if (zone)
+                    return zone
+            }
+
+
             let item = this.parent.items.get(data[3])
             if (item)
                 return item.name
             else
                 return super.sourceName;
         }
+
+
     }
 
     get requiresEquip() {
@@ -178,6 +193,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         return ["difficulty",
             "complexity",
             "bonusDice",
+            "bonusFocus",
             "bonusDamage",
             "armour",
             "defence",

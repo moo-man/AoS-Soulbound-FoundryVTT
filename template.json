@@ -181,7 +181,8 @@
         "combat": {
           "mettle": {
             "value": 0,
-            "bonus": 0
+            "bonus": 0,
+            "regain" : 1
           },
           "health": {
             "toughness": {
@@ -217,7 +218,8 @@
           "speeds": {
             "foot": "normal",
             "flight": "none",
-            "swim": "none"
+            "swim": "none",
+            "modifier" : 0
           },
           "speed": "normal",
           "flight": "none",
@@ -396,7 +398,8 @@
     "talent": {
       "description": "",
       "effect": "",
-      "requirement": ""
+      "requirement": "",
+      "free" : false
     },
     "weapon": {
       "templates": [

@@ -93,6 +93,8 @@ export class AgeOfSigmarActor extends Actor {
             this._computeSkillTotals();
             this._computeSecondary();
         }
+
+        this._computeSpeedModifier();
     }
 
     _initializeData() {
@@ -199,6 +201,31 @@ export class AgeOfSigmarActor extends Actor {
     {
         if(item.traitList.defensive)
             this.combat.defence.total += 2;
+    }
+
+    _computeSpeedModifier() 
+    {
+        let speed = this.combat.speeds
+        speed.foot = this._applySpeedModifier(speed.foot, speed.modifier)
+        speed.flight = this._applySpeedModifier(speed.flight, speed.modifier)
+        speed.swim = this._applySpeedModifier(speed.swim, speed.modifier)
+    }
+
+    _applySpeedModifier(value, modifier=0)
+    {
+        const speedNum = {
+            "none" : 0,
+            "slow" : 1,
+            "normal" : 2,
+            "fast" : 3
+        }
+
+        let valueNum = speedNum[value] || 0;
+        if (valueNum != 0)
+            valueNum = Math.clamped(valueNum + modifier, 1, 3)
+        else return value
+
+        return game.aos.utility.findKey(valueNum, speedNum)
 
     }
 
@@ -265,7 +292,7 @@ export class AgeOfSigmarActor extends Actor {
             spent += this.getSkillCost(costs, skill.focus);
         }
 
-        let tam = this.items.filter(x => x.isTalent || x.isMiracle);
+        let tam = this.items.filter(x =>((x.isTalent || x.isMiracle) && !x.free))
 
         spent += tam.length * costs.talentsAndMiracles;
 
@@ -285,74 +312,62 @@ export class AgeOfSigmarActor extends Actor {
         })
     }
 
-    characterCreation(archetype)
-    {
-        new Dialog({
-            title : game.i18n.localize("HEADER.CHARGEN"),
-            content : `<p>${game.i18n.localize("CHARGEN.PROMPT")}</p>`,
-            buttons : {
-                yes : {
-                    label: game.i18n.localize("BUTTON.YES"),
-                    callback: () => {
-                        new CharacterCreation({actor: this, archetype}).render(true)
-                    }
-                },
-                no : {
-                    label : game.i18n.localize("BUTTON.NO"),
-                    callback: () => {
-                        this.update({"data.bio.archetype" : archetype.name, })
-                        this.createEmbeddedDocuments("Item", [archetype.toObject()])
-                    }
-                }
-            }
-        }).render(true)
-    }
+    async applyArchetype(archetype, apply) {
 
-    async applyArchetype(archetype) {
 
-        ui.notifications.notify(`${game.i18n.localize("CHARGEN.APPLYING")} ${archetype.name} ${game.i18n.localize("BIO.ARCHETYPE")}`)
+        if (this.type == "player" && apply)
+        {
+            new CharacterCreation({actor: this, archetype}).render(true)
+        }
+        else if (this.type == "player")
+        {
+            this.update({"data.bio.archetype" : archetype.name, "data.bio.species" : archetype.species })
+            this.createEmbeddedDocuments("Item", [archetype.toObject()])
+        }
+        else if (this.type == "npc" && apply)
+        {
+            ui.notifications.notify(`${game.i18n.localize("CHARGEN.APPLYING")} ${archetype.name} ${game.i18n.localize("BIO.ARCHETYPE")}`)
 
-        let items = [];
-        let actorData = this.toObject();
-
-        actorData.data.bio.faction = archetype.species
-
-        actorData.data.attributes.body.value = archetype.attributes.body
-        actorData.data.attributes.mind.value = archetype.attributes.mind
-        actorData.data.attributes.soul.value = archetype.attributes.soul
-
-        archetype.skills.list.forEach(skill => {
-            actorData.data.skills[skill].training = 1
-            actorData.data.skills[skill].focus = 1
-        })
-
-        actorData.data.skills[archetype.skills.core].training = 2
-        actorData.data.skills[archetype.skills.core].focus = 2
-
-        items = items.concat(archetype.ArchetypeItems);
-
-        // Remove IDs so items work within the update method
-        items.forEach(i => delete i._id)
-
-        actorData.data.bio.type = 3; // Champion
-
-        // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
-        actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
-        actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
-
-        actorData.img = archetype.data.img
-        actorData.token.img = archetype.data.img.replace("images", "tokens")
-
-        await this.update(actorData)
-
-        // Add items separately so active effects get added seamlessly
-        this.createEmbeddedDocuments("Item", items)
+            let items = [];
+            let actorData = this.toObject();
+    
+            actorData.data.bio.faction = archetype.species
+    
+            actorData.data.attributes.body.value = archetype.attributes.body
+            actorData.data.attributes.mind.value = archetype.attributes.mind
+            actorData.data.attributes.soul.value = archetype.attributes.soul
+    
+            archetype.skills.list.forEach(skill => {
+                actorData.data.skills[skill].training = 1
+                actorData.data.skills[skill].focus = 1
+            })
+    
+            actorData.data.skills[archetype.skills.core].training = 2
+            actorData.data.skills[archetype.skills.core].focus = 2
+    
+            items = items.concat(await archetype.GetArchetypeItems());
+    
+            actorData.data.bio.type = 3; // Champion
+    
+            // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
+            actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
+            actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
+    
+            actorData.img = archetype.data.img
+            actorData.token.img = archetype.data.img.replace("images", "tokens")
+            actorData.token.img = archetype.data.img.replace("actors", "tokens")
+    
+    
+            await this.update(actorData)
+    
+            // Add items separately so active effects get added seamlessly
+            this.createEmbeddedDocuments("Item", items)
+        }
     }
 
     //#region Rolling Setup
     async setupAttributeTest(attribute, options={}) 
     {
-        console.log(options)
         let dialogData = RollDialog._dialogData(this, attribute, null, options)
         dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} ${game.i18n.localize("SKILL.TEST")}`
         let testData = await RollDialog.create(dialogData);
@@ -543,11 +558,13 @@ export class AgeOfSigmarActor extends Actor {
         return this.update({"data.combat.wounds" : wounds})
     }
 
-    async addCondition(effect) {
+    async addCondition(effect, options) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
         if (!effect)
           return "No Effect Found"
+        else 
+            effect = duplicate(effect)
     
         if (!effect.id)
           return "Conditions require an id field"
@@ -558,6 +575,7 @@ export class AgeOfSigmarActor extends Actor {
         if (!existing) {
           effect.label = game.i18n.localize(effect.label)
           effect["flags.core.statusId"] = effect.id;
+          effect.origin = options.origin || ""
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
@@ -565,9 +583,11 @@ export class AgeOfSigmarActor extends Actor {
     
       async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+            effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
         if (!effect)
           return "No Effect Found"
+        else
+            effect = duplicate(effect)
     
         if (!effect.id)
           return "Conditions require an id field"
@@ -631,6 +651,47 @@ export class AgeOfSigmarActor extends Actor {
         }
 
         return changes
+    }
+
+
+
+    async onEnterDrawing(drawing)
+    {
+        let flags = drawing.data.flags["age-of-sigmar-soulbound"]
+
+        let cover = flags.cover
+        let hazard = flags.hazard
+        let obscured = flags.obscured
+        let difficult = flags.difficult
+        let options = {origin : drawing.uuid}
+
+        if (cover)
+            await this.addCondition(cover, options)
+        if (hazard)
+            await this.addCondition(hazard, options)
+        if (obscured)
+            await this.addCondition(obscured, options)
+        if (difficult)
+            await this.addCondition("difficult", options)
+    }
+
+    async onLeaveDrawing(drawing)
+    {
+        let flags = drawing.data.flags["age-of-sigmar-soulbound"]
+
+        let cover = flags.cover
+        let hazard = flags.hazard
+        let obscured = flags.obscured
+        let difficult = flags.difficult
+
+        if (cover)
+            await this.removeCondition(cover)
+        if (hazard)
+            await this.removeCondition(hazard)
+        if (obscured)
+            await this.removeCondition(obscured)
+        if (difficult)
+            await this.removeCondition("difficult")
     }
 
        /**

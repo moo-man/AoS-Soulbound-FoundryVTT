@@ -201,6 +201,7 @@ export default function registerHooks() {
         Migration.checkMigration()
         FoundryOverrides()
         game.counter.render(true)
+        game.aos.tags.createTags()
 
         CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
             let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
@@ -312,7 +313,48 @@ export default function registerHooks() {
     Hooks.on("updateCombat", (combat) => {
         let actor = combat.combatant.actor
         if (actor.combat.mettle.value < actor.combat.mettle.max)
-            actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + 1})
+            actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
+        
+        let zones = game.aos.utility.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
+        zones.forEach(z => {
+            let hazard = z.getFlag("age-of-sigmar-soulbound", "hazard")
+            let ignoreArmour = z.getFlag("age-of-sigmar-soulbound", "ignoreArmour")
+            let damage = game.aos.config.zoneHazardDamage[hazard]
+            actor.applyDamage(damage, {ignoreArmour})
+        })
+    })
+
+    Hooks.on("preUpdateToken", (token, updateData) => {
+        if(Number.isNumeric(updateData.x) || Number.isNumeric(updateData.y))
+        {
+            let newX = updateData.x || token.data.x;
+            let newY = updateData.y || token.data.y;
+
+            let oldX = token.data.x;
+            let oldY = token.data.y;
+
+            newX += canvas.grid.size / 2
+            newY += canvas.grid.size / 2
+            oldX += canvas.grid.size / 2
+            oldY += canvas.grid.size / 2
+
+            if (token.parent?.drawings)
+            {
+                for(let drawing of token.parent.drawings.contents)
+                {
+                    if (SoulboundUtility.pointInDrawing({x : newX, y: newY}, drawing) && !SoulboundUtility.pointInDrawing({x : oldX, y: oldY}, drawing))
+                    {
+                        token.actor.onEnterDrawing(drawing)
+                    }
+                    else if (!SoulboundUtility.pointInDrawing({x : newX, y : newY}, drawing) && SoulboundUtility.pointInDrawing({x : oldX, y : oldY}, drawing))
+                    {
+                        token.actor.onLeaveDrawing(drawing)
+                    }
+                }
+            }
+
+        }
+
     })
 
 

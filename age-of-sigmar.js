@@ -19,6 +19,8 @@ import AgeOfSigmarEffectSheet from "./scripts/apps/active-effect-config.js";
 import SoulboundCounter from "./scripts/apps/counter.js";
 import ModuleUpdater from "./scripts/apps/module-updater.js";
 import ModuleInitializer from "./scripts/apps/module-initialization.js";
+import TagManager from "./scripts/system/tag-manager.js";
+import ZoneConfig from "./scripts/apps/zone-config.js";
 
 Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
@@ -46,8 +48,10 @@ Hooks.once("init", () => {
         apps: {
             ItemTraits,
             ModuleUpdater,
-            ModuleInitializer
-        }
+            ModuleInitializer,
+            ZoneConfig
+        },
+        tags: new TagManager()
     };
     
     game.counter = new SoulboundCounter()
@@ -55,7 +59,6 @@ Hooks.once("init", () => {
     CONFIG.fontFamilies.push("Quadrant-Regular");
     CONFIG.defaultFontFamily = "Quadrant-Regular"
     CONFIG.canvasTextStyle._fontFamily = "Quadrant-Regular"
-
 });
 
 hooks();
