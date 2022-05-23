@@ -68,6 +68,7 @@ export default class CharacterCreation extends FormApplication {
         this.character.data.update({ [`data.attributes.body.value`]: this.archetype.attributes.body })
         this.character.data.update({ [`data.attributes.mind.value`]: this.archetype.attributes.mind })
         this.character.data.update({ [`data.attributes.soul.value`]: this.archetype.attributes.soul })
+        this.character.data.update({"data.bio.species" : this.archetype.species})
 
         this.character.data.update({ "token": this.actor.data.token })
 
