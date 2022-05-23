@@ -8,19 +8,22 @@ export default class BugReportFormSoulbound extends Application {
         this.domains = [
             "Soulbound System",
             "Soulbound Core Module",
-            "Soulbound Starter Set"
+            "Soulbound Starter Set",
+            "Soulbound Champions of Order"
         ]
 
         this.domainKeys = [
             "age-of-sigmar-soulbound",
             "soulbound-core",
-            "soulbound-starter-set"
+            "soulbound-starter-set",
+            "soulbound-order"
         ]
 
         this.domainKeysToLabel = {
             "age-of-sigmar-soulbound" : "system",
             "soulbound-core" : "core",
             "soulbound-starter-set" : "starter-set",
+            "soulbound-order" : "champions-of-order"
         }
     }
 
