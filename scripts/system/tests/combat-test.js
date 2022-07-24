@@ -41,7 +41,7 @@ export default class CombatTest extends Test {
             result.dice = duplicate(this.result.dice.filter(i => i.index >= this.testData.dualWieldingData.primary.pool))
 
 
-        result.dice.forEach(d => d.success = d.value >= testData.dn.difficulty) // Re evaluate whether the dice succeded or not with new difficulty
+        result.dice.forEach(d => d.success = d.value >= testData.dn.difficulty) // Re (0, eval)uate whether the dice succeded or not with new difficulty
 
         result.successes = result.dice.reduce((prev, current) => prev += current.success, 0)
         result.success = result.successes >= testData.dn.complexity

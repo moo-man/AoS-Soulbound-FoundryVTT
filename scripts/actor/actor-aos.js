@@ -37,7 +37,7 @@ export class AgeOfSigmarActor extends Actor {
 
             // Treat the custom default token as a true default token
         // If you change the actor image from the default token, it will automatically set the same image to be the token image
-        if (this.data.token.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img && !updateData.token?.img) {
+        if (this.prototypeToken.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img && !updateData.token?.img) {
             updateData["token.img"] = updateData.img;
         }
 
@@ -235,17 +235,17 @@ export class AgeOfSigmarActor extends Actor {
         let size = this.bio.size; 
 
         if(size <= 2) {
-            this.data.token.update({"height" : 1});
-            this.data.token.update({"width" : 1});
+            this.prototypeToken.update({"height" : 1});
+            this.prototypeToken.update({"width" : 1});
         } else if(size === 3) {
-            this.data.token.update({"height" : 2});
-            this.data.token.update({"width" : 2});
+            this.prototypeToken.update({"height" : 2});
+            this.prototypeToken.update({"width" : 2});
         } else if(size === 4) {
-            this.data.token.update({"height" : 3});
-            this.data.token.update({"width" : 3});
+            this.prototypeToken.update({"height" : 3});
+            this.prototypeToken.update({"width" : 3});
         } else if(size === 5) {
-            this.data.token.update({"height" : 4});
-            this.data.token.update({"width" : 4});
+            this.prototypeToken.update({"height" : 4});
+            this.prototypeToken.update({"width" : 4});
         }
     }
 
@@ -331,27 +331,27 @@ export class AgeOfSigmarActor extends Actor {
             let items = [];
             let actorData = this.toObject();
     
-            actorData.data.bio.faction = archetype.species
+            actorData.system.bio.faction = archetype.species
     
-            actorData.data.attributes.body.value = archetype.attributes.body
-            actorData.data.attributes.mind.value = archetype.attributes.mind
-            actorData.data.attributes.soul.value = archetype.attributes.soul
+            actorData.system.attributes.body.value = archetype.attributes.body
+            actorData.system.attributes.mind.value = archetype.attributes.mind
+            actorData.system.attributes.soul.value = archetype.attributes.soul
     
             archetype.skills.list.forEach(skill => {
-                actorData.data.skills[skill].training = 1
-                actorData.data.skills[skill].focus = 1
+                actorData.system.skills[skill].training = 1
+                actorData.system.skills[skill].focus = 1
             })
     
-            actorData.data.skills[archetype.skills.core].training = 2
-            actorData.data.skills[archetype.skills.core].focus = 2
+            actorData.system.skills[archetype.skills.core].training = 2
+            actorData.system.skills[archetype.skills.core].focus = 2
     
             items = items.concat(await archetype.GetArchetypeItems());
     
-            actorData.data.bio.type = 3; // Champion
+            actorData.system.bio.type = 3; // Champion
     
             // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
-            actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
-            actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
+            actorData.system.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
+            actorData.system.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
     
             actorData.img = archetype.data.img
             actorData.token.img = archetype.data.img.replace("images", "tokens")
@@ -469,7 +469,7 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? await this.update(updates) : this;
 
-        let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.data.token.name});
+        let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
 
         // Doing this here because foundry throws an error if wounds are added before the update
@@ -505,7 +505,7 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? await this.update(updates) : this;
 
-        let note = game.i18n.format("NOTIFICATION.APPLY_HEALING", {toughness : healing.toughness, name : this.data.token.name});
+        let note = game.i18n.format("NOTIFICATION.APPLY_HEALING", {toughness : healing.toughness, name : this.prototypeToken.name});
         ui.notifications.notify(note);
 
         return ret;
@@ -630,7 +630,7 @@ export class AgeOfSigmarActor extends Actor {
             if(sub === 0) break;            
         }
         
-        let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.data.token.name});
+        let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
     }
 
