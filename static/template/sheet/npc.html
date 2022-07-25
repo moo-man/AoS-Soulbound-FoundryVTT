@@ -7,22 +7,22 @@
             <input name="name" type="text" value="{{actor.name}}"/>
         </div>
         <div class="sheet-subHeader">
-            <select name="data.bio.size" data-dtype="Number">
-                {{#select data.bio.size}}
+            <select name="system.bio.size" data-dtype="Number">
+                {{#select system.bio.size}}
                 {{#each (config "actorSize") as |size s|}}
                     <option value="{{s}}">{{size}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            <select name="data.bio.type" data-dtype="Number">
-                {{#select data.bio.type}}
+            <select name="system.bio.type" data-dtype="Number">
+                {{#select system.bio.type}}
                 {{#each (config "npcType") as |type t|}}
                     <option value="{{t}}">{{type}}</option>
                 {{/each}}
                 {{/select}}
             </select>
-            (<input name="data.bio.faction" type="text" value="{{data.bio.faction}}" placeholder="{{localize "BIO.FACTION"}}"/>, <input name="data.bio.subfaction" type="text" value="{{data.bio.subfaction}}" placeholder="{{localize "BIO.SUBFACTION"}}"/>)
-            <input name="data.bio.role" type="text" value="{{data.bio.role}}" placeholder="{{localize "BIO.ROLE"}}"/>
+            (<input name="system.bio.faction" type="text" value="{{system.bio.faction}}" placeholder="{{localize "BIO.FACTION"}}"/>, <input name="system.bio.subfaction" type="text" value="{{system.bio.subfaction}}" placeholder="{{localize "BIO.SUBFACTION"}}"/>)
+            <input name="system.bio.role" type="text" value="{{system.bio.role}}" placeholder="{{localize "BIO.ROLE"}}"/>
         </div>
         <hr>
         <div class="sheet-tabs tabs" data-group="primary">

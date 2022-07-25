@@ -9,13 +9,13 @@
         <div class="sheet-subHeader">
             <div class="subheader-content">
                 <div class="entry-horizontal">
-                    <input class="archetype-input" readonly type="text" value="{{data.bio.archetype}}" placeholder="{{localize 'BIO.ARCHETYPE'}}" />
-                    <input name="data.bio.species" type="text" value="{{data.bio.species}}" placeholder="{{localize 'BIO.SPECIES'}}" />
+                    <input class="archetype-input" readonly type="text" value="{{system.bio.archetype}}" placeholder="{{localize 'BIO.ARCHETYPE'}}" />
+                    <input name="system.bio.species" type="text" value="{{system.bio.species}}" placeholder="{{localize 'BIO.SPECIES'}}" />
                 </div>
             </div>
             <div class="subheader-content xp-header">
-                <input name="header.experience.spent" type="number" value="{{data.experience.spent}}" data-dtype="Number" disabled /> /
-                <input name="header.experience.total" type="number" value="{{data.experience.total}}" data-dtype="Number" disabled /> {{localize "EXPERIENCE.XP"}}
+                <input name="header.experience.spent" type="number" value="{{system.experience.spent}}" data-dtype="Number" disabled /> /
+                <input name="header.experience.total" type="number" value="{{system.experience.total}}" data-dtype="Number" disabled /> {{localize "EXPERIENCE.XP"}}
             </div>
         </div>
         <hr>

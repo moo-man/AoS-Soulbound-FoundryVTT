@@ -1,5 +1,5 @@
 <form>
-    <img class="background-image" src="{{archetype.data.img}}">
+    <img class="background-image" src="{{archetype.img}}">
     <div class="character-creation">
         <header class="header">
             <input type="text" name="name" value="{{actor.name}}" placeholder="Name">
@@ -66,7 +66,7 @@
                     {{#each coreTalents as |talent t|}}
                     <div class="core talent">
                         <div class="talent-header">
-                            <img src="{{talent.data.img}}">
+                            <img src="{{talent.img}}">
                             <label>{{talent.name}}</label>
                         </div>
                         <div class="talent-description">
@@ -80,7 +80,7 @@
                     {{#each chooseTalents as |talent t|}}
                     <div class="talent">
                         <div class="talent-header">
-                            <img src="{{talent.data.img}}">
+                            <img src="{{talent.img}}">
                             <label>{{talent.name}}</label>
                             <input type="checkbox" data-id="{{talent.id}}">
                         </div>
@@ -98,7 +98,7 @@
                     <h3>{{localize "ARCHETYPE.EQUIPMENT"}}</h3>
                     <div class="aqua-ghyranis">
                         <label>{{localize "ARCHETYPE.AQUA_GHYRANIS"}}</label>
-                        <input type="number" name="aqua" value="{{archetype.data.data.aqua}}">
+                        <input type="number" name="aqua" value="{{archetype.system.aqua}}">
                     </div>
                     {{{equipmentHTML}}}
                 </div>

@@ -276,9 +276,9 @@ AOS.systemEffects = {
         icon : "icons/svg/blind.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 2},
-            {key: "data.combat.melee.bonus", mode : 2, value : -1},
-            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "system.combat.melee.bonus", mode : 2, value : -1},
+            {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
@@ -309,9 +309,9 @@ CONFIG.statusEffects = [
         icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 2},
-            {key: "data.combat.melee.bonus", mode : 2, value : -1},
-            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "system.combat.melee.bonus", mode : 2, value : -1},
+            {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ],
         flags : { 
             "age-of-sigmar-soulbound.changeCondition" : { 
@@ -367,8 +367,8 @@ CONFIG.statusEffects = [
         label : "CONDITION.PRONE",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
         changes : [
-            {key: "data.combat.melee.bonus", mode : 2, value : -1},
-            {key: "data.combat.accuracy.bonus", mode : 2, value : -1}
+            {key: "system.combat.melee.bonus", mode : 2, value : -1},
+            {key: "system.combat.accuracy.bonus", mode : 2, value : -1}
         ]
     },
     {
@@ -376,9 +376,9 @@ CONFIG.statusEffects = [
         label : "CONDITION.RESTRAINED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
         changes : [
-            {key: "data.combat.melee.bonus", mode : 2, value : -1},
-            {key: "data.combat.accuracy.bonus", mode : 2, value : -1},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "system.combat.melee.bonus", mode : 2, value : -1},
+            {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
+            {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ]
     },
     {
@@ -386,8 +386,8 @@ CONFIG.statusEffects = [
         label : "CONDITION.STUNNED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
-            {key: "data.combat.speeds.foot", mode : 5, value : "slow"},
-            {key: "data.combat.defence.bonus", mode : 2, value : -1}
+            {key: "system.combat.speeds.foot", mode : 5, value : "slow"},
+            {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ]
     },
     {

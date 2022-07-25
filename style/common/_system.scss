@@ -14,7 +14,7 @@
     width: 300px;
     margin: 0px;
     padding: 0px;
-    background: url(../../asset/image/background.webp) repeat;
+    background: url(./asset/image/background.webp) repeat;
     background-position-y: 45px;
     border-radius: 0px;
     box-shadow: 0 0 0px #000;
@@ -33,7 +33,7 @@
 
 
 #sidebar-tabs {
-    background-image: url(../../asset/image/header-background.webp);
+    background-image: url(./asset/image/header-background.webp);
     background-size: cover;
     color: white;
     box-shadow: 0 0 10px var(--color-active);
@@ -235,6 +235,7 @@
     margin: 0;
     font-family: var(--font-text);
     font-weight: bold;
+    border: none
 }
 
 .counter .input-controls {
@@ -256,7 +257,7 @@
 }
 
 .counter .input-controls a {
-    background: url(../../asset/image/header-background-vertical.webp);
+    background: url(./asset/image/header-background-vertical.webp);
     border: 1px outset var(--color-active);
     color: var(--color-active);
     width: 20px;
@@ -482,6 +483,7 @@
     padding: 0px 4px;
     flex-grow: 1;
     text-align: center;
+    border: none
 }
 
 .character-creation .sheet-body .skills .skill{

@@ -9,7 +9,7 @@ li.folder > .folder-header .create-folder, li.folder > .folder-header .create-do
 
 
 .dark button {
-    background: url(../../asset/image/header-background-vertical.webp)
+    background: url(./asset/image/header-background-vertical.webp)
 }
 
 a:hover {
@@ -35,7 +35,7 @@ select:focus {
 select {
     border-radius: 0px;
     border: 1px solid var(--color-header-gold);
-    /*background: url(../../asset/image/input-bg.webp);
+    /*background: url(./asset/image/input-bg.webp);
     background-size: 100%;
     background-position: 0px 0px;*/
 }
@@ -60,7 +60,7 @@ input[type="time"]:focus {
     font-family: var(--font-text);
     color: whitesmoke;
     border: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.webp');
+    background-image: url('./asset/image/header-background.webp');
     background-size: cover;
     border-bottom: none
 }
@@ -138,7 +138,7 @@ li.directory-item.folder:not(.collapsed) {
     font-family: var(--font-text);
     color: whitesmoke;
     border: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.webp');
+    background-image: url('./asset/image/header-background.webp');
     background-size: cover;
 }
 
@@ -176,6 +176,7 @@ li.directory-item.folder:not(.collapsed) {
     padding: 0px 4px;
     flex-grow: 1;
     text-align: center;
+    border: none
 }
 
 .age-of-sigmar-soulbound .combat-misc h3 {
@@ -202,16 +203,16 @@ li.directory-item.folder:not(.collapsed) {
     padding: 0px 7px;
 }
 
-.age-of-sigmar-soulbound.sheet .editor-content{
+.age-of-sigmar-soulbound.sheet .journal-entry-page.text{
     padding: 0px 7px;
 }
 
 .window-app .window-content {
-    background: url(../../asset/image/background.webp) repeat;
+    background: url(./asset/image/background.webp) repeat;
 }
 
 .window-app.image-popout .window-content {
-    background: url(../../asset/image/background.webp) repeat;
+    background: url(./asset/image/background.webp) repeat;
 }
 .age-of-sigmar-soulbound.dialog {
     display: flex;
@@ -278,7 +279,7 @@ li.directory-item.folder:not(.collapsed) {
 .content-box{
     display: flex;
     flex-direction: column;
-    background: url(../../asset/image/input.webp) repeat;
+    background: url(./asset/image/input.webp) repeat;
     border-left: 2px solid #7c6c42;
 }
 
@@ -321,7 +322,7 @@ li.directory-item.folder:not(.collapsed) {
     font-family: var(--font-text);
     color: whitesmoke;
     border-bottom: 2px solid #7c6c42;
-    background-image: url('../../asset/image/header-background.webp');
+    background-image: url('./asset/image/header-background.webp');
     background-size: cover;
     border-right: 2px solid #7c6c42;
     border-top: 2px solid #7c6c42;
@@ -495,14 +496,14 @@ li.directory-item.folder:not(.collapsed) {
 
 
 .editor,
-.editor-content {
+.journal-entry-page.text {
   font-family: var(--font-text);
   font-size: 15px;
   color: var(--color-text);
 }
 
 .editor h1,
-.editor-content h1 { 
+.journal-entry-page.text h1 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   color : var(--color-header-gold);
@@ -525,7 +526,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h2,
-.editor-content h2 { 
+.journal-entry-page.text h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   font-size: 26px;
@@ -534,7 +535,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h3,
-.editor-content h3 { 
+.journal-entry-page.text h3 { 
   font-family: var(--font-header);
   font-size : 28px;
   font-variant: small-caps;
@@ -542,7 +543,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor .block h3,
-.editor-content .block h3 { 
+.journal-entry-page.text .block h3 { 
   font-family: var(--font-header);
   margin: 20px 0px;
   text-align: center;
@@ -552,18 +553,18 @@ li.directory-item.folder:not(.collapsed) {
   color: var(--color-header-gold)
 }
 
-.editor-content .sidebar,
+.journal-entry-page.text .sidebar,
 .editor .sidebar {
     border-left: 3px solid darkgoldenrod
 }
 
-.editor-content .sidebar h3,
+.journal-entry-page.text .sidebar h3,
 .editor .sidebar h3 {
     font-size: initial;
 }
 
 .editor  h4,
-.editor-content  h4 { 
+.journal-entry-page.text  h4 { 
   font-family: var(--font-header);
   border: none;
   font-size: 20px;
@@ -572,7 +573,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor  h5,
-.editor-content  h5 { 
+.journal-entry-page.text  h5 { 
   font-family: var(--font-header);
   border: none;
   font-size: 16px;
@@ -583,36 +584,36 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor .block,
-.editor-content .block {
+.journal-entry-page.text .block {
     background-color: black;
     font-family: var(--font-sidebar);
     color: white;
     border: 5px solid transparent;
-    border-image: url(../../asset/image/sidebar-border.webp) 8 8 8 8 repeat repeat;
+    border-image: url(./asset/image/sidebar-border.webp) 8 8 8 8 repeat repeat;
     margin-right: 10px;
 } 
 
 /* .editor .block::before,
-.editor-content .block::before {
+.journal-entry-page.text .block::before {
     content: "";
-    background-image: url(../../asset/image/block-top.webp) ;
+    background-image: url(./asset/image/block-top.webp) ;
 } */
 
 .editor table,
-.editor-content table {
-    /*background: url(../../asset/image/input-bg.webp);
+.journal-entry-page.text table {
+    /*background: url(./asset/image/input-bg.webp);
     background-size: fill;*/
     border: 1px solid var(--color-header-gold)
 }
 
 .editor table td,
-.editor-content table td {
+.journal-entry-page.text table td {
     border: 1px solid var(--color-header-gold)
 }
 
 .editor table .table-header,
-.editor-content table .table-header {
-    background: url(../../asset/image/header-background.webp);
+.journal-entry-page.text table .table-header {
+    background: url(./asset/image/header-background.webp);
     background-size: cover;
     text-transform: uppercase;
     color: white;
@@ -628,7 +629,7 @@ table tr:nth-child(even) {
 #controls ol.control-tools > li,
     #controls ol.scene-controls > li {
         color: white;
-    background: url(../../asset/image/header.webp) repeat;
+    background: url(./asset/image/header.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
@@ -636,7 +637,7 @@ table tr:nth-child(even) {
 #controls ol.control-tools > li.active,
 #controls ol.scene-controls > li.active {
     border: 1px solid var(--color-active);
-    background: url(../../asset/image/background.webp) repeat;
+    background: url(./asset/image/background.webp) repeat;
     color: var(--color-header-blue);
     box-shadow: 0 0 10px var(--color-active)
 }
@@ -649,7 +650,7 @@ table tr:nth-child(even) {
 #navigation #scene-list .scene.view {
     color: var(--color-header-blue);
     border: 1px solid var(--color-active);
-    background: url(../../asset/image/background.webp) repeat;
+    background: url(./asset/image/background.webp) repeat;
     box-shadow: 0 0 10px var(--color-active);
 }
 
@@ -657,7 +658,7 @@ table tr:nth-child(even) {
     color: white;
     font-family: var(--font-sidebar);
     border: 1px solid var(--color-header-gold);
-    background: url(../../asset/image/header.webp) repeat;
+    background: url(./asset/image/header.webp) repeat;
 }
 
 #navigation #scene-list .scene.context {
@@ -665,13 +666,13 @@ table tr:nth-child(even) {
 }
 
 #navigation #nav-toggle {
-    background: url(../../asset/image/header.webp) repeat;
+    background: url(./asset/image/header.webp) repeat;
     background-size: 50%;
     border: 1px solid var(--color-header-gold)
 }
 
 #players {
-    background: url(../../asset/image/header-background-vertical.webp) repeat;
+    background: url(./asset/image/header-background-vertical.webp) repeat;
     border: 1px solid var(--color-header-gold)
 }
 
@@ -685,7 +686,7 @@ table tr:nth-child(even) {
     #macro-list {
     font-family: var(--font-sidebar);
     color: white;
-    background: url(../../asset/image/header-background.webp) repeat;
+    background: url(./asset/image/header-background.webp) repeat;
     background-size : 100%;
 }
 
@@ -714,7 +715,7 @@ textarea:focus {
 button {
     width: 100%;
     margin: 0 1px;
-    background: url(../../asset/image/header-background-vertical.webp) repeat;
+    background: url(./asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
     border-radius: 0px;
     font-size: 14px;
@@ -724,19 +725,19 @@ button {
 }
 
 form button {
-    background: url(../../asset/image/header-background-vertical.webp) repeat;
+    background: url(./asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
 }
 
 .dialog .dialog-buttons button {
-    background: url(../../asset/image/header-background-vertical.webp) repeat;
+    background: url(./asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
     /*margin: 5px;*/
 }
 
 .dialog .dialog-buttons button.default {
     box-shadow: 0 0 10px inset var(--color-active);
-    background: url(../../asset/image/header-background-vertical.webp) repeat;
+    background: url(./asset/image/header-background-vertical.webp) repeat;
     border: 3px solid var(--color-header-gold);
 }
 
@@ -751,7 +752,7 @@ button:disabled {
 }
 
 .filepicker .current-dir button {
-    background: url(../../asset/image/header-background-vertical.webp) repeat;
+    background: url(./asset/image/header-background-vertical.webp) repeat;
     border: 1px solid var(--color-header-gold);
 }
 
@@ -782,18 +783,18 @@ a.inline-roll i {
     vertical-align: middle;
 }
 .editor .block a.content-link i,
-.editor-content .block a.content-link i {
+.journal-entry-page.text .block a.content-link i {
     color: var(--color-active)
 } 
 
 .editor .block a.content-link,
-.editor-content .block a.content-link {
+.journal-entry-page.text .block a.content-link {
     color: white;
 }
 
 #settings #game-details {
     color: white;
-    background: url(../../asset/image/header-background.webp) ;
+    background: url(./asset/image/header-background.webp) ;
     background-size: cover;
     outline: 3px solid var(--color-header-gold);
 }
@@ -801,4 +802,23 @@ a.inline-roll i {
 
 #client-settings section.content .submenu > button {
     height: unset
+}
+
+
+.journal-sheet {
+    form {
+        background: none
+    }
+
+    .directory {
+        background : none;
+        border: none;
+        border-right : 3px solid var(--color-header-gold);
+        color: var(--color-text);
+        font-family: var(--font-text);
+
+        .directory-item.active {
+            
+        }
+    }
 }

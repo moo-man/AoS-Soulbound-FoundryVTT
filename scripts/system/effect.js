@@ -4,8 +4,8 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     prepareData()
     {
         if (game.ready && this.item && this.item.equippable && this.requiresEquip && !this.parent.pack)
-            this.data.disabled = !this.item.equipped
-            //this.data.update({"disabled" : !this.item.equipped})
+            this.disabled = !this.item.equipped
+            //this.updateSource({"disabled" : !this.item.equipped})
     }
 
     /** @override 
@@ -39,10 +39,10 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     get item() {
         if (this.parent && this.parent.documentName == "Item")
             return this.parent
-        else if (this.data.origin && this.parent.documentName == "Actor") 
+        else if (this.origin && this.parent.documentName == "Actor") 
         {
-            let origin = this.data.origin.split(".")
-            if (this.parent.data && origin[1] == this.parent?.id) // If origin ID is same as parent ID
+            let origin = this.origin.split(".")
+            if (this.parent && origin[1] == this.parent?.id) // If origin ID is same as parent ID
             {
                 if (origin[3])
                 {
@@ -53,7 +53,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     }
 
     getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {
-        let allChanges = this.data.changes.map(c => c.toObject())
+        let allChanges = this.changes.map(c => c.toObject())
         allChanges.forEach((c, i) => {
             c.conditional = this.changeConditionals[i] || {}
             c.document = this
@@ -141,27 +141,23 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         return (getProperty(this.data, "flags.age-of-sigmar-soulbound.changeCondition") || {})
     }
 
-    get label() {
-        return this.data.label
-    }
-
     get description() {
         return getProperty(this.data, "flags.age-of-sigmar-soulbound.description")
     }
 
     get hasRollEffect() {
-        return this.data.changes.some(c => c.mode == 0)
+        return this.changes.some(c => c.mode == 0)
     }
 
     get sourceName() {
-        if (!this.data.origin)
+        if (!this.origin)
             return super.sourceName
 
-        let data = this.data.origin.split(".")
+        let data = this.origin.split(".")
 
-        if (data.length == 4) {
+        if (length == 4) {
 
-            if (this.data.origin.includes("Drawing"))
+            if (this.origin.includes("Drawing"))
             {
                 let scene = game.scenes.get(data[1])
                 let drawing = scene.drawings.get(data[3])

@@ -8,7 +8,7 @@
         </div>
         <div class="sheet-subHeader">
             <h3>{{localize "ARCHETYPE.SPECIES"}}</h3>
-            <input name="data.species" type="text" value="{{data.species}}" />
+            <input name="system.species" type="text" value="{{system.species}}" />
         </div>
         <hr>
         <div class="sheet-content">
@@ -19,15 +19,15 @@
                 <div class="content-row">
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.BODY"}}</h3>
-                        <input name="data.attributes.body" type="number" value="{{data.attributes.body}}" data-dtype="Number" />
+                        <input name="system.attributes.body" type="number" value="{{system.attributes.body}}" data-dtype="Number" />
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.MIND"}}</h3>
-                        <input name="data.attributes.mind" type="number" value="{{data.attributes.mind}}" data-dtype="Number" />
+                        <input name="system.attributes.mind" type="number" value="{{system.attributes.mind}}" data-dtype="Number" />
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.SOUL"}}</h3>
-                        <input name="data.attributes.soul" type="number" value="{{data.attributes.soul}}" data-dtype="Number" />
+                        <input name="system.attributes.soul" type="number" value="{{system.attributes.soul}}" data-dtype="Number" />
                     </div>
                 </div>
                 <div class="content-row skills">
@@ -35,9 +35,9 @@
                         <div class="skill-header">
                             <div class="core">
                                 <label>{{localize "ARCHETYPE.CORE_SKILL"}}:</label>
-                                <select name="data.skills.core">
+                                <select name="system.skills.core">
                                     <option value=""></option>
-                                    {{#select data.skills.core}}
+                                    {{#select system.skills.core}}
                                     {{#each (config "skills") as |skill sk|}}
                                     {{#if (lookup ../skills sk)}}
                                     <option value="{{sk}}">{{skill}}</option>
@@ -49,7 +49,7 @@
 
                             <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
                             <div class="xp">
-                                <input type="number" value="{{data.skills.xp}}" name="data.skills.xp" data-dtype="Number" />
+                                <input type="number" value="{{system.skills.xp}}" name="system.skills.xp" data-dtype="Number" />
                                 <label>{{localize "EXPERIENCE.XP"}}</label>
                             </div>
                         </div>
@@ -69,9 +69,9 @@
                         <div class="entry-list">
                             <h4>{{localize "ARCHETYPE.CORE_TALENTS"}}</h4>
                             <div class="inline-list">
-                                {{#each data.talents.core as |talent index|}}
+                                {{#each system.talents.core as |talent index|}}
                                 <div class="entry-content">
-                                    <div class="entry-element talents" data-path="data.talents.core" data-index="{{index}}">
+                                    <div class="entry-element talents" data-path="system.talents.core" data-index="{{index}}">
                                         <div class="entry-name">
                                             {{talent.name}}
                                         </div>
@@ -82,11 +82,11 @@
                         </div>
                         <hr>
                         <div class="entry-list">
-                            <h4>{{localize "ARCHETYPE.CHOOSE"}} <input type="number" name="data.talents.choose" value="{{data.talents.choose}}" data-dtype="Number"></h4>
+                            <h4>{{localize "ARCHETYPE.CHOOSE"}} <input type="number" name="system.talents.choose" value="{{system.talents.choose}}" data-dtype="Number"></h4>
                             <div class="inline-list">
-                                {{#each data.talents.list as |talent index|}}
+                                {{#each system.talents.list as |talent index|}}
                                 <div class="entry-content">
-                                    <div class="entry-element talents" data-path="data.talents.list" data-index="{{index}}">
+                                    <div class="entry-element talents" data-path="system.talents.list" data-index="{{index}}">
                                         <div class="entry-name">
                                             {{talent.name}}
                                         </div>
@@ -111,7 +111,7 @@
                 <div class="content-row">
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.AQUA_GHYRANIS"}}</h3>
-                        <input type="number" name="data.aqua" value="{{data.aqua}}" data-dtype="Number">
+                        <input type="number" name="system.aqua" value="{{system.aqua}}" data-dtype="Number">
                     </div>
                 </div>
 

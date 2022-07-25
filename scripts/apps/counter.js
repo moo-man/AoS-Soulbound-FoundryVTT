@@ -138,9 +138,9 @@ export default class SoulboundCounter extends Application {
       else if (this.party)
       {
         if (type == "soulfire")
-          await this.party.update({"data.soulfire.value" : parseInt(value)})
+          await this.party.update({"system.soulfire.value" : parseInt(value)})
         else
-          await this.party.update({"data.doom.value" : parseInt(value)})
+          await this.party.update({"system.doom.value" : parseInt(value)})
       }
       else
         await game.settings.set('age-of-sigmar-soulbound', type, value);

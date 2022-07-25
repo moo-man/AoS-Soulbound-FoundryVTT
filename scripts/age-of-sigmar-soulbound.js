@@ -56,7 +56,7 @@ Hooks.once("init", () => {
     
     game.counter = new SoulboundCounter()
     
-    CONFIG.fontFamilies.push("Quadrant-Regular");
+    CONFIG.fontDefinitions["Quadrant-Regular"] = {editor : true, fonts : []}
     CONFIG.defaultFontFamily = "Quadrant-Regular"
     CONFIG.canvasTextStyle._fontFamily = "Quadrant-Regular"
 });

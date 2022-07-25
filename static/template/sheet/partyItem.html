@@ -19,20 +19,20 @@
                 <div class="content-row">
                     <div class="entry-vertical">
                         <h3>{{localize (configLookup "partyItemCategoryLabels" data.category)}}</h3>
-                        <input name="data.state" type="checkbox" value="active" {{checked data.state}}/>
+                        <input name="system.state" type="checkbox" value="active" {{checked data.state}}/>
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "PARTY.CATEGORY"}}</h3>
                         {{#unless (eq item.parent.type "party")}}
-                        <select name="data.category">
-                            {{#select data.category}}
+                        <select name="system.category">
+                            {{#select system.category}}
                             <option value="shortGoal">Short-Term Goal</option>
                             <option value="longGoal">Long-Term Goal</option>
                             {{/select}}
                         </select>   
                         {{else}}
-                        <select name="data.category">
-                            {{#select data.category}}
+                        <select name="system.category">
+                            {{#select system.category}}
                             {{#each (config "partyItemCategories") as |category c|}}
                             <option value="{{c}}">{{category}}</option>
                             {{/each}}
@@ -49,7 +49,7 @@
                     <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                 </div>
                 <div class="content-wrapper">
-                    {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                    {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
                 </div>
             </div>
         </div>

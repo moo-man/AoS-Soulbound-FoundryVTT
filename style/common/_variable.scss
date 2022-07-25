@@ -1,38 +1,38 @@
 @font-face {
     font-family: "Alegreya Sans SC";
-    src: url("../../asset/font/alegreya-sans-sc-regular.ttf");
+    src: url("./asset/font/alegreya-sans-sc-regular.ttf");
 }
 
 @font-face {
     font-family: "Alegreya Sans SC";
-    src: url("../../asset/font/alegreya-sans-sc-bold.ttf");
+    src: url("./asset/font/alegreya-sans-sc-bold.ttf");
 	font-weight: bold;
 }
 
 @font-face {
     font-family: "Quadrant-Regular";
-    src: url("../../asset/font/Quadrat-Regular.otf");
+    src: url("./asset/font/Quadrat-Regular.otf");
 }
 
 @font-face {
     font-family: "MinionPro";
-    src: url("../../asset/font/MinionPro-Regular.otf");
+    src: url("./asset/font/MinionPro-Regular.otf");
 }
 
 /* @font-face {
     font-family: "MinionPro";
-    src: url("../../asset/font/MinionPro-Bold.otf");
+    src: url("./asset/font/MinionPro-Bold.otf");
     font-weight: bold;
 } */
 
 @font-face {
     font-family: "PompeiStd";
-    src: url("../../asset/font/PompeiStd-Regular.otf");
+    src: url("./asset/font/PompeiStd-Regular.otf");
 }
 
 @font-face {
     font-family: "PompeiStd";
-    src: url("../../asset/font/PompeiStd-Bold.otf");
+    src: url("./asset/font/PompeiStd-Bold.otf");
     font-weight: bold;
 }
 
@@ -49,5 +49,6 @@
     --color-header-black: black;
     --font-text: "MinionPro";
     --font-header: "Quadrant-Regular";
-    --font-sidebar: "PompeiStd"
+    --font-sidebar: "PompeiStd";
+    --color-border-highlight: #806b3a;
 }

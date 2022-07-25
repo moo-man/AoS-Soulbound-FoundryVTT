@@ -9,8 +9,8 @@
         <div class="sheet-subHeader">
             <div class="entry-horizontal">
                 <h3>{{localize "AETHERIC_DEVICE.AVAILABILITY"}}</h3>
-                <select name="data.availability">
-                    {{#select data.availability}}
+                <select name="system.availability">
+                    {{#select system.availability}}
                     {{#each (config "availability") as |availability a|}}
                     <option value="{{a}}">{{availability}}</option>
                     {{/each}}
@@ -19,7 +19,7 @@
             </div>
             <div class="segment-horizontal">
                 <h3>{{localize "AETHERIC_DEVICE.COST"}}</h3>
-                <input name="data.cost" type="text" value="{{data.cost}}"/>
+                <input name="system.cost" type="text" value="{{system.cost}}"/>
             </div>
         </div>
         <hr>
@@ -37,9 +37,9 @@
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.CATEGORY"}}</h3>
                                 <div class="segment-horizontal">
-                                    <select name="data.category">
+                                    <select name="system.category">
                                         <option value="">–</option>
-                                        {{#select data.category}}
+                                        {{#select system.category}}
                                         <option value="melee">{{localize "CATEGORY.MELEE"}}</option>
                                         <option value="ranged">{{localize "CATEGORY.RANGE"}}</option>
                                         {{/select}}
@@ -49,21 +49,21 @@
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.DAMAGE"}}</h3>
                                 <div class="segment-horizontal">
-                                <input name="data.damage" type="text" value="{{data.damage}}"/>
+                                <input name="system.damage" type="text" value="{{system.damage}}"/>
                             </div>
                         </div> 
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.ARMOUR"}}</h3>
                                 <div class="segment-horizontal">
-                                <input name="data.armour" type="number" value="{{data.armour}}" data-dtype="Number"/>
+                                <input name="system.armour" type="number" value="{{system.armour}}" data-dtype="Number"/>
                             </div>
                         </div> 
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.POWER"}}:</h3>
                             <div class="segment-horizontal">
-                                -<div class="sheet-table-value"><input name="data.power.consumption" type="number" value="{{data.power.consumption}}" data-dtype="Number"/></div>
+                                -<div class="sheet-table-value"><input name="system.power.consumption" type="number" value="{{system.power.consumption}}" data-dtype="Number"/></div>
                                 <h3> / </h3>
-                                +<div class="sheet-table-value"><input name="data.power.capacity" type="number" value="{{data.power.capacity}}" data-dtype="Number"/></div>
+                                +<div class="sheet-table-value"><input name="system.power.capacity" type="number" value="{{system.power.capacity}}" data-dtype="Number"/></div>
                             </div>
                         </div>
                     </div>
@@ -71,17 +71,17 @@
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.TEST"}}</h3>
                             <div class="entry-inputs">
-                                <input name="data.test.dn" type="text" placeholder="{{localize 'POWER.DN'}}" value="{{data.test.dn}}"/>
-                                <select name="data.test.attribute">
-                                    {{#select data.test.attribute}}
+                                <input name="system.test.dn" type="text" placeholder="{{localize 'POWER.DN'}}" value="{{system.test.dn}}"/>
+                                <select name="system.test.attribute">
+                                    {{#select system.test.attribute}}
                                     <option value="">-</option>
                                     {{#each (config "attributes") as |attribute a|}}
                                     <option value="{{a}}">{{attribute}}</option>
                                     {{/each}}
                                     {{/select}}
                                 </select>
-                                <select name="data.test.skill">
-                                    {{#select data.test.skill}}
+                                <select name="system.test.skill">
+                                    {{#select system.test.skill}}
                                     <option value="">-</option>
                                     {{#each (config "skills") as |skill s|}}
                                     <option value="{{s}}">{{skill}}</option>
@@ -94,17 +94,17 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.TRAITS"}} <a class="item-traits"><i class="fas fa-cog"></i></a></h3>
-                            <input name="data.traits" type="text" value="{{item.Traits}}" disabled/>
+                            <input name="system.traits" type="text" value="{{item.Traits}}" disabled/>
                         </div>
                     </div>
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.CRAFTING"}}</h3>
-                            <input title="{{data.crafting}}" name="data.crafting" type="text" value="{{data.crafting}}" />
+                            <input title="{{system.crafting}}" name="system.crafting" type="text" value="{{system.crafting}}" />
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}</h3>
-                            <input title="{{data.requirements}}" name="data.requirements" type="text" value="{{data.requirements}}" />
+                            <input title="{{system.requirements}}" name="system.requirements" type="text" value="{{system.requirements}}" />
                         </div>
                     </div>     
                 </div>
@@ -114,7 +114,7 @@
                         <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
                     <div class="content-wrapper"´style="height:100%">
-                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                        {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>

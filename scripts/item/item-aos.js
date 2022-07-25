@@ -22,22 +22,22 @@ export class AgeOfSigmarItem extends Item {
     await super._preCreate(data, options, user)
         
         // TODO Remove when wound item type is deprecated
-        if (this.type == "wound" && hasProperty(updateData, "data.woundType")) {
-            switch (updateData.data.woundType) {
+        if (this.type == "wound" && hasProperty(updateData, "system.woundType")) {
+            switch (updateData.system.woundType) {
                 case "minor":
                     updateData.name = "Minor Wound";
-                    updateData.data.damage = 1
+                    updateData.system.damage = 1
                     break;
                 case "serious":
                     updateData.name = "Serious Wound";
-                    updateData.data.damage = 2
+                    updateData.system.damage = 2
                     break;
                 case "deadly":
                     updateData.name = "Deadly Wound";
-                    updateData.data.damage = 3
+                    updateData.system.damage = 3
                     break;
                 default: 
-                    updateData.data.damage = 0;
+                    updateData.system.damage = 0;
             }
         }
     }
@@ -156,18 +156,18 @@ export class AgeOfSigmarItem extends Item {
 
     resetGroups()
     {
-        this.update({ "data.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+        this.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
     }
 
 
 
     async sendToChat() {
-        const item = new CONFIG.Item.documentClass(this.data._source);
-        if (item.data.img.includes("/unknown")) {
-            item.data.img = null;
+        const item = new CONFIG.Item.documentClass(this._source);
+        if (item.img.includes("/unknown")) {
+            item.img = null;
         }
 
-        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.html", { item, data: item.data.data });
+        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.html", { item, data: item.system });
         const chatData = {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
@@ -333,11 +333,11 @@ export class AgeOfSigmarItem extends Item {
     }
 
     get nonTransferEffects() {
-        return this.effects.filter(i => !i.data.transfer)
+        return this.effects.filter(i => !i.transfer)
     }
 
     
-    get equippable() { return hasProperty(this, "data.data.equipped") }
+    get equippable() { return hasProperty(this, "system.equipped") }
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }
@@ -358,7 +358,7 @@ export class AgeOfSigmarItem extends Item {
     get isThreat() { return this.type === "threat" }
     get isActive() { return this.state === "active" }
     /************** GEAR *********************/
-    get isEquipped() { return this.data.data.equipped }
+    get isEquipped() { return this.system.equipped }
     get isArmour() { return this.type === "armour" }
     get isWeapon() { return this.type === "weapon" }
     get isAethericDevice() { return this.type === "aethericDevice" }
@@ -377,41 +377,41 @@ export class AgeOfSigmarItem extends Item {
     }
 
     // @@@@@@ DATA GETTERS @@@@@@
-    get bonus() { return this.data.data.bonus }
-    get description() { return this.data.data.description }
-    get cost() { return this.data.data.cost }
-    get availability() { return this.data.data.availability }
-    get power() { return this.data.data.power }
-    get requirements() { return this.data.data.requirements }
-    get crafting() { return this.data.data.crafting }
-    get damage() { return this.data.data.damage }
-    get traits() { return this.data.data.traits }
-    get state() { return this.data.data.state }
-    get subtype() { return this.data.data.type }
-    get benefit() { return this.data.data.benefit }
-    get completed() { return this.data.data.completed }
-    get target() { return this.data.data.target }
-    get range() { return this.data.data.range }
-    get duration() { return this.data.data.duration }
-    get effect() { return this.data.data.effect }
-    get god() { return this.data.data.god }
-    get dn() { return this.data.data.dn }
-    get test() { return this.data.data.test }
-    get overcast() { return this.data.data.overcast }
-    get overcasts() { return this.data.data.overcasts }
-    get lore() { return this.data.data.lore }
-    get requirement() { return this.data.data.requirement }
-    get category() { return this.data.data.category }
-    get equipped() { return this.data.data.equipped }
-    get armour() { return this.data.data.armour }
-    get attributes() {return this.data.data.attributes}
-    get species() {return this.data.data.species}
-    get skills() {return this.data.data.skills}
-    get talents() {return this.data.data.talents}
-    get equipment() {return this.data.data.equipment}
-    get groups() {return this.data.data.groups}
-    get journal() {return this.data.data.journal}
-    get free() {return this.data.data.free}
+    get bonus() { return this.system.bonus }
+    get description() { return this.system.description }
+    get cost() { return this.system.cost }
+    get availability() { return this.system.availability }
+    get power() { return this.system.power }
+    get requirements() { return this.system.requirements }
+    get crafting() { return this.system.crafting }
+    get damage() { return this.system.damage }
+    get traits() { return this.system.traits }
+    get state() { return this.system.state }
+    get subtype() { return this.system.type }
+    get benefit() { return this.system.benefit }
+    get completed() { return this.system.completed }
+    get target() { return this.system.target }
+    get range() { return this.system.range }
+    get duration() { return this.system.duration }
+    get effect() { return this.system.effect }
+    get god() { return this.system.god }
+    get dn() { return this.system.dn }
+    get test() { return this.system.test }
+    get overcast() { return this.system.overcast }
+    get overcasts() { return this.system.overcasts }
+    get lore() { return this.system.lore }
+    get requirement() { return this.system.requirement }
+    get category() { return this.system.category }
+    get equipped() { return this.system.equipped }
+    get armour() { return this.system.armour }
+    get attributes() {return this.system.attributes}
+    get species() {return this.system.species}
+    get skills() {return this.system.skills}
+    get talents() {return this.system.talents}
+    get equipment() {return this.system.equipment}
+    get groups() {return this.system.groups}
+    get journal() {return this.system.journal}
+    get free() {return this.system.free}
 
 
 

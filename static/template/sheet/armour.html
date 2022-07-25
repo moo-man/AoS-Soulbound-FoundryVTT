@@ -9,8 +9,8 @@
         <div class="sheet-subHeader">
             <div class="entry-horizontal">
                 <h3>{{localize "ARMOUR.AVAILABILITY"}}</h3>
-                <select name="data.availability">
-                    {{#select data.availability}}
+                <select name="system.availability">
+                    {{#select system.availability}}
                     {{#each (config "availability") as |availability a|}}
                     <option value="{{a}}">{{availability}}</option>
                     {{/each}}
@@ -19,7 +19,7 @@
             </div>
             <div class="segment-horizontal">
                 <h3>{{localize "ARMOUR.COST"}}</h3>
-                <input name="data.cost" type="text" value="{{data.cost}}"/>
+                <input name="system.cost" type="text" value="{{system.cost}}"/>
             </div>
         </div>
         <hr>
@@ -37,8 +37,8 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "ARMOUR.TYPE"}}</h3>
-                            <select name="data.type">
-                                {{#select data.type}}
+                            <select name="system.type">
+                                {{#select system.type}}
                                     <option value="light">{{localize "TYPE.LIGHT"}}</option>
                                     <option value="medium">{{localize "TYPE.MEDIUM"}}</option>
                                     <option value="heavy">{{localize "TYPE.HEAVY"}}</option>
@@ -48,17 +48,17 @@
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "ARMOUR.REQUIREMENTS"}}</h3>
-                            <input name="data.requirements" type="text" value="{{data.requirements}}"/>
+                            <input name="system.requirements" type="text" value="{{system.requirements}}"/>
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "ARMOUR.BENEFIT"}}</h3>
-                            <input name="data.benefit" type="number" value="{{data.benefit}}" data-dtype="Number"/>
+                            <input name="system.benefit" type="number" value="{{system.benefit}}" data-dtype="Number"/>
                         </div>
                     </div>
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "ARMOUR.TRAITS"}} <a class="item-traits"><i class="fas fa-cog"></i></a></h3>
-                            <input name="data.traits" type="text" value="{{item.Traits}}" disabled/>
+                            <input name="system.traits" type="text" value="{{item.Traits}}" disabled/>
                         </div>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
                     <div class="content-wrapper">
-                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                        {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>

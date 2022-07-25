@@ -61,7 +61,7 @@ export default class FilterResults extends FormApplication {
                 let test = f.test
                 
                 // Convert rarity to a number so that ranges of rarities can be used
-                if (f.property == "data.availability")
+                if (f.property == "system.availability")
                 {
                     propValue = this.rarityNumber[propValue]
                     testValue = this.rarityNumber[testValue]

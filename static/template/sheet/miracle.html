@@ -9,7 +9,7 @@
         <div class="sheet-subHeader">
             <div class="segment-horizontal">
                 <h3>{{localize "MIRACLE.OF"}}</h3>
-                <input name="data.god" type="text" value="{{data.god}}" placeholder="{{localize 'MIRACLE.GOD'}}"
+                <input name="system.god" type="text" value="{{system.god}}" placeholder="{{localize 'MIRACLE.GOD'}}"
                     style="width:60%" />
             </div>
         </div>
@@ -27,12 +27,12 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "MIRACLE.TARGET"}}</h3>
-                            <input name="data.target" type="text" value="{{data.target}}" />
+                            <input name="system.target" type="text" value="{{system.target}}" />
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.RANGE"}}</h3>
-                            <select name="data.range">
-                                {{#select data.range}}
+                            <select name="system.range">
+                                {{#select system.range}}
                                 {{#each (config "range") as |range r|}}
                                 <option value="{{r}}">{{range}}</option>
                                 {{/each}}
@@ -41,28 +41,28 @@
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "MIRACLE.DURATION"}}</h3>
-                            <input name="data.duration" type="text" value="{{data.duration}}" />
+                            <input name="system.duration" type="text" value="{{system.duration}}" />
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "MIRACLE.COST"}}</h3>
-                            <input name="data.cost" type="number" value="{{data.cost}}" data-dtype="Number" />
+                            <input name="system.cost" type="number" value="{{system.cost}}" data-dtype="Number" />
                         </div>
                     </div>
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "MIRACLE.TEST"}}</h3>
                             <div class="entry-inputs">
-                                <input name="data.test.dn" type="text" placeholder="{{localize 'MIRACLE.DN'}}" value="{{data.test.dn}}" />
-                                <select name="data.test.attribute">
-                                    {{#select data.test.attribute}}
+                                <input name="system.test.dn" type="text" placeholder="{{localize 'MIRACLE.DN'}}" value="{{system.test.dn}}" />
+                                <select name="system.test.attribute">
+                                    {{#select system.test.attribute}}
                                     <option value="">-</option>
                                     {{#each (config "attributes") as |attribute a|}}
                                     <option value="{{a}}">{{attribute}}</option>
                                     {{/each}}
                                     {{/select}}
                                 </select>
-                                <select name="data.test.skill">
-                                    {{#select data.test.skill}}
+                                <select name="system.test.skill">
+                                    {{#select system.test.skill}}
                                     <option value="">-</option>
                                     {{#each (config "skills") as |skill s|}}
                                     <option value="{{s}}">{{skill}}</option>
@@ -70,7 +70,7 @@
                                     {{/select}}
                                 </select>
                                 <h3>{{localize "MIRACLE.OPPOSED"}}</h3>
-                                <input name="data.test.opposed" title="Checking this will roll a Soul (Devotion) Test when using the miracle" type="checkbox" {{checked data.test.opposed}} />
+                                <input name="system.test.opposed" title="Checking this will roll a Soul (Devotion) Test when using the miracle" type="checkbox" {{checked data.test.opposed}} />
                             </div>
                         </div>
                     </div>
@@ -81,7 +81,7 @@
                         <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
                     <div class="content-wrapper">
-                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                        {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>

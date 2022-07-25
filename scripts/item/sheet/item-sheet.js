@@ -39,7 +39,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       });
 
       // Add skills array to form data
-      formData["data.skills.list"] = skills
+      formData["system.skills.list"] = skills
     }
     return super._updateObject(event, formData)
   }
@@ -53,7 +53,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       
       if (dragData.type == "JournalEntry")
       {
-        return this.item.update({"data.journal" : dragData.id})
+        return this.item.update({"system.journal" : dragData.id})
       }
 
       let obj = {
@@ -71,7 +71,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
               callback: () => {
                 let core = duplicate(this.item.talents.core)
                 core.push(obj)
-                this.item.update({ "data.talents.core": core })
+                this.item.update({ "system.talents.core": core })
               }
             },
             normal: {
@@ -79,7 +79,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
               callback: () => {
                 let list = duplicate(this.item.talents.list)
                 list.push(obj)
-                this.item.update({ "data.talents.list": list })
+                this.item.update({ "system.talents.list": list })
               }
             }
 
@@ -100,7 +100,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
         // Add new index to groups (last index + 1)
         let groups = this.item.addToGroup({type : "item", index : (list.length - 1 || 0)})
-        this.item.update({ "data.equipment": list, "data.groups": groups })
+        this.item.update({ "system.equipment": list, "system.groups": groups })
       }
     }
   }
@@ -134,14 +134,14 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     return buttons;
   }
 
-  getData() {
-    const data = super.getData();
+  async getData() {
+    const data = await super.getData();
 
     // If this is a temp item with an archetype parent
     if (this.item.archetype) {
       let list = duplicate(getProperty(this.item.archetype.data, this.item.archetypeItemPath))
       let item = list[this.item.archetypeItemIndex];
-      mergeObject(data.data, item.diff, { overwrite: true }) // Merge archetype diff with item data
+      mergeObject(system, item.diff, { overwrite: true }) // Merge archetype diff with item data
       data.name = item.diff.name || data.item.name
     }
     else
@@ -149,7 +149,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     
 
-    data.data = data.data.data; // project system data so that handlebars has the same name and value paths
+    data.system = data.data.system; // project system data so that handlebars has the same name and value paths
     data.conditions = CONFIG.statusEffects.map(i => {
       return {
         label: i.label,
@@ -161,7 +161,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     // Lock "Initial" value for overcasts targeting damage or duration - already provided by the spell
     if (this.item.type == "spell") {
-      for (let oc of data.data.overcasts) {
+      for (let oc of system.overcasts) {
         if (oc.property == "damage.total" || oc.property == "duration.value") {
           oc.initialDisabled = true;
           oc.initial = ""
@@ -173,7 +173,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     // Create an easily accessible object for handlebars to check if a skill is included (used in checked property of skill list)
     if (this.item.type == "archetype") {
       data.skills = {}
-      data.data.skills.list.forEach(s => {
+      system.skills.list.forEach(s => {
         data.skills[s] = true;
       })
 
@@ -187,7 +187,18 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     }
 
+
+    data.enrichment = await this._handleEnrichment()
+
     return data;
+  }
+
+  async _handleEnrichment()
+  {
+      let enrichment = {}
+      enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true})
+
+      return expandObject(enrichment)
   }
 
   _onFocusIn(event) {
@@ -208,7 +219,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       if (this.item.isOwned)
         ui.notifications.error("Effects can only be added to world items or actors directly")
 
-      let effectData = { label: this.item.name, icon: (this.item.data.img || "icons/svg/aura.svg") }
+      let effectData = { label: this.item.name, icon: (this.item.img || "icons/svg/aura.svg") }
 
       let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html", effectData)
       let dialog = new Dialog({
@@ -269,7 +280,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       let overcasts = foundry.utils.deepClone(this.item.overcasts)
       overcasts.push(overcast)
 
-      return this.item.update({ "data.overcasts": overcasts })
+      return this.item.update({ "system.overcasts": overcasts })
 
     })
 
@@ -294,7 +305,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
       setProperty(overcasts[index], path, value)
 
-      this.item.update({ "data.overcasts": overcasts })
+      this.item.update({ "system.overcasts": overcasts })
 
     })
 

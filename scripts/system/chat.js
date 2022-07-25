@@ -642,7 +642,7 @@ export default class SoulboundChat {
         if (table)
         {
             let {roll, results} =  await table.roll({roll : tableRoll})
-            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].data.text}`, flavor : `The Price of Failure (${formula})`, speaker : test.context.speaker, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
+            ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].text}`, flavor : `The Price of Failure (${formula})`, speaker : test.context.speaker, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
         }
         else
             ui.notifications.error("No Table Found")

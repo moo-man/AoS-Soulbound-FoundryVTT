@@ -3,10 +3,10 @@
         <h1>{{localize "TITLE.ATTRIBUTES"}}</h1>
     </div>
     <div class="content-row">
-        {{#each data.attributes as |attribute key|}}
+        {{#each system.attributes as |attribute key|}}
             <div class="entry-vertical">
                 <div class="roll-attribute content-label-centered" data-attribute="{{key}}">{{localize attribute.label}}</div>
-                <input name="data.attributes.{{key}}.value" type="number" value="{{attribute.value}}" data-dtype="Number" />
+                <input name="system.attributes.{{key}}.value" type="number" value="{{attribute.value}}" data-dtype="Number" />
             </div>
         {{/each}}
     </div>
@@ -24,13 +24,13 @@
                 <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
                 <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
             </div>
-            {{#each data.skills as |skill key|}}
+            {{#each system.skills as |skill key|}}
                 {{#if skill.isLeft}}
                     <div class="content-row" style="align-items: center;">
                         <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{skill.label}}</a>
-                        <div class="sheet-table-value"><input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
+                        <div class="sheet-table-value"><input name="system.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
                         <div class="sheet-table-value">({{skill.value}})</div>
-                        <div class="sheet-table-value"><input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
+                        <div class="sheet-table-value"><input name="system.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
                     </div>
                 {{/if}}
             {{/each}}
@@ -42,13 +42,13 @@
                 <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
                 <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
             </div>
-            {{#each data.skills as |skill key|}}
+            {{#each system.skills as |skill key|}}
                 {{#if skill.isRight}}
                     <div class="content-row" style="align-items: center;">
                         <a class="roll-skill sheet-table-name" data-skill="{{key}}">{{skill.label}}</a>
-                        <div class="sheet-table-value"><input name="data.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
+                        <div class="sheet-table-value"><input name="system.skills.{{key}}.training" type="number" value="{{skill.training}}" data-dtype="Number" /></div>
                         <div class="sheet-table-value">({{skill.value}})</div>
-                        <div class="sheet-table-value"><input name="data.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
+                        <div class="sheet-table-value"><input name="system.skills.{{key}}.focus" type="number" value="{{skill.focus}}" data-dtype="Number" /></div>
                     </div>
                 {{/if}}
             {{/each}}
@@ -66,7 +66,7 @@
             <div class="item-content">
                 <div class="item-property item-name">
                     <div class="item-image">
-                        <img src={{item.data.img}} />
+                        <img src={{item.img}} />
                     </div>
                     <a class="">{{item.name}}</a>
                 </div>

@@ -9,8 +9,8 @@
         <div class="sheet-subHeader">
             <div class="entry-horizontal">
                 <h3>{{localize "EQUIPMENT.AVAILABILITY"}}</h3>
-                <select name="data.availability">
-                    {{#select data.availability}}
+                <select name="system.availability">
+                    {{#select system.availability}}
                         <option value="common">{{localize "AVAILABILITY.COMMON"}}</option>
                         <option value="rare">{{localize "AVAILABILITY.RARE"}}</option>
                         <option value="exotic">{{localize "AVAILABILITY.EXOTIC"}}</option>
@@ -20,7 +20,7 @@
             </div>
             <div class="segment-horizontal">
                 <h3>{{localize "EQUIPMENT.COST"}}</h3>
-                <input name="data.cost" type="text" value="{{data.cost}}" />
+                <input name="system.cost" type="text" value="{{system.cost}}" />
             </div>
         </div>
         <hr>
@@ -36,7 +36,7 @@
                         <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
                     <div class="content-wrapper">
-                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                        {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         const data = super.getData();
         this.costructPartyItemLists(data)
         data.members = {};
-        for (let id of data.data.members) {
+        for (let id of system.members) {
             let actor = game.actors.get(id);
             data.members[id] = actor;
         }
@@ -55,7 +55,7 @@ export class PartySheet extends AgeOfSigmarActorSheet {
              type : header.type
         };
         if (header.category)
-            data["data.category"] = header.category
+            data["system.category"] = header.category
         
         data.name = `${game.i18n.localize("ITEM.NEW")} ${game.aos.config.partyItemCategories[header.category]}`
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
@@ -74,7 +74,7 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const id = div.data("itemId");
         let item = this.actor.items.get(id)
-        return item.update({"data.state" : !item.state})
+        return item.update({"system.state" : !item.state})
     }
 
     async _onDrop(event) {        
@@ -123,14 +123,14 @@ export class PartySheet extends AgeOfSigmarActorSheet {
                 "ally" : {
                     label : game.i18n.localize("PARTY.ALLY"),
                     callback: () => {
-                        partyItem["data.category"] = "ally"
+                        partyItem["system.category"] = "ally"
                         this.actor.createEmbeddedDocuments("Item", [partyItem])
                     }
                 },
                 "enemy" : {
                     label : game.i18n.localize("PARTY.ENEMY"),
                     callback: () => {
-                        partyItem["data.category"] = "enemy"
+                        partyItem["system.category"] = "enemy"
                         this.actor.createEmbeddedDocuments("Item", [partyItem])
                     }
                 }

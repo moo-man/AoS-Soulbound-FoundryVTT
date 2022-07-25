@@ -71,7 +71,7 @@ export default function registerHooks() {
         hint: "",
         scope: "client",
         config: false,
-        default: undefined,
+        default: {},
         type: Object
       });
 
@@ -146,7 +146,7 @@ export default function registerHooks() {
         // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
         let macro
         if (data.type == "Item") {
-            let item = data.data
+            let item = system
             let command = `game.macro.rollItemMacro("${item.name}", "${item.type}");`;
             macro = game.macros.contents.find(m => (m.name === item.name) && (m.command === command));
             if (!macro) {
@@ -163,7 +163,7 @@ export default function registerHooks() {
             macro = await Macro.create({
                 name: actor.name,
                 type: "script",
-                img: actor.data.img,
+                img: actor.img,
                 command: `game.actors.get("${data.id}").sheet.render(true)`
             }, { displaySheet: false })
         }
@@ -272,21 +272,21 @@ export default function registerHooks() {
 
     Hooks.on("preCreateActiveEffect", (effect, data, options, user) => {
         if (effect.parent?.type == "spell" || effect.parent?.type == "miracle")
-            effect.data.update({"transfer" : false})
+            effect.updateSource({"transfer" : false})
 
         if (effect.item && effect.item.equippable && effect.parent.documentName == "Item")
-            effect.data.update({"flags.age-of-sigmar-soulbound.requiresEquip" : true})
+            effect.updateSource({"flags.age-of-sigmar-soulbound.requiresEquip" : true})
         else if (effect.item && effect.parent.documentName == "Actor")
         {
-            effect.data.update({"flags.age-of-sigmar-soulbound.requiresEquip" : getProperty(data, "flags.age-of-sigmar-soulbound.requiresEquip")})
-            effect.data.update({"disabled" : effect.data.disabled})
+            effect.updateSource({"flags.age-of-sigmar-soulbound.requiresEquip" : getProperty(data, "flags.age-of-sigmar-soulbound.requiresEquip")})
+            effect.updateSource({"disabled" : effect.disabled})
         }
     })
 
     Hooks.on("updateActor", (actor, updateData) => {
         if(actor.type == "party" && actor.id == game.settings.get('age-of-sigmar-soulbound', 'counterParty'))
         {
-            if (hasProperty(updateData, "data.soulfire.value") || hasProperty(updateData, "data.doom.value"))
+            if (hasProperty(updateData, "system.soulfire.value") || hasProperty(updateData, "system.doom.value"))
                 game.counter.render(true)
 
         }
@@ -307,13 +307,13 @@ export default function registerHooks() {
     })
 
     Hooks.on("preCreateScene", (scene, data) => {
-        scene.data.update({gridDistance : 5, gridUnits : "ft"})
+        scene.updateSource({gridDistance : 5, gridUnits : "ft"})
     })
 
     Hooks.on("updateCombat", (combat) => {
         let actor = combat.combatant.actor
         if (actor.combat.mettle.value < actor.combat.mettle.max)
-            actor.update({"data.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
+            actor.update({"system.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
         
         let zones = game.aos.utility.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
         zones.forEach(z => {
@@ -327,11 +327,11 @@ export default function registerHooks() {
     Hooks.on("preUpdateToken", (token, updateData) => {
         if(Number.isNumeric(updateData.x) || Number.isNumeric(updateData.y))
         {
-            let newX = updateData.x || token.data.x;
-            let newY = updateData.y || token.data.y;
+            let newX = updateData.x || token.x;
+            let newY = updateData.y || token.y;
 
-            let oldX = token.data.x;
-            let oldY = token.data.y;
+            let oldX = token.x;
+            let oldY = token.y;
 
             newX += canvas.grid.size / 2
             newY += canvas.grid.size / 2

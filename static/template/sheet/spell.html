@@ -9,11 +9,11 @@
         <div class="sheet-subHeader">
             <div class="entry-horizontal">
                 <h3>{{localize "SPELL.LORE"}}</h3>
-                <input name="data.lore" type="text" value="{{data.lore}}"/>
+                <input name="system.lore" type="text" value="{{system.lore}}"/>
             </div>
             <div class="segment-horizontal">
                 <h3>{{localize "SPELL.DN"}}</h3>
-                <input name="data.dn" type="text" value="{{data.dn}}" style="width:50px"/>
+                <input name="system.dn" type="text" value="{{system.dn}}" style="width:50px"/>
             </div>
         </div>
         <hr>
@@ -27,12 +27,12 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.TARGET"}}</h3>
-                            <input name="data.target" type="text" value="{{data.target}}" />
+                            <input name="system.target" type="text" value="{{system.target}}" />
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.RANGE"}}</h3>
-                            <select name="data.range">
-                                {{#select data.range}}
+                            <select name="system.range">
+                                {{#select system.range}}
                                 <option value="special">{{localize "RANGE.SPECIAL"}}</option>
                                 {{#each (config "range") as |range r|}}
                                 <option value="{{r}}">{{range}}</option>
@@ -43,9 +43,9 @@
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.DURATION"}}</h3>
                             <div class="entry-inputs">
-                                <input name="data.duration.value" type="text" value="{{data.duration.value}}"/>
-                                <select name="data.duration.unit">
-                                    {{#select data.duration.unit}}
+                                <input name="system.duration.value" type="text" value="{{system.duration.value}}"/>
+                                <select name="system.duration.unit">
+                                    {{#select system.duration.unit}}
                                     {{#each (config "durations") as |duration d|}}
                                     <option value="{{d}}">{{duration}}</option>
                                     {{/each}}
@@ -55,24 +55,24 @@
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.DAMAGE"}}</h3>
-                            <input name="data.damage" type="text" value="{{data.damage}}"/>
+                            <input name="system.damage" type="text" value="{{system.damage}}"/>
                         </div>
                     </div>
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.TEST"}}</h3>
                             <div class="entry-inputs">
-                                <input name="data.test.dn" type="text" placeholder="{{localize 'SPELL.DN'}}" value="{{data.test.dn}}"/>
-                                <select name="data.test.attribute">
-                                    {{#select data.test.attribute}}
+                                <input name="system.test.dn" type="text" placeholder="{{localize 'SPELL.DN'}}" value="{{system.test.dn}}"/>
+                                <select name="system.test.attribute">
+                                    {{#select system.test.attribute}}
                                     <option value="">-</option>
                                     {{#each (config "attributes") as |attribute a|}}
                                     <option value="{{a}}">{{attribute}}</option>
                                     {{/each}}
                                     {{/select}}
                                 </select>
-                                <select name="data.test.skill">
-                                    {{#select data.test.skill}}
+                                <select name="system.test.skill">
+                                    {{#select system.test.skill}}
                                     <option value="">-</option>
                                     {{#each (config "skills") as |skill s|}}
                                     <option value="{{s}}">{{skill}}</option>
@@ -85,7 +85,7 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "SPELL.OVERCAST"}}</h3>
-                            <input title="{{data.overcast}}" name="data.overcast" type="text" value="{{data.overcast}}"/>
+                            <input title="{{system.overcast}}" name="system.overcast" type="text" value="{{system.overcast}}"/>
                         </div>
                     </div>
 
@@ -101,9 +101,9 @@
                                         <div>{{localize "SPELL.OVERCAST_TITLE"}} <i class="far fa-question-circle" title="{{localize 'SPELL.OVERCAST_TITLE_HELP'}}"></i></div>
                                         <a style="width : 10px"></a>
                                     </div>
-                                    {{#each data.overcasts as |overcast index|}}
+                                    {{#each system.overcasts as |overcast index|}}
                                     <div class="entry-content">
-                                        <div class="entry-element overcasts" data-path="data.overcasts" data-index="{{index}}">
+                                        <div class="entry-element overcasts" data-path="system.overcasts" data-index="{{index}}">
                                             <div class="ratio">
                                                 <input data-path="ratio.success" placeholder="S" data-dtype="Number" type="number" value="{{overcast.ratio.success}}">
                                                 :
@@ -135,7 +135,7 @@
                         <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
                     <div class="content-wrapper">
-                        {{editor content=data.description target="data.description" button=true owner=owner editable=editable}}
+                        {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>

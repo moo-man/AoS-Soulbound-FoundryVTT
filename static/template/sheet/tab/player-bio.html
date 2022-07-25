@@ -5,35 +5,35 @@
     <div class="content-row">
         <div class="entry-vertical">
             <h3>{{localize "BIO.AGE"}}</h3>
-            <input name="data.bio.age" type="text" value="{{data.bio.age}}"/>
+            <input name="system.bio.age" type="text" value="{{system.bio.age}}"/>
         </div>
         <div class="entry-vertical">
             <h3>{{localize "BIO.HEIGHT"}}</h3>
-            <input name="data.bio.height" type="text" value="{{data.bio.height}}"/>
+            <input name="system.bio.height" type="text" value="{{system.bio.height}}"/>
         </div>
         <div class="entry-vertical">
             <h3>{{localize "BIO.WEIGHT"}}</h3>
-            <input name="data.bio.weight" type="text" value="{{data.bio.weight}}"/>
+            <input name="system.bio.weight" type="text" value="{{system.bio.weight}}"/>
         </div>
     </div>
     <div class="content-row">
         <div class="entry-vertical">
             <h3>{{localize "BIO.EYETYPE"}}</h3>
-            <input name="data.bio.eyeType" type="text" value="{{data.bio.eyeType}}"/>
+            <input name="system.bio.eyeType" type="text" value="{{system.bio.eyeType}}"/>
         </div>
         <div class="entry-vertical">
             <h3>{{localize "BIO.EYES"}}</h3>
-            <input name="data.bio.eyes" type="text" value="{{data.bio.eyes}}"/>
+            <input name="system.bio.eyes" type="text" value="{{system.bio.eyes}}"/>
         </div>
         <div class="entry-vertical">
             <h3>{{localize "BIO.HAIR"}}</h3>
-            <input name="data.bio.hair" type="text" value="{{data.bio.hair}}"/>
+            <input name="system.bio.hair" type="text" value="{{system.bio.hair}}"/>
         </div>
     </div>
     <div class="content-row">
         <div class="entry-vertical">
             <h3>{{localize "BIO.DISTINGUISHING_FEATURES"}}</h3>
-            <input name="data.bio.distinguishingFeatures" type="text" value="{{data.bio.distinguishingFeatures}}"/>
+            <input name="system.bio.distinguishingFeatures" type="text" value="{{system.bio.distinguishingFeatures}}"/>
         </div>
     </div>
 </div>
@@ -45,15 +45,15 @@
     <div class="content-row">
         <div class="entry-vertical">
             <h3>{{localize "BIO.FACTION"}}</h3>
-            <input name="data.bio.faction" type="text" value="{{data.bio.faction}}"/>
+            <input name="system.bio.faction" type="text" value="{{system.bio.faction}}"/>
         </div>
         <div class="entry-vertical">
             <h3>{{localize "BIO.SUBFACTION"}}</h3>
-        <input name="data.bio.subfaction" type="text" value="{{data.bio.subfaction}}"/>
+        <input name="system.bio.subfaction" type="text" value="{{system.bio.subfaction}}"/>
         </div>
     </div>
     <div class="content-wrapper" style="min-height: 72px;">
-        {{{editor content=data.bio.background target="data.bio.background" button=true owner=owner editable=editable}}}
+        {{{editor enrichment.system.bio.background target="system.bio.background" button=true owner=owner editable=editable}}}
     </div>
 </div>
 <hr>
@@ -91,6 +91,6 @@
         <h1>{{localize "TITLE.CONNECTIONS"}}</h1>
     </div>
     <div class="content-wrapper" style="min-height: 72px;">
-            {{{editor content=data.bio.connections target="data.bio.connections" button=true owner=owner editable=editable}}}
+            {{{editor enrichment.system.bio.connections target="system.bio.connections" button=true owner=owner editable=editable}}}
     </div>
 </div>

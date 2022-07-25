@@ -112,7 +112,7 @@ export default class BugReportFormSoulbound extends Application {
 
             let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m[0]))
             
-            let versions = `<br/>age-of-sigmar-soulbound: ${game.system.data.version}`
+            let versions = `<br/>age-of-sigmar-soulbound: ${game.system.version}`
 
             for (let mod of officialModules)
             {
