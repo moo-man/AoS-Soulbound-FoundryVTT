@@ -92,9 +92,8 @@ export class AgeOfSigmarActor extends Actor {
         {
             this._computeSkillTotals();
             this._computeSecondary();
+            this._computeSpeedModifier();
         }
-
-        this._computeSpeedModifier();
     }
 
     _initializeData() {

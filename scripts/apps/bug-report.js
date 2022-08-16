@@ -128,3 +128,4 @@ export default class BugReportFormSoulbound extends Application {
         })
     }
 }
+
