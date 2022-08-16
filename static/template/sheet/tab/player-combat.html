@@ -1,0 +1,238 @@
+<div class="content-box">
+    <div class="content-header">
+        <h1>{{localize "TITLE.ABILITIES"}}</h1>
+    </div>
+    <div class="content-row">
+        <div class="entry-vertical">
+            <div class="segment-horizontal"><img src="systems/age-of-sigmar-soulbound/asset/image/melee.webp" width="24" height="24"/><input type="text" value="{{system.combat.melee.ability}}" disabled /></div>
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.melee.bonus" type="number" value="{{system.combat.melee.bonus}}" data-dtype="Number" /></div></div>
+        </div>
+        <div class="entry-vertical">
+            <div class="segment-horizontal"><img src="systems/age-of-sigmar-soulbound/asset/image/accuracy.webp" width="24" height="24"/><input type="text" value="{{system.combat.accuracy.ability}}" disabled /></div>
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.accuracy.bonus" type="number" value="{{system.combat.accuracy.bonus}}" data-dtype="Number" /></div></div>
+        </div>
+        <div class="entry-vertical">
+            <div class="segment-horizontal"><img src="systems/age-of-sigmar-soulbound/asset/image/defence.webp" width="24" height="24"/><input type="text" value="{{system.combat.defence.ability}}" disabled /></div>
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.defence.bonus" type="number" value="{{system.combat.defence.bonus}}" data-dtype="Number" /></div></div>
+        </div>
+    </div>
+    <div class="content-row">
+        <div class="entry-vertical">
+            <h3>{{localize "HEADER.ARMOUR"}}</h3>
+            <div class="sheet-table-valueMain armour"><input name="system.combat.armour.value" type="number" value="{{system.combat.armour.value}}" data-dtype="Number" /></div>
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input type="number" name="system.combat.armour.bonus" data-dtype="Number" value="{{system.combat.armour.bonus}}" /></div></div>
+        </div>
+        <div class="entry-vertical">
+            <h3>{{localize "HEADER.TOUGHNESS"}}</h3>
+            <div class="segment-horizontal">
+                <div class="sheet-table-valueMain"><input name="system.combat.health.toughness.value" type="number" value="{{system.combat.health.toughness.value}}" data-dtype="Number" /></div> 
+                {{#unless actor.isSwarm}}
+                /
+                <div class="sheet-table-valueMain"><input type="number" value="{{system.combat.health.toughness.max}}" data-dtype="Number" disabled /></div>
+            </div>
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.health.toughness.bonus" type="number" value="{{system.combat.health.toughness.bonus}}" data-dtype="Number" /></div></div>
+            {{else}}
+            </div>
+            <div class="segment-horizontal"></div>
+            {{/unless}}
+        </div>
+        <div class="entry-vertical">
+            <h3>{{localize "HEADER.WOUND"}}</h3>
+            <div class="segment-horizontal">
+                {{#if data.combat.health.wounds.deadly}}
+                <div class="sheet-table-valueMain"><input class="deadly" type="text" value="{{system.combat.health.wounds.value}}" disabled /></div>
+                {{else}}
+                <div class="sheet-table-valueMain"><input type="text" value="{{system.combat.health.wounds.value}}" disabled /></div>
+                {{/if}}
+                 / <div class="sheet-table-valueMain"><input type="text" value="{{system.combat.health.wounds.max}}" disabled /></div>
+            </div>
+            
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.health.wounds.bonus" type="number" value="{{system.combat.health.wounds.bonus}}" data-dtype="Number" /></div></div>
+            
+        </div>
+        <div class="entry-vertical">
+            <h3>{{localize "HEADER.METTLE"}}</h3>
+            <div class="segment-horizontal">
+                <div class="sheet-table-valueMain"><input name="system.combat.mettle.value" type="number" value="{{system.combat.mettle.value}}" data-dtype="Number" /></div> / <div class="sheet-table-valueMain"><input type="number" value="{{system.combat.mettle.max}}" data-dtype="Number" disabled /></div>
+            </div>
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.mettle.bonus" type="number" value="{{system.combat.mettle.bonus}}" data-dtype="Number" /></div></div>
+        </div>
+    </div>
+    <div class="content-row wounds-row">
+        <div class="content-column combat-misc">
+            <div class="segment-horizontal">
+                <h3>{{localize "HEADER.INITIATIVE"}}</h3>
+                <div class="sheet-table-value"><input name="system.combat.initiative.bonus" type="number"
+                        value="{{system.combat.initiative.bonus}}" data-dtype="Number" /></div>
+                <div class="sheet-table-value"><input type="number" value="{{system.combat.initiative.total}}"
+                        data-dtype="Number" disabled /></div>
+            </div>
+            <div class="segment-horizontal">
+                <h3>{{localize "HEADER.NATURAL_AWARENESS"}}</h3>
+                <div class="sheet-table-value"><input name="system.combat.naturalAwareness.bonus" type="number"
+                        value="{{system.combat.naturalAwareness.bonus}}" data-dtype="Number" /></div>
+                <div class="sheet-table-value"><input type="number" value="{{system.combat.naturalAwareness.total}}"
+                        data-dtype="Number" disabled /></div>
+            </div>
+            <div class="segment-horizontal">
+                <h3><a class="speed-config">{{localize "HEADER.SPEED"}} <i class="fas fa-cog"></i></a></a></h3>
+                <div class="sheet-table-value speed">
+                    {{actor.Speed}}
+                </div>
+            </div>
+        </div>
+        <div class="content-column wounds-column">
+            <div class="header-element">
+                <b class="name">{{localize "WOUND.TYPE"}}</b>
+                <b class="damage">{{localize "WOUND.DAMAGE"}}</b>
+                <div class="button">
+                    <a class="wound-create" title="Add Wound"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="segment-vertical wounds-list">
+                {{#each system.combat.wounds as |wound w|}}
+                <div class="table-element wound item" data-index="{{w}}">
+                    <select class="wound-edit" data-edit-type="type">
+                        {{#select wound.type}}
+                        <option value=""></option>
+                        {{#each (config "woundType") as |type t|}}
+                        <option value="{{t}}">{{type}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                    <div class="wound-value">
+                        <input type="number" class="wound-edit" data-edit-type="value" value="{{wound.damage}}"/>
+                    </div>
+                        
+                    <div class="button">
+                        <a class="item-control wound-delete" title="Delete Wound"><i class="fas fa-trash"></i></a>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+<hr>
+<div class="item-list">
+    <div class="item-header">
+        <h1 class="header-text">{{localize "TITLE.WEAPONS"}}</h1>
+        <div class="header-columns">
+            <div class="item-property item-name">{{localize "WEAPON.NAME"}}</div>
+            <div class="item-property">{{localize "WEAPON.DAMAGE"}}</div>
+            <div class="item-property flex">{{localize "WEAPON.TRAITS"}}</div>
+            <div class="item-controls"></div>
+        </div>
+    </div>
+    {{#each items.attacks as |item|}}
+                <div class="item" data-item-id="{{item.id}}">
+                    <div class="item-content">
+                        <div class="item-property item-name">
+                            <div class="item-image">
+                                <img src={{item.img}} />
+                            </div>
+                            <a class="roll-weapon item-edit-right">{{item.name}}</a>
+                        </div>
+                        <div class="item-property">{{item.Damage}}</div>
+                        <div class="item-property flex">{{{arrayDisplay item.Traits "item-trait"}}}</div>
+                        <div class="item-controls">
+                            <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                        </div>
+                    </div>
+                    <div class="item-content">
+                        <div class="item-property description dropdown-target">{{{enrich item.description}}}</div>
+                    </div>
+                </div>
+    {{/each}}
+</div>
+<hr>
+
+{{#if items.talents.length}}
+<div class="item-list">
+    <div class="item-header">
+        <h1 class="header-text">{{localize "TITLE.TALENTS"}}</h1>
+        <a class="item-create absolute" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
+    </div>
+    {{#each items.talents as |item|}}
+                <div class="item" data-item-id="{{item.id}}">
+                    <div class="item-content">
+                        <div class="item-property item-name">
+                            <div class="item-image">
+                                <img src={{item.img}} />
+                            </div>
+                            <a class="item-dropdown item-edit-right">{{item.name}}</a>
+                        </div>
+                        {{#if item.nonTransferEffects.length}}
+                        <div class="item-property">
+                            <a title="Transfer effects to selected tokens" class="transfer-effect"><i class="fas fa-crosshairs"></i></a>
+                        </div>
+                        {{/if}}
+                        <div class="item-controls">
+                            <a class="item-control item-edit"><i class="fas fa-edit"></i></a> 
+                            <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                        </div>
+                    </div>
+                </div>
+    {{/each}}
+</div>
+<hr>
+{{/if}}
+
+
+<div class="item-list">
+    <div class="item-header">
+        <h1 class="header-text">{{localize "TITLE.POWERS"}}</h1>
+        <div class="header-columns">
+            <div class="item-property item-name">{{localize "POWER.NAME"}}</div>
+            <div class="item-property">{{localize "POWER.DAMAGE"}}</div>
+            <div class="item-property long">{{localize "POWER.TARGET"}}</div>
+            <div class="item-property long">{{localize "POWER.DURATION"}}</div>
+            <div class="item-property">{{localize "POWER.DN_COST"}}</div>
+            <div class="item-controls"></div>
+        </div>
+    </div>
+    {{#each items.spells as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+            <div class="item-content">
+                <div class="item-property item-name">
+                    <div class="item-image">
+                        <img src={{item.img}} />
+                    </div>
+                    <a class="roll-power item-edit-right">{{item.name}}</a>
+                </div>
+                <div class="item-property">{{item.Damage}}</div>
+                <div class="item-property long">{{item.target}}</div>
+                <div class="item-property long">{{item.Duration}}</div>
+                <div class="item-property">{{localize "POWER.DN"}} {{item.dn}}</div>
+                <div class="item-controls">
+                    <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                </div>
+            </div>
+            <div class="item-content">
+                <div class="item-property description dropdown-target">{{{enrich item.description}}}</div>
+            </div>
+        </div>
+    {{/each}}
+    {{#each items.miracles as |item|}}
+        <div class="item" data-item-id="{{item.id}}">
+            <div class="item-content">
+                <div class="item-property item-name">
+                    <div class="item-image">
+                        <img src={{item.img}} />
+                    </div>
+                    <a class="roll-power item-edit-right">{{item.name}}</a>
+                </div>
+                <div class="item-property">{{item.Damage}}</div>
+                <div class="item-property long">{{item.target}}</div>
+                <div class="item-property long">{{item.Duration}}</div>
+                <div class="item-property">{{item.cost}} {{localize "HEADER.METTLE"}}</div>
+                <div class="item-controls">
+                    <a class="item-control item-post"><i class="fas fa-comment"></i></a> 
+                </div>
+            </div>
+            <div class="item-content">
+                <div class="item-property description dropdown-target">{{{enrich item.description}}}</div>
+            </div>
+        </div>
+{{/each}}
+</div>

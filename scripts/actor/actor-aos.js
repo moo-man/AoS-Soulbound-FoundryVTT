@@ -15,21 +15,21 @@ export class AgeOfSigmarActor extends Actor {
             await super._preCreate(data, options, user)
 
         let initData = {
-            "token.bar1" :{ "attribute" : "combat.health.toughness" },
-            "token.bar2" :{ "attribute" : "combat.health.wounds" },
-            "token.displayName" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-            "token.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
-            "token.disposition" : CONST.TOKEN_DISPOSITIONS.NEUTRAL,
-            "token.name" : data.name
+            "prototypeToken.bar1" :{ "attribute" : "combat.health.toughness" },
+            "prototypeToken.bar2" :{ "attribute" : "combat.health.wounds" },
+            "prototypeToken.displayName" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "prototypeToken.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER,
+            "prototypeToken.disposition" : CONST.TOKEN_DISPOSITIONS.NEUTRAL,
+            "prototypeToken.name" : data.name
         }
         if (data.type === "player") {
-            initData["token.vision"] = true;
-            initData["token.actorLink"] = true;
+            initData["prototypeToken.vision"] = true;
+            initData["prototypeToken.actorLink"] = true;
         }
         else if (data.type === "npc") {
             initData["flags.age-of-sigmar-soulbound.autoCalcTokenSize"] = true
         }
-        this.data.update(initData)
+        this.updateSource(initData)
     }
 
     async _preUpdate(updateData, options, user) {
@@ -37,8 +37,8 @@ export class AgeOfSigmarActor extends Actor {
 
             // Treat the custom default token as a true default token
         // If you change the actor image from the default token, it will automatically set the same image to be the token image
-        if (this.data.token.img.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img && !updateData.token?.img) {
-            updateData["token.img"] = updateData.img;
+        if (this.prototypeToken.texture.src.includes("modules/soulbound-core/assets/tokens/unknown") && updateData.img && !updateData.token?.img) {
+            updateData["prototypeToken.texture.src"] = updateData.img;
         }
 
         this.handleScrollingText(updateData)
@@ -48,10 +48,10 @@ export class AgeOfSigmarActor extends Actor {
     handleScrollingText(data) {
         try {
 
-            if (hasProperty(data, "data.combat.health.toughness.value"))
-                this._displayScrollingChange(getProperty(data, "data.combat.health.toughness.value") - this.combat.health.toughness.value);
-            if (hasProperty(data, "data.combat.mettle.value"))
-                this._displayScrollingChange(getProperty(data, "data.combat.mettle.value") - this.combat.mettle.value, { mettle: true });
+            if (hasProperty(data, "system.combat.health.toughness.value"))
+                this._displayScrollingChange(getProperty(data, "system.combat.health.toughness.value") - this.combat.health.toughness.value);
+            if (hasProperty(data, "system.combat.mettle.value"))
+                this._displayScrollingChange(getProperty(data, "system.combat.mettle.value") - this.combat.mettle.value, { mettle: true });
         }
         catch (e) {
             console.error(game.i18n.localize("ERROR.ScrollingText"), data, e)
@@ -64,7 +64,8 @@ export class AgeOfSigmarActor extends Actor {
         this.postReadyEffects = []
 
         if (game.ready && this.type != "party")
-            this.data.update({"data.doom" : game.counter.doom}) // Add doom to actor data so it can be used with effects
+            this.system.doom = game.counter.doom // Add doom to actor data so it can be used with effects 
+            // TODO: test with v10
 
         super.prepareData();
 
@@ -234,17 +235,17 @@ export class AgeOfSigmarActor extends Actor {
         let size = this.bio.size; 
 
         if(size <= 2) {
-            this.data.token.update({"height" : 1});
-            this.data.token.update({"width" : 1});
+            this.prototypeToken.height = 1;
+            this.prototypeToken.width = 1;
         } else if(size === 3) {
-            this.data.token.update({"height" : 2});
-            this.data.token.update({"width" : 2});
+            this.prototypeToken.height = 2;
+            this.prototypeToken.width = 2;
         } else if(size === 4) {
-            this.data.token.update({"height" : 3});
-            this.data.token.update({"width" : 3});
+            this.prototypeToken.height = 3;
+            this.prototypeToken.width = 3;
         } else if(size === 5) {
-            this.data.token.update({"height" : 4});
-            this.data.token.update({"width" : 4});
+            this.prototypeToken.height = 4;
+            this.prototypeToken.width = 4;
         }
     }
 
@@ -320,7 +321,7 @@ export class AgeOfSigmarActor extends Actor {
         }
         else if (this.type == "player")
         {
-            this.update({"data.bio.archetype" : archetype.name, "data.bio.species" : archetype.species })
+            this.update({"system.bio.archetype" : archetype.name, "system.bio.species" : archetype.species })
             this.createEmbeddedDocuments("Item", [archetype.toObject()])
         }
         else if (this.type == "npc" && apply)
@@ -330,31 +331,31 @@ export class AgeOfSigmarActor extends Actor {
             let items = [];
             let actorData = this.toObject();
     
-            actorData.data.bio.faction = archetype.species
+            actorData.system.bio.faction = archetype.species
     
-            actorData.data.attributes.body.value = archetype.attributes.body
-            actorData.data.attributes.mind.value = archetype.attributes.mind
-            actorData.data.attributes.soul.value = archetype.attributes.soul
+            actorData.system.attributes.body.value = archetype.attributes.body
+            actorData.system.attributes.mind.value = archetype.attributes.mind
+            actorData.system.attributes.soul.value = archetype.attributes.soul
     
             archetype.skills.list.forEach(skill => {
-                actorData.data.skills[skill].training = 1
-                actorData.data.skills[skill].focus = 1
+                actorData.system.skills[skill].training = 1
+                actorData.system.skills[skill].focus = 1
             })
     
-            actorData.data.skills[archetype.skills.core].training = 2
-            actorData.data.skills[archetype.skills.core].focus = 2
+            actorData.system.skills[archetype.skills.core].training = 2
+            actorData.system.skills[archetype.skills.core].focus = 2
     
             items = items.concat(await archetype.GetArchetypeItems());
     
-            actorData.data.bio.type = 3; // Champion
+            actorData.system.bio.type = 3; // Champion
     
             // Fill toughness and mettle so it doesn't start as 0 (not really ideal though, doesnt't take into account effects)
-            actorData.data.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
-            actorData.data.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
+            actorData.system.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
+            actorData.system.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
     
-            actorData.img = archetype.data.img
-            actorData.token.img = archetype.data.img.replace("images", "tokens")
-            actorData.token.img = archetype.data.img.replace("actors", "tokens")
+            actorData.img = archetype.img
+            actorData.prototypeToken.texture.src = archetype.img.replace("images", "tokens")
+            actorData.prototypeToken.texture.src = archetype.img.replace("actors", "tokens")
     
     
             await this.update(actorData)
@@ -452,7 +453,7 @@ export class AgeOfSigmarActor extends Actor {
 
          // Update the Actor
          const updates = {
-            "data.combat.health.toughness.value": remaining >= 0 ? remaining : 0
+            "system.combat.health.toughness.value": remaining >= 0 ? remaining : 0
         };
 
         if (damage > 0 && restraining)
@@ -468,7 +469,7 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? await this.update(updates) : this;
 
-        let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.data.token.name});
+        let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
 
         // Doing this here because foundry throws an error if wounds are added before the update
@@ -491,7 +492,7 @@ export class AgeOfSigmarActor extends Actor {
          const updates = {};
 
         if (healing.toughness)
-            updates["data.combat.health.toughness.value"] =  Math.min(this.combat.health.toughness.value + healing.toughness, this.combat.health.toughness.max)
+            updates["system.combat.health.toughness.value"] =  Math.min(this.combat.health.toughness.value + healing.toughness, this.combat.health.toughness.max)
         else return
 
         // Delegate damage application to a hook
@@ -504,7 +505,7 @@ export class AgeOfSigmarActor extends Actor {
 
         let ret = allowed !== false ? await this.update(updates) : this;
 
-        let note = game.i18n.format("NOTIFICATION.APPLY_HEALING", {toughness : healing.toughness, name : this.data.token.name});
+        let note = game.i18n.format("NOTIFICATION.APPLY_HEALING", {toughness : healing.toughness, name : this.prototypeToken.name});
         ui.notifications.notify(note);
 
         return ret;
@@ -554,7 +555,7 @@ export class AgeOfSigmarActor extends Actor {
 
         this._displayScrollingChange(-1, {wound : type})
 
-        return this.update({"data.combat.wounds" : wounds})
+        return this.update({"system.combat.wounds" : wounds})
     }
 
     async addCondition(effect, options) {
@@ -621,15 +622,15 @@ export class AgeOfSigmarActor extends Actor {
 
             
             if(val >= 0) {
-                await am.update({"data.benefit": val});
+                await am.update({"system.benefit": val});
             } else {
-                await am.update({"data.benefit": 0}); 
+                await am.update({"system.benefit": 0}); 
             }
             
             if(sub === 0) break;            
         }
         
-        let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.data.token.name});
+        let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
     }
 
@@ -640,7 +641,7 @@ export class AgeOfSigmarActor extends Actor {
     getDialogChanges({condense = false}={}) {
 
         // Aggregate dialog changes from each effect
-        let changes =  this.effects.filter(i => !i.data.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
+        let changes =  this.effects.filter(i => !i.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
 
         if (game.user.targets.size > 0)
         {
@@ -656,7 +657,7 @@ export class AgeOfSigmarActor extends Actor {
 
     async onEnterDrawing(drawing)
     {
-        let flags = drawing.data.flags["age-of-sigmar-soulbound"]
+        let flags = drawing.flags["age-of-sigmar-soulbound"]
 
         let cover = flags.cover
         let hazard = flags.hazard
@@ -676,7 +677,7 @@ export class AgeOfSigmarActor extends Actor {
 
     async onLeaveDrawing(drawing)
     {
-        let flags = drawing.data.flags["age-of-sigmar-soulbound"]
+        let flags = drawing.flags["age-of-sigmar-soulbound"]
 
         let cover = flags.cover
         let hazard = flags.hazard
@@ -775,17 +776,17 @@ export class AgeOfSigmarActor extends Actor {
     get isSwarm() {return this.bio.type === 0}
 
     // @@@@@@ DATA GETTERS @@@@@@
-    get attributes() {return this.data.data.attributes}
-    get skills() {return this.data.data.skills}
-    get combat() {return this.data.data.combat}
-    get currencies() {return this.data.data.currencies}
-    get bio() {return this.data.data.bio}
-    get experience() {return this.data.data.experience}
-    get notes() {return this.data.data.notes}
-    get soulfire() {return this.data.data.soulfire}
-    get doom() {return this.data.data.doom}
-    get power() {return this.data.data.power}
-    get members() {return this.data.data.members || []}
+    get attributes() {return this.system.attributes}
+    get skills() {return this.system.skills}
+    get combat() {return this.system.combat}
+    get currencies() {return this.system.currencies}
+    get bio() {return this.system.bio}
+    get experience() {return this.system.experience}
+    get notes() {return this.system.notes}
+    get soulfire() {return this.system.soulfire}
+    get doom() {return this.system.doom}
+    get power() {return this.system.power}
+    get members() {return this.system.members || []}
 
 
       /**

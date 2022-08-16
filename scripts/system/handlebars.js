@@ -57,7 +57,7 @@ function registerHandlebarsHelpers() {
 
 
     Handlebars.registerHelper("enrich", function (string) {
-        return TextEditor.enrichHTML(string)
+        return TextEditor.enrichHTML(string, {async: false})
     })
 
     Handlebars.registerHelper("arrayDisplay", function (array, cls) {

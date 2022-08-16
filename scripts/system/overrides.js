@@ -66,9 +66,9 @@
     function SoulboundImportFromJson(json) {
         const data = JSON.parse(json);
         delete data._id
-        if (data.token)
-          delete data.token.actorId
-        this.data.update(data, {recursive: false});
+        if (prototypeToken)
+          delete prototypeToken.actorId
+        this.updateSource(data, {recursive: false});
         return this.update(this.toJSON(), {diff: false, recursive: false});
       }
     

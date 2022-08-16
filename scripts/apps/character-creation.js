@@ -33,10 +33,10 @@ export default class CharacterCreation extends FormApplication {
 
         if (this.archetype.skills.core)
         {
-            this.character.data.update({ [`data.skills.${this.archetype.skills.core}.training`]: 1 })
-            this.character.data.update({ [`data.skills.${this.archetype.skills.core}.focus`]: 1 })
+            this.character.updateSource({ [`system.skills.${this.archetype.skills.core}.training`]: 1 })
+            this.character.updateSource({ [`system.skills.${this.archetype.skills.core}.focus`]: 1 })
         }
-        this.character.data.update({ "data.bio.archetype": this.archetype.name })
+        this.character.updateSource({ "system.bio.archetype": this.archetype.name })
 
         this.character.prepareData();
 
@@ -65,18 +65,18 @@ export default class CharacterCreation extends FormApplication {
             return
         }
 
-        this.character.data.update({ [`data.attributes.body.value`]: this.archetype.attributes.body })
-        this.character.data.update({ [`data.attributes.mind.value`]: this.archetype.attributes.mind })
-        this.character.data.update({ [`data.attributes.soul.value`]: this.archetype.attributes.soul })
-        this.character.data.update({"data.bio.species" : this.archetype.species})
+        this.character.updateSource({ [`system.attributes.body.value`]: this.archetype.attributes.body })
+        this.character.updateSource({ [`system.attributes.mind.value`]: this.archetype.attributes.mind })
+        this.character.updateSource({ [`system.attributes.soul.value`]: this.archetype.attributes.soul })
+        this.character.updateSource({"system.bio.species" : this.archetype.species})
 
-        this.character.data.update({ "token": this.actor.data.token })
+        this.character.updateSource({ "prototypeToken": this.actor.prototypeToken })
 
-        this.character.data.update({
-            "img": this.actor.data.img,
+        this.character.updateSource({
+            "img": this.actor.img,
             "name": formData.name,
             "token.name": formData.name,
-            "data.currencies.drops": Number(formData.aqua)
+            "system.currencies.drops": Number(formData.aqua)
         })
 
 
@@ -265,7 +265,7 @@ export default class CharacterCreation extends FormApplication {
                 if (this.character.skills[skill][type] >= 3)
                     return
 
-                this.character.data.update({ [`data.skills.${skill}.${type}`]: this.character.skills[skill][type] + 1 });
+                this.character.updateSource({ [`system.skills.${skill}.${type}`]: this.character.skills[skill][type] + 1 });
             }
             else {
                 if (this.character.skills[skill][type] <= 0)
@@ -273,7 +273,7 @@ export default class CharacterCreation extends FormApplication {
                 if (this.archetype.skills.core == skill && this.character.skills[skill][type] <= 1)
                     return
 
-                this.character.data.update({ [`data.skills.${skill}.${type}`]: this.character.skills[skill][type] - 1 });
+                this.character.updateSource({ [`system.skills.${skill}.${type}`]: this.character.skills[skill][type] - 1 });
             }
 
             ev.target.parentElement.querySelector(".skill-value").textContent = this.character.skills[skill][type]

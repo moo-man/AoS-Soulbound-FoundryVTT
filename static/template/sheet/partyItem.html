@@ -1,0 +1,57 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+    </div>
+    <div class="sheet-body">
+        <div class="sheet-header">
+            <h1><input name="name" type="text" value="{{item.name}}"/></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <h3>{{localize "ITEM.PARTY"}}</h3>  
+        </div>
+        <hr>
+        <hr>
+        <div class="sheet-content">
+            <div class="content-box">
+                <div class=content-header>
+                    <h1>{{localize "TITLE.STATS"}}</h1>
+                </div>
+                <div class="content-row">
+                    <div class="entry-vertical">
+                        <h3>{{localize (configLookup "partyItemCategoryLabels" data.category)}}</h3>
+                        <input name="system.state" type="checkbox" value="active" {{checked data.state}}/>
+                    </div>
+                    <div class="entry-vertical">
+                        <h3>{{localize "PARTY.CATEGORY"}}</h3>
+                        {{#unless (eq item.parent.type "party")}}
+                        <select name="system.category">
+                            {{#select system.category}}
+                            <option value="shortGoal">Short-Term Goal</option>
+                            <option value="longGoal">Long-Term Goal</option>
+                            {{/select}}
+                        </select>   
+                        {{else}}
+                        <select name="system.category">
+                            {{#select system.category}}
+                            {{#each (config "partyItemCategories") as |category c|}}
+                            <option value="{{c}}">{{category}}</option>
+                            {{/each}}
+                            {{/select}}
+                        </select>
+                        {{/unless}}
+                    </div>
+                </div>
+            </div>
+        <hr>
+        <div class="sheet-content">
+            <div class="content-box item-description">
+                <div class="content-header">
+                    <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                </div>
+                <div class="content-wrapper">
+                    {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

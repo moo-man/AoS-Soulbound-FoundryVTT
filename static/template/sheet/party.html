@@ -1,0 +1,34 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="avatar">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}"/>
+    </div>
+    <div class="sheet-body">
+        <div class="sheet-header">
+            <h1><input name="name" type="text" value="{{actor.name}}"/></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <div class="entry-horizontal">
+                <h3>{{localize "PARTY.SOULFIRE"}}</h3>
+                <input name="system.soulfire.value" type="text" value="{{system.soulfire.value}}"/> /
+                <input name="system.soulfire.max" type="text" value="{{system.soulfire.max}}"/>
+            </div>
+            <div class="segment-horizontal">
+                <h3>{{localize "BIO.DOOM"}}</h3>
+                <input name="system.doom.value" type="text" value="{{system.doom.value}}"/>
+            </div>
+        </div>    
+        <hr>
+        <div class="sheet-tabs tabs" data-group="primary">
+            <b class="item" data-tab="main">{{localize "TAB.MAIN"}}</b>
+            <b class="item" data-tab="members">{{localize "TAB.MEMBERS"}}</b>
+        </div>
+        <div class="sheet-content">
+            <div class="tab" data-group="primary" data-tab="main">
+                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/party-main.html}}
+            </div>
+            <div class="tab" data-group="primary" data-tab="members">
+                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/party-members.html}}
+            </div>
+        </div>
+    </div>
+</form>

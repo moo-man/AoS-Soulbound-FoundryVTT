@@ -1,0 +1,106 @@
+<div class="item-list">
+    <div class="item-header">
+        <h1 class="header-text">{{localize "TITLE.MEMBERS"}}</h1>
+    </div>
+        {{#each members as |item|}}
+                <div class="item" data-item-id="{{item.id}}">
+                    <div class="item-content">
+                        <div class="item-property item-name">
+                            <div class="item-image">
+                                <img src={{item.prototypeToken.texture.src}} />
+                            </div>
+                            <a class="member-click bold">{{item.name}}</a>
+                        </div>
+                        <div class="item-property long">{{item.bio.species}} - {{item.bio.archetype}}</div>
+                        <div class="item-controls">
+                            <a class="item-control member-delete"><i class="fas fa-trash"></i></a> 
+                        </div>
+                    </div>
+                </div>
+    {{/each}}
+</div>
+<hr>
+
+<div class="item-list-columns">
+    <div class="item-list">
+        <div class="item-header">
+            <h1 class="header-text">{{localize "TITLE.ALLIES"}}</h1>
+            <a class="item-create absolute" title="Add Ally" data-type="partyItem" data-category="ally"><i class="fas fa-plus"></i></a>
+        </div>
+            {{#each party.allies as |item|}}
+                    <div class="item" data-item-id="{{item.id}}">
+                        <div class="item-content">
+                            {{#if item.state}}
+                                <a class="item-property fit completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
+                            {{else}}
+                                <a class="item-property fit completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
+                            {{/if}}
+                            <div class="item-property item-name">
+                                <a class="item-edit">{{item.name}}</a>
+                            </div>
+                            <div class="item-controls">
+                                <a class="item-control item-delete"><i class="fas fa-trash"></i></a> 
+                            </div>
+                        </div>
+                    </div>
+        {{/each}}
+    </div>
+
+    <div class="item-list">
+        <div class="item-header">
+            <h1 class="header-text">{{localize "TITLE.ENEMIES"}}</h1>
+            <a class="item-create absolute" title="Add Enemy" data-type="partyItem" data-category="enemy"><i class="fas fa-plus"></i></a>
+        </div>
+            {{#each party.enemies as |item|}}
+                    <div class="item" data-item-id="{{item.id}}">
+                        <div class="item-content">
+                            {{#if item.state}}
+                                <a class="item-property fit completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
+                            {{else}}
+                                <a class="item-property fit completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
+                            {{/if}}
+                            <div class="item-property item-name">
+                                <a class="item-edit">{{item.name}}</a>
+                            </div>
+                            <div class="item-controls">
+                                <a class="item-control item-delete"><i class="fas fa-trash"></i></a> 
+                            </div>
+                        </div>
+                    </div>
+        {{/each}}
+    </div>
+</div>
+<hr>
+
+<div class="item-list">
+    <div class="item-header">
+        <h1 class="header-text">{{localize "TITLE.RESOURCES"}}</h1>
+        <a class="item-create absolute" title="Add Resource" data-type="partyItem" data-category="resource"><i class="fas fa-plus"></i></a>
+    </div>
+        {{#each party.resources as |item|}}
+                <div class="item" data-item-id="{{item.id}}">
+                    <div class="item-content">
+                        {{#if item.state}}
+                            <a class="item-property fit completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-sun"></i></a>
+                        {{else}}
+                            <a class="item-property fit completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-skull"></i></a>
+                        {{/if}}
+                        <div class="item-property item-name">
+                            <a class="item-edit">{{item.name}}</a>
+                        </div>
+                        <div class="item-controls">
+                            <a class="item-control item-delete"><i class="fas fa-trash"></i></a> 
+                        </div>
+                    </div>
+                </div>
+    {{/each}}
+</div>
+<hr>
+<div class="content-box" style="flex-grow:1">
+    <div class="content-header">
+        <h1>{{localize "TITLE.NOTES"}}</h1>
+    </div>
+    <div class="content-wrapper" style="display:flex; flex-grow:1;">
+        {{editor enrichment.system.notes target="system.notes" button=true owner=owner editable=editable}}
+    </div>
+</div>

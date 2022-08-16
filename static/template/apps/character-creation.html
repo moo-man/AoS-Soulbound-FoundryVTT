@@ -1,0 +1,109 @@
+<form>
+    <img class="background-image" src="{{archetype.img}}">
+    <div class="character-creation">
+        <header class="header">
+            <input type="text" name="name" value="{{actor.name}}" placeholder="Name">
+        </header>
+        <div class="sheet-body">
+            <div class="attributes">
+                <div class="attribute">
+                    <input type="text" disabled class="attribute-input" value="{{archetype.attributes.body}}">
+                    <label>{{localize "ATTRIBUTE.BODY"}}</label>
+                </div>
+                <div class="attribute">
+                    <input type="text" disabled class="attribute-input" value="{{archetype.attributes.mind}}">
+                    <label>{{localize "ATTRIBUTE.MIND"}}</label>
+                </div>
+                <div class="attribute">
+                    <input type="text" disabled class="attribute-input" value="{{archetype.attributes.soul}}">
+                    <label>{{localize "ATTRIBUTE.SOUL"}}</label>
+                </div>
+            </div>
+            <div class="cc-columns">
+                <div class="skills">
+                    <h3>{{localize "ARCHETYPE.SKILLS"}}</h3>
+                    <div class="xp">
+                        {{localize "CHARGEN.XP_SPENT"}}
+                        <input type="number" disabled class="xp-spent" value="0">
+                        <input type="number" class="xp-total" value="{{archetype.skills.xp}}">
+                    </div>
+                    <div class="skill-header skill">
+                        <span>{{localize "ARCHETYPE.SKILL"}}</span>
+                        <span>{{localize "HEADER.TRAINING"}}</span>
+                        <span>{{localize "HEADER.FOCUS"}}</span>
+                    </div>
+                    {{#each archetype.skills.list as |skill sk|}}
+                    <div class="skill" data-skill="{{skill}}">
+                        <span>{{configLookup "skills" skill}}</span>
+                        <span class="skill-button" data-type="training">
+                            <button type="button" data-type="dec">-</button>
+                            {{#if (eq ../archetype.skills.core skill)}}
+                            <span class="skill-value">1</span>
+                            {{else}}
+                            <span class="skill-value">0</span>
+                            {{/if}}
+                            <button type="button" data-type="inc">+</button>
+                        </span>
+                        <span class="skill-button" data-type="focus">
+                            <button type="button" data-type="dec">-</button>
+                            {{#if (eq ../archetype.skills.core skill)}}
+                            <span class="skill-value">1</span>
+                            {{else}}
+                            <span class="skill-value">0</span>
+                            {{/if}}
+                            <button type="button" data-type="inc">+</button>
+                        </span>
+                    </div>
+                    {{/each}}
+
+                </div>
+                <div class="talents">
+                    <h3>{{localize "ARCHETYPE.TALENTS"}}</h3>
+                    <div class="talent-count">
+                        <label>{{localize "ARCHETYPE.CHOOSE"}}</label>
+                        <input disabled type="number" value="{{archetype.talents.choose}}">
+                    </div>
+                    {{#each coreTalents as |talent t|}}
+                    <div class="core talent">
+                        <div class="talent-header">
+                            <img src="{{talent.img}}">
+                            <label>{{talent.name}}</label>
+                        </div>
+                        <div class="talent-description">
+                            {{#if talent.requirement}}
+                            <b>{{localize "ARCHETYPE.REQUIREMENT"}}:</b> {{talent.requirement}}<br>
+                            {{/if}}
+                            {{{enrich talent.description}}}
+                        </div>
+                    </div>
+                    {{/each}}
+                    {{#each chooseTalents as |talent t|}}
+                    <div class="talent">
+                        <div class="talent-header">
+                            <img src="{{talent.img}}">
+                            <label>{{talent.name}}</label>
+                            <input type="checkbox" data-id="{{talent.id}}">
+                        </div>
+                        <div class="talent-description">
+                            {{#if talent.requirement}}
+                            <b>{{localize "ARCHETYPE.REQUIREMENT"}}:</b> {{talent.requirement}}<br>
+                            {{/if}}
+                            {{{enrich talent.description}}}
+                        </div>
+                    </div>
+                    {{/each}}
+
+                </div>
+                <div class="equipment">
+                    <h3>{{localize "ARCHETYPE.EQUIPMENT"}}</h3>
+                    <div class="aqua-ghyranis">
+                        <label>{{localize "ARCHETYPE.AQUA_GHYRANIS"}}</label>
+                        <input type="number" name="aqua" value="{{archetype.system.aqua}}">
+                    </div>
+                    {{{equipmentHTML}}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <button type="submit">{{localize "BUTTON.SUBMIT"}}</button>
+</form>

@@ -60,7 +60,7 @@ export default class ArchetypeGeneric extends FormApplication {
         }
 
 
-        this.object.item.update({"data.equipment" : equipment, "data.groups" : groups})
+        this.object.item.update({"system.equipment" : equipment, "system.groups" : groups})
     }
 
 
@@ -77,7 +77,7 @@ export default class ArchetypeGeneric extends FormApplication {
             //  // Add new index to groups (last index + 1)
             // let groups = this.object.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
             
-            await this.object.item.update({"data.equipment" : equipment})
+            await this.object.item.update({"system.equipment" : equipment})
             this.render(true);
         })
     }

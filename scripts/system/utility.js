@@ -116,27 +116,27 @@ export default class SoulboundUtility {
       let points = []
 
       // Polygon
-      if (drawing.data.type == "p")
+      if (drawing.type == "p")
       {
-        points = drawing.data.points.map(i => {return {x: i[0] + drawing.data.x , y: i[1] + drawing.data.y}})
+        points = drawing.points.map(i => {return {x: i[0] + drawing.x , y: i[1] + drawing.y}})
       }
 
       // Rectangle
-      else if (drawing.data.type == "r")
+      else if (drawing.type == "r")
       {
         points = [
-          {x : drawing.data.x, y: drawing.data.y}, 
-          {x : drawing.data.x + drawing.data.width, y : drawing.data.y}, 
-          {x : drawing.data.x + drawing.data.width, y: drawing.data.y + drawing.data.height}, 
-          {x : drawing.data.x, y: drawing.data.y + drawing.data.height}
+          {x : drawing.x, y: drawing.y}, 
+          {x : drawing.x + drawing.width, y : drawing.y}, 
+          {x : drawing.x + drawing.width, y: drawing.y + drawing.height}, 
+          {x : drawing.x, y: drawing.y + drawing.height}
         ]
       }
         
       let poly
 
       // Ellipse
-      if (drawing.data.type == "e")
-        poly = new PIXI.Ellipse(drawing.data.x + drawing.data.width /2 , drawing.data.y + drawing.data.height / 2, drawing.data.width/2, drawing.data.height/2 )
+      if (drawing.type == "e")
+        poly = new PIXI.Ellipse(drawing.x + drawing.width /2 , drawing.y + drawing.height / 2, drawing.width/2, drawing.height/2 )
       else
         poly  = new PIXI.Polygon(points);
 

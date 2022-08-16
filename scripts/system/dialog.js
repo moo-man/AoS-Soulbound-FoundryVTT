@@ -197,7 +197,7 @@ export class RollDialog extends Dialog {
 
         changes.forEach(c => {
             if (typeof c.value == "string" && c.value.includes("@"))
-                c.value = eval(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
+                c.value = (0, eval)(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
         })
         for (let c of changes)
         {

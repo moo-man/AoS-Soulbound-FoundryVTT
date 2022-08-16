@@ -18,9 +18,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         });
     }
 
-    getData() {
-        const data = super.getData();
-        data.data = data.data.data; // project system data so that handlebars has the same name and value paths
+    async getData() {
+        const data = await super.getData();
+        data.system = data.data.system; // project system data so that handlebars has the same name and value paths
         this.constructEffectLists(data)
         this.constructItemLists(data)
 
@@ -30,12 +30,26 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             this._orderSkills(data)
             this._addPowerBar(data)
         }
+
+        data.enrichment = await this._handleEnrichment()
+
         return data;
       }
 
+      async _handleEnrichment()
+      {
+          let enrichment = {}
+          enrichment["system.bio.background"] = await TextEditor.enrichHTML(this.actor.system.bio.background, {async: true})
+          enrichment["system.bio.connections"] = await TextEditor.enrichHTML(this.actor.system.bio.connections, {async: true})
+          enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true})
+  
+          return expandObject(enrichment)
+      }
+  
+
     _addWoundImages(sheetData)
     {
-        sheetData.data.combat.wounds.map(i => {
+        sheetData.system.combat.wounds.map(i => {
             switch (i.type) {
                 case "minor": i.img = "icons/skills/wounds/blood-spurt-spray-red.webp"
                     break;
@@ -52,7 +66,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _orderSkills(sheetData)
     {
-        let skills = Object.values(sheetData.data.skills);        
+        let skills = Object.values(sheetData.system.skills);        
         skills.forEach(x => x.label = game.i18n.localize(x.label));
         skills.sort((x, y) => x.label.localeCompare(y.label, game.i18n.lang));
 
@@ -67,15 +81,15 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _addPowerBar(sheetData)
     {
-        sheetData.data.power.pct = (sheetData.data.power.consumed / sheetData.data.power.capacity) * 100;
-        if (sheetData.data.power.pct <= 30)
-            sheetData.data.power.state = "low";
-        else if (sheetData.data.power.pct <= 70)
-            sheetData.data.power.state = "medium";
-        else if (sheetData.data.power.pct <= 100)
-            sheetData.data.power.state = "high";
-        else if (sheetData.data.power.pct > 100)
-            sheetData.data.power.state = "over";
+        sheetData.system.power.pct = (sheetData.system.power.consumed / sheetData.system.power.capacity) * 100;
+        if (sheetData.system.power.pct <= 30)
+            sheetData.system.power.state = "low";
+        else if (sheetData.system.power.pct <= 70)
+            sheetData.system.power.state = "medium";
+        else if (sheetData.system.power.pct <= 100)
+            sheetData.system.power.state = "high";
+        else if (sheetData.system.power.pct > 100)
+            sheetData.system.power.state = "over";
 
     }
 
@@ -110,9 +124,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     {
         let effects = {}
 
-        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.data.disabled && !i.isCondition)
-        effects.disabled = sheetData.actor.effects.filter(i => i.data.disabled)
-        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.data.disabled && !i.isCondition)
+        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.disabled && !i.isCondition)
+        effects.disabled = sheetData.actor.effects.filter(i => i.disabled)
+        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.disabled && !i.isCondition)
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
                 label : i.label,
@@ -131,7 +145,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         for(let list in items)
         {
             if (Array.isArray(items[list]))
-                items[list] = items[list].sort((a, b) => a.data.sort - b.data.sort)
+                items[list] = items[list].sort((a, b) => a.sort - b.sort)
             else if (typeof items[list] == "object")
                this._sortItemLists(items[list])
         }
@@ -233,7 +247,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             data.type = "partyItem"
 
         if (header.category)
-            data["data.category"] = header.category
+            data["system.category"] = header.category
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
 
@@ -336,7 +350,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
         let effect = this.object.effects.get(id)
 
-        effect.update({"disabled" : !effect.data.disabled})
+        effect.update({"disabled" : !effect.disabled})
     }
 
     _onItemStateUpdate(event) {
@@ -346,13 +360,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let data;
         switch (item.state) {
             case "active":
-                data = { _id: item.id, "data.state": "equipped"};
+                data = { _id: item.id, "system.state": "equipped"};
                 break;
             case "equipped":
-                data = { _id: item.id, "data.state": "other"};
+                data = { _id: item.id, "system.state": "other"};
                 break;
             default:
-                data = { _id: item.id, "data.state": "active"};
+                data = { _id: item.id, "system.state": "active"};
                 break;
         }
         return this.actor.updateEmbeddedDocuments("Item", [data]);
@@ -421,7 +435,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let wounds = duplicate(this.actor.combat.wounds)
         let index = $(ev.currentTarget).parents(".item").data("index")
         wounds.splice(index, 1)
-        return this.actor.update({"data.combat.wounds" : wounds})
+        return this.actor.update({"system.combat.wounds" : wounds})
     }
 
     _onWoundEdit(ev)
@@ -440,7 +454,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         {
             wounds[index].damage = parseInt(ev.currentTarget.value)
         }
-        return this.actor.update({"data.combat.wounds" : wounds})
+        return this.actor.update({"system.combat.wounds" : wounds})
     }
     
     _onSpeedConfigClick(ev) {
@@ -509,7 +523,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             if (!dropdownData) {
                 return
             } else {
-                dropdownHTML = `<div class="item-summary">${TextEditor.enrichHTML(dropdownData.text)}`;
+                dropdownHTML = `<div class="item-summary">${await TextEditor.enrichHTML(dropdownData.text)}`;
             }
             if (dropdownData.groups) {
 

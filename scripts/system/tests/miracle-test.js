@@ -25,7 +25,7 @@ export default class MiracleTest extends Test{
 
         if (!this.context.mettleSubtracted)
         {
-            this.actor.update({"data.combat.mettle.value" : this.actor.combat.mettle.value - this.item.cost})
+            this.actor.update({"system.combat.mettle.value" : this.actor.combat.mettle.value - this.item.cost})
             this.context.mettleSubtracted = true
         }
     }
