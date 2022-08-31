@@ -12,11 +12,11 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         });
     }
 
-    getData() {
-        const data = super.getData();
+    async getData() {
+        const data = await super.getData();
         this.costructPartyItemLists(data)
         data.members = {};
-        for (let id of system.members) {
+        for (let id of data.system.members) {
             let actor = game.actors.get(id);
             data.members[id] = actor;
         }
@@ -37,6 +37,15 @@ export class PartySheet extends AgeOfSigmarActorSheet {
             threats : sheetData.items.partyItems.filter(i => i.category == "threat")
         }
     }
+
+    async _handleEnrichment()
+    {
+        let enrichment = {}
+        enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true})
+        return expandObject(enrichment)
+    }
+
+    
 
     activateListeners(html) {
         super.activateListeners(html);
