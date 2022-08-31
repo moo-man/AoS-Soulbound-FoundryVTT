@@ -31,7 +31,7 @@ export default class CombatTest extends Test {
     // Compute primary or secondary result (for dual wielding)
     computeDualResult(type)
     {
-        let result = {}
+        let result = { triggerToDamage: this.result.triggerToDamage}
         let testData = this.testData.dualWieldingData[type]
 
         // assign dice based on index to separate pool
