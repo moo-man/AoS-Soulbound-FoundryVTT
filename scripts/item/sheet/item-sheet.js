@@ -53,11 +53,11 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       
       if (dragData.type == "JournalEntry")
       {
-        return this.item.update({"system.journal" : dragData.id})
+        return this.item.update({ "system.journal": dragData.uuid.replace("Item.", "") });
       }
 
       let obj = {
-        id: dragData.id,
+        id: dragData.uuid.replace("Item.", ""),
         name: dropItem.name,
         diff: {}
       }
@@ -90,7 +90,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       else if (["weapon", "armour", "equipment", "aethericDevice", "rune"].includes(dropItem.type)) {
         let list = duplicate(this.item.equipment)
         let obj = {
-          id: dragData.id,
+          id: dragData.uuid.replace("Item.", ""),
           name: dropItem.name,
           type : "item",
           diff: {}
@@ -161,7 +161,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     // Lock "Initial" value for overcasts targeting damage or duration - already provided by the spell
     if (this.item.type == "spell") {
-      for (let oc of system.overcasts) {
+      for (let oc of data.system.overcasts) {
         if (oc.property == "damage.total" || oc.property == "duration.value") {
           oc.initialDisabled = true;
           oc.initial = ""
@@ -173,7 +173,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     // Create an easily accessible object for handlebars to check if a skill is included (used in checked property of skill list)
     if (this.item.type == "archetype") {
       data.skills = {}
-      system.skills.list.forEach(s => {
+      data.system.skills.list.forEach(s => {
         data.skills[s] = true;
       })
 

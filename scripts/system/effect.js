@@ -53,7 +53,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     }
 
     getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {
-        let allChanges = this.changes.map(c => c.toObject())
+        let allChanges = this.changes.map((c) => c);
         allChanges.forEach((c, i) => {
             c.conditional = this.changeConditionals[i] || {}
             c.document = this

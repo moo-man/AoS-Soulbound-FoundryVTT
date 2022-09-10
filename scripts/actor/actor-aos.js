@@ -575,7 +575,7 @@ export class AgeOfSigmarActor extends Actor {
         if (!existing) {
           effect.label = game.i18n.localize(effect.label)
           effect["flags.core.statusId"] = effect.id;
-          effect.origin = options.origin || ""
+          // effect.origin = options.origin || "";
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
