@@ -45,23 +45,24 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
   }
   async _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
-    let dropItem = await Item.implementation.fromDropData(dragData);
+    let dropDocument = await fromUuid(dragData.uuid)
 
+    if (!dropDocument)
+      return
+    
     if (this.item.type === "archetype") {
-      let list;
-      let path;
       
-      if (dragData.type == "JournalEntry")
+      if (dropDocument.documentName == "JournalEntry")
       {
-        return this.item.update({ "system.journal": dragData.uuid.replace("Item.", "") });
+        return this.item.update({ "system.journal": dropDocument.uuid});
       }
 
       let obj = {
-        id: dragData.uuid.replace("Item.", ""),
-        name: dropItem.name,
+        id: dropDocument.uuid,
+        name: dropDocument.name,
         diff: {}
       }
-      if (dropItem.type == "talent") {
+      if (dropDocument.type == "talent") {
         new Dialog({
           title: "Core Talent?",
           content: "",
@@ -87,11 +88,11 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         }).render(true)
 
       }
-      else if (["weapon", "armour", "equipment", "aethericDevice", "rune"].includes(dropItem.type)) {
+      else if (["weapon", "armour", "equipment", "aethericDevice", "rune"].includes(dropDocument.type)) {
         let list = duplicate(this.item.equipment)
         let obj = {
-          id: dragData.uuid.replace("Item.", ""),
-          name: dropItem.name,
+          id: dropDocument.uuid,
+          name: dropDocument.name,
           type : "item",
           diff: {}
         }
@@ -141,7 +142,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     if (this.item.archetype) {
       let list = duplicate(getProperty(this.item.archetype.data, this.item.archetypeItemPath))
       let item = list[this.item.archetypeItemIndex];
-      mergeObject(system, item.diff, { overwrite: true }) // Merge archetype diff with item data
+      mergeObject(data.data, item.diff, { overwrite: true }) // Merge archetype diff with item data
       data.name = item.diff.name || data.item.name
     }
     else
@@ -317,7 +318,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
       this.item.resetGroups();
     })
 
-    html.find(".entry-element.talents,.equipment").mouseup(ev => {
+    html.find(".entry-element.talents,.equipment").mouseup(async ev => {
       let path = ev.currentTarget.dataset.path
       let index = Number(ev.currentTarget.dataset.index)
       let array = duplicate(getProperty(this.item.data, path));
@@ -330,7 +331,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
           if (obj.type == "generic")
           new ArchetypeGeneric({item: this.item, index}).render(true);
           else
-            new AgeOfSigmarItem(game.items.get(obj.id).toObject(), { archetype: { item: this.item, index, path} }).sheet.render(true)
+            new AgeOfSigmarItem((await fromUuid(obj.id)).toObject(), { archetype: { item: this.item, index, path} }).sheet.render(true)
         }
         else {
           new Dialog({
