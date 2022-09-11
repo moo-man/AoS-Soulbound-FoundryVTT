@@ -331,7 +331,16 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
           if (obj.type == "generic")
           new ArchetypeGeneric({item: this.item, index}).render(true);
           else
-            new AgeOfSigmarItem((await fromUuid(obj.id)).toObject(), { archetype: { item: this.item, index, path} }).sheet.render(true)
+          {
+            let item = await fromUuid(obj.id)
+            if (!item)
+              item = await game.aos.utility.findItem(obj.id)
+
+            if (!item)
+              throw Error("Could not find Item reference")
+
+            new AgeOfSigmarItem(item.toObject(), { archetype: { item: this.item, index, path} }).sheet.render(true, {editable : this.isEditable})
+          }
         }
         else {
           new Dialog({
