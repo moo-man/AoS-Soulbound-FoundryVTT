@@ -558,7 +558,7 @@ export class AgeOfSigmarActor extends Actor {
         return this.update({"system.combat.wounds" : wounds})
     }
 
-    async addCondition(effect, options) {
+    async addCondition(effect, options={}) {
         if (typeof (effect) === "string")
             effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
         if (!effect)
@@ -575,7 +575,7 @@ export class AgeOfSigmarActor extends Actor {
         if (!existing) {
           effect.label = game.i18n.localize(effect.label)
           effect["flags.core.statusId"] = effect.id;
-          effect.origin = options.origin || ""
+          effect.origin = options.origin || "";
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
