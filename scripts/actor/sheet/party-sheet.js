@@ -89,14 +89,17 @@ export class PartySheet extends AgeOfSigmarActorSheet {
     async _onDrop(event) {        
         const json = event.dataTransfer.getData('text/plain');
         if (!json) return;
-        let draggedItem = JSON.parse(json);
-        if (draggedItem.type == 'Item') return super._onDrop(event);
+        let dragData = JSON.parse(json);
 
-        const actor = game.actors.get(draggedItem.id);
-        if (actor.type == "player" && actor.hasPlayerOwner)
-            this._addMembers(actor);
-        else if (actor.type != "party")
-             this._addAllyOrEnemy(actor)
+        let document = await fromUuid(dragData.uuid)
+
+        if (document.documentName == "Item")
+            return super._onDrop(event);
+
+        if (document.type == "player" && document.hasPlayerOwner)
+            this._addMembers(document);
+        else if (document.type != "party")
+             this._addAllyOrEnemy(document)
     }
 
     _onMemberClick(event) {
