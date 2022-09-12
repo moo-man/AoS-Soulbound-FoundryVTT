@@ -823,18 +823,6 @@ a.inline-roll i {
         background: none
     }
 
-    .editor-menu {
-        // background-image: url(./asset/image/header-background.webp);
-        background:rgb(24, 48, 81);
-        .pm-dropdown {
-            color: var(--color-header-blue)
-        }
-        .pm-dropdown:hover {
-            color: var(--color-header-blue)
-        }
-
-    }
-
     .journal-sidebar {
         background : none;
         border: none;
@@ -856,4 +844,21 @@ a.inline-roll i {
             
         }
     }
+}
+
+.prosemirror .editor-menu {
+    // background: linear-gradient(36deg, rgba(83,123,176,1) 0%, rgba(24,48,81,1) 33%, rgba(24,48,81,1) 66%, rgba(83,123,176,1) 100%);
+    // border: 0px;
+    background: rgba(128, 107, 58, 0.5);
+    border-radius: 0px  ;
+    .pm-dropdown {
+        color: var(--color-header-blue)
+    }
+    .pm-dropdown:hover {
+        color: var(--color-header-blue)
+    }
+}
+
+.age-of-sigmar-soulbound .editor-content {
+    padding: 0px 5px
 }
