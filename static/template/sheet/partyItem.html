@@ -18,8 +18,8 @@
                 </div>
                 <div class="content-row">
                     <div class="entry-vertical">
-                        <h3>{{localize (configLookup "partyItemCategoryLabels" data.category)}}</h3>
-                        <input name="system.state" type="checkbox" value="active" {{checked data.state}}/>
+                        <h3>{{localize (configLookup "partyItemCategoryLabels" system.category)}}</h3>
+                        <input name="system.state" type="checkbox" value="active" {{checked system.state}}/>
                     </div>
                     <div class="entry-vertical">
                         <h3>{{localize "PARTY.CATEGORY"}}</h3>
@@ -49,7 +49,7 @@
                     <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                 </div>
                 <div class="content-wrapper">
-                    {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
+                    {{editor enrichment.system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
                 </div>
             </div>
         </div>

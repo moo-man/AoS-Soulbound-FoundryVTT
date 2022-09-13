@@ -52,8 +52,8 @@
         <input name="system.bio.subfaction" type="text" value="{{system.bio.subfaction}}"/>
         </div>
     </div>
-    <div class="content-wrapper" style="min-height: 72px;">
-        {{{editor enrichment.system.bio.background target="system.bio.background" button=true owner=owner editable=editable}}}
+    <div class="content-wrapper" style="min-height: 150px;">
+        {{{editor enrichment.system.bio.background target="system.bio.background" engine="prosemirror" button=true owner=owner editable=editable}}}
     </div>
 </div>
 <hr>
@@ -90,7 +90,7 @@
     <div class="content-header" style="padding:0px 4px 0px 24px;">
         <h1>{{localize "TITLE.CONNECTIONS"}}</h1>
     </div>
-    <div class="content-wrapper" style="min-height: 72px;">
-            {{{editor enrichment.system.bio.connections target="system.bio.connections" button=true owner=owner editable=editable}}}
+    <div class="content-wrapper" style="min-height: 150px;">
+            {{{editor enrichment.system.bio.connections target="system.bio.connections" engine="prosemirror" button=true owner=owner editable=editable}}}
     </div>
 </div>

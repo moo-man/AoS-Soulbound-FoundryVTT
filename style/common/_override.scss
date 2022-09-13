@@ -203,7 +203,7 @@ li.directory-item.folder:not(.collapsed) {
     padding: 0px 7px;
 }
 
-.age-of-sigmar-soulbound.sheet .journal-entry-page.text{
+.age-of-sigmar-soulbound.sheet .journal-entry-page.text .journal-page-content{
     padding: 0px 7px;
 }
 
@@ -496,14 +496,14 @@ li.directory-item.folder:not(.collapsed) {
 
 
 .editor,
-.journal-entry-page.text {
+.journal-entry-page.text .journal-page-content {
   font-family: var(--font-text);
   font-size: 15px;
   color: var(--color-text);
 }
 
 .editor h1,
-.journal-entry-page.text h1 { 
+.journal-entry-page.text .journal-page-content h1 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   color : var(--color-header-gold);
@@ -526,7 +526,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h2,
-.journal-entry-page.text h2 { 
+.journal-entry-page.text .journal-page-content h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   font-size: 26px;
@@ -535,7 +535,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h3,
-.journal-entry-page.text h3 { 
+.journal-entry-page.text .journal-page-content h3 { 
   font-family: var(--font-header);
   font-size : 28px;
   font-variant: small-caps;
@@ -543,7 +543,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor .block h3,
-.journal-entry-page.text .block h3 { 
+.journal-entry-page.text .journal-page-content .block h3 { 
   font-family: var(--font-header);
   margin: 20px 0px;
   text-align: center;
@@ -553,18 +553,18 @@ li.directory-item.folder:not(.collapsed) {
   color: var(--color-header-gold)
 }
 
-.journal-entry-page.text .sidebar,
+.journal-entry-page.text .journal-page-content .sidebar,
 .editor .sidebar {
     border-left: 3px solid darkgoldenrod
 }
 
-.journal-entry-page.text .sidebar h3,
+.journal-entry-page.text .journal-page-content .sidebar h3,
 .editor .sidebar h3 {
     font-size: initial;
 }
 
 .editor  h4,
-.journal-entry-page.text  h4 { 
+.journal-entry-page.text .journal-page-content  h4 { 
   font-family: var(--font-header);
   border: none;
   font-size: 20px;
@@ -573,7 +573,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor  h5,
-.journal-entry-page.text  h5 { 
+.journal-entry-page.text .journal-page-content  h5 { 
   font-family: var(--font-header);
   border: none;
   font-size: 16px;
@@ -584,7 +584,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor .block,
-.journal-entry-page.text .block {
+.journal-entry-page.text .journal-page-content .block {
     background-color: black;
     font-family: var(--font-sidebar);
     color: white;
@@ -594,25 +594,25 @@ li.directory-item.folder:not(.collapsed) {
 } 
 
 /* .editor .block::before,
-.journal-entry-page.text .block::before {
+.journal-entry-page.text .journal-page-content .block::before {
     content: "";
     background-image: url(./asset/image/block-top.webp) ;
 } */
 
 .editor table,
-.journal-entry-page.text table {
+.journal-entry-page.text .journal-page-content table {
     /*background: url(./asset/image/input-bg.webp);
     background-size: fill;*/
     border: 1px solid var(--color-header-gold)
 }
 
 .editor table td,
-.journal-entry-page.text table td {
+.journal-entry-page.text .journal-page-content table td {
     border: 1px solid var(--color-header-gold)
 }
 
 .editor table .table-header,
-.journal-entry-page.text table .table-header {
+.journal-entry-page.text .journal-page-content table .table-header {
     background: url(./asset/image/header-background.webp);
     background-size: cover;
     text-transform: uppercase;
@@ -783,12 +783,12 @@ a.inline-roll i {
     vertical-align: middle;
 }
 .editor .block a.content-link i,
-.journal-entry-page.text .block a.content-link i {
+.journal-entry-page.text .journal-page-content .block a.content-link i {
     color: var(--color-active)
 } 
 
 .editor .block a.content-link,
-.journal-entry-page.text .block a.content-link {
+.journal-entry-page.text .journal-page-content .block a.content-link {
     color: white;
 }
 
@@ -805,20 +805,60 @@ a.inline-roll i {
 }
 
 
+.sheet.journal-entry {
+
+    .window-content {
+        background: url(./asset/image/background.webp) repeat;
+    }
+
+    .journal-entry-content {
+        border: none;
+        background: none;
+    }
+
+}
+
 .journal-sheet {
     form {
         background: none
     }
 
-    .directory {
+    .journal-sidebar {
         background : none;
         border: none;
         border-right : 3px solid var(--color-header-gold);
         color: var(--color-text);
         font-family: var(--font-text);
 
+        .pages-list {
+            color: var(--color-text)
+        }
+
+        .directory-header {
+            a {
+                color: var(--color-header-blue)
+            }
+        }
+
         .directory-item.active {
             
         }
     }
+}
+
+.prosemirror .editor-menu {
+    // background: linear-gradient(36deg, rgba(83,123,176,1) 0%, rgba(24,48,81,1) 33%, rgba(24,48,81,1) 66%, rgba(83,123,176,1) 100%);
+    // border: 0px;
+    background: rgba(128, 107, 58, 0.5);
+    border-radius: 0px  ;
+    .pm-dropdown {
+        color: var(--color-header-blue)
+    }
+    .pm-dropdown:hover {
+        color: var(--color-header-blue)
+    }
+}
+
+.age-of-sigmar-soulbound .editor-content {
+    padding: 0px 5px
 }
