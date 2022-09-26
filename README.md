@@ -9,7 +9,12 @@ The **official** system for playing Age of Sigmar: Soulbound on [Foundry VTT](ht
 3. Create a Game World using the Age of Sigmar: Soulbound system.
 
 ## Official Modules
-- [Age of Sigmar: Soulbound Core Module](https://foundryvtt.com/packages/soulbound-core) - Provides all the content from the Core Rulebook within Foundry, from rules and lore to weapons and spells, already created for you to begin adventuring in the Mortal Realms!
+- [Age of Sigmar: Soulbound Core Rulebook](https://foundryvtt.com/packages/soulbound-core) - Provides all the content from the Core Rulebook within Foundry, from rules and lore to weapons and spells, already created for you to begin adventuring in the Mortal Realms!
+
+- [Age of Sigmar: Starter Set](https://foundryvtt.com/packages/soulbound-starter-set) - Contains everything you need to begin roleplaying epic adventures in the perilous lands of the Mortal Realms.
+
+- [Age of Sigmar: Champions of Order](https://foundryvtt.com/packages/soulbound-starter-order) - A wealth of new options for creating characters for <b>Warhammer Age of Sigmar: Soulbound</b> and features new Archetypes, new Talents, and devastating new spells. It’s packed with content and options to expand on your Soulbound game.
+
 
 ## Special Thanks
 - Cubicle 7
