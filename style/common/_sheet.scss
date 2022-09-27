@@ -578,8 +578,11 @@
 }
 
 
-.age-of-sigmar-soulbound.sheet .content-box.item-description{
-   height: 100%
+.age-of-sigmar-soulbound.sheet .content-box.item-description {
+   height: calc(100% - 135px);
+   .content-wrapper {
+      height: calc(100% - 30px)
+   }
 }
 
 
