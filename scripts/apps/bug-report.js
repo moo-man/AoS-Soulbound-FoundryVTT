@@ -267,6 +267,7 @@ export default class BugReportFormSoulbound extends Application {
             }
 
             data.description = data.description.concat(versions);
+            data.description += `<br/>Active Modules: ${game.modules.contents.filter(i => i.active).map(i => i.id).filter(i => !this.domainKeys.includes(i)).join(", ")}`
 
             this.submit(data)
             this.close()
