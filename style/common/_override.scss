@@ -203,7 +203,7 @@ li.directory-item.folder:not(.collapsed) {
     padding: 0px 7px;
 }
 
-.age-of-sigmar-soulbound.sheet .journal-entry-page.text .journal-page-content{
+.age-of-sigmar-soulbound.sheet .journal-entry-page.text{
     padding: 0px 7px;
 }
 
@@ -496,14 +496,14 @@ li.directory-item.folder:not(.collapsed) {
 
 
 .editor,
-.journal-entry-page.text .journal-page-content {
+.journal-entry-page.text {
   font-family: var(--font-text);
   font-size: 15px;
   color: var(--color-text);
 }
 
 .editor h1,
-.journal-entry-page.text .journal-page-content h1 { 
+.journal-entry-page.text h1 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   color : var(--color-header-gold);
@@ -512,7 +512,7 @@ li.directory-item.folder:not(.collapsed) {
   border: 2px solid var(--color-header-gold);
   border-left: 0px;
   border-right: 0px;
-  line-height: 28px;
+  line-height: 38px;
 }
 
 .journal-sheet input{
@@ -526,7 +526,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h2,
-.journal-entry-page.text .journal-page-content h2 { 
+.journal-entry-page.text h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   font-size: 26px;
@@ -535,15 +535,16 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h3,
-.journal-entry-page.text .journal-page-content h3 { 
+.journal-entry-page.text h3 { 
   font-family: var(--font-header);
   font-size : 28px;
   font-variant: small-caps;
   color: var(--color-header-blue);
+  border: none;
 }
 
 .editor .block h3,
-.journal-entry-page.text .journal-page-content .block h3 { 
+.journal-entry-page.text .block h3 { 
   font-family: var(--font-header);
   margin: 20px 0px;
   text-align: center;
@@ -553,18 +554,18 @@ li.directory-item.folder:not(.collapsed) {
   color: var(--color-header-gold)
 }
 
-.journal-entry-page.text .journal-page-content .sidebar,
+.journal-entry-page.text .sidebar,
 .editor .sidebar {
     border-left: 3px solid darkgoldenrod
 }
 
-.journal-entry-page.text .journal-page-content .sidebar h3,
+.journal-entry-page.text .sidebar h3,
 .editor .sidebar h3 {
     font-size: initial;
 }
 
 .editor  h4,
-.journal-entry-page.text .journal-page-content  h4 { 
+.journal-entry-page.text  h4 { 
   font-family: var(--font-header);
   border: none;
   font-size: 20px;
@@ -573,7 +574,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor  h5,
-.journal-entry-page.text .journal-page-content  h5 { 
+.journal-entry-page.text  h5 { 
   font-family: var(--font-header);
   border: none;
   font-size: 16px;
@@ -584,7 +585,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor .block,
-.journal-entry-page.text .journal-page-content .block {
+.journal-entry-page.text .block {
     background-color: black;
     font-family: var(--font-sidebar);
     color: white;
@@ -594,25 +595,25 @@ li.directory-item.folder:not(.collapsed) {
 } 
 
 /* .editor .block::before,
-.journal-entry-page.text .journal-page-content .block::before {
+.journal-entry-page.text .block::before {
     content: "";
     background-image: url(./asset/image/block-top.webp) ;
 } */
 
 .editor table,
-.journal-entry-page.text .journal-page-content table {
+.journal-entry-page.text table {
     /*background: url(./asset/image/input-bg.webp);
     background-size: fill;*/
     border: 1px solid var(--color-header-gold)
 }
 
 .editor table td,
-.journal-entry-page.text .journal-page-content table td {
+.journal-entry-page.text table td {
     border: 1px solid var(--color-header-gold)
 }
 
 .editor table .table-header,
-.journal-entry-page.text .journal-page-content table .table-header {
+.journal-entry-page.text table .table-header {
     background: url(./asset/image/header-background.webp);
     background-size: cover;
     text-transform: uppercase;
@@ -783,12 +784,12 @@ a.inline-roll i {
     vertical-align: middle;
 }
 .editor .block a.content-link i,
-.journal-entry-page.text .journal-page-content .block a.content-link i {
+.journal-entry-page.text .block a.content-link i {
     color: var(--color-active)
 } 
 
 .editor .block a.content-link,
-.journal-entry-page.text .journal-page-content .block a.content-link {
+.journal-entry-page.text .block a.content-link {
     color: white;
 }
 
