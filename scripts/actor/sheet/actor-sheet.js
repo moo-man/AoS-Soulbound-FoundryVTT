@@ -162,7 +162,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
       {
           let data = ev.dataTransfer.getData("text/plain")
           data = JSON.parse(data)
-          if (data.type == "itemDrop")
+          if (data.type == "itemFromChat")
           {
               return this.actor.createEmbeddedDocuments("Item", [data.payload])
           }

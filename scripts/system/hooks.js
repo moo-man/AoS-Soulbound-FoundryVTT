@@ -132,7 +132,7 @@ export default function registerHooks() {
         {
             item.attr("draggable", true)
             item[0].addEventListener("dragstart", ev => {
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemDrop", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemFromChat", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
             })
         }
 
