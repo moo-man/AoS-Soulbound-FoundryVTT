@@ -32,7 +32,7 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "TALENT.FREE"}}</h3>
-                            <input title="{{localize 'TALENT.FREE_TT'}}" name="system.free" type="checkbox" {{checked data.free}} />
+                            <input title="{{localize 'TALENT.FREE_TT'}}" name="system.free" type="checkbox" {{checked system.free}} />
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                         <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
                     </div>
                     <div class="content-wrapper">
-                        {{editor enrichment.system.description target="system.description" button=true owner=owner editable=editable}}
+                        {{editor enrichment.system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
                     </div>
                 </div>
             </div>

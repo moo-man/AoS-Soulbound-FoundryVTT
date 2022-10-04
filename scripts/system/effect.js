@@ -25,6 +25,22 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     }
 
     fillDerivedData(actor, change) {
+
+        // See if change references an ID
+        let matches = Array.from(change.value.matchAll(/@UUID\[Actor\.(.+?)\]\.system\.(.+)/gm));
+
+        if (matches[0])
+        {
+
+            let [, id, path] = matches[0]
+            // If matches, replace values
+            actor = game.actors.get(id)
+            change.value = "@" + path;
+            
+            if (!actor)
+            return console.error(`ERROR.ReferencedActorNotFound`);
+        }
+
         let data = (0, eval)(Roll.replaceFormulaData(change.value, actor.getRollData()))
         //Foundry Expects to find a String for numbers
         //Raw Numbers don't work anymore
@@ -35,7 +51,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
         
     }
-
+    
     get item() {
         if (this.parent && this.parent.documentName == "Item")
             return this.parent
@@ -53,7 +69,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     }
 
     getDialogChanges({target = false, condense = false, indexOffset = 0}={}) {
-        let allChanges = this.changes.map(c => c.toObject())
+        let allChanges = foundry.utils.deepClone(this.changes)
         allChanges.forEach((c, i) => {
             c.conditional = this.changeConditionals[i] || {}
             c.document = this

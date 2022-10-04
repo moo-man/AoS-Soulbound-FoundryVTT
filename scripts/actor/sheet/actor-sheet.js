@@ -162,7 +162,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
       {
           let data = ev.dataTransfer.getData("text/plain")
           data = JSON.parse(data)
-          if (data.type == "itemDrop")
+          if (data.type == "itemFromChat")
           {
               return this.actor.createEmbeddedDocuments("Item", [data.payload])
           }
@@ -180,7 +180,15 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
               }
           }
           super._onDrop(ev)
+      }
 
+
+      // TODO Remove this once https://github.com/foundryvtt/foundryvtt/issues/8317 is fixed
+      async _onDropActiveEffect(event, data) {
+        const effect = await ActiveEffect.implementation.fromDropData(data);
+        if ( !this.actor.isOwner || !effect ) return false;
+        if ( this.actor.uuid === effect.parent?.uuid ) return false;
+        return ActiveEffect.create(effect.toObject(), {parent: this.actor});
       }
     
 

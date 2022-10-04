@@ -77,13 +77,6 @@
    margin: 0px 0px 0px 72px;
 }
 
-.age-of-sigmar-soulbound.sheet.item h4 {
-    color: unset;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .age-of-sigmar-soulbound.sheet.item .content-row.talent .entry-list h4 input {
     width: 25px;
     margin-left: 5px;
@@ -578,8 +571,11 @@
 }
 
 
-.age-of-sigmar-soulbound.sheet .content-box.item-description{
-   height: 100%
+.age-of-sigmar-soulbound.sheet .content-box.item-description {
+   height: calc(100% - 135px);
+   .content-wrapper {
+      height: calc(100% - 30px)
+   }
 }
 
 

@@ -503,16 +503,17 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h1,
-.journal-entry-page.text h1 { 
-  font-family: var(--font-header);
-  text-transform: uppercase;
-  color : var(--color-header-gold);
-  font-size : 40px;
-  text-align: center;
-  border: 2px solid var(--color-header-gold);
-  border-left: 0px;
-  border-right: 0px;
-  line-height: 28px;
+.journal-page-content h1 { 
+    font-family: var(--font-header);
+    text-transform: uppercase;
+    color: var(--color-header-gold);
+    font-size: 40px;
+    text-align: center;
+    border: 2px solid var(--color-header-gold);
+    border-left: 0px;
+    border-right: 0px;
+    line-height: 26px;
+    padding-top: 4px;
 }
 
 .journal-sheet input{
@@ -526,7 +527,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h2,
-.journal-entry-page.text h2 { 
+.journal-page-content h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
   font-size: 26px;
@@ -535,15 +536,30 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h3,
-.journal-entry-page.text h3 { 
+.journal-page-content h3 { 
   font-family: var(--font-header);
   font-size : 28px;
   font-variant: small-caps;
   color: var(--color-header-blue);
+  border: none;
+}
+
+.editor h3.like-h1,
+.journal-page-content h3.like-h1 { 
+font-family: var(--font-header);
+text-transform: uppercase;
+color: var(--color-header-gold);
+font-size: 40px;
+text-align: center;
+border: 2px solid var(--color-header-gold);
+border-left: 0px;
+border-right: 0px;
+line-height: 26px;
+padding-top: 4px;
 }
 
 .editor .block h3,
-.journal-entry-page.text .block h3 { 
+.journal-page-content .block h3 { 
   font-family: var(--font-header);
   margin: 20px 0px;
   text-align: center;
@@ -553,18 +569,23 @@ li.directory-item.folder:not(.collapsed) {
   color: var(--color-header-gold)
 }
 
-.journal-entry-page.text .sidebar,
+.journal-page-content .sidebar,
 .editor .sidebar {
     border-left: 3px solid darkgoldenrod
 }
 
-.journal-entry-page.text .sidebar h3,
+.editor.sidebar h4,
+.journal-page-content .sidebar h4 {
+    text-transform: unset;
+    font-size: 16px;
+}
+.journal-page-content .sidebar h3,
 .editor .sidebar h3 {
     font-size: initial;
 }
 
 .editor  h4,
-.journal-entry-page.text  h4 { 
+.journal-page-content  h4 { 
   font-family: var(--font-header);
   border: none;
   font-size: 20px;
@@ -573,7 +594,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor  h5,
-.journal-entry-page.text  h5 { 
+.journal-page-content  h5 { 
   font-family: var(--font-header);
   border: none;
   font-size: 16px;
@@ -584,7 +605,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor .block,
-.journal-entry-page.text .block {
+.journal-page-content .block {
     background-color: black;
     font-family: var(--font-sidebar);
     color: white;
@@ -805,20 +826,64 @@ a.inline-roll i {
 }
 
 
+.sheet.journal-entry {
+
+    .window-content {
+        background: url(./asset/image/background.webp) repeat;
+    }
+
+    .journal-entry-content {
+        border: none;
+        background: none;
+    }
+
+}
+
 .journal-sheet {
     form {
         background: none
     }
 
-    .directory {
+    .journal-sidebar {
         background : none;
         border: none;
         border-right : 3px solid var(--color-header-gold);
         color: var(--color-text);
         font-family: var(--font-text);
 
+        .pages-list {
+            color: var(--color-text);
+
+            .level4 .page-title {
+                text-indent: calc(3 * var(--level-indent));
+            }
+        }
+
+        .directory-header {
+            a {
+                color: var(--color-header-blue)
+            }
+        }
+
         .directory-item.active {
             
         }
     }
+}
+
+.prosemirror .editor-menu {
+    // background: linear-gradient(36deg, rgba(83,123,176,1) 0%, rgba(24,48,81,1) 33%, rgba(24,48,81,1) 66%, rgba(83,123,176,1) 100%);
+    // border: 0px;
+    background: rgba(128, 107, 58, 0.5);
+    border-radius: 0px  ;
+    .pm-dropdown {
+        color: var(--color-header-blue)
+    }
+    .pm-dropdown:hover {
+        color: var(--color-header-blue)
+    }
+}
+
+.age-of-sigmar-soulbound .editor-content {
+    padding: 0px 5px
 }

@@ -132,7 +132,7 @@ export default function registerHooks() {
         {
             item.attr("draggable", true)
             item[0].addEventListener("dragstart", ev => {
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemDrop", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemFromChat", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
             })
         }
 
@@ -142,44 +142,42 @@ export default function registerHooks() {
      * Create a macro when dropping an entity on the hotbar
      * Item      - open roll dialog for item
      */
-    Hooks.on("hotbarDrop", async (bar, data, slot) => {
+    Hooks.on("hotbarDrop", (bar, data, slot) => {
+        if (data.type == "Item" || data.type == "Actor")
+        {
+            createMacro(bar, data, slot)
+            return false
+        }
+    });
+
+    async function createMacro(bar, data, slot)
+    {
         // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
+        let document = await fromUuid(data.uuid)
         let macro
-        if (data.type == "Item") {
-            let item = system
-            let command = `game.macro.rollItemMacro("${item.name}", "${item.type}");`;
-            macro = game.macros.contents.find(m => (m.name === item.name) && (m.command === command));
+        if (document.documentName == "Item") {
+            let command = `game.macro.rollItemMacro("${document.name}", "${document.type}");`;
+            macro = game.macros.contents.find(m => (m.name === document.name) && (m.command === command));
             if (!macro) {
                 macro = await Macro.create({
-                    name: item.name,
+                    name: document.name,
                     type: "script",
-                    img: item.img,
+                    img: document.img,
                     command: command
                 }, { displaySheet: false })
             }
         } 
-        else if (data.type == "Actor"){
-            let actor = game.actors.get(data.id)
+        else if (document.documentName == "Actor"){
             macro = await Macro.create({
-                name: actor.name,
+                name: document.name,
                 type: "script",
-                img: actor.img,
-                command: `game.actors.get("${data.id}").sheet.render(true)`
-            }, { displaySheet: false })
-        }
-        else if (data.type == "JournalEntry")
-        {
-            let j = game.journal.get(data.id)
-            macro = await Macro.create({
-                name: j.name,
-                type: "script",
-                img: "icons/svg/book.svg",
-                command: `game.journal.get("${data.id}").sheet.render(true)`
+                img: document.img,
+                command: `game.actors.get("${document.id}").sheet.render(true)`
             }, { displaySheet: false })
         }
         if (macro)
             game.user.assignHotbarMacro(macro, slot);
-    });
+    }
 
     /** Helpers  */
 
