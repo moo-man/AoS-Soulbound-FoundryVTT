@@ -1,6 +1,6 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="avatar">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}"/>
+        <img class="profile-img" src="{{item.img}}" data-edit="img" data-tooltip="{{item.name}}"/>
     </div>
     <div class="sheet-body">
         <div class="sheet-header">
@@ -100,11 +100,11 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.CRAFTING"}}</h3>
-                            <input title="{{system.crafting}}" name="system.crafting" type="text" value="{{system.crafting}}" />
+                            <input data-tooltip="{{system.crafting}}" name="system.crafting" type="text" value="{{system.crafting}}" />
                         </div>
                         <div class="entry-vertical">
                             <h3>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}</h3>
-                            <input title="{{system.requirements}}" name="system.requirements" type="text" value="{{system.requirements}}" />
+                            <input data-tooltip="{{system.requirements}}" name="system.requirements" type="text" value="{{system.requirements}}" />
                         </div>
                     </div>     
                 </div>

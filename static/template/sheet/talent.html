@@ -1,6 +1,6 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="avatar">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+        <img class="profile-img" src="{{item.img}}" data-edit="img" data-tooltip="{{item.name}}" />
     </div>
     <div class="sheet-body">
         <div class="sheet-header">
@@ -23,7 +23,7 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "TALENT.REQUIREMENT"}}</h3>
-                            <input title="{{system.requirement}}" name="system.requirement" type="text"
+                            <input data-tooltip="{{system.requirement}}" name="system.requirement" type="text"
                                 value="{{system.requirement}}" />
                         </div>
                     </div>
@@ -32,7 +32,7 @@
                     <div class="content-row">
                         <div class="entry-vertical">
                             <h3>{{localize "TALENT.FREE"}}</h3>
-                            <input title="{{localize 'TALENT.FREE_TT'}}" name="system.free" type="checkbox" {{checked system.free}} />
+                            <input data-tooltip="{{localize 'TALENT.FREE_TT'}}" name="system.free" type="checkbox" {{checked system.free}} />
                         </div>
                     </div>
                 </div>

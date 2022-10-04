@@ -1,6 +1,6 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="avatar">
-        <img class="profile-img" src="{{item.img}}" data-edit="img" title="{{item.name}}" />
+        <img class="profile-img" src="{{item.img}}" data-edit="img" data-tooltip="{{item.name}}" />
     </div>
     <div class="sheet-body">
         <div class="sheet-header">
@@ -102,8 +102,8 @@
                         <h3>
                             {{localize "ARCHETYPE.EQUIPMENT"}}
                             <a class="configure-groups"><i class="fas fa-cog"></i></a>
-                            <a class="add-generic" title="{{localize 'ARCHETYPE.ITEM.ADD_GENERIC'}}"><i class="fas fa-filter"></i></a>
-                            <a class="reset" title="{{localize 'ARCHETYPE.ITEM.RESET_GROUPS'}}"><i class="fas fa-redo"></i></a>
+                            <a class="add-generic" data-tooltip="{{localize 'ARCHETYPE.ITEM.ADD_GENERIC'}}"><i class="fas fa-filter"></i></a>
+                            <a class="reset" data-tooltip="{{localize 'ARCHETYPE.ITEM.RESET_GROUPS'}}"><i class="fas fa-redo"></i></a>
                         </h3>
                         {{{equipmentHTML}}}
                     </div>

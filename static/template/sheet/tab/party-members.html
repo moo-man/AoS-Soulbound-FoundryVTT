@@ -25,15 +25,15 @@
     <div class="item-list">
         <div class="item-header">
             <h1 class="header-text">{{localize "TITLE.ALLIES"}}</h1>
-            <a class="item-create absolute" title="Add Ally" data-type="partyItem" data-category="ally"><i class="fas fa-plus"></i></a>
+            <a class="item-create absolute" data-tooltip="Add Ally" data-type="partyItem" data-category="ally"><i class="fas fa-plus"></i></a>
         </div>
             {{#each party.allies as |item|}}
                     <div class="item" data-item-id="{{item.id}}">
                         <div class="item-content">
                             {{#if item.state}}
-                                <a class="item-property fit completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
+                                <a class="item-property fit completed active" data-tooltip="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
                             {{else}}
-                                <a class="item-property fit completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
+                                <a class="item-property fit completed" data-tooltip="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
                             {{/if}}
                             <div class="item-property item-name">
                                 <a class="item-edit">{{item.name}}</a>
@@ -49,15 +49,15 @@
     <div class="item-list">
         <div class="item-header">
             <h1 class="header-text">{{localize "TITLE.ENEMIES"}}</h1>
-            <a class="item-create absolute" title="Add Enemy" data-type="partyItem" data-category="enemy"><i class="fas fa-plus"></i></a>
+            <a class="item-create absolute" data-tooltip="Add Enemy" data-type="partyItem" data-category="enemy"><i class="fas fa-plus"></i></a>
         </div>
             {{#each party.enemies as |item|}}
                     <div class="item" data-item-id="{{item.id}}">
                         <div class="item-content">
                             {{#if item.state}}
-                                <a class="item-property fit completed active" title="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
+                                <a class="item-property fit completed active" data-tooltip="{{localize 'STATE.ALIVE'}}"><i class="fas fa-sun"></i></a>
                             {{else}}
-                                <a class="item-property fit completed" title="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
+                                <a class="item-property fit completed" data-tooltip="{{localize 'STATE.DEAD'}}"><i class="fas fa-skull"></i></a>
                             {{/if}}
                             <div class="item-property item-name">
                                 <a class="item-edit">{{item.name}}</a>
@@ -75,15 +75,15 @@
 <div class="item-list">
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.RESOURCES"}}</h1>
-        <a class="item-create absolute" title="Add Resource" data-type="partyItem" data-category="resource"><i class="fas fa-plus"></i></a>
+        <a class="item-create absolute" data-tooltip="Add Resource" data-type="partyItem" data-category="resource"><i class="fas fa-plus"></i></a>
     </div>
         {{#each party.resources as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
                     <div class="item-content">
                         {{#if item.state}}
-                            <a class="item-property fit completed active" title="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-sun"></i></a>
+                            <a class="item-property fit completed active" data-tooltip="{{localize 'STATE.ACTIVE'}}"><i class="fas fa-sun"></i></a>
                         {{else}}
-                            <a class="item-property fit completed" title="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-skull"></i></a>
+                            <a class="item-property fit completed" data-tooltip="{{localize 'STATE.INACTIVE'}}"><i class="fas fa-skull"></i></a>
                         {{/if}}
                         <div class="item-property item-name">
                             <a class="item-edit">{{item.name}}</a>

@@ -20,9 +20,9 @@
         <div class="content-column">
             <div class="content-row">
                 <div class="sheet-table-name bold">{{localize "HEADER.NAME"}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
+                <div class="sheet-table-value bold" data-tooltip="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}</div>
+                <div class="sheet-table-value bold" data-tooltip="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
+                <div class="sheet-table-value bold" data-tooltip="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
             </div>
             {{#each system.skills as |skill key|}}
                 {{#if skill.isLeft}}
@@ -38,9 +38,9 @@
         <div class="content-column">
             <div class="content-row">
                 <div class="sheet-table-name bold">{{localize "HEADER.NAME"}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
-                <div class="sheet-table-value bold" title="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
+                <div class="sheet-table-value bold" data-tooltip="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}</div>
+                <div class="sheet-table-value bold" data-tooltip="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
+                <div class="sheet-table-value bold" data-tooltip="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
             </div>
             {{#each system.skills as |skill key|}}
                 {{#if skill.isRight}}
@@ -59,7 +59,7 @@
 <div class="item-list">
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.TALENTS"}}</h1>
-        <a class="item-create absolute" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
+        <a class="item-create absolute" data-tooltip="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
     </div>
     {{#each items.talents as |item|}}
         <div class="item" data-item-id="{{item.id}}">
@@ -72,7 +72,7 @@
                 </div>
                 {{#if item.nonTransferEffects.length}}
                     <div class="item-property">
-                        <a title="Transfer effects to selected tokens" class="transfer-effect"><i class="fas fa-crosshairs"></i></a>
+                        <a data-tooltip="Transfer effects to selected tokens" class="transfer-effect"><i class="fas fa-crosshairs"></i></a>
                     </div>
                 {{/if}}
                 <div class="item-controls">

@@ -892,3 +892,9 @@ a.inline-roll i {
 .age-of-sigmar-soulbound .editor-content {
     padding: 0px 5px
 }
+
+#tooltip {
+    background: var(--color-header-blue);
+    border: 2px solid var(--color-active);
+    border-radius: 10px;
+}
