@@ -224,27 +224,12 @@ export default function registerHooks() {
 
 
         game.actors.contents.forEach(a => {
-                a.prepareData()
+            SoulboundUtility.log("Post Ready Preparation")
+            if (a.postReadyEffects?.length || a.derivedEffects?.length)
+            {
+                a._initialize();
+            }
         })
-    })
-
-    Hooks.on("preCreateItem", (data, options, user) => {
-        if (data.type == "wound" 
-         || data.type == "ally" 
-         || data.type == "connection" 
-         || data.type == "enemy" 
-         || data.type == "fear" 
-         || data.type == "goal" 
-         || data.type == "resource" 
-         || data.type == "rumour" 
-         || data.type == "threat")
-        {
-            if (data.type == "wound")
-                ui.notifications.warn("The Wound Type item is deprecated")
-            else
-                ui.notifications.warn("This item type is deprecated. Use the Party Item type instead")
-            return false
-        }
     })
 
       /**

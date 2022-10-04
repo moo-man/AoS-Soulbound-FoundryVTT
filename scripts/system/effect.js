@@ -1,3 +1,5 @@
+import SoulboundUtility from "./utility"
+
 export default class AgeOfSigmarEffect extends ActiveEffect {
 
 
@@ -14,14 +16,17 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     apply(actor, change) {
         if (change.value.includes("@"))
         {
+            SoulboundUtility.log(`Deferring ${this.label} for ${this.parent?.name}`)
             if (change.value == "@doom" && !game.ready)
                 actor.postReadyEffects.push(change)
             else
                 actor.derivedEffects.push(change)
-
         }
         else
+        {
+            SoulboundUtility.log(`Applying ${this.label} to ${this.parent?.name}`)
             super.apply(actor, change)
+        }
     }
 
     fillDerivedData(actor, change) {
@@ -31,7 +36,6 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
 
         if (matches[0])
         {
-
             let [, id, path] = matches[0]
             // If matches, replace values
             actor = game.actors.get(id)

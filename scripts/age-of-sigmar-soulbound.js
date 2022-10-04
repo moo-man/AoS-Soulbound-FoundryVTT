@@ -25,6 +25,13 @@ import CharacterCreation from "./apps/character-creation.js";
 import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 
 Hooks.once("init", () => {
+
+
+  // #if _ENV === "development"
+  CONFIG.debug.soulbound = true;
+  SoulboundUtility.log("Development Mode: Logs on")
+  //#endif
+
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
     CONFIG.Item.documentClass = AgeOfSigmarItem;
     CONFIG.ActiveEffect.documentClass = AgeOfSigmarEffect

@@ -79,7 +79,12 @@ export class AgeOfSigmarActor extends Actor {
             this.computeSpentExperience();
         }
     }
-
+    
+    _initialize(...args)
+    {
+        SoulboundUtility.log("Initializing " + this._source.name)
+        super._initialize(args)
+    }
 
     prepareBaseData() {
         if (this.type === "player" || this.type === "npc")

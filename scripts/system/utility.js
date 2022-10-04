@@ -154,4 +154,10 @@ export default class SoulboundUtility {
       return ids
     }
 
+    static log(message, force=false, args) {
+      if (CONFIG.debug.soulbound || force)
+        console.log(`%cSoulbound` + `%c | ${message}`, "color: gold", "color: unset", args || "");
+    }
+  
+
 }
