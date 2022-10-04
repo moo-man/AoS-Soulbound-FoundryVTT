@@ -20,26 +20,7 @@ export class AgeOfSigmarItem extends Item {
       options.keepId = SoulboundUtility._keepID(data._id, this)
 
     await super._preCreate(data, options, user)
-        
-        // TODO Remove when wound item type is deprecated
-        if (this.type == "wound" && hasProperty(updateData, "system.woundType")) {
-            switch (updateData.system.woundType) {
-                case "minor":
-                    updateData.name = "Minor Wound";
-                    updateData.system.damage = 1
-                    break;
-                case "serious":
-                    updateData.name = "Serious Wound";
-                    updateData.system.damage = 2
-                    break;
-                case "deadly":
-                    updateData.name = "Deadly Wound";
-                    updateData.system.damage = 3
-                    break;
-                default: 
-                    updateData.system.damage = 0;
-            }
-        }
+    
     }
 
     /**

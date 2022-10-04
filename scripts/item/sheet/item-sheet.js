@@ -135,6 +135,30 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     return buttons;
   }
 
+  _onDragStart(event)
+  {
+    let dragData
+    if (event.currentTarget.dataset.effectId)
+    {
+      let effect = this.item.effects.get(event.currentTarget.dataset.effectId)
+
+      // Create drag data with explicit data becasue we are modifying it
+      dragData = {data : effect.toObject(), type : effect.documentName }
+
+      if (this.item.actor)
+      {
+        let changes = dragData.data.changes
+
+        changes.forEach(c => {
+          c.value = c.value.replace("@UUID[Actor.ID]", `@UUID[Actor.${this.actor.id}]`)
+        })
+      }
+    }
+
+    if (dragData)
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+  }
+
   async getData() {
     const data = await super.getData();
 

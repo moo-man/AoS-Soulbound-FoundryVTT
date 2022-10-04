@@ -198,10 +198,8 @@ export default class Test {
 
         if (this.message && !newMessage)
         {
-            // TODO: UNCOMMENT IN V9, remove delete statement
-            //chatData.roll = chatData.roll.toJSON()
+            // Updating with a roll object causes validation error
             delete chatData.roll
-
             this.message.update(chatData)
         }
         else

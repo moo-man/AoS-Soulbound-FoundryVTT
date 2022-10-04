@@ -547,6 +547,7 @@
   "ERROR.NotEnoughMettle": "Not enough Mettle!",
   "ERROR.NotEnoughSuccesses": "Not Enough Successes to Overcast",
   "ERROR.ScrollingText": "Error displaying scrolling text for",
+  "ERROR.ReferencedActorNotFound" : "Fill Derived Data failed: Referenced Actor Not Found",
 
   "WARN.NoActorsToApply": "Tokens must be selected or a character must be assigned to apply an Effect.",
   "WARN.NoActorsToTest": "Tokens must be selected or a character must be assigned to roll a Test.",
