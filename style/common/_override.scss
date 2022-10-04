@@ -503,6 +503,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h1,
+.journal-page-header h1,
 .journal-page-content h1 { 
     font-family: var(--font-header);
     text-transform: uppercase;
@@ -527,6 +528,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h2,
+.journal-page-header h2,
 .journal-page-content h2 { 
   font-family: var(--font-header);
   text-transform: uppercase;
@@ -536,6 +538,7 @@ li.directory-item.folder:not(.collapsed) {
 }
 
 .editor h3,
+.journal-page-header h3,
 .journal-page-content h3 { 
   font-family: var(--font-header);
   font-size : 28px;
@@ -585,7 +588,8 @@ padding-top: 4px;
 }
 
 .editor  h4,
-.journal-page-content  h4 { 
+.journal-page-header h4,
+.journal-page-content h4 { 
   font-family: var(--font-header);
   border: none;
   font-size: 20px;
@@ -594,7 +598,8 @@ padding-top: 4px;
 }
 
 .editor  h5,
-.journal-page-content  h5 { 
+.journal-page-header h5,
+.journal-page-content h5 { 
   font-family: var(--font-header);
   border: none;
   font-size: 16px;

@@ -152,6 +152,8 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         changes.forEach(c => {
           c.value = c.value.replace("@UUID[Actor.ID]", `@UUID[Actor.${this.actor.id}]`)
         })
+
+        dragData.data.origin = this.item.actor.uuid
       }
     }
 
