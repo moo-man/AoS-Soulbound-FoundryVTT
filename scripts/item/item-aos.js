@@ -305,7 +305,17 @@ export class AgeOfSigmarItem extends Item {
     }
 
     get Journal() {
-        return game.journal.get(this.journal)
+        return fromUuid(this.journal)
+    }
+
+    async showInJournal() {
+        let journal = await this.Journal
+
+        if (journal instanceof JournalEntry)
+            return journal.sheet.render(true)
+        else if (journal instanceof JournalEntryPage) 
+            return journal.showInJournal()
+
     }
 
     get difficultyNumber()

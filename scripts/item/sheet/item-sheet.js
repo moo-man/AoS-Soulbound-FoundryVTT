@@ -52,7 +52,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     
     if (this.item.type === "archetype") {
       
-      if (dropDocument.documentName == "JournalEntry")
+      if (dropDocument.documentName == "JournalEntry" || dropDocument.documentName == "JournalEntryPage")
       {
         return this.item.update({ "system.journal": dropDocument.uuid});
       }
@@ -128,7 +128,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         label : game.i18n.localize("BUTTON.JOURNAL"),
         class: "archetype-journal",
         icon : "fas fa-book",
-        onclick: (ev) => this.item.Journal?.sheet?.render(true)
+        onclick: (ev) => this.item.showInJournal()
       })
     }
 

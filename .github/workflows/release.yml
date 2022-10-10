@@ -55,6 +55,5 @@ jobs:
         with:
           token: ${{ secrets.PAT }}
           artifacts: "./system.json, ./${{steps.systemID.outputs.prop}}.zip"
-          prerelease : true
           draft : true
           generateReleaseNotes : true
