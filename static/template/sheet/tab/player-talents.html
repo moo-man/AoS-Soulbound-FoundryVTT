@@ -1,7 +1,7 @@
 <div class="item-list">
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.TALENTS"}}</h1>
-        <a class="item-create absolute" title="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
+        <a class="item-create absolute" data-tooltip="Add Talent" data-type="talent"><i class="fas fa-plus"></i></a>
     </div>
     {{#each items.talents as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
@@ -27,7 +27,7 @@
 <div class="item-list">
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.SPELLS"}}</h1>
-        <a class="item-create absolute" title="Add Spell" data-type="spell"><i class="fas fa-plus"></i></a>
+        <a class="item-create absolute" data-tooltip="Add Spell" data-type="spell"><i class="fas fa-plus"></i></a>
     </div>
     {{#each items.spells as |item|}}
                 <div class="item" data-item-id="{{item.id}}">
@@ -52,7 +52,7 @@
 <div class="item-list">
     <div class="item-header">
         <h1 class="header-text">{{localize "TITLE.MIRACLES"}}</h1>
-        <a class="item-create absolute" title="Add Miracle" data-type="miracle"><i class="fas fa-plus"></i></a>
+        <a class="item-create absolute" data-tooltip="Add Miracle" data-type="miracle"><i class="fas fa-plus"></i></a>
     </div>
     {{#each items.miracles as |item|}}
                 <div class="item" data-item-id="{{item.id}}">

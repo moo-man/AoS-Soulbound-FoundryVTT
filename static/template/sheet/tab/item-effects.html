@@ -1,7 +1,7 @@
 <div class="effects">
   <div class="condition-list">
     {{#each conditions as |effect e|}}
-    <div class="condition" title={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
+    <div class="condition" data-tooltip={{effect.label}} data-key={{effect.key}} {{#unless effect.existing}}style="opacity:0.5"{{/unless}}>
         <img src="{{effect.img}}"/>
         <a class="condition-toggle">
           {{#if effect.existing}}
@@ -17,7 +17,7 @@
   <div class="item-list">
     <div class="item-header">
         <h1>{{localize "HEADER.EFFECTS"}}</h1>
-        <a class="effect-create absolute" title="Create Effect"><i class="fas fa-plus"></i></a>
+        <a class="effect-create absolute" data-tooltip="Create Effect"><i class="fas fa-plus"></i></a>
     </div>
       {{#each item.effects as |effect|}}
                 <div class="item" data-effect-id="{{effect.id}}">

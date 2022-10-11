@@ -4,7 +4,6 @@ import CombatTest from "../system/tests/combat-test.js";
 import SpellTest from "../system/tests/spell-test.js";
 import MiracleTest from "../system/tests/miracle-test.js";
 import SoulboundUtility from "../system/utility.js";
-import CharacterCreation from "../apps/character-creation.js";
 
 export class AgeOfSigmarActor extends Actor {
 
@@ -80,7 +79,12 @@ export class AgeOfSigmarActor extends Actor {
             this.computeSpentExperience();
         }
     }
-
+    
+    _initialize(...args)
+    {
+        SoulboundUtility.log("Initializing " + this._source.name)
+        super._initialize(args)
+    }
 
     prepareBaseData() {
         if (this.type === "player" || this.type === "npc")
@@ -317,7 +321,7 @@ export class AgeOfSigmarActor extends Actor {
 
         if (this.type == "player" && apply)
         {
-            new CharacterCreation({actor: this, archetype}).render(true)
+            new game.aos.apps.CharacterCreation({actor: this, archetype}).render(true)
         }
         else if (this.type == "player")
         {

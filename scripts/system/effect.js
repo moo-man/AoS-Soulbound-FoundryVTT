@@ -1,3 +1,5 @@
+import SoulboundUtility from "./utility"
+
 export default class AgeOfSigmarEffect extends ActiveEffect {
 
 
@@ -14,17 +16,35 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     apply(actor, change) {
         if (change.value.includes("@"))
         {
+            SoulboundUtility.log(`Deferring ${this.label} for ${this.parent?.name}`)
             if (change.value == "@doom" && !game.ready)
                 actor.postReadyEffects.push(change)
             else
                 actor.derivedEffects.push(change)
-
         }
         else
+        {
+            SoulboundUtility.log(`Applying ${this.label} to ${this.parent?.name}`)
             super.apply(actor, change)
+        }
     }
 
     fillDerivedData(actor, change) {
+
+        // See if change references an ID
+        let matches = Array.from(change.value.matchAll(/@UUID\[Actor\.(.+?)\]\.system\.(.+)/gm));
+
+        if (matches[0])
+        {
+            let [, id, path] = matches[0]
+            // If matches, replace values
+            actor = game.actors.get(id)
+            
+            if (!actor)
+            return console.error(`ERROR.ReferencedActorNotFound`);
+            change.value = "@" + path;
+        }
+
         let data = (0, eval)(Roll.replaceFormulaData(change.value, actor.getRollData()))
         //Foundry Expects to find a String for numbers
         //Raw Numbers don't work anymore
@@ -35,7 +55,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
         
     }
-
+    
     get item() {
         if (this.parent && this.parent.documentName == "Item")
             return this.parent
@@ -89,7 +109,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
      * 
      * @param {Test} test 
      */
-    static populateEffectData(effectData, test, item)
+    static async populateEffectData(effectData, test, item)
     {
         effectData.origin = test.actor.uuid
 
@@ -126,12 +146,21 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
                 split.splice(0, 1)
                 value = split.join(".")
                 value = getProperty(test, value)
-                if (Number.isNumeric(value))
-                    change.value = parseInt(value)
-                else 
-                    change.value = 0
             }
+
+            // Get referential derived data from a different actor
+            if (split[0].includes("@UUID"))
+            {
+                change.value = change.value.replace("Actor.ID", `Actor.${test.actor.id}`)
+            }
+
+            if (Number.isNumeric(value))
+                change.value = parseInt(value)
+            else if (!change.value.includes("@UUID"))
+                change.value = 0
         }
+
+
         return effectData
 
 
@@ -170,10 +199,9 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
             let item = this.parent.items.get(data[3])
             if (item)
                 return item.name
-            else
-                return super.sourceName;
         }
-
+        
+        return super.sourceName
 
     }
 

@@ -70,16 +70,20 @@ export default class SoulboundUtility {
     }
 
     static findItem(id, type) {
+      if (id.includes("."))
+        return fromUuid(id);
+  
       if (game.items.has(id))
         return game.items.get(id)
-
-      let packs = game.aos.tags.getPacksWithTag(type)
+  
+      let packs = game.wng.tags.getPacksWithTag(type)
       for (let pack of packs) {
         if (pack.index.has(id)) {
           return pack.getDocument(id)
         }
       }
     }
+  
 
     static findJournal(id) {
       if (game.journal.has(id))
@@ -153,5 +157,11 @@ export default class SoulboundUtility {
       }
       return ids
     }
+
+    static log(message, force=false, args) {
+      if (CONFIG.debug.soulbound || force)
+        console.log(`%cSoulbound` + `%c | ${message}`, "color: gold", "color: unset", args || "");
+    }
+  
 
 }

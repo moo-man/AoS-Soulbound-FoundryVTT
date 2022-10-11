@@ -659,7 +659,7 @@ export default class SoulboundChat {
             item = test.secondaryWeapon
 
         let effect = item.effects.get(effectId).toObject()
-        AgeOfSigmarEffect.populateEffectData(effect, test, item)
+        await AgeOfSigmarEffect.populateEffectData(effect, test, item)
 
         if (canvas.tokens.controlled.length)
         {

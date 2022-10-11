@@ -132,7 +132,7 @@ export default function registerHooks() {
         {
             item.attr("draggable", true)
             item[0].addEventListener("dragstart", ev => {
-                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemDrop", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
+                ev.dataTransfer.setData("text/plain", JSON.stringify({type : "itemFromChat", payload : message.getFlag("age-of-sigmar-soulbound", "itemData")}))
             })
         }
 
@@ -224,27 +224,12 @@ export default function registerHooks() {
 
 
         game.actors.contents.forEach(a => {
-                a.prepareData()
+            SoulboundUtility.log("Post Ready Preparation")
+            if (a.postReadyEffects?.length || a.derivedEffects?.length)
+            {
+                a._initialize();
+            }
         })
-    })
-
-    Hooks.on("preCreateItem", (data, options, user) => {
-        if (data.type == "wound" 
-         || data.type == "ally" 
-         || data.type == "connection" 
-         || data.type == "enemy" 
-         || data.type == "fear" 
-         || data.type == "goal" 
-         || data.type == "resource" 
-         || data.type == "rumour" 
-         || data.type == "threat")
-        {
-            if (data.type == "wound")
-                ui.notifications.warn("The Wound Type item is deprecated")
-            else
-                ui.notifications.warn("This item type is deprecated. Use the Party Item type instead")
-            return false
-        }
     })
 
       /**

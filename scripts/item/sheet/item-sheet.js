@@ -52,7 +52,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     
     if (this.item.type === "archetype") {
       
-      if (dropDocument.documentName == "JournalEntry")
+      if (dropDocument.documentName == "JournalEntry" || dropDocument.documentName == "JournalEntryPage")
       {
         return this.item.update({ "system.journal": dropDocument.uuid});
       }
@@ -128,11 +128,37 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         label : game.i18n.localize("BUTTON.JOURNAL"),
         class: "archetype-journal",
         icon : "fas fa-book",
-        onclick: (ev) => this.item.Journal?.sheet?.render(true)
+        onclick: (ev) => this.item.showInJournal()
       })
     }
 
     return buttons;
+  }
+
+  _onDragStart(event)
+  {
+    let dragData
+    if (event.currentTarget.dataset.effectId)
+    {
+      let effect = this.item.effects.get(event.currentTarget.dataset.effectId)
+
+      // Create drag data with explicit data becasue we are modifying it
+      dragData = {data : effect.toObject(), type : effect.documentName }
+
+      if (this.item.actor)
+      {
+        let changes = dragData.data.changes
+
+        changes.forEach(c => {
+          c.value = c.value.replace("@UUID[Actor.ID]", `@UUID[Actor.${this.actor.id}]`)
+        })
+
+        dragData.data.origin = this.item.actor.uuid
+      }
+    }
+
+    if (dragData)
+      event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
   }
 
   async getData() {
