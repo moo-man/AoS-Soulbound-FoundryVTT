@@ -16,15 +16,15 @@ export default class MiracleTest extends Test{
             this.roll.dice[0].results.forEach((result, i) => {
                 result.index = i;
             })  
-            this.computeResult()   
+            this.computeResult();
         }
         else 
         {
-            this.roll = new Roll("1 + 1")
+            this.roll("0");
             await this.roll.roll(); // Chat Messages must have an evaluated test
         }
 
-        this.testData.roll = this.roll.toJSON()
+        this.testData.roll = this.roll.toJSON();
 
         if (!this.context.mettleSubtracted)
         {
