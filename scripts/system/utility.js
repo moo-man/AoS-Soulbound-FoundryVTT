@@ -76,7 +76,7 @@ export default class SoulboundUtility {
       if (game.items.has(id))
         return game.items.get(id)
   
-      let packs = game.wng.tags.getPacksWithTag(type)
+      let packs = game.aos.tags.getPacksWithTag(type)
       for (let pack of packs) {
         if (pack.index.has(id)) {
           return pack.getDocument(id)

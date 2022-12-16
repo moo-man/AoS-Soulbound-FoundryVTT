@@ -20,8 +20,8 @@ export default class MiracleTest extends Test{
         }
         else 
         {
-            this.roll("0");
-            await this.roll.roll(); // Chat Messages must have an evaluated test
+            this.roll = new Roll("0");
+            await this.roll.evaluate({async: true}); // Chat Messages must have an evaluated test
         }
 
         this.testData.roll = this.roll.toJSON();
