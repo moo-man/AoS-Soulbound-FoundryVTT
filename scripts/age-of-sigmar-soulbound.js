@@ -42,7 +42,7 @@ Hooks.once("init", () => {
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("age-of-sigmar-soulbound", AgeOfSigmarItemSheet, { makeDefault: true });
     DocumentSheetConfig.registerSheet(ActiveEffect, "age-of-sigmar-soulbound", AgeOfSigmarEffectSheet, { makeDefault: true, label : "Soulbound Active Effect Config" });
-    DocumentSheetConfig.registerSheet(JournalEntryPage, "age-of-sigmar-soulbound", Level4TextPageSheet, { makeDefault: true, label : "Soulbound Journal Sheet" });
+    DocumentSheetConfig.registerSheet(JournalEntryPage, "age-of-sigmar-soulbound", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "Soulbound Journal Sheet" });
     initializeHandlebars();
     
     game.aos = {
