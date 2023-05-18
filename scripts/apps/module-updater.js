@@ -15,7 +15,7 @@ export default class ModuleUpdater extends Dialog {
               {
                 label: game.i18n.localize("BUTTON.UPDATE"),
                 callback: html => {
-                    if (!game.settings.get(module.name, "initialized"))
+                    if (!game.settings.get(module.id, "initialized"))
                         return ui.notifications.notify(game.i18n.localize("UPDATER.Error"))
                     let settings = this.getUpdateSettings(html)
                     this.updateImportedContent(settings)
@@ -53,7 +53,7 @@ export default class ModuleUpdater extends Dialog {
             if (type != "excludeNameChange" && settings[type])
                 await this.updateDocuments(documents[type], settings)
         }
-        ui.notifications.notify(`${game.i18n.format("UPDATER.Notification", { created: this.count.created,  updated: this.count.updated,  name: this.data.module.name, version: this.data.module.version })}`)
+        ui.notifications.notify(`${game.i18n.format("UPDATER.Notification", { created: this.count.created,  updated: this.count.updated,  name: this.data.module.id, version: this.data.module.version })}`)
 
     }
 
@@ -86,7 +86,7 @@ export default class ModuleUpdater extends Dialog {
             }
             else 
             {
-                let folder = document.getFlag(this.data.module.name, "initialization-folder")
+                let folder = document.getFlag(this.data.module.id, "initialization-folder")
                 folder = game.folders.getName(folder)
                 let newDoc = document.toObject()
                 if (folder)

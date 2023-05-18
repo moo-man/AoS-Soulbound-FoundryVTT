@@ -167,11 +167,11 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     }
 
     get changeConditionals() {
-        return (getProperty(this.data, "flags.age-of-sigmar-soulbound.changeCondition") || {})
+        return (getProperty(this, "flags.age-of-sigmar-soulbound.changeCondition") || {})
     }
 
     get description() {
-        return getProperty(this.data, "flags.age-of-sigmar-soulbound.description")
+        return getProperty(this, "flags.age-of-sigmar-soulbound.description")
     }
 
     get hasRollEffect() {
