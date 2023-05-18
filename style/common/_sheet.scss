@@ -507,7 +507,10 @@
 }
 
 .age-of-sigmar-soulbound.sheet .item-list .item-property.flex{
-   flex: 1
+   flex: 1;
+    flex-wrap: wrap;
+    justify-content: center;
+    display: flex;
 }
 
 .age-of-sigmar-soulbound.sheet .item-list .item-property.small{

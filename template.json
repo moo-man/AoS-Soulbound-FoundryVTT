@@ -308,6 +308,9 @@
       "equipped": {
         "equipped": false
       },
+      "quantity" : {
+        "quantity" : 1
+      },
       "test": {
         "test": {
           "attribute": "",
@@ -319,7 +322,8 @@
     "aethericDevice": {
       "templates": [
         "equipped",
-        "test"
+        "test",
+        "quantity"
       ],
       "category": "",
       "description": "",
@@ -338,7 +342,8 @@
     },
     "armour": {
       "templates": [
-        "equipped"
+        "equipped",
+        "quantity"
       ],
       "description": "",
       "type": "light",
@@ -351,7 +356,8 @@
     },
     "equipment": {
       "templates": [
-        "equipped"
+        "equipped",
+        "quantity"
       ],
       "description": "",
       "cost": "",
@@ -404,7 +410,8 @@
     "weapon": {
       "templates": [
         "equipped",
-        "test"
+        "test",
+        "quantity"
       ],
       "description": "",
       "category": "melee",

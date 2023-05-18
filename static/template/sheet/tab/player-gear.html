@@ -46,6 +46,7 @@
             <div class="item-property item-name">{{localize "WEAPON.NAME"}}</div>
             <div class="item-property">{{localize "WEAPON.DAMAGE"}}</div>
             <div class="item-property flex">{{localize "WEAPON.TRAITS"}}</div>
+            <div class="item-property">{{localize "EQUIPMENT.QUANTITY"}}</div>
             <div class="item-property">{{localize "EQUIPMENT.EQUIPPED"}}</div>
             <div class="item-controls"></div>
         </div>
@@ -61,6 +62,9 @@
                         </div>
                         <div class="item-property">{{item.Damage}}</div>
                         <div class="item-property flex">{{{arrayDisplay item.Traits "item-trait"}}}</div>
+                        <div class="item-property">
+                            <a class="quantity-click">{{item.system.quantity}}</a>
+                        </div>
                         <div class="item-property">
                             {{#if item.equipped}}
 
@@ -88,6 +92,7 @@
             <div class="item-property item-name">{{localize "ARMOUR.NAME"}}</div>
             <div class="item-property long">{{localize "ARMOUR.ARMOUR"}}</div>
             <div class="item-property flex">{{localize "ARMOUR.TRAITS"}}</div>
+            <div class="item-property">{{localize "EQUIPMENT.QUANTITY"}}</div>
             <div class="item-property">{{localize "EQUIPMENT.EQUIPPED"}}</div>
             <div class="item-controls"></div>
         </div>
@@ -103,6 +108,9 @@
                         </div>
                         <div class="item-property long">{{item.benefit}} ({{item.Type}})</div>
                         <div class="item-property flex">{{{arrayDisplay item.Traits "item-trait"}}}</div>
+                        <div class="item-property">
+                            <a class="quantity-click">{{item.system.quantity}}</a>
+                        </div>
                         <div class="item-property">
                             {{#if item.equipped}}
 
@@ -129,6 +137,7 @@
         <a class="item-create absolute" data-tooltip="Add Equipment" data-type="equipment"><i class="fas fa-plus"></i></a>
         <div class="header-columns">
             <div class="item-property item-name">{{localize "EQUIPMENT.NAME"}}</div>
+            <div class="item-property">{{localize "EQUIPMENT.QUANTITY"}}</div>
             <div class="item-property">{{localize "EQUIPMENT.EQUIPPED"}}</div>
             <div class="item-controls"></div>
         </div>
@@ -141,6 +150,9 @@
                                 <img src={{item.img}} />
                             </div>
                             <a class="item-edit item-dropdown-right">{{item.name}}</a>
+                        </div>
+                        <div class="item-property">
+                            <a class="quantity-click">{{item.system.quantity}}</a>
                         </div>
                         <div class="item-property">
                             {{#if item.equipped}}
@@ -170,6 +182,7 @@
             <div class="item-property">{{localize "AETHERIC_DEVICE.DAMAGE"}}</div>
             <div class="item-property long">{{localize "AETHERIC_DEVICE.POWER"}}</div>
             <div class="item-property flex">{{localize "AETHERIC_DEVICE.TRAITS"}}</div>
+            <div class="item-property">{{localize "EQUIPMENT.QUANTITY"}}</div>
             <div class="item-property">{{localize "EQUIPMENT.EQUIPPED"}}</div>
             <div class="item-controls"></div>
         </div>
@@ -193,7 +206,9 @@
                         </div>
 
                         <div class="item-property flex">{{{arrayDisplay item.Traits "item-trait"}}}</div>
-
+                        <div class="item-property">
+                            <a class="quantity-click">{{item.system.quantity}}</a>
+                        </div>
                         <div class="item-property">
                             {{#if item.equipped}}
 

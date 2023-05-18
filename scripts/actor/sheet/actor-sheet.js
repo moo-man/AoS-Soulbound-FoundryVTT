@@ -222,6 +222,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".item-dropdown-right").contextmenu(this._onDropdownClick.bind(this))
         html.find(".item-trait").click(this._onTraitClick.bind(this))
         html.find(".transfer-effect").click(this._onTransferEffectClick.bind(this))
+        html.find(".quantity-click").mousedown(this._onQuantityClick.bind(this))
     }
 
     _getHeaderButtons() {
@@ -467,6 +468,19 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
     
     _onSpeedConfigClick(ev) {
         new SpeedConfig(this.actor).render(true)
+    }
+
+    _onQuantityClick(ev)
+    {
+        const div = $(ev.currentTarget).parents(".item");
+        const item = this.actor.items.get(div.data("itemId"));
+        
+        if (item)
+        {
+            let quantity = item.system.quantity;
+            quantity = ev.button == 2 ? quantity - 1 : quantity + 1;
+            item.update({"system.quantity" : Math.max(0, quantity)})
+        }
     }
 
     _onConditionToggle(ev)
