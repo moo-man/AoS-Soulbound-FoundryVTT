@@ -599,6 +599,10 @@
   "ZONE.LIGHTLY_OBSCURED" : "Lightly Obscured",
   "ZONE.HEAVILY_OBSCURED" : "Heavily Obscured",
 
+  "EFFECT.ActivateIf" : "Activate If",
+  "EFFECT.HideIf" : "Hide If",
+  "EFFECT.ActivateHint" : "Function must return true for automatic activation. Leave blank for manual selection.",
+  "EFFECT.HideHint" : "Function must return true to prevent the effect script from showing in the dialog.",
 
   "QUICKEFFECT.CHANGE": "Change",
   "QUICKEFFECT.LABEL": "Label",

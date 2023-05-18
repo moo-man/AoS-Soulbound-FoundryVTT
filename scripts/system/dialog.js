@@ -13,22 +13,14 @@ export class RollDialog extends Dialog {
     async _render(...args)
     {
         await super._render(...args)
-
-        let automatic = this.runChangeConditionals()
-        let select = this.element.find(".effect-select")[0]
-        let options = Array.from(select.children)
-        options.forEach((opt, i) => {
-            if (automatic[i])
-            {
-                opt.selected = true;
-                select.dispatchEvent(new Event("change"))
-            }
-        })
-        if (automatic.some(i => i))
-            select.focus()
+        let automatic = this._runConditional("script")
+        this.applyAutomaticChanges(automatic)
     }
 
     static async create(data) {
+        let hide = this.runConditional("hide", data)
+        this.removeHiddenChanges(hide, data);
+        data.condensedChanges = this.condenseChanges(data.changes);
         return new Promise(async (resolve, reject) => {
             const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
             return new this({
@@ -81,28 +73,99 @@ export class RollDialog extends Dialog {
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
             bonusFocus: options.bonusFocus || 0,
-            changeList : actor.getDialogChanges({condense: true}),
-            changes : actor.getDialogChanges(),
+            changes : actor.allDialogChanges( {targets : Array.from(game.user.targets).map(t => t.actor)}),
             actor : actor,
             targets : Array.from(game.user.targets),
             resist: options.resist
         }
     }
-
-    runChangeConditionals()
-    {
-        let results = this.data.dialogData.changes.map(c => {
-            try {
-                let func = new Function("data", c.conditional.script).bind({actor : this.data.actor, targets : this.data.targets, effect : c.document})
-                return (func(this.data.dialogData) == true) // Only accept true returns
-            }
-            catch (e)
-            {
-                console.error("Something went wrong when processing conditional dialog effect: " + e, c)
-                return false
-            }
-        })
+    static runConditional(type, data) {
+        let results = {}
+        for (let id in data.changes) {
+          let change = data.changes[id];
+          try {
+            let func = new Function("data", change.conditional[type]).bind({ actor: data.actor, targets: data.targets, effect: change.document })
+            results[id] = (func(data) == true) // Only accept true returns
+          }
+          catch (e) {
+            console.error("Something went wrong when processing conditional dialog effect: " + e, change)
+            results[id] = false
+          }
+        }
         return results
+      }
+  
+    _runConditional(type)
+    {
+      return this.constructor.runConditional(type, this.data.dialogData);
+    }
+  
+    applyAutomaticChanges(automatic) {
+      try {
+        let automaticIds = Object.keys(automatic).filter(i => automatic[i]);
+  
+        // If a condensed change includes at least one ID automatically activate, activate the whole change
+        let activatedIndex = this.data.dialogData.condensedChanges.map((cc, index) => {
+          if (cc.id.some(id => automaticIds.includes(id)))
+            return index;
+        }).filter(i => Number.isNumeric(i));
+  
+        let select = this.element.find(".effect-select")[0]
+        let options = Array.from(select.children)
+        options.forEach((opt, index) => {
+          if (activatedIndex.includes(index)) {
+            opt.selected = true;
+            select.dispatchEvent(new Event("change"))
+          }
+        })
+        if (Object.values(automatic).some(i => i))
+          select.focus()
+      }
+      catch(e)
+    {
+        console.error("Error applying automatic dialog changes: " + e)
+    }
+
+  }
+
+    static removeHiddenChanges(hidden, data)
+    {
+      for(let id in hidden)
+      {
+        if (hidden[id])
+        {
+          delete data.changes[id];
+        }
+      }
+    }
+
+    // Condense effects that have the same description into one clickable element
+    static condenseChanges(changes)
+    {
+      let condensed = [];
+      for(let id in changes)
+      {
+        let existing = condensed.find(i => i.description == changes[id].conditional.description)
+        if (existing)
+        {
+          existing.id.push(id);
+
+          // Only push this change's document if it's unique
+          if (!existing.tooltip.find(i => i.id == changes[id].document.id))
+          {
+            existing.tooltip.push(changes[id].document)
+          }
+        }
+        else 
+        {
+          condensed.push({id : [id], description : changes[id].conditional.description, tooltip : [changes[id].document]})
+        }
+      }
+
+      condensed.forEach(i => {
+        i.tooltip = `From: ${i.tooltip.map(i => i.label).join(", ")}`
+      })
+      return condensed
     }
 
     activateListeners(html)
@@ -187,18 +250,11 @@ export class RollDialog extends Dialog {
             "triggerToDamage" : null
         }
         
-        let changes = []
-        $(ev.currentTarget).val().map(i => {
-            let indices = i.split(",");
-            indices.forEach(changeIndex => {
-                changes.push(this.data.dialogData.changes[parseInt(changeIndex)])
-            })
-        })
+        let changes = $(ev.currentTarget).val()
+        .map(index => this.data.dialogData.condensedChanges[index]) // Convert indices to condensed changes
+        .reduce((prev, current) => prev.concat(current.id), [])     // Combine all condensed ids
+        .map(id => this.data.dialogData.changes[id])                // Turn ids into changes
 
-        changes.forEach(c => {
-            if (typeof c.value == "string" && c.value.includes("@"))
-                c.value = (0, eval)(Roll.replaceFormulaData(c.value, c.document.parent.getRollData()))
-        })
         for (let c of changes)
         {
             if (AgeOfSigmarEffect.numericTypes.includes(c.key))

@@ -357,9 +357,9 @@ export class AgeOfSigmarActor extends Actor {
             actorData.system.combat.health.toughness.value = archetype.attributes.body + archetype.attributes.mind + archetype.attributes.soul
             actorData.system.combat.mettle.value = Math.ceil(archetype.attributes.soul / 2)
     
+            actorData.name = archetype.name;
             actorData.img = archetype.img
-            actorData.prototypeToken.texture.src = archetype.img.replace("images", "tokens")
-            actorData.prototypeToken.texture.src = archetype.img.replace("actors", "tokens")
+            actorData.prototypeToken.texture.src = archetype.img.replace("images", "tokens").replace("actors", "tokens")
     
     
             await this.update(actorData)
@@ -642,16 +642,15 @@ export class AgeOfSigmarActor extends Actor {
         return (this.itemCategories || this.itemTypes)[type]
     }
 
-    getDialogChanges({condense = false}={}) {
-
+    allDialogChanges({targets=[]} = {}) {
+        let effects = this.effects.contents
         // Aggregate dialog changes from each effect
-        let changes =  this.effects.filter(i => !i.disabled).reduce((prev, current) => prev.concat(current.getDialogChanges({condense, indexOffset : prev.length})), [])
+        let changes = effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges()), {})
 
-        if (game.user.targets.size > 0)
-        {
-            let target = Array.from(game.user.targets)[0].actor
-            let targetChanges = target.effects.reduce((prev, current) => prev.concat(current.getDialogChanges({target, condense, indexOffset : changes.length})), [])
-            changes = changes.concat(targetChanges)
+        if (targets.length) {
+            let target = targets[0]
+            let targetChanges = target.effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges({target : true})), {})
+            mergeObject(changes, targetChanges);
         }
 
         return changes

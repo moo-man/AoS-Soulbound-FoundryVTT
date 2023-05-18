@@ -87,8 +87,8 @@
         </div>
         <div class="content-row">
             <select class="effect-select" multiple>
-                {{#each changeList as |change c|}}
-                <option data-tooltip="{{change.document.label}}: {{change.conditional.description}}" value="{{change.index}}">&#8226; {{#if change.target}}Target: {{/if}} {{change.conditional.description}}</option>
+                {{#each condensedChanges as |change c|}}
+                <option value={{c}} title="{{change.tooltip}}">&#8226; {{change.description}}</option>
                 {{/each}}
             </select>
         </div>
