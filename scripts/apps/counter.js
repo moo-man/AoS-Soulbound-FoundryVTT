@@ -8,7 +8,7 @@ export default class SoulboundCounter extends Application {
     static get defaultOptions() {
       const options = super.defaultOptions;
       options.id = 'counter';
-      options.template = 'systems/age-of-sigmar-soulbound/template/apps/counter.html';
+      options.template = 'systems/age-of-sigmar-soulbound/template/apps/counter.hbs';
       options.popOut = true;
       return options;
     }

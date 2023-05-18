@@ -1,0 +1,12 @@
+{{#if targetTokens.length}}
+    <div class="content-wrapper targets">
+        <a class="target-selector">
+            <i class="fas fa-crosshairs"></i>
+        </a>
+        {{#each targetTokens as |token t|}}
+            <div class="target" data-token-id="{{token.id}}">
+                {{token.name}}
+            </div>
+        {{/each}}
+    </div>
+{{/if}}

@@ -2,7 +2,7 @@ export default class ItemTraits extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "item-traits",
-            template: "systems/age-of-sigmar-soulbound/template/apps/item-traits.html",
+            template: "systems/age-of-sigmar-soulbound/template/apps/item-traits.hbs",
             height: "auto",
             width: 285,
             title: game.i18n.localize("HEADER.ITEM_TRAITS"),

@@ -3,7 +3,7 @@ export default class ActorConfigure extends FormApplication
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "actor-configure",
-            template : "systems/age-of-sigmar-soulbound/template/apps/actor-configure.html",
+            template : "systems/age-of-sigmar-soulbound/template/apps/actor-configure.hbs",
             width:420
         })
     }

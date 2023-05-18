@@ -1,0 +1,13 @@
+<form autocomplete="off">
+    <div class="age-of-sigmar-soulbound chat">
+        <h3>Select the dice you wish to reroll</h3>
+        <div class="diceContainer">
+            {{#each object.result.dice as |dice index|}}
+                <a class="die diceClick" data-index={{dice.index}}>
+                    <img class="diceImg" src="{{dice.img}}">
+                </a>
+            {{/each}}
+        </div>
+    </div>
+    <button type="submit"><i class="fas fa-redo"></i> {{localize "CHAT.REROLL"}}</button>
+</form>

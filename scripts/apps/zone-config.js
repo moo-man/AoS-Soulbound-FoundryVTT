@@ -2,7 +2,7 @@ export default class ZoneConfig extends FormApplication
 {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template : "systems/age-of-sigmar-soulbound/template/apps/zone-config.html",
+            template : "systems/age-of-sigmar-soulbound/template/apps/zone-config.hbs",
             height : 400,
             width : 300,
             title : game.i18n.localize("HEADER.ZONE_CONFIG"),

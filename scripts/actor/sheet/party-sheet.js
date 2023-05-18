@@ -7,7 +7,7 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         dragDrop.push({ dropSelector: '.party' });
         return mergeObject(super.defaultOptions, {
             classes: ["age-of-sigmar-soulbound", "sheet", "actor"],
-            template: "systems/age-of-sigmar-soulbound/template/sheet/party.html",
+            template: "systems/age-of-sigmar-soulbound/template/sheet/party.hbs",
             dragDrop: dragDrop
         });
     }

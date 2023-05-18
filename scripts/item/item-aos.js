@@ -148,7 +148,7 @@ export class AgeOfSigmarItem extends Item {
             item.img = null;
         }
 
-        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.html", { item, data: item.system });
+        const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/chat/item.hbs", { item, data: item.system });
         const chatData = {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),

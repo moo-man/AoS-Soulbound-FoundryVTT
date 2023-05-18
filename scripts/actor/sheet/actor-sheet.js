@@ -315,7 +315,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
             effectData["duration.rounds"] = 1;
           }
 
-        let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html")
+        let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.hbs")
         let dialog = new Dialog({
             title : game.i18n.localize("QUICKEFFECT.TITLE"),
             content : html,

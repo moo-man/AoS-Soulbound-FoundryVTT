@@ -22,7 +22,7 @@ export class RollDialog extends Dialog {
         this.removeHiddenChanges(hide, data);
         data.condensedChanges = this.condenseChanges(data.changes);
         return new Promise(async (resolve, reject) => {
-            const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.html", data);
+            const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/common-roll.hbs", data);
             return new this({
                 title: data.title,
                 content: html,
@@ -305,7 +305,7 @@ export class RollDialog extends Dialog {
 export class CombatDialog extends RollDialog {
     static async create(data) {
         return new Promise(async (resolve, reject) => {
-            const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.html", data);
+            const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/combat-roll.hbs", data);
             return new this({
                 title: data.title,
                 actor : data.actor,
@@ -578,7 +578,7 @@ export class CombatDialog extends RollDialog {
 export class SpellDialog extends RollDialog {
     static async create(data) {
         return new Promise(async (resolve, reject) => {
-            const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.html", data);
+            const html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/spell-roll.hbs", data);
             return new this({
                 title: data.title,
                 dialogData : data,

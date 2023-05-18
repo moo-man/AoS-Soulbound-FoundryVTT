@@ -16,7 +16,7 @@ export default class CharacterCreation extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: game.i18n.localize("HEADER.CHARGEN"),
-            template: "systems/age-of-sigmar-soulbound/template/apps/character-creation.html",
+            template: "systems/age-of-sigmar-soulbound/template/apps/character-creation.hbs",
             closeOnSubmit: false,
             width: 1400,
             height: 800,

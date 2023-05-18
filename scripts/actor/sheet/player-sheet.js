@@ -4,7 +4,7 @@ export class PlayerSheet extends AgeOfSigmarActorSheet {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: "systems/age-of-sigmar-soulbound/template/sheet/player.html",
+            template: "systems/age-of-sigmar-soulbound/template/sheet/player.hbs",
         });
     }
 

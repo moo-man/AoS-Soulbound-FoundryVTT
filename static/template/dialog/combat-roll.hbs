@@ -1,0 +1,200 @@
+<div class="age-of-sigmar-soulbound dialog">
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.COMBAT_ROLL"}}</h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
+                <select name="attribute" id="attribute">
+                    {{#select combat.attribute}}
+                        {{#each attributes as |attribute key|}}
+                            <option value="{{key}}">{{localize attribute.label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.SKILL"}}</h3>
+                <select name="skill" id="skill">
+                    {{#select combat.skill}}
+                        {{#each skills as |skill key|}}
+                            <option value="{{key}}">{{localize skill.label}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ATTACK"}}</h3>
+                <select name="attack" id="attack">
+                    {{#select attackRating}}
+                        {{#each (config "ratings") as | rating r|}}
+                            <option value="{{r}}">{{rating}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DOUBLE_TRAINING"}}</h3>
+                <input name="double-training" id="double-training" type="checkbox" />
+            </div>
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DOUBLE_FOCUS"}}</h3>
+                <input name="double-focus" id="double-focus" type="checkbox" />
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
+                <div class="dialog-value"><input name="bonusDice" id="bonusDice" type="number" value="{{bonusDice}}" />
+                </div>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSFOCUS"}}</h3>
+                <div class="dialog-value"><input name="bonusFocus" id="bonusFocus" type="number"
+                        value="{{bonusFocus}}" /></div>
+            </div>
+        </div>
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.BONUSDAMAGE"}}</h3>
+                <div class="dialog-value"><input name="bonusDamage" id="bonusDamage" type="number"
+                        value="{{combat.bonusDamage}}" /></div>
+            </div>
+        </div>
+        <input name="triggerToDamage" id="triggerToDamage" type="hidden" />
+
+
+        {{#if showDualWielding}}
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <h3>{{localize "DIALOG.DUAL_WIELDING"}}</h3>
+                    <input name="dual-wielding" id="dual-wielding" type="checkbox" />
+                </div>
+            </div>
+        {{/if}}
+
+    </div>
+
+
+
+
+
+    <div class="content-box non-dual">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.OPPONENT"}}</h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.DEFENCE"}}</h3>
+                <select name="defence" id="defence">
+                    {{#select primaryTarget.defence}}
+                        {{#each (config "ratings") as | rating r|}}
+                            <option value="{{r}}">{{rating}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ARMOUR"}}</h3>
+                <div class="dialog-value"><input name="armour" id="armour" type="number"
+                        value="{{primaryTarget.armour}}" /></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@ DUAL WIELDING @@@@@@@@@@@@@@@@@@@@@@@@-->
+    <div class="content-box dual weapon" style="display: none">
+        <div class="content-row">
+            <div class="entry-horizontal">
+                <h3>{{localize "DIALOG.DUAL_WEAPON"}}</h3>
+                <select name="dual-weapon" id="dual-weapon">
+                    {{#each otherWeapons as |weapon|}}
+                        <option value="{{weapon.id}}">{{weapon.name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="content-box dual primary" style="display: none">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.PRIMARY"}} <label class="target-name"
+                    data-token-id="{{primaryTarget.tokenId}}">{{#if primaryTarget.name}} ({{primaryTarget.name}})
+                    {{/if}}</label></h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.DEFENCE"}}</h3>
+                <select name="defence" id="defence">
+                    {{#select primaryTarget.defence}}
+                        {{#each (config "ratings") as | rating r|}}
+                            <option value="{{r}}">{{rating}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ARMOUR"}}</h3>
+                <div class="dialog-value"><input name="armour" id="armour" type="number"
+                        value="{{primaryTarget.armour}}" /></div>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.POOL"}}</h3>
+                <div class="dialog-value"><input name="primary-pool" class="pool" type="number" value="0" /></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-box dual secondary" style="display: none">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.SECONDARY"}} <label class="target-name"
+                    data-token-id="{{secondaryTarget.tokenId}}">{{#if secondaryTarget.name}} ({{secondaryTarget.name}})
+                    {{/if}}</label></h1>
+        </div>
+        <div class="content-row">
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.DEFENCE"}}</h3>
+                <select name="defence" id="defence">
+                    {{#select secondaryTarget.defence}}
+                        {{#each (config "ratings") as | rating r|}}
+                            <option value="{{r}}">{{rating}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.ARMOUR"}}</h3>
+                <div class="dialog-value"><input name="armour" id="armour" type="number"
+                        value="{{secondaryTarget.armour}}" /></div>
+            </div>
+            <div class="entry-vertical">
+                <h3>{{localize "DIALOG.POOL"}}</h3>
+                <div class="dialog-value"><input name="secondary-pool" class="pool" type="number" value="0" /></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+    <hr>
+</div>
+<div class="dialog-effects">
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.EFFECTS"}}</h1>
+        </div>
+        <div class="content-row">
+            <select class="effect-select" multiple>
+                {{#each condensedChanges as |change c|}}
+                    <option value={{c}} title="{{change.tooltip}}">&#8226; {{change.description}}</option>
+                {{/each}}
+            </select>
+        </div>
+    </div>
+</div>

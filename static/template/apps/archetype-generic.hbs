@@ -1,0 +1,46 @@
+<form>
+
+  <div class="form-group">
+    <label>{{localize "ARCHETYPE.ITEM.NAME"}}</label>
+    <input type="text" name="name" value="{{name}}">
+  </div>
+
+
+
+
+  {{#each filters as |filter f|}}
+    <hr>
+    <div class="form-group">
+      <label>{{localize "ARCHETYPE.ITEM.PROPERTY"}}</label>
+      <input type="text" class="property" value="{{filter.property}}" data-index="{{f}}">
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "ARCHETYPE.ITEM.FILTER"}}</label>
+      <select class="test" data-index="{{f}}">
+        {{#select filter.test}}
+          <option value=""></option>
+          <option value="lt">
+            << /option>
+          <option value="le">
+            <=< /option>
+          <option value="eq">==</option>
+          <option value="gt">></option>
+          <option value="ge">>=</option>
+        {{/select}}
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>{{localize "ARCHETYPE.ITEM.VALUE"}}</label>
+      <input type="text" class="value" value="{{filter.value}}" data-index="{{f}}">
+    </div>
+
+  {{/each}}
+
+  {{#if object.index}}
+    <a class="add-filter"><i class="fas fa-plus"></i> {{localize "ARCHETYPE.ITEM.ADD_FILTER"}}</a>
+  {{/if}}
+
+  <button> {{localize "BUTTON.SAVE"}} </button>
+</form>

@@ -1,0 +1,85 @@
+<form class="age-of-sigmar-soulbound sheet item">
+  <div class="sheet-body">
+    <div class="sheet-tabs tabs" data-group="primary">
+      <b class="item" data-tab="properties">{{localize "TAB.PROPERTIES"}}</b>
+      <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+    </div>
+    <div class="sheet-content">
+      <div class="tab" data-group="primary" data-tab="properties">
+
+        <div class="content-box" style="border-top:2px solid #7c6c42">
+          <div class="content-row">
+            <div class="entry-vertical">
+              <h3>{{localize "ZONE.COVER"}}</h3>
+              <div class="entry-inputs">
+                <select name="flags.age-of-sigmar-soulbound.cover">
+                  {{#select object.flags.age-of-sigmar-soulbound.cover}}
+                    <option value=""></option>
+                    {{#each (config "zoneCover") as |value k|}}
+                      <option value="{{k}}">{{value}}</option>
+                    {{/each}}
+                  {{/select}}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-row">
+            <div class="entry-vertical">
+              <h3>{{localize "ZONE.HAZARD"}}</h3>
+              <div class="entry-inputs">
+                <select name="flags.age-of-sigmar-soulbound.hazard">
+                  {{#select object.flags.age-of-sigmar-soulbound.hazard}}
+                    <option value=""></option>
+                    {{#each (config "zoneHazard") as |value k|}}
+                      <option value="{{k}}">{{value}}</option>
+                    {{/each}}
+                  {{/select}}
+                </select>
+              </div>
+            </div>
+            <div class="entry-vertical">
+              <h3>{{localize "ZONE.HAZARD_IGNORE_ARMOUR"}}</h3>
+              <div class="entry-inputs">
+                <input type="checkbox" name="flags.age-of-sigmar-soulbound.ignoreArmour" {{checked
+                  object.flags.age-of-sigmar-soulbound.ignoreArmour}} />
+              </div>
+            </div>
+          </div>
+
+          <div class="content-row">
+            <div class="entry-vertical">
+              <h3>{{localize "ZONE.OBSCURED"}}</h3>
+              <div class="entry-inputs">
+                <select name="flags.age-of-sigmar-soulbound.obscured">
+                  {{#select object.flags.age-of-sigmar-soulbound.obscured}}
+                    <option value=""></option>
+                    {{#each (config "zoneObscured") as |value k|}}
+                      <option value="{{k}}">{{value}}</option>
+                    {{/each}}
+                  {{/select}}
+                </select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="content-row">
+            <div class="entry-vertical">
+              <h3>{{localize "ZONE.DIFFICULT_TERRAIN"}}</h3>
+              <div class="entry-inputs">
+                <input type="checkbox" name="flags.age-of-sigmar-soulbound.difficult" {{checked
+                  object.flags.age-of-sigmar-soulbound.difficult}} />
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="tab" data-group="primary" data-tab="effects">
+        {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.hbs}}
+      </div>
+    </div>
+  </div>
+  <button type="submit"><i class="fas fa-save"></i> Save</button>
+</form>

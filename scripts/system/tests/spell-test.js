@@ -14,7 +14,7 @@ export default class SpellTest extends Test{
     }
 
     get template() {
-        return "systems/age-of-sigmar-soulbound/template/chat/spell/spell-roll.html"
+        return "systems/age-of-sigmar-soulbound/template/chat/spell/spell-roll.hbs"
     }
 
     computeResult()

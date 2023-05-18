@@ -27,7 +27,7 @@ export default class Test {
     }
 
     get template() {
-        return "systems/age-of-sigmar-soulbound/template/chat/base/base-roll.html"
+        return "systems/age-of-sigmar-soulbound/template/chat/base/base-roll.hbs"
     }
 
     static recreate(data)

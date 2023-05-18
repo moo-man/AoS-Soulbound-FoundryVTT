@@ -10,7 +10,7 @@ export default class ArchetypeGeneric extends FormApplication {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             id: "archetype-generic",
-            template: "systems/age-of-sigmar-soulbound/template/apps/archetype-generic.html",
+            template: "systems/age-of-sigmar-soulbound/template/apps/archetype-generic.hbs",
             height: "auto",
             width: 285,
             title: game.i18n.localize("HEADER.ARCHETYPE_GENERIC"),

@@ -1,0 +1,31 @@
+<div class="counter-app">
+  <div>
+    <div class="party">
+      <a class="party" style="{{#unless party}} visibility: hidden;{{/unless}}">
+        Linked to {{party.name}}
+      </a>
+    </div>
+    <div class="handle">
+      <i class="fas fa-grip-horizontal"></i>
+    </div>
+    <div class="counters">
+      <div class="counter">
+        <h3>{{localize "PARTY.SOULFIRE"}}</h3>
+        <div class="input-controls">
+          {{#if canEdit}} <a class="decr">-</a> {{/if}}
+          <input type="number" data-type="soulfire" value="{{soulfire}}" {{#unless canEdit}}disabled{{/unless}}>
+          {{#if canEdit}} <a class="incr">+</a>{{/if}}
+        </div>
+      </div>
+
+
+      <div class="counter">
+        <h3>{{localize "PARTY.DOOM"}}</h3>
+        <div class="input-controls">
+          <a {{#unless (isGM)}} style="visibility: hidden" {{/unless}} class="decr">-</a>
+          <input type="number" data-type="doom" value="{{doom}}" {{#unless (isGM)}}disabled{{/unless}}>
+          <a {{#unless (isGM)}} style="visibility: hidden" {{/unless}} class="incr">+</a>
+        </div>
+      </div>
+    </div>
+  </div>

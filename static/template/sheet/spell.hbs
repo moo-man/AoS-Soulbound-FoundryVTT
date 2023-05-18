@@ -1,0 +1,159 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="avatar">
+        <img class="profile-img" src="{{item.img}}" data-edit="img" data-tooltip="{{item.name}}" />
+    </div>
+    <div class="sheet-body">
+        <div class="sheet-header">
+            <h1><input name="name" type="text" value="{{item.name}}" /></h1>
+        </div>
+        <div class="sheet-subHeader">
+            <div class="entry-horizontal">
+                <h3>{{localize "SPELL.LORE"}}</h3>
+                <input name="system.lore" type="text" value="{{system.lore}}" />
+            </div>
+            <div class="segment-horizontal">
+                <h3>{{localize "SPELL.DN"}}</h3>
+                <input name="system.dn" type="text" value="{{system.dn}}" style="width:50px" />
+            </div>
+        </div>
+        <hr>
+        <div class="sheet-tabs tabs">
+            <b class="item" data-tab="description">{{localize "TAB.DESCRIPTION"}}</b>
+            <b class="item" data-tab="effects">{{localize "TAB.EFFECTS"}}</b>
+        </div>
+        <div class="sheet-content">
+            <div class="tab" data-tab="description">
+                <div class="content-box" style="border-top:2px solid #7c6c42">
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.TARGET"}}</h3>
+                            <input name="system.target" type="text" value="{{system.target}}" />
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.RANGE"}}</h3>
+                            <select name="system.range">
+                                {{#select system.range}}
+                                    <option value="special">{{localize "RANGE.SPECIAL"}}</option>
+                                    {{#each (config "range") as |range r|}}
+                                        <option value="{{r}}">{{range}}</option>
+                                    {{/each}}
+                                {{/select}}
+                            </select>
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.DURATION"}}</h3>
+                            <div class="entry-inputs">
+                                <input name="system.duration.value" type="text" value="{{system.duration.value}}" />
+                                <select name="system.duration.unit">
+                                    {{#select system.duration.unit}}
+                                        {{#each (config "durations") as |duration d|}}
+                                            <option value="{{d}}">{{duration}}</option>
+                                        {{/each}}
+                                    {{/select}}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.DAMAGE"}}</h3>
+                            <input name="system.damage" type="text" value="{{system.damage}}" />
+                        </div>
+                    </div>
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.TEST"}}</h3>
+                            <div class="entry-inputs">
+                                <input name="system.test.dn" type="text" placeholder="{{localize 'SPELL.DN'}}"
+                                    value="{{system.test.dn}}" />
+                                <select name="system.test.attribute">
+                                    {{#select system.test.attribute}}
+                                        <option value="">-</option>
+                                        {{#each (config "attributes") as |attribute a|}}
+                                            <option value="{{a}}">{{attribute}}</option>
+                                        {{/each}}
+                                    {{/select}}
+                                </select>
+                                <select name="system.test.skill">
+                                    {{#select system.test.skill}}
+                                        <option value="">-</option>
+                                        {{#each (config "skills") as |skill s|}}
+                                            <option value="{{s}}">{{skill}}</option>
+                                        {{/each}}
+                                    {{/select}}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-row">
+                        <div class="entry-vertical">
+                            <h3>{{localize "SPELL.OVERCAST"}} <a class="overcast-create"><i class="fas fa-plus"></i></a>
+                            </h3>
+                            {{#if system.overcasts.length}}
+                                <div class="entry-list">
+                                    <div class="entry-element overcasts">
+                                        <div class="ratio">{{localize "SPELL.OVERCAST_RATIO"}} <i
+                                                class="far fa-question-circle"
+                                                data-tooltip="{{localize 'SPELL.OVERCAST_RATIO_HELP'}}"></i></div>
+                                        <div>{{localize "SPELL.OVERCAST_INITIAL"}} <i class="far fa-question-circle"
+                                                data-tooltip="{{localize 'SPELL.OVERCAST_INITIAL_HELP'}}"></i></div>
+                                        <div>{{localize "SPELL.OVERCAST_PROPERTY"}} <i class="far fa-question-circle"
+                                                data-tooltip="{{localize 'SPELL.OVERCAST_PROPERTY_HELP'}}"></i></div>
+                                        <div>{{localize "SPELL.OVERCAST_TITLE"}} <i class="far fa-question-circle"
+                                                data-tooltip="{{localize 'SPELL.OVERCAST_TITLE_HELP'}}"></i></div>
+                                        <a style="width : 10px"></a>
+                                    </div>
+                                    {{#each system.overcasts as |overcast index|}}
+                                        <div class="entry-content">
+                                            <div class="entry-element overcasts" data-path="system.overcasts"
+                                                data-index="{{index}}">
+                                                <div class="ratio">
+                                                    <input data-path="ratio.success" placeholder="S" data-dtype="Number"
+                                                        type="number" value="{{overcast.ratio.success}}">
+                                                    :
+                                                    <input data-path="ratio.value" placeholder="V" data-dtype="Number"
+                                                        type="number" value="{{overcast.ratio.value}}">
+                                                </div>
+
+                                                <input type="number" data-dtype="Number" data-path="initial"
+                                                    value="{{overcast.initial}}"
+                                                    placeholder='{{localize "SPELL.OVERCAST_INITIAL"}}' {{#if
+                                                    overcast.initialDisabled}} disabled style="opacity:0.5" {{/if}}>
+
+                                                <input type="text" data-path="property"
+                                                    placeholder='{{localize "SPELL.OVERCAST_PROPERTY"}}'
+                                                    value="{{overcast.property}}">
+                                                <input type="text" data-path="title"
+                                                    placeholder='{{localize "SPELL.OVERCAST_TITLE"}}'
+                                                    value="{{overcast.title}}">
+                                                <a class="entry-delete"><i class="fas fa-times"></i></a>
+                                            </div>
+                                        </div>
+                                        <div class="entry-description">
+                                            <div class="entry-element overcasts" data-index="{{index}}">
+                                                <input type="text" data-path="description" placeholder="Description"
+                                                    value="{{overcast.description}}">
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    {{/each}}
+
+                                </div>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                <div class="content-box" style="height:100%">
+                    <div class="content-header">
+                        <h1>{{localize "TITLE.DESCRIPTION"}}</h1>
+                    </div>
+                    <div class="content-wrapper">
+                        {{editor enrichment.system.description target="system.description" engine="prosemirror" button=true owner=owner editable=editable}}
+                    </div>
+                </div>
+            </div>
+            <div class="tab" data-tab="effects">
+                {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.hbs}}
+            </div>
+        </div>
+    </div>
+</form>

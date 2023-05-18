@@ -1,0 +1,59 @@
+<form class="bug-report">
+    <div class="form-group">
+        <label>{{localize "Domain"}}</label>
+        <select class="domain">
+            <option value=""></option>
+            {{#select domains}}
+                {{#each domains as |domain index|}}
+                    <option value="{{index}}">{{domain}}</option>
+                {{/each}}
+            {{/select}}
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "Label"}}</label>
+        <select class="issue-label">
+            <option value=""></option>
+            <option value="bug">Bug</option>
+            <option value="data">Text or Data</option>
+            <option value="enhancement">Enhancement</option>
+            <option value="translation">Translation</option>
+            <option value="mod-incompat">Module Incompatibility</option>
+            <option value="effect">Effect Report</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "BUGREPORT.Contact"}}</label>
+        <input type="text" placeholder="{{localize 'BUGREPORT.ContactPlaceholder'}}" value="{{name}}" class="issuer">
+    </div>
+
+    <p class="notification warning publicity" style="display:none">{{{localize "BUGREPORT.Warning"}}}
+
+    <div class="form-group">
+        <label>{{localize "Title"}}</label>
+        <input type="text" class="bug-title">
+    </div>
+
+
+    <div class="form-group matching" style="display: none">
+        <label class="wide">{{localize "BUGREPORT.MatchingIssues"}}</label>
+        <div class="issue-list">
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="wide">{{localize "Description"}}</label>
+    </div>
+    <textarea placeholder="{{localize 'BUGREPORT.DescriptionPlaceholder'}}" class="bug-description"></textarea>
+
+    <div class='module-check'>
+    </div>
+
+    <div class="active-modules notification warning" style="display: none">
+        {{localize "BUGREPORT.ManyModules"}}
+    </div>
+    <button type="button" class="bug-submit">{{localize "Submit"}}</button>
+</form>

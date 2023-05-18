@@ -4,7 +4,7 @@ export default class MiracleTest extends Test{
 
 
     get template() {
-        return "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-roll.html"
+        return "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-roll.hbs"
     }
 
 

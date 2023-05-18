@@ -24,7 +24,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
   }
 
   get template() {
-    return `systems/age-of-sigmar-soulbound/template/sheet/${this.item.type}.html`
+    return `systems/age-of-sigmar-soulbound/template/sheet/${this.item.type}.hbs`
   }
 
   
@@ -248,7 +248,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
       let effectData = { label: this.item.name, icon: (this.item.img || "icons/svg/aura.svg") }
 
-      let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.html", effectData)
+      let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.hbs", effectData)
       let dialog = new Dialog({
         title: "Quick Effect",
         content: html,

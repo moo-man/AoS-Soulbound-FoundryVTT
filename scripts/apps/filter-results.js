@@ -8,7 +8,7 @@ export default class FilterResults extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "filter-results",
             title: game.i18n.localize("HEADER.FILTER_RESULTS"),
-            template: "systems/age-of-sigmar-soulbound/template/apps/filter-results.html",
+            template: "systems/age-of-sigmar-soulbound/template/apps/filter-results.hbs",
             width: 300,
             height: 800,
             resizable: true
