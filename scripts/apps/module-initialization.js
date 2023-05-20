@@ -9,15 +9,15 @@ export default class ModuleInitializer extends Dialog {
             module: game.modules.get(module),
             buttons: {
                 initialize: {
-                    label: "Initialize",
+                    label: game.i18n.localize("BUTTON.INITIALIZE"),
                     callback: async () => {
                         game.settings.set(module, "initialized", true)
                         await this.initialize()
-                        ui.notifications.notify(game.modules.get(module).title + ": Initialization Complete")
+                        ui.notifications.notify(game.modules.get(module).title + `: ${game.i18n.localize("INITIALIZER.Complete")}`)
                     }
                 },
                 update: {
-                    label: "Update",
+                    label: game.i18n.localize("BUTTON.UPDATE"),
                     condition : game.settings.get(module, "initialized"),
                     callback: async () => {
                         let updater = await game.aos.apps.ModuleUpdater.create(game.modules.get(module), this)
@@ -25,7 +25,7 @@ export default class ModuleInitializer extends Dialog {
                     }
                 },
                 delete : {
-                    label: "Delete",
+                    label: game.i18n.localize("BUTTON.DELETE"),
                     condition : game.settings.get(module, "initialized"),
                     callback: async () => {
                         this.deleteModuleContent(module);
@@ -35,7 +35,7 @@ export default class ModuleInitializer extends Dialog {
                     label: "No",
                     callback: () => {
                         game.settings.set(module, "initialized", true)
-                        ui.notifications.notify("Skipped Initialization.")
+                        ui.notifications.notify(game.i18n.localize("INITIALIZER.Skipped"))
                     }
                 }
             }
@@ -54,7 +54,6 @@ export default class ModuleInitializer extends Dialog {
         this.scenes = {};
         this.tables = {};
         this.moduleKey = module
-        // this.scenePacks = []
     }
 
     async initialize() {
