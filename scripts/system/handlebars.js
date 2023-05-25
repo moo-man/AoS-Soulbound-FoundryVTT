@@ -52,7 +52,10 @@ function registerHandlebarsHelpers() {
     })
 
     Handlebars.registerHelper("lookup", function (obj, key) {
-        return getProperty(obj, key)
+        if (obj[key])
+            return obj[key]
+        else 
+            return getProperty(obj, key)
     })
 
 
