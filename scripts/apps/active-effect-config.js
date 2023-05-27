@@ -1,8 +1,8 @@
 import EffectScriptConfig from "./effect-script.js"
 
 export default class AgeOfSigmarEffectSheet extends ActiveEffectConfig {
-    getData() {
-        let data = super.getData()
+    async getData() {
+        let data = await super.getData()
         data.equippableItem = this.object.item && this.object.item.equippable
         data.modes[6] = "Dialog Effect"
         data.modes[7] = "Targeter's Dialog Effect"
