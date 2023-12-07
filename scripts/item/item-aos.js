@@ -96,8 +96,8 @@ export class AgeOfSigmarItem extends Item {
         let existing = this.hasCondition(effect.id)
     
         if (!existing) {
-          effect.label = game.i18n.localize(effect.label)
-          effect["flags.core.statusId"] = effect.id;
+          effect.name = game.i18n.localize(effect.name)
+          effect.statuses = [effect.id];
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [effect])
         }
@@ -121,10 +121,9 @@ export class AgeOfSigmarItem extends Item {
     
     
       hasCondition(conditionKey) {
-        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        let existing = this.effects.find(e => e.statuses.has(conditionKey))
         return existing
-      }
-
+    }
 
 
     addToGroup(object)
@@ -304,18 +303,15 @@ export class AgeOfSigmarItem extends Item {
             return ""
     }
 
-    get Journal() {
-        return fromUuid(this.journal)
-    }
-
     async showInJournal() {
-        let journal = await this.Journal
-
-        if (journal instanceof JournalEntry)
-            return journal.sheet.render(true)
-        else if (journal instanceof JournalEntryPage) 
-            return journal.showInJournal()
-
+        let journal = await fromUuid(this.journal)
+        let page;
+        if (journal instanceof JournalEntryPage)
+        {
+            page = journal;
+            journal = journal.parent;
+        }
+        journal.sheet.render(true, {pageId : page?.id})
     }
 
     get difficultyNumber()

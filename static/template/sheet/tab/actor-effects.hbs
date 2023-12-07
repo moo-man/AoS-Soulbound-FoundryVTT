@@ -3,7 +3,7 @@
   <div class="condition-list">
     {{#each effects.conditions as |effect e|}}
       {{#unless (eq "dead" effect.key)}}
-        <div class="condition" data-tooltip={{effect.label}} data-key={{effect.key}} {{#unless
+        <div class="condition" data-tooltip={{effect.name}} data-key={{effect.key}} {{#unless
           effect.existing}}style="opacity:0.5" {{/unless}}>
           <a class="condition-click" data-tooltip="{{{effect.tooltip}}}"><img src="{{effect.img}}" /></a>
           <a class="condition-toggle">
@@ -31,7 +31,7 @@
             <div class="item-image">
               <img src={{effect.icon}} />
             </div>
-            <a class="effect-edit">{{effect.label}}</a>
+            <a class="effect-edit">{{effect.name}}</a>
           </div>
           <div class="item-property flex">{{effect.sourceName}}</div>
 
@@ -61,7 +61,7 @@
             <div class="item-image">
               <img src={{effect.icon}} />
             </div>
-            <a class="effect-edit">{{effect.label}}</a>
+            <a class="effect-edit">{{effect.name}}</a>
           </div>
           <div class="item-property flex">{{effect.sourceName}}</div>
 
@@ -89,7 +89,7 @@
             <div class="item-image">
               <img src={{effect.icon}} />
             </div>
-            <a class="effect-edit">{{effect.label}}</a>
+            <a class="effect-edit">{{effect.name}}</a>
           </div>
           <div class="item-property flex">{{effect.sourceName}}</div>
 

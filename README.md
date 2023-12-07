@@ -3,7 +3,7 @@ The **official** system for playing Age of Sigmar: Soulbound on [Foundry VTT](ht
 
 ![](https://img.shields.io/github/v/release/moo-man/AoS-Soulbound-FoundryVTT?label=Latest%20Version)
 ![](https://img.shields.io/github/downloads/moo-man/AoS-Soulbound-FoundryVTT/latest/age-of-sigmar-soulbound.zip?label=Downloads%20%28Latest%20Version%29)
-![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V10-orange)
+![](https://img.shields.io/badge/FoundryVTT%20Compatibility-V11-orange)
 
 ![repo-cover-soulbound](https://user-images.githubusercontent.com/28637157/145496204-852c373e-c785-4354-8f39-cba680b4b0c0.png)
 

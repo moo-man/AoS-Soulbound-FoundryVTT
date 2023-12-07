@@ -16,7 +16,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     apply(actor, change) {
         if (change.value.includes("@"))
         {
-            SoulboundUtility.log(`Deferring ${this.label} for ${this.parent?.name}`)
+            SoulboundUtility.log(`Deferring ${this.name} for ${this.parent?.name}`)
             if (change.value == "@doom" && !game.ready)
                 actor.postReadyEffects.push(change)
             else
@@ -24,7 +24,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
         else
         {
-            SoulboundUtility.log(`Applying ${this.label} to ${this.parent?.name}`)
+            SoulboundUtility.log(`Applying ${this.name} to ${this.parent?.name}`)
             super.apply(actor, change)
         }
     }
@@ -86,7 +86,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
 
             if (!dialogChange.conditional.description)
             {
-                dialogChange.conditional.description = this.label;
+                dialogChange.conditional.description = this.name;
             }
 
             if (target)
@@ -112,8 +112,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     {
         effectData.origin = test.actor.uuid
 
-        // Set statusId so that the icon shows on the token
-        setProperty(effectData, "flags.core.statusId", getProperty(effectData, "flags.core.statusId") || effectData.label.slugify())
+        effectData.statuses = effectData.statuses || effectData.name.slugify()
         
         if(!item)  
             item = test.item
@@ -185,7 +184,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
             {
                 let scene = game.scenes.get(data[1])
                 let drawing = scene.drawings.get(data[3])
-                let zone = drawing?.data?.text
+                let zone = drawing?.text
                 if (zone)
                     return zone
             }
@@ -205,7 +204,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     }
 
     get isCondition() {
-        return CONFIG.statusEffects.map(i => i.id).includes(this.getFlag("core", "statusId"))
+        return CONFIG.statusEffects.map(i => i.id).includes(Array.from(this.statuses)[0])
     }
 
     static get numericTypes() {

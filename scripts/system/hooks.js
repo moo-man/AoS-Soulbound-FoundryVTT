@@ -219,7 +219,7 @@ export default function registerHooks() {
 
         for (let effect of CONFIG.statusEffects)
         {
-            effect.label = game.i18n.localize(effect.label)
+            effect.name = game.i18n.localize(effect.name)
         }
 
 

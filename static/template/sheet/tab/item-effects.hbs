@@ -1,7 +1,7 @@
 <div class="effects">
     <div class="condition-list">
         {{#each conditions as |effect e|}}
-            <div class="condition" data-tooltip={{effect.label}} data-key={{effect.key}} {{#unless
+            <div class="condition" data-tooltip={{effect.name}} data-key={{effect.key}} {{#unless
                 effect.existing}}style="opacity:0.5" {{/unless}}>
                 <img src="{{effect.img}}" />
                 <a class="condition-toggle">
@@ -27,7 +27,7 @@
                         <div class="item-image">
                             <img src={{effect.icon}} />
                         </div>
-                        <a class="effect-edit">{{effect.label}}</a>
+                        <a class="effect-edit">{{effect.name}}</a>
                     </div>
                     <div class="item-controls">
                         <a class="item-control effect-delete"><i class="fas fa-trash"></i></a>

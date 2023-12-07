@@ -48,9 +48,10 @@
 
 #scenes-popout .directory-list .directory-item .document-name a,
 #sidebar #scenes .directory-list .directory-item .document-name a {
-    background: #000000d4;
+    background-color: rgba(24, 48, 81, 1);
+    color: white;
     border-radius: 2px;
-    border: 3px double #564d3a;
+    border: 1px double rgba(255,255,255, 0.2);
     padding: 10px;
     box-shadow: 0 0 5px #000000 inset;
     font-family: var(--actor-input-font-family);
@@ -58,7 +59,6 @@
     font-weight: var(--actor-input-font-weight);
     position: relative;
     top: -2px;
-    color: #CCC
 }
 
 #chat-log .message {
@@ -126,7 +126,6 @@
     color: darkslategrey;
     font-family: Quadrant-Regular;
     text-transform: uppercase;
-    text-shadow: 1px 1px whitesmoke;
 }
 
 .profile .item-profile img{
@@ -143,7 +142,8 @@
 }
 
 .journal-image img{
-    border: none
+    border: none;
+    object-fit: contain;
   } 
   .journal-image {
     display: flex; 
@@ -655,3 +655,35 @@
     margin-right: 5px;
   }
   
+
+  .document-resolver form {
+    height: 100%
+  }
+  
+  .document-resolver form > div {
+    height: calc(100% - 45px);
+    overflow: auto;
+  }
+  
+  .document-resolver .document {
+    height: 100px;
+    display: flex;
+    align-items: center;
+  
+  }
+  
+  .document-resolver .document img {
+    object-fit: contain;
+    flex: 0 0 100px;
+    width:100px;
+    height:100px;
+    padding: 10px;
+  }
+  
+  .document-resolver .document a {
+    flex : 1
+  }
+  
+  .document-resolver .document input {
+    flex : 0 0 20px
+  }

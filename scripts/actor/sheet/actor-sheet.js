@@ -39,9 +39,9 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
       async _handleEnrichment()
       {
           let enrichment = {}
-          enrichment["system.bio.background"] = await TextEditor.enrichHTML(this.actor.system.bio.background, {async: true})
-          enrichment["system.bio.connections"] = await TextEditor.enrichHTML(this.actor.system.bio.connections, {async: true})
-          enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true})
+          enrichment["system.bio.background"] = await TextEditor.enrichHTML(this.actor.system.bio.background, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          enrichment["system.bio.connections"] = await TextEditor.enrichHTML(this.actor.system.bio.connections, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
   
           return expandObject(enrichment)
       }
@@ -129,7 +129,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.disabled && !i.isCondition)
         effects.conditions = CONFIG.statusEffects.map(i => {
             return {
-                label : i.label,
+                name : i.name,
                 key : i.id,
                 img : i.icon,
                 existing : this.actor.hasCondition(i.id),
@@ -327,7 +327,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                         let label = html.find(".label").val()
                         let key = html.find(".key").val()
                         let value = parseInt(html.find(".modifier").val())
-                        effectData.label = label
+                        effectData.name = label
                         effectData.changes = [{key, mode, value}]
                         this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
                     }
@@ -386,7 +386,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const target = event.currentTarget.dataset["target"]
         const item = this.actor.items.get(div.data("itemId"));
-        item.update({[target] : !getProperty(item.data, target)})
+        item.update({[target] : !getProperty(item, target)})
     }
 
     async _onAttributeClick(event) {
@@ -498,7 +498,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let effect = CONFIG.statusEffects.find(i => i.id == key)
         if (effect)
         {
-            let journal = game.journal.getName(effect.label)
+            let journal = game.journal.getName(effect.name)
             if (journal)
                 journal.sheet.render(true)
         }
@@ -572,7 +572,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
         let effects = item.nonTransferEffects.map(i => i.toObject())
-        effects.forEach(i => i["flags.core.statusId"] = i.label.slugify())
+        effects.forEach(i => i.statuses =[i.name.slugify()])
         canvas.tokens.controlled.forEach(token => {
             token.actor.createEmbeddedDocuments("ActiveEffect", effects)
         })

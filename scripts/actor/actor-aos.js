@@ -22,7 +22,7 @@ export class AgeOfSigmarActor extends Actor {
             "prototypeToken.name" : data.name
         }
         if (data.type === "player") {
-            initData["prototypeToken.vision"] = true;
+            initData["prototypeToken.sight.enabled"] = true;
             initData["prototypeToken.actorLink"] = true;
         }
         else if (data.type === "npc") {
@@ -577,8 +577,8 @@ export class AgeOfSigmarActor extends Actor {
         let existing = this.hasCondition(effect.id)
     
         if (!existing) {
-          effect.label = game.i18n.localize(effect.label)
-          effect["flags.core.statusId"] = effect.id;
+          effect.name = game.i18n.localize(effect.name)
+          effect.statuses = [effect.id];
           effect.origin = options.origin || "";
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [effect])
@@ -605,9 +605,9 @@ export class AgeOfSigmarActor extends Actor {
     
     
       hasCondition(conditionKey) {
-        let existing = this.effects.find(i => i.getFlag("core", "statusId") == conditionKey)
+        let existing = this.effects.find(e => e.statuses.has(conditionKey))
         return existing
-      }
+    }
 
     async applyRend(damage, {magicWeapon = false}={}) {
 

@@ -179,7 +179,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     data.system = data.data.system; // project system data so that handlebars has the same name and value paths
     data.conditions = CONFIG.statusEffects.map(i => {
       return {
-        label: i.label,
+        name : i.name,
         key: i.id,
         img: i.icon,
         existing: this.item.hasCondition(i.id)
@@ -223,7 +223,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
   async _handleEnrichment()
   {
       let enrichment = {}
-      enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true})
+      enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, {async: true, secrets: this.item.isOwner, relativeTo: this.item})
 
       return expandObject(enrichment)
   }
@@ -260,7 +260,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
               let label = html.find(".label").val()
               let key = html.find(".key").val()
               let value = parseInt(html.find(".modifier").val())
-              effectData.label = label
+              effectData.name = label
               effectData.changes = [{ key, mode, value }]
               this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
             }
@@ -314,7 +314,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     html.find(".entry-delete").click(ev => {
       let index = parseInt($(ev.currentTarget).parents(".entry-element").attr("data-index"))
       let path = $(ev.currentTarget).parents(".entry-element").attr("data-path")
-      let array = duplicate(getProperty(this.item.data, path))
+      let array = duplicate(getProperty(this.item, path))
       array.splice(index, 1)
 
       return this.item.update({ [`${path}`]: array })
@@ -347,7 +347,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     html.find(".entry-element.talents,.equipment").mouseup(async ev => {
       let path = ev.currentTarget.dataset.path
       let index = Number(ev.currentTarget.dataset.index)
-      let array = duplicate(getProperty(this.item.data, path));
+      let array = duplicate(getProperty(this.item, path));
 
       let obj = array[index];
 

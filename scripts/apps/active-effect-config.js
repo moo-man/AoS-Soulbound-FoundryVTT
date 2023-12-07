@@ -39,6 +39,8 @@ export default class AgeOfSigmarEffectSheet extends ActiveEffectConfig {
         async _addEffectChange() {
             const idx = this.document.changes.length;
             super._addEffectChange().then(sheet => {
+                // Well this isn't good, forgot to fix the path here, I don't think I can change it without needing a migration
+                // I will just wait until the effect refactor to handle this
                 this.document.update({[`flags.wrath-and-glory.changeCondition.${idx}`] : {script : "", description : "", hide : ""}})
             })
         }

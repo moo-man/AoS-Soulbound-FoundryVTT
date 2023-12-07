@@ -72,15 +72,21 @@ input[type="time"]:focus {
 
 #playlists .global-control .playlist-header,
 li.folder.collapsed > .folder-header {
-    background: none
+    color: black;
+    background: none;
+    border-top: none;
+}
+
+.compendium li.folder > .folder-header h3 {
+    color: black;
+}
+
+.compendium .header-control {
+    color: black;
 }
 
 #playlists .sound-control {
     color: black;
-}
-
-li.folder > .folder-header h3 {
-    color: unset;
 }
 
 
@@ -132,14 +138,17 @@ li.directory-item.folder:not(.collapsed) {
 
 }
 
-
-#compendium h3 {
+#compendium .compendium-name {
     color: var(--color-text);
     font-family: var(--font-text);
     color: whitesmoke;
     border: 2px solid #7c6c42;
     background-image: url('./asset/image/header-background.webp');
     background-size: cover;
+}
+
+#compendium .source {
+    color: whitesmoke;
 }
 
 #compendium li.compendium-pack .compendium-footer {
