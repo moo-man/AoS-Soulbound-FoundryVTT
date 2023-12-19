@@ -305,7 +305,7 @@ AOS.systemEffects = {
 CONFIG.statusEffects = [
     {
         id : "blinded",
-        label : "CONDITION.BLINDED",
+        name : "CONDITION.BLINDED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 2},
@@ -321,12 +321,12 @@ CONFIG.statusEffects = [
     },
     {
         id : "charmed",
-        label : "CONDITION.CHARMED",
+        name : "CONDITION.CHARMED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/charmed.svg"
     },
     {
         id : "deafened",
-        label : "CONDITION.DEAFENED",
+        name : "CONDITION.DEAFENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
         changes : [{key: "bonusDice", mode : 6, value : -1}],
         flags : { 
@@ -337,7 +337,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "frightened",
-        label : "CONDITION.FRIGHTENED",
+        name : "CONDITION.FRIGHTENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
         changes : [{key: "bonusDice", mode : 6, value : -1}],
         flags : { 
@@ -353,7 +353,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "poisoned",
-        label : "CONDITION.POISONED",
+        name : "CONDITION.POISONED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
         changes : [{key: "bonusDice", mode : 6, value : -1}],
         flags : { 
@@ -364,7 +364,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "prone",
-        label : "CONDITION.PRONE",
+        name : "CONDITION.PRONE",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
         changes : [
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
@@ -373,7 +373,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "restrained",
-        label : "CONDITION.RESTRAINED",
+        name : "CONDITION.RESTRAINED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
         changes : [
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
@@ -383,7 +383,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "stunned",
-        label : "CONDITION.STUNNED",
+        name : "CONDITION.STUNNED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
             {key: "system.combat.speeds.foot", mode : 5, value : "slow"},
@@ -392,12 +392,12 @@ CONFIG.statusEffects = [
     },
     {
         id : "unconscious",
-        label : "CONDITION.UNCONSCIOUS",
+        name : "CONDITION.UNCONSCIOUS",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
     },
     {       
         id: "dead",
-        label: "EFFECT.StatusDead", // Foundry Default Text Key
+        name: "EFFECT.StatusDead", // Foundry Default Text Key
         icon: "systems/age-of-sigmar-soulbound/asset/icons/dead.svg"
     }
 ]
