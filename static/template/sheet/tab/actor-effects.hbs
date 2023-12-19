@@ -3,7 +3,7 @@
   <div class="condition-list">
     {{#each effects.conditions as |effect e|}}
       {{#unless (eq "dead" effect.key)}}
-        <div class="condition" data-tooltip={{effect.name}} data-key={{effect.key}} {{#unless
+        <div class="condition" data-tooltip="{{effect.name}}" data-key="{{effect.key}}" {{#unless
           effect.existing}}style="opacity:0.5" {{/unless}}>
           <a class="condition-click" data-tooltip="{{{effect.tooltip}}}"><img src="{{effect.img}}" /></a>
           <a class="condition-toggle">

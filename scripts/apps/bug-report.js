@@ -236,14 +236,10 @@ export default class BugReportFormSoulbound extends Application {
             data.issuer = $(form).find(".issuer")[0].value
             let label = $(form).find(".issue-label")[0].value;
 
-
             if (!data.domain || !data.title || !data.description)
                 return ui.notifications.error(game.i18n.localize("BugReport.ErrorForm"))
             if (!data.issuer)
                 return ui.notifications.error(game.i18n.localize("BugReport.ErrorName1"))
-
-            if (!data.issuer.includes("@") && !data.issuer.includes("#"))
-                return ui.notifications.notify(game.i18n.localize("BugReport.ErrorName2"))
 
             data.title = `[${this.domains[Number(data.domain)]}] ${data.title}`
             data.description = data.description + `<br/>**From**: ${data.issuer}`
@@ -255,15 +251,14 @@ export default class BugReportFormSoulbound extends Application {
 
             game.settings.set("age-of-sigmar-soulbound", "bugReportName", data.issuer);
 
-            let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m[0]))
+            let officialModules = Array.from(game.modules).filter(m => this.domainKeys.includes(m.id))
             
             let versions = `<br/>age-of-sigmar-soulbound: ${game.system.version}`
 
             for (let mod of officialModules)
             {
-                let modData = game.modules.get(mod[0]);
-                if (modData.active)
-                    versions = versions.concat(`<br/>${mod[0]}: ${modData.data.version}`)
+                if (mod.active)
+                    versions = versions.concat(`<br/>${mod.id}: ${mod.version}`)
             }
 
             data.description = data.description.concat(versions);
