@@ -348,7 +348,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "incapacitated",
-        label : "CONDITION.INCAPACITATED",
+        name : "CONDITION.INCAPACITATED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/incapacitated.svg"
     },
     {
