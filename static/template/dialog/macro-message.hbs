@@ -1,0 +1,19 @@
+<div class="age-of-sigmar-soulbound dialog">
+    <div class="content-box">
+        <div class="content-header">
+            <h1>{{localize "DIALOG.MACRO_EXISTS_TITLE"}}</h1>
+        </div>
+        <div class="content-column">
+            <p class="dialog-value">{{localize "DIALOG.MACRO_EXISTS" name=name type=type}}</p>
+            <p class="content-label-centered">{{localize "DIALOG.MACRO_EXISTS_AUTHOR"}}</p>
+            <p class="dialog-value">{{author}}</p>
+
+            {{#if owners}}
+            <p class="content-label-centered">{{localize "DIALOG.MACRO_EXISTS_OWNERS"}}</p>
+            {{#each owners as |owner|}}
+            <p class="dialog-value">{{owner}}</p>
+            {{/each}}
+            {{/if}}
+        </div>
+    </div>
+</div>

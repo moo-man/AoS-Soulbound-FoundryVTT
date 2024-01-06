@@ -26,6 +26,21 @@ export default function registerHooks() {
             }
         });
 
+        game.settings.register("age-of-sigmar-soulbound", "macroDuplication", {
+            name: "SETTING.MACRO_DUPLICATION",
+            hint: "SETTING.MACRO_DUPLICATION_HINT",
+            scope: "world",
+            config: true,
+            default: "block",
+            type: String,
+            restricted: true,
+            choices: {
+                "block": "SETTING.MACRO_DUPLICATION_BLOCK",
+                "warn": "SETTING.MACRO_DUPLICATION_WARN",
+                "allow": "SETTING.MACRO_DUPLICATION_ALLOW",
+            },
+        });
+
         game.settings.register("age-of-sigmar-soulbound", "systemMigrationVersion", {
             scope: "world",
             config: false,
@@ -101,7 +116,6 @@ export default function registerHooks() {
         type: Boolean
       });
 
-
         game.macro = AOS_MacroUtil;
 
         _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
@@ -150,33 +164,78 @@ export default function registerHooks() {
         }
     });
 
-    async function createMacro(bar, data, slot)
-    {
+    async function createMacro(bar, data, slot, force = false) {
         // Create item macro if rollable item - weapon, spell, prayer, trait, or skill
-        let document = await fromUuid(data.uuid)
+        const { documentName, name, type, id, img } = await fromUuid(data.uuid)
+        const { user: { id: userId, name: userName} } = game;
         let macro
-        if (document.documentName == "Item") {
-            let command = `game.macro.rollItemMacro("${document.name}", "${document.type}");`;
-            macro = game.macros.contents.find(m => (m.name === document.name) && (m.command === command));
-            if (!macro) {
+
+        if (documentName == "Item") {
+            const command = `game.macro.rollItemMacro("${name}", "${type}");`;
+            const duplicationFlag = game.settings.get("age-of-sigmar-soulbound", "macroDuplication");
+
+            macro = game.macros.contents.find(m => (m.name === name) && (m.command === command));
+
+            if (macro && !macro.canExecute && !force && duplicationFlag !== "allow") {
+                //  Macro with the same name and command already exists but user
+                //  does not have accees to run it
+                const { ownership, author: { id: authorId } } = macro;
+                const html = await renderTemplate(
+                    "systems/age-of-sigmar-soulbound/template/dialog/macro-message.hbs",
+                    {
+                        name,
+                        type,
+                        author: game.users.get(authorId)?.name,
+                        owners: Object.entries(ownership)
+                            .filter(([id, type]) => id !== authorId && type === 3)
+                            .map(([id]) => game.users.get(id)?.name),
+                    }
+                );
+
+                return new Dialog({
+                    title : game.i18n.localize("DIALOG.MACRO_EXISTS_TITLE"),
+                    content: html,
+                    buttons: {
+                        ...(duplicationFlag === "warn" && {
+                            createDuplicate: {
+                                label : game.i18n.localize("DIALOG.MACRO_EXISTS_CREATE_DUPLICATE"),
+                                callback: () => createMacro(bar, data, slot, true),
+                            }
+                        }),
+                        ok : {
+                            label: game.i18n.localize("DIALOG.MACRO_EXISTS_CREATE_ACKNOWLEDGE")
+                        },
+                    }
+                }).render(true);
+            }
+
+            if (!macro || force || duplicationFlag === "allow") {
                 macro = await Macro.create({
-                    name: document.name,
+                    name: !macro ? name : `${name} (${userName})`,
                     type: "script",
-                    img: document.img,
+                    img: img,
                     command: command
                 }, { displaySheet: false })
             }
         } 
-        else if (document.documentName == "Actor"){
+
+        else if (documentName == "Actor"){
             macro = await Macro.create({
-                name: document.name,
+                name: name,
                 type: "script",
-                img: document.img,
-                command: `game.actors.get("${document.id}").sheet.render(true)`
+                img: img,
+                command: `game.actors.get("${id}").sheet.render(true)`
             }, { displaySheet: false })
         }
-        if (macro)
+
+        if (macro) {
             game.user.assignHotbarMacro(macro, slot);
+
+            // If creation has been forced open edition
+            if (force) {
+                return new MacroConfig(macro).render(true);
+            }
+        }
     }
 
     /** Helpers  */
