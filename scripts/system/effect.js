@@ -157,7 +157,18 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
             else if (!change.value.includes("@UUID"))
                 change.value = 0
         }
-
+        if (test.result){
+           let id=effectData._id;
+	       let result=test.result;
+	       if (test.result[id]&&test.result[id].changes)//have overcasted fo improve effect
+	       {
+	          for (let key in result[id].changes){
+	        	if (effectData.changes[key]){
+	               effectData.changes[key].value=result[id].changes[key].value;
+		         }
+	           }
+	       }
+  	    }  
 
         return effectData
 
