@@ -127,22 +127,6 @@ export class AgeOfSigmarItem extends Item {
         return existing
     }
 
-
-    addToGroup(object)
-    {
-        let groups = duplicate(this.groups)
-        object.groupId = randomID()
-        groups.items.push(object)
-        return groups
-    }
-
-    resetGroups()
-    {
-        this.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
-    }
-
-
-
     async sendToChat() {
         const item = new CONFIG.Item.documentClass(this._source);
         if (item.img.includes("/unknown")) {

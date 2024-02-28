@@ -88,7 +88,7 @@ export class PlayerModel extends StandardActorModel
 
         if (apply)
         {
-            new game.aos.apps.CharacterCreation({actor: this, archetype}).render(true)
+            new game.aos.apps.CharacterCreation({actor: this.parent, archetype}).render(true)
         }
         else
         {

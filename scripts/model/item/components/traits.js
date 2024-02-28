@@ -8,7 +8,7 @@ export class TraitItemModel extends EquippableItemModel
     {
         let schema = super.defineSchema();
         schema.traits = new fields.ArrayField(new fields.SchemaField({
-            key : new fields.StringField(),
+            name : new fields.StringField(),
             value : new fields.StringField({nullable : true})
         }));
 

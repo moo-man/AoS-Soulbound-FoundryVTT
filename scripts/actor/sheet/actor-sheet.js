@@ -176,8 +176,8 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
                   return Dialog.confirm({
                       title: game.i18n.localize(this.actor.type == "player" ? "HEADER.CHARGEN" : "HEADER.ARCHETYPE_APPLY"),
                       content: `<p>${game.i18n.localize(this.actor.type == "player" ? "CHARGEN.PROMPT" : "ARCHETYPE.PROMPT")}</p>`,
-                      yes: () => this.actor.applyArchetype(item, true),
-                      no: () => this.actor.applyArchetype(item, false)
+                      yes: () => this.actor.system.applyArchetype(item, true),
+                      no: () => this.actor.system.applyArchetype(item, false)
                   })
               }
           }

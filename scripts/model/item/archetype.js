@@ -10,7 +10,7 @@ export class ArchetypeModel extends BaseItemModel
         schema.species = new fields.StringField();
         schema.aqua = new fields.NumberField();
 
-        schema.damage = new fields.SchemaField({
+        schema.attributes = new fields.SchemaField({
             body : new fields.NumberField(),
             mind : new fields.NumberField(),
             soul : new fields.NumberField(),
@@ -23,20 +23,30 @@ export class ArchetypeModel extends BaseItemModel
         });
 
         schema.talents = new fields.SchemaField({
-            core : new fields.ArrayField(ArchetypeItem),
-            list : new fields.ArrayField(ArchetypeItem),
+            core : new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeItem)),
+            list : new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeItem)),
             choose : new fields.NumberField(),
         }); 
 
-        schema.equipment = new fields.ArrayField(ArchetypeItem),
+        schema.equipment = new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeItem)),
 
-        schema.groups = new fields.SchemaField({
-            type : new fields.StringField({initial : "and"}),
-            items : new fields.ArrayField(ArchetypeItem),
-            groupId : new fields.StringField({initial : "root"}),
-        });
+        schema.groups = new fields.ObjectField({});
         return schema;
     }
+
+    addToGroup(object)
+    {
+        let groups = duplicate(this.groups)
+        object.groupId = randomID()
+        groups.items.push(object)
+        return groups
+    }
+
+    resetGroups()
+    {
+        this.parent.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+    }
+
 }
 
 export class ArchetypeItem extends foundry.abstract.DataModel 
@@ -50,6 +60,11 @@ export class ArchetypeItem extends foundry.abstract.DataModel
         schema.groupId = new fields.StringField(),
         schema.index = new fields.NumberField(),
         schema.diff = new fields.ObjectField({})
+        schema.filters = new fields.ArrayField(new fields.SchemaField({
+            test : new fields.StringField(),
+            property : new fields.StringField(),
+            value : new fields.StringField(),
+        }))
         return schema;
     }
 }

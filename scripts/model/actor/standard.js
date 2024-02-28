@@ -25,9 +25,9 @@ export class StandardActorModel extends BaseActorModel
         return schema;
     }
 
-    async preCreateData(data, options) 
+    async preCreateData(data, options, user) 
     {
-        let preCreateData = await super.preCreateData(data, options);
+        let preCreateData = await super.preCreateData(data, options, user);
         if (!data.prototypeToken)
         {
             mergeObject(preCreateData, {

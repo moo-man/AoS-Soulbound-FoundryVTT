@@ -15,7 +15,7 @@ export class BaseActorModel extends foundry.abstract.DataModel
         return schema;
     }
     
-    async preCreateData(data) 
+    async preCreateData(data, options, user) 
     {
         let preCreateData = {};
         if (!data.prototypeToken)

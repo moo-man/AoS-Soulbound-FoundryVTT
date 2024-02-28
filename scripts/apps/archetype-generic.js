@@ -56,7 +56,7 @@ export default class ArchetypeGeneric extends FormApplication {
         {
             equipment.push(generic)
             // Add new index to groups (last index + 1)
-            groups = this.object.item.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
+            groups = this.object.item.system.addToGroup({type : "item", index : (equipment.length - 1 || 0)})
         }
 
 

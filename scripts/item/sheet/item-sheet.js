@@ -100,7 +100,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
         list.push(obj)
 
         // Add new index to groups (last index + 1)
-        let groups = this.item.addToGroup({type : "item", index : (list.length - 1 || 0)})
+        let groups = this.item.system.addToGroup({type : "item", index : (list.length - 1 || 0)})
         this.item.update({ "system.equipment": list, "system.groups": groups })
       }
     }
@@ -341,7 +341,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
     })
 
     html.find(".reset").click(ev => {
-      this.item.resetGroups();
+      this.item.system.resetGroups();
     })
 
     html.find(".entry-element.talents,.equipment").mouseup(async ev => {
@@ -379,7 +379,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
                   array.splice(index, 1)
                   await this.item.update({ [`${path}`]: array })
                   if (path.includes("equipment")) {
-                    this.item.resetGroups();
+                    this.item.system.resetGroups();
                   }
                 }
               },

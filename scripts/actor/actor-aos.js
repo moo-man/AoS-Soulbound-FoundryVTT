@@ -14,7 +14,7 @@ export class AgeOfSigmarActor extends Actor {
         
         await super._preCreate(data, options, user)
 
-        this.updateSource(await this.system.preCreateData())
+        this.updateSource(await this.system.preCreateData(data, options, user))
     }
 
     async _preUpdate(updateData, options, user) {
