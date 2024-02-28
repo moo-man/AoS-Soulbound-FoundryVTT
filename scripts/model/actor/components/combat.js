@@ -147,20 +147,20 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     addArmour(item) {
         if (item.system.subtype === "shield") {
             // Like below treat shield benefit as an step increase
-            this.defence.total += (item.system.benefit * 2);
+            this.defence.total += (parseInt(item.system.benefit) * 2);
         } else {
-            this.armour.value += item.system.benefit;
+            this.armour.value += parseInt(item.system.benefit);
         }
     }
 
     addAethericDevice(item) {
         if (item.armour > 0)
-            this.armour.value += item.system.armour
+            this.armour.value += parseInt(item.system.armour)
     }
 
     addWeapon(item)
     {
-        if(item.system.traitList.defensive)
+        if(item.system.traitList?.defensive)
             this.defence.total += 2;
     }
 

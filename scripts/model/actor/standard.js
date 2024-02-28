@@ -108,7 +108,7 @@ export class StandardActorModel extends BaseActorModel
                 {
                     this.power.consumed += item.system.power.consumption;
                     this.power.capacity += item.system.power.capacity;
-                    this.combat.addDevice(item);
+                    this.combat.addAethericDevice(item);
                 }
                 if (item.isWeapon) 
                 {

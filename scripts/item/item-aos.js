@@ -150,7 +150,15 @@ export class AgeOfSigmarItem extends Item {
     {
         return {text : this.description}
     }
+    
+    
+    get Traits () {
+        return this.system.Traits
+    }
 
+    get traitList () {
+        return this.system.traitList
+    }
 
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get State() {
@@ -170,38 +178,6 @@ export class AgeOfSigmarItem extends Item {
             default:
                 return game.i18n.localize("HEADER.STATE");
         }
-    }
-
-    
-
-    get Traits () {
-        return Object.values(this.traitList).map(i => i.display)
-    }
-
-    get traitList () {
-        let traits = {}
-        if (!this.traits || !Array.isArray(this.traits))
-            return []
-        this.traits.forEach(i => {
-
-            if (i.custom) 
-            {
-                traits[i.name] = duplicate(i)
-            }
-            else 
-            {
-                traits[i.name] = {
-                    name : i.name,
-                    display : game.aos.config.traits[i.name]
-                }
-                if (game.aos.config.traitsWithValue.includes(i.name))
-                {
-                    traits[i.name].rating = i.value;
-                    traits[i.name].display += ` (${i.value})`
-                }
-            }   
-        })
-        return traits
     }
 
     get DN() {

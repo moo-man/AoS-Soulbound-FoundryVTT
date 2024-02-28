@@ -25,6 +25,7 @@ export class SpellModel extends StandardItemModel
             }),
             property : new fields.StringField(),
             description : new fields.StringField(),
+            title : new fields.StringField()
         }));
         schema.effect = new fields.StringField();
         schema.lore = new fields.StringField();

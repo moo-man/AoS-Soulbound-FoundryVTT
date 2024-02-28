@@ -619,7 +619,7 @@ export class SpellDialog extends RollDialog {
         let data = super._dialogData(actor, attribute, skill)
         mergeObject(data, spell.difficultyNumber)
         data.spell = spell
-        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget")) {
+        if (game.settings.get("age-of-sigmar-soulbound", "loseTarget") && canvas.scene) {
             game.user.updateTokenTargets([])
         }
         return data
