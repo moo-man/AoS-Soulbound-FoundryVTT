@@ -23,6 +23,19 @@ import TagManager from "./system/tag-manager.js";
 import ZoneConfig from "./apps/zone-config.js";
 import CharacterCreation from "./apps/character-creation.js";
 import { Level4TextPageSheet } from "./apps/journal-sheet.js";
+import { PlayerModel } from "./model/actor/player.js";
+import { NPCModel } from "./model/actor/npc.js";
+import { PartyModel } from "./model/actor/party.js";
+import { AethericDeviceModel } from "./model/item/aethericDevice.js";
+import { ArmourModel } from "./model/item/armour.js";
+import { EquipmentModel } from "./model/item/equipment.js";
+import { MiracleModel } from "./model/item/miracle.js";
+import { RuneModel } from "./model/item/rune.js";
+import { SpellModel } from "./model/item/spell.js";
+import { TalentModel } from "./model/item/talent.js";
+import { WeaponModel } from "./model/item/weapon.js";
+import { PartyItemModel } from "./model/item/partyItem.js";
+import { ArchetypeModel } from "./model/item/archetype.js";
 
 Hooks.once("init", () => {
 
@@ -35,6 +48,24 @@ Hooks.once("init", () => {
     CONFIG.Actor.documentClass = AgeOfSigmarActor;
     CONFIG.Item.documentClass = AgeOfSigmarItem;
     CONFIG.ActiveEffect.documentClass = AgeOfSigmarEffect
+
+    CONFIG.Actor.dataModels["player"] = PlayerModel;
+    CONFIG.Actor.dataModels["npc"] = NPCModel;
+    CONFIG.Actor.dataModels["party"] = PartyModel;
+
+    CONFIG.Item.dataModels["aethericDevice"] = AethericDeviceModel;
+    CONFIG.Item.dataModels["armour"] = ArmourModel;
+    CONFIG.Item.dataModels["equipment"] = EquipmentModel;
+    CONFIG.Item.dataModels["miracle"] = MiracleModel;
+    CONFIG.Item.dataModels["rune"] = RuneModel;
+    CONFIG.Item.dataModels["spell"] = SpellModel;
+    CONFIG.Item.dataModels["talent"] = TalentModel;
+    CONFIG.Item.dataModels["weapon"] = WeaponModel;
+    CONFIG.Item.dataModels["partyItem"] = PartyItemModel;
+    CONFIG.Item.dataModels["archetype"] = ArchetypeModel;
+
+
+
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
     Actors.registerSheet("age-of-sigmar-soulbound", NpcSheet, { types: ["npc"], makeDefault: true });

@@ -20,7 +20,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     async getData() {
         const data = await super.getData();
-        data.system = data.data.system; // project system data so that handlebars has the same name and value paths
+        data.system = data.actor.system;
         this.constructEffectLists(data)
         this.constructItemLists(data)
 
@@ -66,9 +66,11 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
 
     _orderSkills(sheetData)
     {
-        let skills = Object.values(sheetData.system.skills);        
-        skills.forEach(x => x.label = game.i18n.localize(x.label));
-        skills.sort((x, y) => x.label.localeCompare(y.label, game.i18n.lang));
+        for(let s in sheetData.system.skills)
+        {
+            sheetData.system.skills[s].label = game.i18n.localize(game.aos.config.skills[s]);
+        }
+        let skills = Object.values(sheetData.system.skills).sort((x, y) => x.label.localeCompare(y.label, game.i18n.lang));
 
         let middle = skills.length / 2;
         let i = 0;
@@ -98,19 +100,19 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let items = {}
         items.equipped = {}
 
-        items.aethericDevices = this.actor.getItemTypes("aethericDevice")
-        items.armour = this.actor.getItemTypes("armour")
-        items.equipment = this.actor.getItemTypes("equipment")
-        items.goals = this.actor.getItemTypes("partyItem").filter(i => i.category == "shortGoal" || i.category == "longGoal")
-        items.miracles = this.actor.getItemTypes("miracle")
-        items.runes = this.actor.getItemTypes("rune")
-        items.spells = this.actor.getItemTypes("spell")
-        items.talents = this.actor.getItemTypes("talent")
-        items.weapons = this.actor.getItemTypes("weapon")
-        items.partyItems = this.actor.getItemTypes("partyItem")
+        items.aethericDevices = this.actor.itemTypes["aethericDevice"]
+        items.armour = this.actor.itemTypes["armour"]
+        items.equipment = this.actor.itemTypes["equipment"]
+        items.goals = this.actor.itemTypes["partyItem"].filter(i => i.category == "shortGoal" || i.category == "longGoal")
+        items.miracles = this.actor.itemTypes["miracle"]
+        items.runes = this.actor.itemTypes["rune"]
+        items.spells = this.actor.itemTypes["spell"]
+        items.talents = this.actor.itemTypes["talent"]
+        items.weapons = this.actor.itemTypes["weapon"]
+        items.partyItems = this.actor.itemTypes["partyItem"]
 
-        items.equipped.weapons = this.actor.getItemTypes("weapon").filter(i => i.equipped)
-        items.equipped.armour = this.actor.getItemTypes("armour").filter(i => i.equipped)
+        items.equipped.weapons = this.actor.itemTypes["weapon"].filter(i => i.equipped)
+        items.equipped.armour = this.actor.itemTypes["armour"].filter(i => i.equipped)
 
         items.attacks = items.equipped.weapons.concat(items.aethericDevices.filter(i => i.damage && i.equipped))
 
@@ -437,7 +439,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         power.sendToChat()
     }
 
-    _onWoundCreate(ev) { return this.actor.addWound("", 0) }
+    _onWoundCreate(ev) { return this.actor.update(this.actor.system.combat.addWound("", 0)) }
 
     _onWoundDelete(ev)
     {

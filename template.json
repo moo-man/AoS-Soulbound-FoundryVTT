@@ -28,145 +28,169 @@
             "label": "SKILL.ARCANA",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "athletics": {
             "label": "SKILL.ATHLETICS",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "awareness": {
             "label": "SKILL.AWARENESS",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "ballisticSkill": {
             "label": "SKILL.BALLISTIC_SKILL",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "beastHandling": {
             "label": "SKILL.BEAST_HANDLING",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "soul"
           },
           "channelling": {
             "label": "SKILL.CHANNELLING",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "crafting": {
             "label": "SKILL.CRAFTING",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "determination": {
             "label": "SKILL.DETERMINATION",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "soul"
           },
           "devotion": {
             "label": "SKILL.DEVOTION",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "soul"
           },
           "dexterity": {
             "label": "SKILL.DEXTERITY",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "entertain": {
             "label": "SKILL.ENTERTAIN",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "soul"
           },
           "fortitude": {
             "label": "SKILL.FORTITUDE",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "guile": {
             "label": "SKILL.GUILE",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "intimidation": {
             "label": "SKILL.INTIMIDATION",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "soul"
           },
           "intuition": {
             "label": "SKILL.INTUITION",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "lore": {
             "label": "SKILL.LORE",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "medicine": {
             "label": "SKILL.MEDICINE",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "might": {
             "label": "SKILL.MIGHT",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "nature": {
             "label": "SKILL.NATURE",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "reflexes": {
             "label": "SKILL.REFLEXES",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "stealth": {
             "label": "SKILL.STEALTH",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           },
           "survival": {
             "label": "SKILL.SURVIVAL",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "theology": {
             "label": "SKILL.THEOLOGY",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "mind"
           },
           "weaponSkill": {
             "label": "SKILL.WEAPON_SKILL",
             "training": 0,
             "bonus": 0,
-            "focus": 0
+            "focus": 0,
+            "attribute" : "body"
           }
         }
       },

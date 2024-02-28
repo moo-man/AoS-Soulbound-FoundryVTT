@@ -171,7 +171,7 @@ AOS.zoneObscured = {
 AOS.Expcost = {
     talentsAndMiracles : 2,
     attributes : [0, 2, 7, 14, 23, 34, 47, 62],
-    skillAndFokus : [0, 1, 3, 7]
+    skillAndFocus : [0, 1, 3, 7]
 }
 
 AOS.partyItemCategories = {
