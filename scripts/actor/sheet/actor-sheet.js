@@ -170,19 +170,6 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
           {
               return this.actor.createEmbeddedDocuments("Item", [data.payload])
           }
-          else if (data.type == "Item") {
-              let item = await Item.implementation.fromDropData(data);
-
-              if (item.type == "archetype")
-              {
-                  return Dialog.confirm({
-                      title: game.i18n.localize(this.actor.type == "player" ? "HEADER.CHARGEN" : "HEADER.ARCHETYPE_APPLY"),
-                      content: `<p>${game.i18n.localize(this.actor.type == "player" ? "CHARGEN.PROMPT" : "ARCHETYPE.PROMPT")}</p>`,
-                      yes: () => this.actor.system.applyArchetype(item, true),
-                      no: () => this.actor.system.applyArchetype(item, false)
-                  })
-              }
-          }
           super._onDrop(ev)
       }
 

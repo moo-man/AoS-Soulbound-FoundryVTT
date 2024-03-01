@@ -46,11 +46,11 @@ export class StandardActorModel extends BaseActorModel
         // Prevent wounds from exceeding max
         if (hasProperty(data, "system.combat.health.toughness.value"))
         {
-            options.deltaToughness = data.system.combat.health.toughness.value - this.system.combat.health.toughness.value;
+            options.deltaToughness = data.system.combat.health.toughness.value - this.combat.health.toughness.value;
         }
         if (hasProperty(data, "system.combat.mettle.value"))
         {
-            options.deltaMettle = data.system.combat.mettle.value - this.system.combat.mettle.value;
+            options.deltaMettle = data.system.combat.mettle.value - this.combat.mettle.value;
         }
     }
 
@@ -128,10 +128,10 @@ export class StandardActorModel extends BaseActorModel
 
     get autoCalc() {
         return {
-            toughness : this.type == "player" || this.bio.type > 1,
-            mettle :  this.type == "player" || this.bio.type > 2,
-            wounds :  this.type == "player" || this.bio.type > 3,
-            tokenSize : !this.isSwarm && this.parent.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
+            toughness : true,
+            mettle : true,
+            wounds : true,
+            tokenSize : true
         }
     }
 

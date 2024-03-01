@@ -72,7 +72,7 @@
                     <div class="entry-vertical">
                         <h3>{{localize "ARCHETYPE.TALENTS"}}</h3>
                         <div class="entry-list">
-                            <h4>{{localize "ARCHETYPE.CORE_TALENTS"}}</h4>
+                            <label>{{localize "ARCHETYPE.CORE_TALENTS"}}</label>
                             <div class="inline-list">
                                 {{#each system.talents.core as |talent index|}}
                                     <div class="entry-content">
@@ -88,8 +88,8 @@
                         </div>
                         <hr>
                         <div class="entry-list">
-                            <h4>{{localize "ARCHETYPE.CHOOSE"}} <input type="number" name="system.talents.choose"
-                                    value="{{system.talents.choose}}" data-dtype="Number"></h4>
+                            <label>{{localize "ARCHETYPE.CHOOSE"}} <input type="number" name="system.talents.choose"
+                                    value="{{system.talents.choose}}" data-dtype="Number"></label>
                             <div class="inline-list">
                                 {{#each system.talents.list as |talent index|}}
                                     <div class="entry-content">

@@ -25,6 +25,13 @@ export class AgeOfSigmarItem extends Item {
         
     }
 
+    async _onCreate(data, options, user)
+    {
+        await super._onCreate(data, options, user);
+        await this.system.createChecks(data, options, user);
+    }
+
+
     /**
      * Override update to account for archetype parent
      */

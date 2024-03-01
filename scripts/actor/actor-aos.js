@@ -17,8 +17,15 @@ export class AgeOfSigmarActor extends Actor {
         this.updateSource(await this.system.preCreateData(data, options, user))
     }
 
+    async _onCreate(data, options, user)
+    {
+        await super._onCreate(data, options, user);
+        await this.system.createChecks(data, options, user);
+    }
+
     async _preUpdate(updateData, options, user) {
         await super._preUpdate(updateData, options, user)
+        await this.system.preUpdateChecks(updateData, options, user);
 
         // Treat the custom default token as a true default token
         // If you change the actor image from the default token, it will automatically set the same image to be the token image
@@ -26,6 +33,13 @@ export class AgeOfSigmarActor extends Actor {
             updateData["prototypeToken.texture.src"] = updateData.img;
         }
     }
+
+    async _onUpdate(data, options, user)
+    {
+        await super._onUpdate(data, options, user);
+        await this.update(await this.system.updateChecks(data, options));
+    }
+
 
     prepareBaseData() {
         this._itemTypes = null;

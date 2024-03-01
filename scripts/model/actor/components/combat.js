@@ -77,6 +77,11 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     compute() 
     {
         let parent = this.parent;
+
+        this.wounds.forEach(i => {
+            this.health.wounds.value += i.damage;
+        })
+
         // melee, accuracy and defence bonus is doubled to represent a one step increase
         this.melee.total +=             parent.attributes.body.value + parent.skills.weaponSkill.training + (this.melee.bonus * 2);
         this.accuracy.total +=          parent.attributes.mind.value + parent.skills.ballisticSkill.training + (this.accuracy.bonus * 2);
@@ -231,7 +236,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         let wounds = duplicate(this.wounds)
         wounds.unshift({type, damage})
 
-        TokenHelpers.displayScrollingText(-1, this.parent.parent, {wound : type})
+        TokenHelpers.displayScrollingText(-1, this.parent.parent, {color: "0xFF0000"})
 
         return {"system.combat.wounds" : wounds}
     }

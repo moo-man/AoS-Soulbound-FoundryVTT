@@ -47,17 +47,17 @@ export class NPCModel extends StandardActorModel
         let size = this.bio.size; 
 
         if(size <= 2) {
-            this.prototypeToken.height = 1;
-            this.prototypeToken.width = 1;
+            this.parent.prototypeToken.height = 1;
+            this.parent.prototypeToken.width = 1;
         } else if(size === 3) {
-            this.prototypeToken.height = 2;
-            this.prototypeToken.width = 2;
+            this.parent.prototypeToken.height = 2;
+            this.parent.prototypeToken.width = 2;
         } else if(size === 4) {
-            this.prototypeToken.height = 3;
-            this.prototypeToken.width = 3;
+            this.parent.prototypeToken.height = 3;
+            this.parent.prototypeToken.width = 3;
         } else if(size === 5) {
-            this.prototypeToken.height = 4;
-            this.prototypeToken.width = 4;
+            this.parent.prototypeToken.height = 4;
+            this.parent.prototypeToken.width = 4;
         }
     }
 
@@ -106,5 +106,13 @@ export class NPCModel extends StandardActorModel
 
     get isSwarm() {return this.bio === 0}
 
+    get autoCalc() {
+        return {
+            toughness : this.bio.type > 1,
+            mettle :  this.bio.type > 2,
+            wounds :  this.bio.type > 3,
+            tokenSize : !this.isSwarm && this.parent.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
+        }
+    }
 }
 

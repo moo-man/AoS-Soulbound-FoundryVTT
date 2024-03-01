@@ -47,6 +47,20 @@ export class ArchetypeModel extends BaseItemModel
         this.parent.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
     }
 
+    async createChecks(data, options, user)
+    {   
+        await super.createChecks(data, options, user);
+        if (this.parent.isOwned)
+        {
+            await Dialog.confirm({
+                title: game.i18n.localize(this.parent.actor.type == "player" ? "HEADER.CHARGEN" : "HEADER.ARCHETYPE_APPLY"),
+                content: `<p>${game.i18n.localize(this.parent.actor.type == "player" ? "CHARGEN.PROMPT" : "ARCHETYPE.PROMPT")}</p>`,
+                yes: () => this.parent.actor.system.applyArchetype(this.parent, true),
+                no: () => this.parent.actor.system.applyArchetype(this.parent, false)
+            })
+        }
+    }
+
 }
 
 export class ArchetypeItem extends foundry.abstract.DataModel 

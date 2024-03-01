@@ -92,8 +92,6 @@ export default class CharacterCreation extends FormApplication {
 
         let items = talents.concat(equipment).map(i => i.toObject())
 
-        items.push(this.archetype.toObject());
-
         await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
         this.actor.createEmbeddedDocuments("Item", items);
         this.close();

@@ -5,6 +5,7 @@ import Migration from "./migrations.js";
 import FoundryOverrides from "./overrides.js";
 import SoulboundUtility from "./utility.js"
 import BugReportFormSoulbound from "../apps/bug-report.js"
+import TokenHelpers from "./token-helpers.js";
 
 export default function registerHooks() {
     Hooks.once("init", () => {
@@ -298,7 +299,7 @@ export default function registerHooks() {
         if (actor.combat.mettle.value < actor.combat.mettle.max)
             actor.update({"system.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
         
-        let zones = game.aos.utility.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
+        let zones = TokenHelpers.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
         zones.forEach(z => {
             let hazard = z.getFlag("age-of-sigmar-soulbound", "hazard")
             let ignoreArmour = z.getFlag("age-of-sigmar-soulbound", "ignoreArmour")
@@ -325,11 +326,11 @@ export default function registerHooks() {
             {
                 for(let drawing of token.parent.drawings.contents)
                 {
-                    if (SoulboundUtility.pointInDrawing({x : newX, y: newY}, drawing) && !SoulboundUtility.pointInDrawing({x : oldX, y: oldY}, drawing))
+                    if (TokenHelpers.pointInDrawing({x : newX, y: newY}, drawing.object) && !TokenHelpers.pointInDrawing({x : oldX, y: oldY}, drawing.object))
                     {
                         token.actor.onEnterDrawing(drawing)
                     }
-                    else if (!SoulboundUtility.pointInDrawing({x : newX, y : newY}, drawing) && SoulboundUtility.pointInDrawing({x : oldX, y : oldY}, drawing))
+                    else if (!TokenHelpers.pointInDrawing({x : newX, y : newY}, drawing.object) && TokenHelpers.pointInDrawing({x : oldX, y : oldY}, drawing.object))
                     {
                         token.actor.onLeaveDrawing(drawing)
                     }

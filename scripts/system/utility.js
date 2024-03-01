@@ -97,67 +97,6 @@ export default class SoulboundUtility {
       }
     }
 
-    static tokensInDrawing(drawing) {
-      let scene = drawing.parent
-
-      return SoulboundUtility.containedTokenIds(drawing).map(t => scene.tokens.get(t))
-    }
-
-    static withinDrawings(token) {
-      let scene = token.parent
-      let drawings = scene.drawings.contents
-
-      return drawings.filter(d => SoulboundUtility.containedTokenIds(d).includes(token.id))
-    }
-
-    static tokenIsInDrawing(token, drawing)
-    {
-      return SoulboundUtility.tokensInDrawing(drawing).find(t => t.id == token.id)
-    }
-
-    static pointInDrawing({x, y}, drawing)
-    {
-      let points = []
-
-      // Polygon
-      if (drawing.type == "p")
-      {
-        points = drawing.points.map(i => {return {x: i[0] + drawing.x , y: i[1] + drawing.y}})
-      }
-
-      // Rectangle
-      else if (drawing.type == "r")
-      {
-        points = [
-          {x : drawing.x, y: drawing.y}, 
-          {x : drawing.x + drawing.width, y : drawing.y}, 
-          {x : drawing.x + drawing.width, y: drawing.y + drawing.height}, 
-          {x : drawing.x, y: drawing.y + drawing.height}
-        ]
-      }
-        
-      let poly
-
-      // Ellipse
-      if (drawing.type == "e")
-        poly = new PIXI.Ellipse(drawing.x + drawing.width /2 , drawing.y + drawing.height / 2, drawing.width/2, drawing.height/2 )
-      else
-        poly  = new PIXI.Polygon(points);
-
-      return poly.contains(x, y);
-    }
-
-    static containedTokenIds(drawing) {
-
-      let ids = [];
-      for (let token of canvas.tokens.placeables)
-      {
-        if(SoulboundUtility.pointInDrawing(token.center, drawing))
-          ids.push(token.document.id)
-      }
-      return ids
-    }
-
     static log(message, force=false, args) {
       if (CONFIG.debug.soulbound || force)
         console.log(`%cSoulbound` + `%c | ${message}`, "color: gold", "color: unset", args || "");
