@@ -89,21 +89,28 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.armour.value +=            this.armour.bonus;        
         this.initiative.total +=        parent.attributes.mind.value + parent.skills.awareness.training + parent.skills.reflexes.training + this.initiative.bonus;
         this.naturalAwareness.total +=  Math.ceil((parent.attributes.mind.value + parent.skills.awareness.training) / 2) + this.naturalAwareness.bonus;        
-        
-        if(this.parent.autoCalc.toughness) {
-            this.health.toughness.max += parent.attributes.body.value + parent.attributes.mind.value + parent.attributes.soul.value + this.health.toughness.bonus;
-        } else if(!this.isSwarm) {
+
+        if(this.parent.autoCalc.toughness) 
+        {
+        this.health.toughness.max += parent.attributes.body.value + parent.attributes.mind.value + parent.attributes.soul.value
+        } 
+        else if(!this.isSwarm) 
+        {
             this.health.toughness.max = 1;
         }
+        this.health.toughness.max += this.health.toughness.bonus;
         
-        if(this.parent.autoCalc.wounds) {
-            this.health.wounds.max += Math.ceil((parent.attributes.body.value + parent.attributes.mind.value + parent.attributes.soul.value) / 2) + this.health.wounds.bonus;
-            this.health.wounds.deadly = this.health.wounds.value >= this.health.wounds.max;
+        if(this.parent.autoCalc.wounds) 
+        {
+            this.health.wounds.max += Math.ceil((parent.attributes.body.value + parent.attributes.mind.value + parent.attributes.soul.value) / 2);
         }
-
+        this.health.wounds.max += this.health.wounds.bonus;
+        this.health.wounds.deadly = this.health.wounds.value >= this.health.wounds.max;
+        
         if(this.parent.autoCalc.mettle) {
-            this.mettle.max += Math.ceil(parent.attributes.soul.value / 2) + this.mettle.bonus;
+            this.mettle.max += Math.ceil(parent.attributes.soul.value / 2);
         }
+        this.mettle.max += this.mettle.bonus;
     }
 
     
