@@ -159,7 +159,8 @@ export default function registerHooks() {
         if (document.documentName == "Item") {
             let command = `game.macro.rollItemMacro("${document.name}", "${document.type}");`;
             macro = game.macros.contents.find(m => (m.name === document.name) && (m.command === command));
-            if (!macro) {
+
+            if (!macro || !macro.canExecute) {
                 macro = await Macro.create({
                     name: document.name,
                     type: "script",
