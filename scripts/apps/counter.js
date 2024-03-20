@@ -151,7 +151,7 @@ export default class SoulboundCounter extends Application {
       // Some actors have effects based on doom, rerender their sheets to reflect the change
       if (type == "doom")
         Object.values(ui.windows).filter(i => i instanceof ActorSheet).forEach(s => {
-          s.actor.prepareData()
+          s.actor.reset()
           s.render(true)
         })
 
