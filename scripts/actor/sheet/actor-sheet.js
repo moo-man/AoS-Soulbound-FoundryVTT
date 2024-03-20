@@ -42,6 +42,11 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
           enrichment["system.bio.background"] = await TextEditor.enrichHTML(this.actor.system.bio.background, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
           enrichment["system.bio.connections"] = await TextEditor.enrichHTML(this.actor.system.bio.connections, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
           enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          enrichment.items = {}
+          for(let item of this.actor.items)
+          {
+            enrichment.items[item.id] = await TextEditor.enrichHTML(item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: item})
+          }
   
           return expandObject(enrichment)
       }
@@ -190,6 +195,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".item-edit-right").contextmenu(this._onItemEdit.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find(".item-post").click(this._onItemPost.bind(this));
+        html.find(".state").click(ev => this._onStateClick(ev));
         //html.find(".item-property").click(this._onChangeItemProperty.bind(this));
         html.find(".effect-create").click(this._onEffectCreate.bind(this));  
         html.find(".effect-edit").click(this._onEffectEdit.bind(this));  
@@ -351,6 +357,13 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         let effect = this.object.effects.get(id)
 
         effect.update({"disabled" : !effect.disabled})
+    }
+
+    _onStateClick(event) {
+        const div = $(event.currentTarget).parents(".item");
+        const id = div.data("itemId");
+        let item = this.actor.items.get(id)
+        return item.update({"system.state" : !item.system.state})
     }
 
     _onItemStateUpdate(event) {

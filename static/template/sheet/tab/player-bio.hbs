@@ -67,10 +67,10 @@
         <div class="item" data-item-id="{{item.id}}">
             <div class="item-content">
                 {{#if item.state}}
-                    <a class="item-property fit completed active" data-tooltip="{{localize 'GOAL.COMPLETED'}}"><i
+                    <a class="state item-property fit completed active" data-tooltip="{{localize 'GOAL.COMPLETED'}}"><i
                             class="far fa-check-circle"></i></a>
                 {{else}}
-                    <a class="item-property fit" data-tooltip="{{localize 'GOAL.IN_PROGRESS'}}"><i
+                    <a class="state item-property fit" data-tooltip="{{localize 'GOAL.IN_PROGRESS'}}"><i
                             class="far fa-circle"></i></a>
                 {{/if}}
                 <div class="item-property item-name">
@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="item-content">
-                <div class="item-property description dropdown-target">{{{enrich item.description}}}</div>
+                <div class="item-property description dropdown-target">{{{lookup ../enrichment item.id}}}</div>
             </div>
         </div>
     {{/each}}

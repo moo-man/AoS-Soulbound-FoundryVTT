@@ -15,7 +15,7 @@ export class PartyModel extends BaseActorModel
         schema.doom = new fields.SchemaField({ 
             value : new fields.NumberField({min: 0})
         });
-        schema.members = new fields.ArrayField({});
+        schema.members = new fields.ArrayField(new fields.StringField());
         return schema;
     }
 }

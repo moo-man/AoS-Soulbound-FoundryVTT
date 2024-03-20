@@ -7,7 +7,7 @@ export class PartyItemModel extends StandardItemModel
     {
         let schema = super.defineSchema();
         schema.category = new fields.StringField({initial: "resource"});
-        schema.state = new fields.BooleanField();
+        schema.state = new fields.BooleanField({initial : true});
         return schema;
     }
 }

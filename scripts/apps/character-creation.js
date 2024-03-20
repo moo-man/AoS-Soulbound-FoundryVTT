@@ -51,14 +51,13 @@ export default class CharacterCreation extends FormApplication {
         data.archetype = this.archetype;
         data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new AgeOfSigmarItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
         data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new AgeOfSigmarItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.talentDescriptions = await this.handleTalentEnrichment(data.coreTalents.concat(data.chooseTalents));
         data.equipmentHTML = this.constructEquipmentHTML();
         return data
     }
 
 
     async _updateObject(ev, formData) {
-
-
         let proceed = await this.validateForm()
         if (!proceed) {
             this._submitting = false;
@@ -225,6 +224,16 @@ export default class CharacterCreation extends FormApplication {
 
         html += groupToHTML(ArchetypeGroups.groupIndexToObjects(this.archetype.groups, this.archetype), html)
         return html;
+    }
+
+    async handleTalentEnrichment(talents)
+    {
+        let descriptions = {};
+        for(let item of talents)
+        {
+          descriptions[item.id] = await TextEditor.enrichHTML(item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: item})
+        }
+        return descriptions
     }
 
     /**

@@ -49,7 +49,6 @@ export class PartySheet extends AgeOfSigmarActorSheet {
 
     activateListeners(html) {
         super.activateListeners(html);
-        html.find(".completed").click(ev => this._onStateClick(ev));
         html.find(".member-delete").click(ev => this._onMemberDelete(ev));
         html.find(".member-click").click(ev => this._onMemberClick(ev));
         html.find(".item-edit").mousedown(ev => this._onAllyEnemyClick(ev));
@@ -77,13 +76,6 @@ export class PartySheet extends AgeOfSigmarActorSheet {
             ].concat(buttons);
         }
         return buttons;
-    }
-
-    _onStateClick(event) {
-        const div = $(event.currentTarget).parents(".item");
-        const id = div.data("itemId");
-        let item = this.actor.items.get(id)
-        return item.update({"system.state" : !item.state})
     }
 
     async _onDrop(event) {        
@@ -114,7 +106,7 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const memberId = div.data("itemId");
         let members = this.actor.members.filter(i => i != memberId)
-        await this.actor.update({ 'data.members': members,});
+        await this.actor.update({ 'system.members': members,});
     }
 
     async _addMembers(actor) {
@@ -122,7 +114,7 @@ export class PartySheet extends AgeOfSigmarActorSheet {
         if (!members.includes(actor.id))
         {
             members.push(actor.id)
-            await this.actor.update({ 'data.members': members});
+            await this.actor.update({ 'system.members': members});
         }
     }
 
