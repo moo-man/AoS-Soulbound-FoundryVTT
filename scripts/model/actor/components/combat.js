@@ -29,13 +29,16 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             bonus : new fields.NumberField({initial : 0}),
         });
         schema.melee = new fields.SchemaField({
-            bonus : new fields.NumberField({initial : 0})
+            bonus : new fields.NumberField({initial : 0}),
+            max : new fields.NumberField({initial : 6})
         });
         schema.accuracy = new fields.SchemaField({
-            bonus : new fields.NumberField({initial : 0})
+            bonus : new fields.NumberField({initial : 0}),
+            max : new fields.NumberField({initial : 6})
         });
         schema.defence = new fields.SchemaField({
-            bonus : new fields.NumberField({initial : 0})
+            bonus : new fields.NumberField({initial : 0}),
+            max : new fields.NumberField({initial : 6})
         });
         schema.armour = new fields.SchemaField({
             bonus : new fields.NumberField({initial : 0}),
@@ -78,10 +81,6 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     {
         let parent = this.parent;
 
-        this.wounds.forEach(i => {
-            this.health.wounds.value += i.damage;
-        })
-
         // melee, accuracy and defence bonus is doubled to represent a one step increase
         this.melee.total +=             parent.attributes.body.value + parent.skills.weaponSkill.training + (this.melee.bonus * 2);
         this.accuracy.total +=          parent.attributes.mind.value + parent.skills.ballisticSkill.training + (this.accuracy.bonus * 2);
@@ -113,6 +112,13 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.mettle.max += this.mettle.bonus;
     }
 
+    computeWounds()
+    {
+        this.wounds.forEach(i => {
+            this.health.wounds.value += i.damage;
+        })
+    }
+
     
     computeRelative() {
         this.melee.relative = this._getCombatLadderValue("melee");
@@ -134,6 +140,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             case 4: return `${game.i18n.localize("ABILITIES.GREAT")} (4)`;
             case 5: return `${game.i18n.localize("ABILITIES.SUPERB")} (5)`;
             case 6: return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (6)`;
+            case 7: return `${game.i18n.localize("ABILITIES.INCALCULABLE")} (7)`;
             default : return `${game.i18n.localize("ABILITIES.EXTRAORDINARY")} (${value})`;
         }
     }
@@ -141,19 +148,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     _getCombatLadderValue(combatStat) {
         let value = this[combatStat].total
 
-        if(value <= 2)
-            return 1;
-        else if(value <= 4) {
-            return 2;
-        } else if(value <= 6) {
-            return 3;
-        } else if(value <= 8) {
-            return 4;
-        } else if(value <= 10) {
-            return 5;
-        } else {
-            return 6;
-        }
+        return Math.clamped(Math.ceil(value / 2), 1, this[combatStat].max);
     }
 
     addArmour(item) {

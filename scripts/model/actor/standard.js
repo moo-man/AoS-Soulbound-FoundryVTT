@@ -85,6 +85,7 @@ export class StandardActorModel extends BaseActorModel
             this.doom = game.counter.doom // Add doom to actor data so it can be used with effects 
         }
         super.computeBase();
+        this.combat.computeWounds();
     }
 
     computeDerived() 
