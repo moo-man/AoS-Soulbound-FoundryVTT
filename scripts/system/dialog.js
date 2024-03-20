@@ -68,7 +68,7 @@ export class RollDialog extends Dialog {
             attributes : actor.attributes,
             skills : actor.skills,
             skillKey : skill,
-            attributeKey: skill ? game.aos.config.skillAttributes[skill] : attribute,
+            attributeKey: attribute || game.aos.config.skillAttributes[skill],
             difficulty : options.difficulty || 4,
             complexity : options.complexity || 1,
             bonusDice: options.bonusDice || 0, // some spells or miracles grant bonus dice 
@@ -377,7 +377,7 @@ export class CombatDialog extends RollDialog {
     static _dialogData(actor, weapon)
     {
         let skill = weapon.category === "melee" ? "weaponSkill" : "ballisticSkill"
-        let attribute = game.aos.config.skillAttributes[skill]
+        let attribute = weapon.system.attribute || game.aos.config.skillAttributes[skill]
         let data = super._dialogData(actor, attribute, skill)
         data.combat = {
             melee: actor.combat.melee.relative,
@@ -615,7 +615,7 @@ export class SpellDialog extends RollDialog {
     static _dialogData(actor, spell)
     {
         let skill = "channelling" 
-        let attribute = game.aos.config.skillAttributes[skill]
+        let attribute = spell.system.attribute || game.aos.config.skillAttributes[skill]
         let data = super._dialogData(actor, attribute, skill)
         mergeObject(data, spell.difficultyNumber)
         data.spell = spell

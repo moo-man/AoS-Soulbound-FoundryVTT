@@ -7,9 +7,9 @@
             <div class="entry-vertical">
                 <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
                 <select name="attribute" id="attribute">
-                    {{#select combat.attribute}}
-                        {{#each attributes as |attribute key|}}
-                            <option value="{{key}}">{{localize attribute.label}}</option>
+                    {{#select attributeKey}}
+                        {{#each (config "attributes")}}
+                            <option value="{{@key}}">{{this}}</option>
                         {{/each}}
                     {{/select}}
                 </select>

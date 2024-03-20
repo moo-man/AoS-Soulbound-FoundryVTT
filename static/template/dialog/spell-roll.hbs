@@ -37,8 +37,8 @@
                 <h3>{{localize "DIALOG.ATTRIBUTE"}}</h3>
                 <select id="attribute">
                     {{#select attributeKey}}
-                        {{#each attributes as |attribute key|}}
-                            <option value="{{key}}">{{localize attribute.label}}</option>
+                        {{#each (config "attributes")}}
+                            <option value="{{@key}}">{{this}}</option>
                         {{/each}}
                     {{/select}}
                 </select>

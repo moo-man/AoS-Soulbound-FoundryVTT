@@ -15,6 +15,16 @@
                 <h3>{{localize "SPELL.DN"}}</h3>
                 <input name="system.dn" type="text" value="{{system.dn}}" style="width:50px" />
             </div>
+            <div class="segment-horizontal">
+                <h3>{{localize "SPELL.ATTRIBUTE"}}</h3>
+                <select name="system.attribute">
+                    {{#select system.attribute}}
+                        {{#each (config "attributes")}}
+                            <option value="{{@key}}">{{this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
         </div>
         <hr>
         <div class="sheet-tabs tabs">
