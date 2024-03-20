@@ -22,8 +22,9 @@ export class SpellModel extends StandardItemModel
         schema.overcasts = new fields.ArrayField(new fields.SchemaField({
             ratio : new fields.SchemaField({
                 success : new fields.NumberField({min: 0, initial : 1}),
-                value : new fields.NumberField({min: 0, initial : 1}),
+                value : new fields.NumberField({initial : 1}),
             }),
+            initial : new fields.NumberField(),
             property : new fields.StringField(),
             description : new fields.StringField(),
             title : new fields.StringField()
