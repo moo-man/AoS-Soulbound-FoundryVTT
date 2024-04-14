@@ -15,12 +15,12 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         schema.health = new fields.SchemaField({
             toughness : new fields.SchemaField({
                 value : new fields.NumberField({initial: 0, min: 0}),
-                max : new fields$i.NumberField({initial: 0, min: 0}),
+                max : new fields.NumberField({initial: 0, min: 0}),
                 bonus : new fields.NumberField({initial : 0})
             }),
             wounds : new fields.SchemaField({
                 value : new fields.NumberField({initial: 0, min: 0}),
-                max : new fields$i.NumberField({initial: 0, min: 0}),
+                max : new fields.NumberField({initial: 0, min: 0}),
                 bonus : new fields.NumberField({initial: 0})
             })
         });
