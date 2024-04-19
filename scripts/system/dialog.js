@@ -384,7 +384,7 @@ export class CombatDialog extends RollDialog {
             accuracy: actor.combat.accuracy.relative,
             attribute: attribute ,
             skill: skill,
-            swarmDice: actor.type === "npc" && actor.isSwarm ? actor.combat.health.toughness.value : 0,
+            swarmDice: actor.type === "npc" && actor.isSwarm ? actor.system.combat.health.toughness.value : 0,
             bonusDamage : 0
         }
 

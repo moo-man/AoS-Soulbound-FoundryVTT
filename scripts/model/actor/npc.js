@@ -104,7 +104,7 @@ export class NPCModel extends StandardActorModel
         }
     }
 
-    get isSwarm() {return this.bio === 0}
+    get isSwarm() {return this.bio.type === 0}
 
     get autoCalc() {
         return {
