@@ -43,7 +43,7 @@ export default class Test {
     async rollTest() {
         this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
         this.testData.roll = this.roll.toJSON()
-        await this.roll.evaluate({async:true})  
+        await this.roll.evaluate()  
         this.roll.dice[0].results.forEach((result, i) => {
             result.index = i;
         })
@@ -182,7 +182,7 @@ export default class Test {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             speaker : this.context.speaker,
-            roll: this.roll,
+            rolls: [this.roll],
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
             flags: {
@@ -199,7 +199,7 @@ export default class Test {
         if (this.message && !newMessage)
         {
             // Updating with a roll object causes validation error
-            delete chatData.roll
+            delete chatData.rolls
             this.message.update(chatData)
         }
         else

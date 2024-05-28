@@ -152,7 +152,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     }
 
     addArmour(item) {
-        if (item.system.subtype === "shield") {
+        if (item.system.type === "shield") {
             // Like below treat shield benefit as an step increase
             this.defence.total += (parseInt(item.system.benefit) * 2);
         } else {
@@ -202,7 +202,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
      * creates and adds a wound based on how far the actors health has gone below zero
      * @param {int} remaining 
      */
-      async computeNewWound(remaining) {
+      computeNewWound(remaining) {
 
         if (remaining >= 0)
             return

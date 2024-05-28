@@ -538,7 +538,7 @@
   "WOUND.DEADLY": "Deadly Wound",
 
   "ERROR.ID": "ID for {name} already exists in collection. This Document has been given a unique ID.",
-  "ERROR.NoArchetypeItem": "No Archetype Item found.",
+  "ERROR.NoArchetypeItem": "No Archetype Item found on this Actor. Add an Archetype Item to fill in this field.",
   "ERROR.NotEnoughFocus": "Not enough Focus!",
   "ERROR.NotEnoughMettle": "Not enough Mettle!",
   "ERROR.NotEnoughSuccesses": "Not Enough Successes to Overcast",
