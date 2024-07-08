@@ -32,7 +32,7 @@ export class StandardActorModel extends BaseActorModel
         {
             mergeObject(preCreateData, {
                 "prototypeToken.bar1" :{ "attribute" : "combat.health.toughness" },
-                "prototypeToken.bar2" :{ "attribute" : "combat.health.wounds" }
+                "prototypeToken.bar2" :{ "attribute" : "combat.mettle" }
             });
         }
         return preCreateData;

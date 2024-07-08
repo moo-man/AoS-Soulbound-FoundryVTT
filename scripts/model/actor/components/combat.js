@@ -11,6 +11,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             value : new fields.NumberField({initial : 0, min : 0}),
             bonus : new fields.NumberField({initial : 0, min : 0}),
             regain : new fields.NumberField({initial : 0, min : 0}),
+            max : new fields.NumberField({initial: 0, min: 0}),
         });
         schema.health = new fields.SchemaField({
             toughness : new fields.SchemaField({
