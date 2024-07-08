@@ -166,7 +166,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
     // If this is a temp item with an archetype parent
     if (this.item.archetype) {
-      let list = duplicate(getProperty(this.item.archetype.data, this.item.archetypeItemPath))
+      let list = getProperty(this.item.archetype.toObject(), this.item.archetypeItemPath);
       let item = list[this.item.archetypeItemIndex];
       mergeObject(data.data, item.diff, { overwrite: true }) // Merge archetype diff with item data
       data.name = item.diff.name || data.item.name

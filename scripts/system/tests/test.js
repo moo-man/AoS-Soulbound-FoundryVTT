@@ -281,7 +281,7 @@ export default class Test {
     _testEffects(item) {
         if(!item)
             return []
-        return item.effects.filter(e => !e.data.transfer)
+        return item.effects.filter(e => !e.transfer)
     }
 
     _itemTest(item) {

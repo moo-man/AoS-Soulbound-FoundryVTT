@@ -46,7 +46,7 @@ export class AgeOfSigmarItem extends Item {
         if (this.archetype) {
             // Get the archetype's equipment, find the corresponding object, add to its diff
 
-            let list = duplicate(getProperty(this.archetype.data, this.archetypeItemPath))
+            let list = getProperty(this.archetype.toObject(), this.archetypeItemPath)
             let item = list[this.archetypeItemIndex];
             mergeObject( // Merge current diff with new diff
             item.diff,
