@@ -16,6 +16,7 @@ export class MiracleModel extends StandardItemModel
         schema.effect = new fields.StringField();
         schema.god = new fields.StringField();
         schema.test = new fields.EmbeddedDataField(TestDataModel);
+        schema.cost = new fields.NumberField();
 
         return schema;
     }
