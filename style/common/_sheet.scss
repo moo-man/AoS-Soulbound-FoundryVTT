@@ -2,31 +2,31 @@
 ** Actor
  */
 
- .age-of-sigmar-soulbound.sheet.actor form{
+ .soulbound.sheet.actor form{
     height: 100%
 }
 
 
-.age-of-sigmar-soulbound.sheet.actor .window-content {
+.soulbound.sheet.actor .window-content {
    background: url(./asset/image/background.webp) repeat;
    overflow:hidden;
 }
 
-.age-of-sigmar-soulbound.sheet.item .window-content {
+.soulbound.sheet.item .window-content {
    overflow:hidden;
 }
 
-.age-of-sigmar-soulbound.sheet.item .window-content form {
+.soulbound.sheet.item .window-content form {
    height: 100%
 }
 
 
-.age-of-sigmar-soulbound.sheet.item .window-content .sheet-content{
+.soulbound.sheet.item .window-content .sheet-content{
    height: calc(100% - 80px);
 }
 
 
-.age-of-sigmar-soulbound.sheet .sheet-body {
+.soulbound.sheet .sheet-body {
    display:flex;
    flex-direction: column;
    height:100%;
@@ -39,14 +39,14 @@
    height:90%;
 }
 
-.age-of-sigmar-soulbound.sheet .tab.active {
+.soulbound.sheet .tab.active {
    display:flex;
    flex-grow:1;
    flex-direction: column;
    height:100%; 
 }
 
-.age-of-sigmar-soulbound.sheet input {
+.soulbound.sheet input {
    border: none;
    border-radius:none;
    text-align: center;
@@ -56,7 +56,7 @@
    height:22px;
 }
 
-.age-of-sigmar-soulbound.sheet img {
+.soulbound.sheet img {
    border: none;
    border-radius:none;
    text-align: center;
@@ -77,7 +77,7 @@
    margin: 0px 0px 0px 72px;
 }
 
-.age-of-sigmar-soulbound.sheet.item .content-row.talent .entry-list h4 input {
+.soulbound.sheet.item .content-row.talent .entry-list h4 input {
     width: 25px;
     margin-left: 5px;
 }
@@ -196,7 +196,7 @@
    flex: 0 0 80px
 }
 
-.age-of-sigmar-soulbound.sheet .avatar {
+.soulbound.sheet .avatar {
    /*border: 2px solid #7c6c42;
     width:72px;
    height:72px;
@@ -208,7 +208,7 @@
    z-index: 100;
 }
 
-.age-of-sigmar-soulbound.sheet .avatar img {
+.soulbound.sheet .avatar img {
    border: 0 none;
    width: 72px;
    height: 72px;
@@ -318,66 +318,66 @@
    font-weight: bold;
 }
 
-.age-of-sigmar-soulbound.sheet .state{
+.soulbound.sheet .state{
    padding: 0px 4px;
 }
 
-.age-of-sigmar-soulbound.sheet .content-column.combat-misc .segment-horizontal {
+.soulbound.sheet .content-column.combat-misc .segment-horizontal {
    flex-grow: unset;
    margin: 5px;
 }
 
-.age-of-sigmar-soulbound.sheet .tabs {
+.soulbound.sheet .tabs {
     margin : 0 0 5px 0
  }
  
- .age-of-sigmar-soulbound.sheet .tabs .item {
+ .soulbound.sheet .tabs .item {
     flex-grow: 1;
     padding: 2px 0 0 0;
     border-bottom: 5px solid var(--color-header-gold);
  }
  
- .age-of-sigmar-soulbound.sheet .tabs .item.active {    
+ .soulbound.sheet .tabs .item.active {    
     text-shadow: 0 0 10px goldenrod;
     border: 2px solid var(--color-header-gold);
     border-bottom: none;
     padding: 0 0 5px 0;
  }
 
-.age-of-sigmar-soulbound.sheet .content-row.wounds-row {
+.soulbound.sheet .content-row.wounds-row {
    max-height: 115px;
 }
 
-.age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list {
+.soulbound.sheet .segment-vertical.wounds-list {
    overflow-y: auto
 } 
 
-.age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list .table-element {
+.soulbound.sheet .segment-vertical.wounds-list .table-element {
    flex-grow: unset
 } 
 
-.age-of-sigmar-soulbound.sheet .segment-vertical.wounds-list .table-element input {
+.soulbound.sheet .segment-vertical.wounds-list .table-element input {
    width: 30px;
 } 
 
-.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element{
+.soulbound.sheet .content-row.wounds-row .wounds-column .header-element{
    justify-content: unset;
 }
 
 
-.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element > *{
+.soulbound.sheet .content-row.wounds-row .wounds-column .header-element > *{
    flex: 1
 }
 
-.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element b{
+.soulbound.sheet .content-row.wounds-row .wounds-column .header-element b{
    padding-left: 20px;
 }
 
-.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element b.damage{
+.soulbound.sheet .content-row.wounds-row .wounds-column .header-element b.damage{
    padding-left: 50px;
 }
 
-.age-of-sigmar-soulbound.sheet .content-row.wounds-row .wounds-column .header-element .button{
+.soulbound.sheet .content-row.wounds-row .wounds-column .header-element .button{
    flex: 0 0 20px
 }
 
@@ -385,20 +385,20 @@
 
 /****** ITEM LISTS ******/
 
-.age-of-sigmar-soulbound.sheet .item-list-columns {
+.soulbound.sheet .item-list-columns {
    display: flex;
 }
-.age-of-sigmar-soulbound.sheet .item-list-columns > *{
+.soulbound.sheet .item-list-columns > *{
    margin: 0px 3px;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list-columns > .item-list:first-of-type{
+.soulbound.sheet .item-list-columns > .item-list:first-of-type{
    margin-left: 0px;
 }
-.age-of-sigmar-soulbound.sheet .item-list-columns > .item-list:last-of-type{
+.soulbound.sheet .item-list-columns > .item-list:last-of-type{
    margin-right: 0px;
 }
-   .age-of-sigmar-soulbound.sheet .item-list{
+   .soulbound.sheet .item-list{
    display: flex;
    flex-direction: column;
    background: url(./asset/image/input.webp) repeat;
@@ -406,7 +406,7 @@
    width: 100%
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-header{
+.soulbound.sheet .item-list .item-header{
    display:flex;
    position: relative;
    flex-direction: column;
@@ -420,19 +420,19 @@
    padding-left: 5px;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-header .absolute{
+.soulbound.sheet .item-list .item-header .absolute{
    position: absolute;
    right: 5px;
    top: 5px;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-header .header-columns{
+.soulbound.sheet .item-list .item-header .header-columns{
    display: flex;
    font-family: var(--font-text);
    width: 100%;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item{
+.soulbound.sheet .item-list .item{
    display:flex;
    flex-direction: column;
    align-items: center;
@@ -440,26 +440,26 @@
    border-bottom: 3px groove rgba(0, 0, 0, 0.05)
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item:last-of-type {
+.soulbound.sheet .item-list .item:last-of-type {
    border-bottom: none
 }
 
 
-.age-of-sigmar-soulbound.sheet .item-list .item-content {
+.soulbound.sheet .item-list .item-content {
    display:flex;
    flex-direction: row;
    align-items: center;
    width: 100%
 }
 
-.age-of-sigmar-soulbound.sheet .item-name .item-image {
+.soulbound.sheet .item-name .item-image {
    display: flex;
    align-items: center;
    justify-content: center;
 }
 
 
-.age-of-sigmar-soulbound.sheet .item-name .item-image img
+.soulbound.sheet .item-name .item-image img
 {
    width: 40px;
    height: 40px;
@@ -467,7 +467,7 @@
    min-height: 40px;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property.item-name{
+.soulbound.sheet .item-list .item-property.item-name{
    flex: 1;
    text-align: left;
    display: flex;
@@ -475,18 +475,18 @@
    font-weight: bold;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property.item-image{
+.soulbound.sheet .item-list .item-property.item-image{
    flex: 0 0 35px;
    height: 35px;
    width: 35px;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property.fit{
+.soulbound.sheet .item-list .item-property.fit{
    margin: 0px 3px 0px 0px;
    flex: unset
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-controls{
+.soulbound.sheet .item-list .item-controls{
    display: flex;
    align-items: center;
    justify-content: center;
@@ -497,84 +497,84 @@
 }
 
 
-.age-of-sigmar-soulbound.sheet .item-list .item-controls > *{
+.soulbound.sheet .item-list .item-controls > *{
    margin: 2px;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property{
+.soulbound.sheet .item-list .item-property{
    flex: 0 0 60px;
    text-align: center;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property.flex{
+.soulbound.sheet .item-list .item-property.flex{
    flex: 1;
     flex-wrap: wrap;
     justify-content: center;
     display: flex;
 }
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property.small{
+.soulbound.sheet .item-list .item-property.small{
    flex: 0 0 30px;
 }
 
 
-.age-of-sigmar-soulbound.sheet .item-list .item-property.long{
+.soulbound.sheet .item-list .item-property.long{
    flex: 0 0 150px;
 }
 
-.age-of-sigmar-soulbound.sheet .effects .item .item-property {
+.soulbound.sheet .effects .item .item-property {
    display:flex;
    align-items: center;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property.description {
+.soulbound.sheet .item .item-property.description {
    flex: 1;
    text-align: left;
    overflow: hidden;
 }
 
-.age-of-sigmar-soulbound.sheet .item-summary {
+.soulbound.sheet .item-summary {
    width: 100%;
    overflow-wrap: anywhere
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property .item-trait {
+.soulbound.sheet .item .item-property .item-trait {
    margin-left: 3px;
 }
 
-.age-of-sigmar-soulbound.sheet .item .item-property .item-trait:first-of-type {
+.soulbound.sheet .item .item-property .item-trait:first-of-type {
    margin-left: 0px;
 }
 
-.age-of-sigmar-soulbound.sheet .table-element-img img,
-   .age-of-sigmar-soulbound.sheet .segment-img img {
+.soulbound.sheet .table-element-img img,
+   .soulbound.sheet .segment-img img {
    width: 50px;
    height: 50px;
    min-width: 50px;
    min-height: 50px;
 }
 
-.age-of-sigmar-soulbound.sheet .effects .condition-list {
+.soulbound.sheet .effects .condition-list {
    display: flex;
    flex-direction: row;
    justify-content: space-evenly;
    align-items: center;
 }
 
-.age-of-sigmar-soulbound.sheet .effects .condition-list .condition {
+.soulbound.sheet .effects .condition-list .condition {
    display: flex;
    flex-direction: column;
    align-items: center;
    color: var(--color-border)
 }
 
-.age-of-sigmar-soulbound.sheet .effects .condition-list .condition img{
+.soulbound.sheet .effects .condition-list .condition img{
    width: 50px;
    height: 50px;
 }
 
 
-.age-of-sigmar-soulbound.sheet .content-box.item-description {
+.soulbound.sheet .content-box.item-description {
    height: calc(100% - 135px);
    .content-wrapper {
       height: calc(100% - 30px)
@@ -582,29 +582,29 @@
 }
 
 
-.age-of-sigmar-soulbound.sheet .content-box.power{
+.soulbound.sheet .content-box.power{
    flex: 1
 }
 
-.age-of-sigmar-soulbound.sheet .content-box.power .content-row{
+.soulbound.sheet .content-box.power .content-row{
    flex: 1
 }
 
-.age-of-sigmar-soulbound.sheet .power-bar-container {
+.soulbound.sheet .power-bar-container {
    width: 100%;
    height: 100%;
    /* border-radius: 10px; */
 }
 
-.age-of-sigmar-soulbound.sheet .power-bar-progress {
+.soulbound.sheet .power-bar-progress {
    /* border-radius: 10px; */
    height: 100%
 }
-.age-of-sigmar-soulbound.sheet .power-bar-progress.low {
+.soulbound.sheet .power-bar-progress.low {
    background: linear-gradient(slategrey, darkslategray);
 }
 
-.age-of-sigmar-soulbound.sheet .power-bar-progress.medium {
+.soulbound.sheet .power-bar-progress.medium {
    background: url(./asset/image/header-background-vertical.webp);
 
    -webkit-animation: glow-medium 1s ease-in-out infinite alternate;
@@ -622,7 +622,7 @@
    }
  }
 
-.age-of-sigmar-soulbound.sheet .power-bar-progress.high {
+.soulbound.sheet .power-bar-progress.high {
    background: url(./asset/image/foreground.webp);
 
    -webkit-animation: glow-high 0.5s ease-in-out infinite alternate;
@@ -639,7 +639,7 @@
    }
  }
 
- .age-of-sigmar-soulbound.sheet .power-bar-progress.over {
+ .soulbound.sheet .power-bar-progress.over {
    background: linear-gradient(red, darkred);
 
    -webkit-animation: glow-over 0.2s ease-in-out infinite alternate;

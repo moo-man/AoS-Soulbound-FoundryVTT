@@ -1,13 +1,13 @@
 import ItemTraits from "../../apps/item-traits.js";
-import { AgeOfSigmarItem } from "../item-aos.js";
+import { SoulboundItem } from "../item-soulbound.js";
 import ArchetypeGroups from "../../apps/archetype-groups.js"
 import ArchetypeGeneric from "../../apps/archetype-generic.js";
 
-export class AgeOfSigmarItemSheet extends ItemSheet {
+export class SoulboundItemSheet extends WarhammerSheetMixin(ItemSheet) {
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["age-of-sigmar-soulbound", "sheet", "item"],
+      classes: ["soulbound", "sheet", "item"],
       width: 420,
       height: 530,
       resizable: true,
@@ -234,55 +234,13 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
 
   activateListeners(html) {
     super.activateListeners(html)
+    
     html.find(".item-traits").click(ev => {
       new ItemTraits(this.item).render(true)
     })
 
     html.find(".configure-groups").click(ev => {
       new ArchetypeGroups(this.item).render(true)
-    })
-
-    html.find(".effect-create").click(async ev => {
-      if (this.item.isOwned)
-        ui.notifications.error("Effects can only be added to world items or actors directly")
-
-      let effectData = { label: this.item.name, icon: (this.item.img || "icons/svg/aura.svg") }
-
-      let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.hbs", effectData)
-      let dialog = new Dialog({
-        title: "Quick Effect",
-        content: html,
-        buttons: {
-          "create": {
-            label: "Create",
-            callback: html => {
-              let mode = 2
-              let label = html.find(".label").val()
-              let key = html.find(".key").val()
-              let value = parseInt(html.find(".modifier").val())
-              effectData.name = label
-              effectData.changes = [{ key, mode, value }]
-              this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
-            }
-          },
-          "skip": {
-            label: "Skip",
-            callback: () => this.object.createEmbeddedDocuments("ActiveEffect", [effectData])
-          }
-        }
-      })
-      await dialog._render(true)
-      dialog._element.find(".label").select()
-    })
-
-    html.find(".effect-edit").click(ev => {
-      let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-      this.object.effects.get(id).sheet.render(true)
-    })
-
-    html.find(".effect-delete").click(ev => {
-      let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-      this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
     })
 
     html.find(".condition-toggle").click(ev => {
@@ -365,7 +323,7 @@ export class AgeOfSigmarItemSheet extends ItemSheet {
             if (!item)
               throw Error("Could not find Item reference")
 
-            new AgeOfSigmarItem(item.toObject(), { archetype: { item: this.item, index, path} }).sheet.render(true, {editable : this.isEditable})
+            new SoulboundItem(item.toObject(), { archetype: { item: this.item, index, path} }).sheet.render(true, {editable : this.isEditable})
           }
         }
         else {

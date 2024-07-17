@@ -155,14 +155,14 @@ li.directory-item.folder:not(.collapsed) {
     color: var(--color-border)
 }
 
-.age-of-sigmar-soulbound.sheet.actor .window-content .fas:hover,
-.age-of-sigmar-soulbound.sheet.actor .window-content .button:hover,
-.age-of-sigmar-soulbound.sheet.actor .window-content .item-control:hover {
+.soulbound.sheet.actor .window-content .fas:hover,
+.soulbound.sheet.actor .window-content .button:hover,
+.soulbound.sheet.actor .window-content .item-control:hover {
     text-shadow: 0 0 10px var(--color-active);
     box-shadow: none;
 }
 
-.age-of-sigmar-soulbound h1 {
+.soulbound h1 {
     font-family: Quadrant-Regular;
     font-size: 14pt;
     font-weight: normal;
@@ -173,11 +173,11 @@ li.directory-item.folder:not(.collapsed) {
     text-align: center;
 }
 
-.age-of-sigmar-soulbound h2 {
+.soulbound h2 {
     color:whitesmoke;
 }
 
-.age-of-sigmar-soulbound h3 {
+.soulbound h3 {
     font-family: Quadrant-Regular;
     font-size: 10pt;
     font-weight: normal;
@@ -188,19 +188,19 @@ li.directory-item.folder:not(.collapsed) {
     border: none
 }
 
-.age-of-sigmar-soulbound .combat-misc h3 {
+.soulbound .combat-misc h3 {
     text-align: left;
 }
 
-.age-of-sigmar-soulbound h4 {
+.soulbound h4 {
     color: whitesmoke;
 }
 
-.age-of-sigmar-soulbound.sheet .editor{
+.soulbound.sheet .editor{
     height: 100%;
 }
 
-.age-of-sigmar-soulbound.sheet .tox{
+.soulbound.sheet .tox{
     display: flex;
     flex-direction: column;
     align-content: stretch;
@@ -208,11 +208,11 @@ li.directory-item.folder:not(.collapsed) {
     min-height: 550px;
 }
 
-.age-of-sigmar-soulbound.sheet .tox-edit-area{
+.soulbound.sheet .tox-edit-area{
     padding: 0px 7px;
 }
 
-.age-of-sigmar-soulbound.sheet .journal-entry-page.text{
+.soulbound.sheet .journal-entry-page.text{
     padding: 0px 7px;
 }
 
@@ -223,59 +223,13 @@ li.directory-item.folder:not(.collapsed) {
 .window-app.image-popout .window-content {
     background: url(./asset/image/background.webp) repeat;
 }
-.age-of-sigmar-soulbound.dialog {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    justify-content: stretch;
-    justify-items: stretch;
-}
 
 .dialog {
     justify-content: stretch;
 }
 
-.dialog .quick-effect > * {
-    margin: 5px;display: flex; align-items: center; justify-content: space-between;
-}
-
 .dialog .dialog-buttons{
     flex: 0 0 35px;
-}
-
-.roll-dialog .dialog-content {
-    display: flex;
-}
-
-.roll-dialog .dialog-content .content-box{
-    flex: 1
-}
-
-.roll-dialog .dialog-content .dialog{
-    flex: 0 0 340px
-}
-
-.roll-dialog .dialog-effects {
-    flex: 1
-}
-
-.roll-dialog .dialog-effects option{
-    white-space: normal;
-}
-
-
-.roll-dialog .dialog-effects .content-box{
-    height: calc(100% - 15px);
-    border-left: none;
-}
-
-.roll-dialog .dialog-effects .content-box .content-row{
-    border-right: 2px solid #7c6c42
-}
-
-.roll-dialog .dialog-effects .content-box select{
-    height: 100%;
-    width: 100%
 }
 
 .chat .target-name,
@@ -898,7 +852,7 @@ a.inline-roll i {
     }
 }
 
-.age-of-sigmar-soulbound .editor-content {
+.soulbound .editor-content {
     padding: 0px 5px
 }
 

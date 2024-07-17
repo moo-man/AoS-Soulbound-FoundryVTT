@@ -1,9 +1,9 @@
-import { AgeOfSigmarActor } from "./actor/actor-aos.js";
-import { AgeOfSigmarItem } from "./item/item-aos.js";
+import { SoulboundActor } from "./actor/actor-soulbound.js";
+import { SoulboundItem } from "./item/item-soulbound.js";
 import { PlayerSheet } from "./actor/sheet/player-sheet.js";
 import { NpcSheet } from "./actor/sheet/npc-sheet.js";
 import { PartySheet } from "./actor/sheet/party-sheet.js";
-import { AgeOfSigmarItemSheet } from "./item/sheet/item-sheet.js";
+import { SoulboundItemSheet } from "./item/sheet/item-sheet.js";
 import { initializeHandlebars } from "./system/handlebars.js";
 import hooks from "./system/hooks.js"
 import AOS from "./system/config.js"
@@ -14,8 +14,6 @@ import CombatTest from "./system/tests/combat-test.js";
 import SpellTest from "./system/tests/spell-test.js";
 import MiracleTest from "./system/tests/miracle-test.js";
 import ItemTraits from "./apps/item-traits.js"
-import AgeOfSigmarEffect from "./system/effect.js";
-import AgeOfSigmarEffectSheet from "./apps/active-effect-config.js";
 import SoulboundCounter from "./apps/counter.js";
 import ModuleUpdater from "./apps/module-updater.js";
 import ModuleInitializer from "./apps/module-initialization.js";
@@ -36,6 +34,9 @@ import { TalentModel } from "./model/item/talent.js";
 import { WeaponModel } from "./model/item/weapon.js";
 import { PartyItemModel } from "./model/item/partyItem.js";
 import { ArchetypeModel } from "./model/item/archetype.js";
+import SoulboundActiveEffectConfig from "./apps/active-effect-config.js";
+import SoulboundEffect from "./system/effect.js";
+import { SoulboundActiveEffectModel } from "./model/effect/effect.js";
 
 Hooks.once("init", () => {
 
@@ -45,9 +46,9 @@ Hooks.once("init", () => {
   SoulboundUtility.log("Development Mode: Logs on")
   //#endif
 
-    CONFIG.Actor.documentClass = AgeOfSigmarActor;
-    CONFIG.Item.documentClass = AgeOfSigmarItem;
-    CONFIG.ActiveEffect.documentClass = AgeOfSigmarEffect
+    CONFIG.Actor.documentClass = SoulboundActor;
+    CONFIG.Item.documentClass = SoulboundItem;
+    CONFIG.ActiveEffect.documentClass = SoulboundEffect
 
     CONFIG.Actor.dataModels["player"] = PlayerModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
@@ -64,15 +65,15 @@ Hooks.once("init", () => {
     CONFIG.Item.dataModels["partyItem"] = PartyItemModel;
     CONFIG.Item.dataModels["archetype"] = ArchetypeModel;
 
-
+    CONFIG.ActiveEffect.dataModels["base"] = SoulboundActiveEffectModel
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
     Actors.registerSheet("age-of-sigmar-soulbound", NpcSheet, { types: ["npc"], makeDefault: true });
     Actors.registerSheet("age-of-sigmar-soulbound", PartySheet, { types: ["party"], makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("age-of-sigmar-soulbound", AgeOfSigmarItemSheet, { makeDefault: true });
-    DocumentSheetConfig.registerSheet(ActiveEffect, "age-of-sigmar-soulbound", AgeOfSigmarEffectSheet, { makeDefault: true, label : "Soulbound Active Effect Config" });
+    Items.registerSheet("age-of-sigmar-soulbound", SoulboundItemSheet, { makeDefault: true });
+    DocumentSheetConfig.registerSheet(ActiveEffect, "age-of-sigmar-soulbound", SoulboundActiveEffectConfig, { makeDefault: true, label : "Soulbound Active Effect Config" });
     DocumentSheetConfig.registerSheet(JournalEntryPage, "age-of-sigmar-soulbound", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "Soulbound Journal Sheet" });
     initializeHandlebars();
     

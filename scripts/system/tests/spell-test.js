@@ -7,7 +7,6 @@ export default class SpellTest extends Test{
         super(data)
         if(data)
         {
-            this.testData.combat = data.combat
             this.testData.overcasts = {spent : 0, options : this.spell.overcasts}
         }
 

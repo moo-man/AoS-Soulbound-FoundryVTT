@@ -1,12 +1,12 @@
-import { AgeOfSigmarActorSheet } from "./actor-sheet.js";
+import { SoulboundActorSheet } from "./actor-sheet.js";
 
-export class PartySheet extends AgeOfSigmarActorSheet {
+export class PartySheet extends SoulboundActorSheet {
 
     static get defaultOptions() {
         let dragDrop = [...super.defaultOptions.dragDrop];
         dragDrop.push({ dropSelector: '.party' });
         return mergeObject(super.defaultOptions, {
-            classes: ["age-of-sigmar-soulbound", "sheet", "actor"],
+            classes: ["soulbound", "sheet", "actor"],
             template: "systems/age-of-sigmar-soulbound/template/sheet/party.hbs",
             dragDrop: dragDrop
         });

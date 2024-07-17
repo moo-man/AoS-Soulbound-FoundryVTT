@@ -8,7 +8,7 @@ export default class MiracleTest extends Test{
     }
 
 
-    async rollTest() {
+    async roll() {
         if (this.item.test.opposed)
         {
             this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);

@@ -1,0 +1,28 @@
+<select name="{{name}}">
+    {{#select value}}
+        <optgroup label="{{localize 'TITLE.ATTRIBUTES'}}">
+            {{#each (config "attributes")}}
+                <option value="system.attributes.{{@key}}.value">{{this}}</option>
+            {{/each}}
+        </optgroup>
+        <optgroup label="{{localize 'TITLE.SKILLS'}}">
+            {{#each (config "skills")}}
+                <option value="system.skills.{{@key}}.bonus">{{this}}</option>
+            {{/each}}
+        </optgroup>
+        <optgroup label="{{localize 'TAB.COMBAT'}}">
+            <option value="system.combat.melee.bonus">{{localize "HEADER.MELEE"}}</option>
+            <option value="system.combat.accuracy.bonus">{{localize "HEADER.ACCURACY"}}</option>
+            <option value="system.combat.defence.bonus">{{localize "HEADER.DEFENCE"}}</option>
+            <option value="system.combat.mettle.bonus">{{localize "HEADER.METTLE"}}</option>
+            <option value="system.combat.mettle.regain">{{localize "HEADER.METTLE_REGAIN"}}</option>
+            <option value="system.combat.health.toughness.bonus">{{localize "HEADER.TOUGHNESS"}}</option>
+            <option value="system.combat.health.wounds.bonus">{{localize "HEADER.WOUND"}}</option>
+            <option value="system.combat.initiative.bonus">{{localize "HEADER.INITIATIVE"}}</option>
+            <option value="system.combat.naturalAwareness.bonus">{{localize "HEADER.NATURAL_AWARENESS"}}
+            </option>
+            <option value="system.combat.armour.bonus">{{localize "HEADER.ARMOUR"}}</option>
+            <option value="system.combat.speeds.modifier">{{localize "ACTOR.SPEED_MODIFIER"}}</option>
+        </optgroup>
+    {{/select}}
+</select>

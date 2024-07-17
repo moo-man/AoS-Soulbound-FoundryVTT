@@ -5,3 +5,31 @@
 @import "./sheet/tab/item-bonus";
 @import "./chat/chat";
 @import "./apps/bug-report";
+
+
+// Shared properties
+.soulbound {
+    a {
+        cursor: pointer
+    }
+
+    img {
+        border: none;
+    }
+
+    .inactive {
+        opacity: 0.5;
+    }
+
+    .disabled {
+        pointer-events: none;
+    }
+
+    .centered {
+        text-align: center;
+    }
+
+    input[type="number"] {
+        text-align: center;
+    }
+}

@@ -1,7 +1,8 @@
-import { BaseItemModel } from "./base";
+import { BaseSoulboundItemModel } from "./base";
+
 let fields = foundry.data.fields;
 
-export class ArchetypeModel extends BaseItemModel
+export class ArchetypeModel extends BaseSoulboundItemModel
 {
     static defineSchema() 
     {

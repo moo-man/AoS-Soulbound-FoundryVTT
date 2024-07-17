@@ -2,7 +2,7 @@ let fields = foundry.data.fields;
 /**
  * Abstract class that interfaces with the Actor class
  */
-export class BaseActorModel extends foundry.abstract.DataModel 
+export class BaseSoulboundActorModel extends BaseWarhammerActorModel 
 {
 
     static preventItemTypes = [];
@@ -50,19 +50,6 @@ export class BaseActorModel extends foundry.abstract.DataModel
     createChecks()
     {
         
-    }
-
-    itemIsAllowed(item)
-    {
-        if (this.constructor.preventItemTypes.includes(item.type))
-        {
-            ui.notifications.error(game.i18n.localize("IMPMAL.ItemsNotAllowed"), {type : item.type});
-            return false;
-        }
-        else 
-        {
-            return true;
-        }
     }
     
     checkSingletonItems(item)

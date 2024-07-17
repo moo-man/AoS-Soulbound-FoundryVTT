@@ -1,12 +1,12 @@
 import ActorConfigure from "../../apps/actor-configure.js";
 import SpeedConfig from "../../apps/speed-config.js";
 
-export class AgeOfSigmarActorSheet extends ActorSheet {
+export class SoulboundActorSheet extends WarhammerSheetMixin(ActorSheet) {
 
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            classes: ["age-of-sigmar-soulbound", "sheet", "actor"],
+            classes: ["soulbound", "sheet", "actor"],
             tabs: [
                 {
                     navSelector: ".sheet-tabs",
@@ -178,16 +178,6 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
           super._onDrop(ev)
       }
 
-
-      // TODO Remove this once https://github.com/foundryvtt/foundryvtt/issues/8317 is fixed
-      async _onDropActiveEffect(event, data) {
-        const effect = await ActiveEffect.implementation.fromDropData(data);
-        if ( !this.actor.isOwner || !effect ) return false;
-        if ( this.actor.uuid === effect.parent?.uuid ) return false;
-        return ActiveEffect.create(effect.toObject(), {parent: this.actor});
-      }
-    
-
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-create").click(this._onItemCreate.bind(this));
@@ -197,10 +187,6 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         html.find(".item-post").click(this._onItemPost.bind(this));
         html.find(".state").click(ev => this._onStateClick(ev));
         //html.find(".item-property").click(this._onChangeItemProperty.bind(this));
-        html.find(".effect-create").click(this._onEffectCreate.bind(this));  
-        html.find(".effect-edit").click(this._onEffectEdit.bind(this));  
-        html.find(".effect-delete").click(this._onEffectDelete.bind(this));  
-        html.find(".effect-toggle").click(this._onEffectToggle.bind(this));  
         html.find("input").focusin(this._onFocusIn.bind(this));
         html.find(".item-state").click(this._onItemStateUpdate.bind(this));
         html.find(".item-toggle").click(this._onItemToggle.bind(this));
@@ -393,20 +379,16 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         item.update({[target] : !getProperty(item, target)})
     }
 
-    async _onAttributeClick(event) {
+    _onAttributeClick(event) {
         event.preventDefault();
         const attribute = $(event.currentTarget).data("attribute");
-        let test = await this.actor.setupAttributeTest(attribute)
-        await test.rollTest()
-        test.sendToChat()
+        this.actor.setupAttributeTest(attribute)
     }
 
     async _onSkillClick(event) {
         event.preventDefault();
         const skill = $(event.currentTarget).data("skill");
-        let test = await this.actor.setupSkillTest(skill)
-        await test.rollTest()
-        test.sendToChat()
+        this.actor.setupSkillTest(skill)
     }
 
     async _onWeaponClick(event) {
@@ -414,7 +396,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         const div = $(event.currentTarget).parents(".item");
         const weaponId = div.data("itemId");
         let test = await this.actor.setupCombatTest(weaponId)
-        await test.rollTest()
+        await test.roll()
         test.sendToChat()
     }
 
@@ -430,7 +412,7 @@ export class AgeOfSigmarActorSheet extends ActorSheet {
         else if (item.type == "miracle")
             test = await this.actor.setupMiracleTest(powerId)
 
-        await test.rollTest()
+        await test.roll()
         test.sendToChat()
     }
 	

@@ -347,17 +347,4 @@ export default function registerHooks() {
         }
 
     })
-
-
-
-    Hooks.on("preCreateJournalEntry", _keepID)
-    Hooks.on("preCreateScene", _keepID)
-    Hooks.on("preCreateRollTable", _keepID)
-
-    
-    function _keepID(document, data, options) {
-        if (data._id)
-            options.keepId = SoulboundUtility._keepID(data._id, document)
-    }
-
 }

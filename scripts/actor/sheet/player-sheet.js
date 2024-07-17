@@ -1,6 +1,6 @@
-import { AgeOfSigmarActorSheet } from "./actor-sheet.js";
+import { SoulboundActorSheet } from "./actor-sheet.js";
 
-export class PlayerSheet extends AgeOfSigmarActorSheet {
+export class PlayerSheet extends SoulboundActorSheet {
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {

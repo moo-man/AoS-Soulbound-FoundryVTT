@@ -1,14 +1,10 @@
-import SoulboundUtility from "./utility"
 
-export default class AgeOfSigmarEffect extends ActiveEffect {
+export default class SoulboundEffect extends WarhammerActiveEffect {
 
-
-    prepareData()
-    {
-        if (game.ready && this.item && this.item.equippable && this.requiresEquip && !this.parent.pack)
-            this.disabled = !this.item.equipped
-            //this.updateSource({"disabled" : !this.item.equipped})
+    static CONFIGURATION = {
+        zone : true
     }
+
 
     /** @override 
      * Adds support for referencing actor data
@@ -16,7 +12,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
     apply(actor, change) {
         if (change.value.includes("@"))
         {
-            SoulboundUtility.log(`Deferring ${this.name} for ${this.parent?.name}`)
+            log(`Deferring ${this.name} for ${this.parent?.name}`)
             if (change.value == "@doom" && !game.ready)
                 actor.postReadyEffects.push(change)
             else
@@ -24,7 +20,7 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         }
         else
         {
-            SoulboundUtility.log(`Applying ${this.name} to ${this.parent?.name}`)
+            log(`Applying ${this.name} to ${this.parent?.name}`)
             super.apply(actor, change)
         }
     }
@@ -56,52 +52,6 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
         
     }
     
-    get item() {
-        if (this.parent && this.parent.documentName == "Item")
-            return this.parent
-        else if (this.origin && this.parent.documentName == "Actor") 
-        {
-            let origin = this.origin.split(".")
-            if (this.parent && origin[1] == this.parent?.id) // If origin ID is same as parent ID
-            {
-                if (origin[3])
-                {
-                    return this.parent.items.get(origin[3])
-                }
-            }
-        }
-    }
-
-    getDialogChanges({target = false}={}) {
-        let allChanges = {}
-        this.changes
-        .filter((c) => c.mode == (target ? 7 : 6))
-        .forEach((c, i) => 
-        {
-            let dialogChange = mergeObject(foundry.utils.deepClone(c), {
-                conditional : this.changeConditionals[i] || {},
-                target : !!target, 
-                document: this
-            })
-
-            if (!dialogChange.conditional.description)
-            {
-                dialogChange.conditional.description = this.name;
-            }
-
-            if (target)
-            {
-                dialogChange.conditional.description = `Target: ${dialogChange.conditional.description}`;
-            }
-
-            if (this.parent?.documentName == "Actor")
-                this.fillDerivedData(this.parent, dialogChange)
-
-            allChanges[randomID()] = dialogChange
-        })
-
-        return allChanges
-    }
 
     /**
      * Takes a test object and returns effect data populated with the results and overcasts computed
@@ -164,58 +114,24 @@ export default class AgeOfSigmarEffect extends ActiveEffect {
 
     }
 
-    get changeConditionals() {
-        return (getProperty(this, "flags.age-of-sigmar-soulbound.changeCondition") || {})
-    }
-
-    get hasRollEffect() {
-        return this.changes.some(c => c.mode == 0)
-    }
-
-    get sourceName() {
-        if (!this.origin)
-            return super.sourceName
-
-        let data = this.origin.split(".")
-
-        if (length == 4) {
-
-            if (this.origin.includes("Drawing"))
+    get source() {
+        if (!this.origin?.includes("Drawing"))
+            return super.source
+        else 
+        {
+            let drawing = fromUuidSync(this.origin);
+            if (drawing)
             {
-                let scene = game.scenes.get(data[1])
-                let drawing = scene.drawings.get(data[3])
-                let zone = drawing?.text
-                if (zone)
-                    return zone
+                return drawing.text;
             }
-
-
-            let item = this.parent.items.get(data[3])
-            if (item)
-                return item.name
+            else 
+            {
+                return super.source;
+            }
         }
-        
-        return super.sourceName
-
-    }
-
-    get requiresEquip() {
-        return this.getFlag("age-of-sigmar-soulbound", "requiresEquip")
     }
 
     get isCondition() {
         return CONFIG.statusEffects.map(i => i.id).includes(Array.from(this.statuses)[0])
     }
-
-    static get numericTypes() {
-        return ["difficulty",
-            "complexity",
-            "bonusDice",
-            "bonusFocus",
-            "bonusDamage",
-            "armour",
-            "defence",
-            "attack"]
-    }
-
 }

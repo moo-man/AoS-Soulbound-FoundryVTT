@@ -1,7 +1,7 @@
-import { BaseItemModel } from "./base";
+import { BaseSoulboundItemModel } from "./base";
 let fields = foundry.data.fields;
 
-export class StandardItemModel extends BaseItemModel
+export class StandardItemModel extends BaseSoulboundItemModel
 {
 
     static defineSchema() 

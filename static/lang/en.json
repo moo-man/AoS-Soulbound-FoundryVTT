@@ -191,6 +191,7 @@
   "DIALOG.DN": "DN",
   "DIALOG.COMMON_ROLL": "Common Roll",
   "DIALOG.SPELL_ROLL": "Spell Roll",
+  "DIALOG.MIRACLE_ROLL": "Miracle Roll",
   "DIALOG.COMBAT_ROLL": "Combat Roll",
   "DIALOG.OPPONENT": "Opponent",
   "DIALOG.CUSTOM_ROLL": "Custom Roll",

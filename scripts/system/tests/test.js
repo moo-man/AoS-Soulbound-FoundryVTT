@@ -8,8 +8,8 @@ export default class Test {
                 skill : data.skill,
                 bonusDice : data.bonusDice,
                 bonusFocus : data.bonusFocus,
-                dn : data.dn,
-                allocation: data.allocation,
+                dn : data.dn || {difficulty : data.difficulty, complexity : data.complexity, name : data.options.title},
+                allocation: data.allocation || [],
                 itemId : data.itemId,
                 doubleTraining : data.doubleTraining || false,
                 doubleFocus : data.doubleFocus || false,
@@ -20,10 +20,15 @@ export default class Test {
                 targetSpeakers : data.targets.map(t => t.actor.speakerData(t))|| [],
                 rollClass : this.constructor.name,
                 focusAllocated : false,
-                messageId : undefined
+                messageId : undefined,
             },
             result : {}
         }
+    }
+
+    static fromData(setupData)
+    {
+        return new this(setupData);
     }
 
     get template() {
@@ -40,7 +45,7 @@ export default class Test {
         return test
     }
 
-    async rollTest() {
+    async roll() {
         this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
         this.testData.roll = this.roll.toJSON()
         await this.roll.evaluate()  
@@ -247,7 +252,7 @@ export default class Test {
     }
 
     get item() {
-        return this.actor.items.get(this.testData.itemId)
+        return fromUuidSync(this.testData.itemId)
     }
 
     get numberOfDice()

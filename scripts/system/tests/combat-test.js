@@ -84,7 +84,7 @@ export default class CombatTest extends Test {
     _computeDamageWithWeapon(result, weapon)
     {
         let regex = /([0-9]*)[+]*(s*)/g;
-        let weaponDamage = weapon.damage.toLowerCase().replace(/( )*/g, '');
+        let weaponDamage = weapon.system.damage.toLowerCase().replace(/( )*/g, '');
         let regexMatch = regex.exec(weaponDamage);
         let damageValue = (+regexMatch[1]) ? +regexMatch[1] : 0;
         let addSuccess =!!(regexMatch[2]);
@@ -168,7 +168,7 @@ export default class CombatTest extends Test {
     }
 
     get secondaryWeapon() {
-        return this.actor.items.get(this.testData.dualWieldingData?.secondary?.itemId)
+        return fromUuidSync(this.testData.dualWieldingData?.secondary?.itemId)
     }
 
     

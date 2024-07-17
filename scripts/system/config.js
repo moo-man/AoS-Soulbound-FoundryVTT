@@ -224,8 +224,91 @@ AOS.traits = {
 AOS.dicePath = "systems/age-of-sigmar-soulbound/asset/image"
 AOS.traitDescriptions = {}
 AOS.conditionDescriptions = {}
-
 AOS.traitsWithValue = ["range", "thrown", "blast"]
+
+AOS.transferTypes = {
+    document : "WH.EffectApplicationDocument",
+    damage : "WH.EffectApplicationDamage",
+    target : "WH.EffectApplicationTarget",
+    zone : "WH.EffectApplicationZone",
+    other : "WH.EffectApplicationOther"
+},
+
+AOS.scriptTriggers = {
+    manual : "WH.TriggerManual",
+    immediate : "WH.TriggerImmediate",
+    prepareBaseData : "WH.TriggerPrepareBaseData",
+    prePrepareDerivedData : "WH.TriggerPrePrepareDerivedData",
+    postPrepareDerivedData : "WH.TriggerPostPrepareDerivedData",
+
+    prepareOwnedItemBaseData : "WH.TriggerPrepareOwnedItemBaseData",
+    prePrepareOwnedItemDerivedData : "WH.TriggerPrePrepareOwnedItemDerivedData",
+    postPrepareOwnedItemDerivedData : "WH.TriggerPostPrepareOwnedItemDerivedData",
+
+    computeCharacteristics : "Compute Characteristics",
+    computeEncumbrance : "Compute Encumbrance",
+    computeCombat : "Compute Combat",
+    computeWarpState : "Compute Warp State",
+    prepareOwnedItems : "Prepare Owned Items",
+    prepareOwnedData : "Prepare Owned Data",
+
+    dialog : "WH.TriggerDialog",
+
+    preRollTest : "WH.TriggerPreRollTest",
+    preRollSkillTest : "WH.TriggerPreRollSkillTest",
+    preRollWeaponTest : "WH.TriggerPreRollWeaponTest",
+    preRollTraitTest : "WH.TriggerPreRollTraitTest",
+    preRollPowerTest : "WH.TriggerPreRollPowerTest",
+
+    rollTest : "WH.TriggerRollTest",
+    rollSkillTest : "WH.TriggerRollSkillTest",
+    rollWeaponTest : "WH.TriggerRollWeaponTest",
+    rollTraitTest : "WH.TriggerRollTraitTest",
+    rollPowerTest : "WH.TriggerRollPowerTest",
+
+    // preAttackerEvaluateOpposed : "WH.TriggerPreAttackerEvaluateOpposed",
+    // preAttackerComputeOpposedDamage : "WH.TriggerPreAttackerComputeOpposedDamage",
+    // postAttackerEvaluateOpposed : "WH.TriggerAttackerEvaluateOpposed",
+
+    // preDefenderEvaluateOpposed : "WH.TriggerPreDefenderEvaluateOpposed",
+    // preDefenderComputeOpposedDamage : "WH.TriggerPreDefenderComputeOpposedDamage",
+    // postDefenderEvaluateOpposed : "WH.TriggerDefenderEvaluateOpposed",
+
+    preApplyDamage : "WH.TriggerPreApplyDamage",
+    applyDamage : "WH.TriggerApplyDamage",
+    preTakeDamage : "WH.TriggerPreTakeDamage",
+    takeDamage : "WH.TriggerTakeDamage",
+
+    createToken : "WH.TriggerCreateToken",
+    createItem : "WH.TriggerCreateItem",
+    preUpdateDocument : "WH.TriggerPreUpdateDocument",
+    updateDocument : "WH.TriggerUpdateDocument",
+    createCondition : "WH.TriggerCreateCondition",
+    deleteEffect : "WH.TriggerDeleteEffect",
+
+    startRound : "WH.TriggerStartRound",
+    endRound : "WH.TriggerEndRound",
+    startTurn : "WH.TriggerStartTurn",
+    endTurn : "WH.TriggerEndTurn",
+    updateCombat  : "WH.UpdateCombat"
+},
+
+AOS.syncTriggers = ["prepareBaseData",
+"prePrepareDerivedData",
+"postPrepareDerivedData",
+"prepareOwnedItemBaseData",
+"prePrepareOwnedItemDerivedData",
+"postPrepareOwnedItemDerivedData",
+"computeCharacteristics",
+"computeEncumbrance",
+"computeCombat",
+"computeWarpState",
+"prepareOwnedItems",
+"prepareOwnedData"]
+
+AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-key-options.hbs",
+AOS.avoidTestTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-avoid-test.hbs",
+AOS.effectScripts = [],
 
 AOS.systemEffects = {
     "partial" : {

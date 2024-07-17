@@ -1,5 +1,5 @@
 import TokenHelpers from "../../system/token-helpers";
-import { BaseActorModel } from "./base";
+import { BaseSoulboundActorModel } from "./base";
 import { AttributesModel } from "./components/attributes";
 import { StandardCombatModel } from "./components/combat";
 import { SkillsModel } from "./components/skills";
@@ -9,7 +9,7 @@ let fields = foundry.data.fields;
  * Represents actors that have characteristics and skills
  * Encompasses player characters and NPCs
  */
-export class StandardActorModel extends BaseActorModel 
+export class StandardActorModel extends BaseSoulboundActorModel 
 {
     static defineSchema() 
     {

@@ -1,4 +1,4 @@
-.age-of-sigmar-soulbound.sheet.item .bonus {
+.soulbound.sheet.item .bonus {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -6,7 +6,7 @@
     overflow-y: scroll;
 }
 
-.age-of-sigmar-soulbound.sheet.item .bonus-wrapper {
+.soulbound.sheet.item .bonus-wrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -14,22 +14,22 @@
     margin-top: 15px;
 }
 
-.age-of-sigmar-soulbound.sheet.item .bonus-wrapper:first-child {
+.soulbound.sheet.item .bonus-wrapper:first-child {
     margin-top: 0;
 }
 
-.age-of-sigmar-soulbound.sheet.item .bonus .bonus-wrapper .wrapper {
+.soulbound.sheet.item .bonus .bonus-wrapper .wrapper {
     display: flex;
     flex-direction: row;
     flex-basis: 100%;
     margin-top: 10px;
 }
 
-.age-of-sigmar-soulbound.sheet.item .bonus .bonus-wrapper .wrapper label {
+.soulbound.sheet.item .bonus .bonus-wrapper .wrapper label {
     width: 30%;
 }
 
-.age-of-sigmar-soulbound.sheet.item .bonus .bonus-wrapper .wrapper input,
-.age-of-sigmar-soulbound.sheet.item .bonus .bonus-wrapper .wrapper select {
+.soulbound.sheet.item .bonus .bonus-wrapper .wrapper input,
+.soulbound.sheet.item .bonus .bonus-wrapper .wrapper select {
     width: 70%;
 }

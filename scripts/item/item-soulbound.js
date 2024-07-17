@@ -1,6 +1,6 @@
 import SoulboundUtility from "../system/utility.js";
 
-export class AgeOfSigmarItem extends Item {
+export class SoulboundItem extends WarhammerItem {
     
 
     constructor(data, context)
@@ -281,11 +281,6 @@ export class AgeOfSigmarItem extends Item {
             journal = journal.parent;
         }
         journal.sheet.render(true, {pageId : page?.id})
-    }
-
-    get difficultyNumber()
-    {
-        return game.aos.utility.DNToObject(this.dn)
     }
 
     get nonTransferEffects() {

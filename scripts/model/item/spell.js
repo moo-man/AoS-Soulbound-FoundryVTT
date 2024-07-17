@@ -35,4 +35,10 @@ export class SpellModel extends StandardItemModel
 
         return schema;
     }
+
+    get difficulty()
+    {
+        return game.aos.utility.DNToObject(this.dn)
+    }
+
 }

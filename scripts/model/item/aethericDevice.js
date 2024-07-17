@@ -19,4 +19,14 @@ export class AethericDeviceModel extends TraitItemModel
         schema.test = new fields.EmbeddedDataField(TestDataModel);
         return schema;
     }
+
+    get isMelee() 
+    {
+        return this.category == "melee";
+    }
+
+    get isRanged() 
+    {
+        return this.category == "ranged";
+    }
 }

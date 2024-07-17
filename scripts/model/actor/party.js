@@ -1,7 +1,7 @@
-import { BaseActorModel } from "./base";
+import { BaseSoulboundActorModel } from "./base";
 let fields = foundry.data.fields;
 
-export class PartyModel extends BaseActorModel
+export class PartyModel extends BaseSoulboundActorModel
 {
     static preventItemTypes = [];
 

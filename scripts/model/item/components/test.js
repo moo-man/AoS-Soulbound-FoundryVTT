@@ -10,6 +10,7 @@ export class TestDataModel extends StandardItemModel
         schema.attribute =  new fields.StringField();
         schema.skill =  new fields.StringField();
         schema.dn =  new fields.StringField();
+        schema.opposed = new fields.BooleanField();
         return schema;
     }
 

@@ -1,5 +1,5 @@
-import { AgeOfSigmarActor } from "../actor/actor-aos.js";
-import { AgeOfSigmarItem } from "../item/item-aos.js";
+import { SoulboundActor } from "../actor/actor-soulbound.js";
+import { SoulboundItem } from "../item/item-soulbound.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
 
@@ -26,7 +26,7 @@ export default class CharacterCreation extends FormApplication {
 
 
     initializeCharacter() {
-        this.character = new AgeOfSigmarActor({ type: "player", name: this.object.actor.name }) // Temporary actor 
+        this.character = new SoulboundActor({ type: "player", name: this.object.actor.name }) // Temporary actor 
 
 
         // Only apply skills to calculate skill EXP correctly, apply attributes on submit
@@ -49,8 +49,8 @@ export default class CharacterCreation extends FormApplication {
         data.actor = this.actor;
         data.character = this.character
         data.archetype = this.archetype;
-        data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new AgeOfSigmarItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
-        data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new AgeOfSigmarItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new SoulboundItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new SoulboundItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
         data.talentDescriptions = await this.handleTalentEnrichment(data.coreTalents.concat(data.chooseTalents));
         data.equipmentHTML = this.constructEquipmentHTML();
         return data
@@ -177,7 +177,7 @@ export default class CharacterCreation extends FormApplication {
             let item;
             // If chosen item is still generic, create a basic item for it
             if (e.type == "generic") {
-                item = new AgeOfSigmarItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
+                item = new SoulboundItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
             }
             else {
 
@@ -185,11 +185,11 @@ export default class CharacterCreation extends FormApplication {
 
                 // Create a temp item and incorporate the diff
                 if (document)
-                    item = new AgeOfSigmarItem(mergeObject(document.toObject(), e.diff, { overwrite: true }))
+                    item = new SoulboundItem(mergeObject(document.toObject(), e.diff, { overwrite: true }))
                 else 
                 {
                     ui.notifications.warn(`Could not find ${e.name}, creating generic`)
-                    item = new AgeOfSigmarItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
+                    item = new SoulboundItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
                 }
             }
             return item
@@ -367,7 +367,7 @@ export default class CharacterCreation extends FormApplication {
                 new FilterResults({ equipment, app: this }).render(true)
             }
             else if (equipment.type == "item")
-                new AgeOfSigmarItem((await game.aos.utility.findItem(equipment.id)).toObject()).sheet.render(true, { editable: false })
+                new SoulboundItem((await game.aos.utility.findItem(equipment.id)).toObject()).sheet.render(true, { editable: false })
         })
     }
 

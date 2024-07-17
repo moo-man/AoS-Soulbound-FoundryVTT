@@ -35,7 +35,7 @@ export default class AOS_MacroUtil {
 
     static async createWeaponDialog(actor, weapon) {
         let test = await actor.setupCombatTest(weapon)
-        await test.rollTest()
+        await test.roll()
         test.sendToChat()
     }
 
@@ -47,7 +47,7 @@ export default class AOS_MacroUtil {
 
     static async createMiracleRoll(actor, spell) {
         let test = await actor.setupMiracleTest(spell)
-        await test.rollTest()
+        await test.roll()
         test.sendToChat()
     }
 }

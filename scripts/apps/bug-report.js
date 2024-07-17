@@ -38,7 +38,7 @@ export default class BugReportFormSoulbound extends Application {
         const options = super.defaultOptions;
         options.id = "bug-report";
         options.template = "systems/age-of-sigmar-soulbound/template/apps/bug-report.hbs"
-        options.classes.push("age-of-sigmar-soulbound", "soulbound-bug-report");
+        options.classes.push("soulbound", "soulbound-bug-report");
         options.resizable = true;
         options.width = 600;
         options.height = "auto";

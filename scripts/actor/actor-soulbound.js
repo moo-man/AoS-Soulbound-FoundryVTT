@@ -5,8 +5,12 @@ import SpellTest from "../system/tests/spell-test.js";
 import MiracleTest from "../system/tests/miracle-test.js";
 import SoulboundUtility from "../system/utility.js";
 import TokenHelpers from "../system/token-helpers.js";
+import { CommonRollDialog } from "../apps/roll-dialog/common.js";
+import { SpellRollDialog } from "../apps/roll-dialog/spell.js";
+import { MiracleRollDialog } from "../apps/roll-dialog/miracle.js";
+import { CombatRollDialog } from "../apps/roll-dialog/combat.js";
 
-export class AgeOfSigmarActor extends Actor {
+export class SoulboundActor extends WarhammerActor {
 
     async _preCreate(data, options, user) {
         if (data._id)
@@ -64,67 +68,37 @@ export class AgeOfSigmarActor extends Actor {
     //#region Rolling Setup
     async setupAttributeTest(attribute, options={}) 
     {
-        let dialogData = RollDialog._dialogData(this, attribute, null, options)
-        dialogData.title = `${game.i18n.localize(game.aos.config.attributes[attribute])} ${game.i18n.localize("SKILL.TEST")}`
-        let testData = await RollDialog.create(dialogData);
-        testData.targets = dialogData.targets
-        testData.speaker = this.speakerData()
-        return new Test(testData)
+        let test = await this._setupTest(CommonRollDialog, Test, {attribute}, options);
+        test.sendToChat();
+        return test;
     }
 
     async setupSkillTest(skill, attribute, options={}) 
     {
-        let dialogData = RollDialog._dialogData(this, attribute || game.aos.config.skillAttributes[skill], skill, options)
-        dialogData.title = `${game.i18n.localize(game.aos.config.skills[skill])} ${game.i18n.localize("SKILL.TEST")}`
-        let testData = await RollDialog.create(dialogData);
-        testData.targets = dialogData.targets
-        testData.speaker = this.speakerData()
-        return new Test(testData)
+        let test = await this._setupTest(CommonRollDialog, Test, {skill, attribute}, options)
+        test.sendToChat();
+        return test;
     }
 
-    async setupCombatTest(weapon, options)
+    async setupCombatTest(weapon, options={})
     {
-        if (typeof weapon == "string")
-            weapon = this.items.get(weapon)
-
-        let dialogData = CombatDialog._dialogData(this, weapon, options)
-        dialogData.title = `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
-        let testData = await CombatDialog.create(dialogData);
-        testData.targets = dialogData.targets
-        testData.speaker = this.speakerData()
-        return new CombatTest(testData)
+        let test = await this._setupTest(CombatRollDialog, CombatTest, weapon, options)
+        test.sendToChat();
+        return test;
     }
 
-    async setupSpellTest(power)
+    async setupSpellTest(power, options={})
     {
-        if (typeof power == "string")
-            power = this.items.get(power)
-
-        let dialogData = SpellDialog._dialogData(this, power)
-        dialogData.title = `${power.name} ${game.i18n.localize("SPELL.TEST")}`
-        let testData = await SpellDialog.create(dialogData);
-        testData.targets = dialogData.targets
-        testData.speaker = this.speakerData()
-        return new SpellTest(testData)
+        let test = await this._setupTest(SpellRollDialog, SpellTest, power, options)
+        test.sendToChat();
+        return test;
     }
 
-    async setupMiracleTest(power)
+    async setupMiracleTest(miracle, options={})
     {
-        if (typeof power == "string")
-            power = this.items.get(power)
-
-        if (power.cost > this.combat.mettle.value)
-            return ui.notifications.error(game.i18n.localize("ERROR.NotEnoughMettle"))
-
-        let dialogData = RollDialog._dialogData(this, "soul", "devotion")
-        dialogData.title = `${power.name} ${game.i18n.localize("POWER.TEST")}`
-        dialogData.difficulty = game.aos.utility.DNToObject(power.test.dn).difficulty || dialogData.difficulty
-        dialogData.complexity = game.aos.utility.DNToObject(power.test.dn).complexity || dialogData.complexity
-        let testData = await RollDialog.create(dialogData);
-        testData.itemId = power.id
-        testData.targets = dialogData.targets
-        testData.speaker = this.speakerData()
-        return new MiracleTest(testData)
+        let test = await this._setupTest(MiracleRollDialog, MiracleTest, miracle, options)
+        test.sendToChat();
+        return test;
     }
     //#endregion
 
@@ -207,9 +181,6 @@ export class AgeOfSigmarActor extends Actor {
         return ret;
     }
 
-
-   
-
     async addCondition(effect, options={}) {
         if (typeof (effect) === "string")
             effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
@@ -286,32 +257,9 @@ export class AgeOfSigmarActor extends Actor {
         ui.notifications.notify(note);
     }
 
-    get itemTypes()
-    {
-        if (!this._itemTypes)
-        {
-            this._itemTypes = super.itemTypes;
-        }
-        return this._itemTypes;
-    }
-
-    allDialogChanges({targets=[]} = {}) {
-        let effects = this.effects.contents
-        // Aggregate dialog changes from each effect
-        let changes = effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges()), {})
-
-        if (targets.length) {
-            let target = targets[0]
-            let targetChanges = target.effects.filter(e => !e.disabled).reduce((prev, current) => mergeObject(prev, current.getDialogChanges({target : true})), {})
-            mergeObject(changes, targetChanges);
-        }
-
-        return changes
-    }
-
     async onEnterDrawing(drawing)
     {
-        let flags = drawing.flags["age-of-sigmar-soulbound"]
+        let flags = drawing.flags["soulbound"]
 
         let cover = flags.cover
         let hazard = flags.hazard
@@ -331,7 +279,7 @@ export class AgeOfSigmarActor extends Actor {
 
     async onLeaveDrawing(drawing)
     {
-        let flags = drawing.flags["age-of-sigmar-soulbound"]
+        let flags = drawing.flags["soulbound"]
 
         let cover = flags.cover
         let hazard = flags.hazard

@@ -610,7 +610,7 @@ export default class SoulboundChat {
                 else 
                     chatTest = await t.actor.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity, resist : test.item?.type})  
                     
-                await chatTest.rollTest()
+                await chatTest.roll()
                 chatTest.sendToChat()     
             }
         }
@@ -621,7 +621,7 @@ export default class SoulboundChat {
             else 
                 chatTest = await game.user.character.setupAttributeTest(test.itemTest.attribute, {difficulty, complexity, resist : test.item?.type})       
                 
-            await chatTest.rollTest()
+            await chatTest.roll()
             chatTest.sendToChat()     
         }
         else

@@ -298,7 +298,7 @@
   height: 95%
 }
 
-.age-of-sigmar-soulbound.sheet .group-wrapper,
+.soulbound.sheet .group-wrapper,
 #archetype-groups .group-wrapper {
     display: flex;
     flex-direction: column;
@@ -318,13 +318,13 @@
     display: flex;
 }
 
-.age-of-sigmar-soulbound.sheet .group-wrapper .group
+.soulbound.sheet .group-wrapper .group
 {
     padding: 2px;
     display: flex;
 }
 
-.age-of-sigmar-soulbound.sheet .group-wrapper .group-list,
+.soulbound.sheet .group-wrapper .group-list,
 #archetype-groups .group-list
 {
     display: flex;
@@ -342,23 +342,23 @@
     color: darkslategrey
 }
 
-.age-of-sigmar-soulbound.sheet .group .equipment {
+.soulbound.sheet .group .equipment {
     width: fit-content;
     font-weight: bold;
     color: darkslategrey;
     margin: 0px 5px
 }
 
-.age-of-sigmar-soulbound.sheet .group a {
+.soulbound.sheet .group a {
     margin: 0px 5px
 }
 
 
-.age-of-sigmar-soulbound.sheet .comma{
+.soulbound.sheet .comma{
     margin-left: -4px;
 }
 
-.age-of-sigmar-soulbound.sheet .group .equipment:hover,
+.soulbound.sheet .group .equipment:hover,
 #archetype-groups .group .equipment:hover
 {   
     cursor: pointer;
@@ -374,11 +374,65 @@
 
 
 
+.dialog-fields {
+  height: calc(100% - 45px);
+  margin-bottom: 10px;
+  display: flex;
+  flex: 1;
+  justify-content: stretch;
+  justify-items: stretch;
 
+  .content-row {
+    flex: 0 0 2rem;
+  }
 
+  .content-box {
+    border-bottom: 2px solid #7c6c42;
+  }
 
+  .content-box,
+  .content-row {
+    .content-header,
+    .entry-vertical:last-child,
+    .entry-horizontal:last-child {
+      border-right: none;
+    }
+  }
 
+  .modifiers-container {
+    flex: 1;
+    border: 2px solid #7c6c42;
+    .dialog-modifiers {
+      height: 100%;
 
+      label {
+        text-align: center;
+        width: 100%;
+        display:block;
+        border-bottom: 2px solid #7c6c42;
+
+        font-family: "Quadrant-Regular";
+        font-size: 14pt;
+        padding: 2px 4px;
+        color: whitesmoke;
+        border-bottom: 2px solid #7c6c42;
+        background-image: url(./asset/image/header-background.webp);
+        background-size: cover;
+        text-transform: uppercase;
+      }
+
+      ul {
+        list-style: none;
+        padding: 3px;
+      }
+
+      .active {
+        background-color: var(--color-header-blue);
+        color: whitesmoke;
+      }
+    }
+  }
+}
 
 
 
@@ -616,8 +670,6 @@
     color: darkred;
 }
 
-
-
 .filter-results {
     height: calc(100% - 30px);
   }
@@ -631,12 +683,6 @@
   #filter-results .document.active {
     box-shadow: inset 0 0 10px var(--color-header-blue);
   }
-
-
-  .roll-dialog option {
-    background: unset
-  }
-
 
   blockquote.foundry-note {
     border-left: none;

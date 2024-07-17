@@ -25,7 +25,7 @@
           class="fas fa-plus"></i></a>
     </div>
     {{#each effects.temporary as |effect|}}
-      <div class="item" data-effect-id="{{effect.id}}">
+      <div class="item" data-effect-id="{{effect.id}}" data-uuid="{{effect.uuid}}">
         <div class="item-content">
           <div class="item-property item-name">
             <div class="item-image">
@@ -55,7 +55,7 @@
           class="fas fa-plus"></i></a>
     </div>
     {{#each effects.passive as |effect|}}
-      <div class="item" data-effect-id="{{effect.id}}">
+      <div class="item" data-effect-id="{{effect.id}}" data-uuid="{{effect.uuid}}">
         <div class="item-content">
           <div class="item-property item-name">
             <div class="item-image">
@@ -83,7 +83,7 @@
       <h1 class="header-text">{{localize "HEADER.DISABLED_EFFECTS"}}</h1>
     </div>
     {{#each effects.disabled as |effect|}}
-      <div class="item" data-effect-id="{{effect.id}}" style="opacity: 0.5;">
+      <div class="item" data-effect-id="{{effect.id}}" style="opacity: 0.5;" data-uuid="{{effect.uuid}}">
         <div class="item-content">
           <div class="item-property item-name">
             <div class="item-image">
