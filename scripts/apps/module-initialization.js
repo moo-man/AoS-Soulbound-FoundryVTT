@@ -1,3 +1,4 @@
+import ModuleUpdater from "./module-updater"
 
 
 export default class ModuleInitializer extends Dialog {
@@ -20,7 +21,7 @@ export default class ModuleInitializer extends Dialog {
                     label: "Update",
                     condition : game.settings.get(module, "initialized"),
                     callback: async () => {
-                        let updater = await game.aos.apps.ModuleUpdater.create(game.modules.get(module), this)
+                        let updater = await ModuleUpdater.create(game.modules.get(module), this)
                         updater.render(true)
                     }
                 },

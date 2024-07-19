@@ -20,6 +20,10 @@ export class SpellRollDialog extends CommonRollDialog {
 
         let skill = "channelling" 
         let attribute = spell.system.attribute || game.aos.config.skillAttributes[skill]
+
+        
+        options.title = options.title || `${spell.name}`
+        options.title += options.appendTitle || "";
         let {data, fields} = super.setupData({skill, attribute}, actor, options)
 
         mergeObject(fields, spell.system.difficulty, {overwrite : false});

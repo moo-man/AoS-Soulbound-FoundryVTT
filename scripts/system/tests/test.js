@@ -1,5 +1,6 @@
-export default class Test {
+export default class SoulboundTest extends WarhammerTestBase {
     constructor(data) {
+        super(data);
         if (!data)
             return 
         this.data = {
@@ -79,11 +80,11 @@ export default class Test {
         
         // Sorted to effiencently apply success not filtered since we would need 
         // to make another function to highlight dice in chat 
-        let sorted = Test._getSortedDiceFromRoll(this.roll);
+        let sorted = SoulboundTest._getSortedDiceFromRoll(this.roll);
 
         if (this.context.rerolled) 
         {
-            let sortedReroll = Test._getSortedDiceFromRoll(this.rerolledDice);
+            let sortedReroll = SoulboundTest._getSortedDiceFromRoll(this.rerolledDice);
             sorted = sorted.map((die) => {
                 let index = die.index
                 if (this.testData.shouldReroll[index])
@@ -190,9 +191,8 @@ export default class Test {
             rolls: [this.roll],
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
-            flags: {
-                "age-of-sigmar-soulbound.rollData" : this.data
-            }
+            type : "test",
+            system : this.data
         };
         chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
         if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
@@ -211,7 +211,7 @@ export default class Test {
         {
             return ChatMessage.create(chatData).then(msg => {
                 this.context.messageId = msg.id;
-                msg.update({"flags.age-of-sigmar-soulbound.rollData" : this.data})
+                msg.update({system : this.data})
             });
         }
     }
@@ -228,11 +228,11 @@ export default class Test {
     get result() { return this.data.result}
 
     get actor() {
-        return game.aos.utility.getSpeaker(this.context.speaker)
+        return ChatMessage.getSpeakerActor(this.context.speaker)
     }
 
     get targets() {
-        return this.context.targetSpeakers.map(speaker => game.aos.utility.getSpeaker(speaker))
+        return this.context.targetSpeakers.map(speaker => ChatMessage.getSpeakerActor(speaker))
     }
 
     get targetTokens() {
@@ -255,6 +255,14 @@ export default class Test {
         return fromUuidSync(this.testData.itemId)
     }
 
+    get succeeded() {
+        return this.result.success
+    }
+
+    get failed() {
+        return !this.succeeded
+    }
+
     get numberOfDice()
     {
         let num = this.attribute.value +  this.testData.bonusDice
@@ -267,10 +275,6 @@ export default class Test {
         return game.messages.get(this.context.messageId);
     }
     
-    get testEffects() {
-        return this._testEffects(this.item)
-    }
-
     get itemTest() {
         return this._itemTest(this.item)
     }
@@ -281,12 +285,6 @@ export default class Test {
 
     get hasTest() {
         return this._hasTest(this.item)
-    }
-
-    _testEffects(item) {
-        if(!item)
-            return []
-        return item.effects.filter(e => !e.transfer)
     }
 
     _itemTest(item) {

@@ -1,6 +1,6 @@
-import Test from "./test.js";
+import SoulboundTest from "./test.js";
 
-export default class MiracleTest extends Test{
+export default class MiracleTest extends SoulboundTest{
 
 
     get template() {

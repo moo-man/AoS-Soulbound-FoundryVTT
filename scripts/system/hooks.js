@@ -2,10 +2,9 @@ import AOS_MacroUtil from "./macro.js"
 
 import SoulboundChat from "./chat.js";
 import Migration from "./migrations.js";
-import FoundryOverrides from "./overrides.js";
-import SoulboundUtility from "./utility.js"
 import BugReportFormSoulbound from "../apps/bug-report.js"
 import TokenHelpers from "./token-helpers.js";
+import socketHandlers from "./socket-handlers.js";
 
 export default function registerHooks() {
     Hooks.once("init", () => {
@@ -107,19 +106,7 @@ export default function registerHooks() {
 
         _registerInitiative(game.settings.get("age-of-sigmar-soulbound", "initiativeRule"));
 
-
-        game.socket.on("system.age-of-sigmar-soulbound", async data => {
-            if (data.type == "updateCounter") {
-              game.counter.render(true)
-            }
-            else if (data.type == "setCounter" && game.user.isGM) {
-              if (game.counter.party)
-                game.counter.party.update({[`data.${data.payload.type}.value`] : parseInt(data.payload.value)})
-              else
-                await game.settings.set("age-of-sigmar-soulbound", data.payload.type, data.payload.value)
-              game.counter.render(true)
-            }
-          })
+        SocketHandlers.register(socketHandlers)
     });
 
     Hooks.on("getChatLogEntryContext", SoulboundChat.addChatMessageContextOptions);
@@ -197,18 +184,7 @@ export default function registerHooks() {
         }
     }
 
-    Hooks.on("ready", () => {
-        Migration.checkMigration()
-        FoundryOverrides()
-        game.counter.render(true)
-        game.aos.tags.createTags()
-
-        CONFIG.ChatMessage.documentClass.prototype.getTest = function() {
-            let rollData = this.getFlag("age-of-sigmar-soulbound", "rollData")
-            if (rollData)
-                return game.aos.rollClass.Test.recreate(rollData)
-        }
-
+    Hooks.on("i18nInit", () => {
         for (let key in game.aos.config) {
             if (typeof game.aos.config[key] == "object")
             {
@@ -223,10 +199,14 @@ export default function registerHooks() {
         {
             effect.name = game.i18n.localize(effect.name)
         }
+    })
 
+    Hooks.on("ready", () => {
+        Migration.checkMigration()
+        game.counter.render(true)
 
         game.actors.contents.forEach(a => {
-            SoulboundUtility.log("Post Ready Preparation")
+            // SoulboundUtility.log("Post Ready Preparation")
             if (a.postReadyEffects?.length || a.derivedEffects?.length)
             {
                 a._initialize();
@@ -261,18 +241,6 @@ export default function registerHooks() {
       })
   })
 
-    Hooks.on("preCreateActiveEffect", (effect, data, options, user) => {
-        if (effect.parent?.type == "spell" || effect.parent?.type == "miracle")
-            effect.updateSource({"transfer" : false})
-
-        if (effect.item && effect.item.equippable && effect.parent.documentName == "Item")
-            effect.updateSource({"flags.age-of-sigmar-soulbound.requiresEquip" : true})
-        else if (effect.item && effect.parent.documentName == "Actor")
-        {
-            effect.updateSource({"flags.age-of-sigmar-soulbound.requiresEquip" : getProperty(data, "flags.age-of-sigmar-soulbound.requiresEquip")})
-            effect.updateSource({"disabled" : effect.disabled})
-        }
-    })
 
     Hooks.on("updateActor", (actor, updateData) => {
         if(actor.type == "party" && actor.id == game.settings.get('age-of-sigmar-soulbound', 'counterParty'))

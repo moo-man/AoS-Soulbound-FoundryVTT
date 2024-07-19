@@ -1,6 +1,6 @@
-import Test from "./test.js";
+import SoulboundTest from "./test.js";
 
-export default class SpellTest extends Test{
+export default class SpellTest extends SoulboundTest{
 
     constructor(data)
     {

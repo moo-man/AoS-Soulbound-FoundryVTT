@@ -1,29 +1,101 @@
 
 export default class SoulboundEffect extends WarhammerActiveEffect {
 
+
+    constructor(data, context)
+    {
+        _migrateEffect(data, context);
+        super(data, context);
+    }
+
     static CONFIGURATION = {
         zone : true
     }
 
+    async resistEffect()
+    {
+        let actor = this.actor;
 
-    /** @override 
-     * Adds support for referencing actor data
-     * */
-    apply(actor, change) {
-        if (change.value.includes("@"))
+        // If no owning actor, no test can be done
+        if (!actor)
         {
-            log(`Deferring ${this.name} for ${this.parent?.name}`)
-            if (change.value == "@doom" && !game.ready)
-                actor.postReadyEffects.push(change)
-            else
-                actor.derivedEffects.push(change)
+            return false;
         }
-        else
+
+        let transferData = this.system.transferData;
+
+        // If no test, cannot be avoided
+        if (transferData.avoidTest.value == "none")
         {
-            log(`Applying ${this.name} to ${this.parent?.name}`)
-            super.apply(actor, change)
+            return false;
+        }
+
+        let test;
+        if (transferData.avoidTest.value == "script")
+        {
+            let script = new WarhammerScript({label : this.effect + " Avoidance", script : transferData.avoidTest.script}, WarhammerScript.createContext(this));
+            return await script.execute();
+        }
+        else if (transferData.avoidTest.value == "item")
+        {
+            test = await this.actor.setupTestFromItem(this.item.uuid, options);
+        }
+        else if (transferData.avoidTest.value == "custom")
+        {
+            let options = {
+                appendTitle : " - " + this.name,
+                skipTargets: true
+            };
+            test = this.actor.setupCommonTest({attribute : transferData.avoidTest.attribute, skill : transferData.avoidTest.skill}, options)
+        }
+
+        await test.roll();
+
+        if (!transferData.avoidTest.reversed)
+        {
+            // If the avoid test is marked as opposed, it has to win, not just succeed
+            if (transferData.avoidTest.opposed)
+            {
+                // TODO
+            }
+            else 
+            {
+                return test.succeeded
+            }
+        }
+        else  // Reversed - Failure removes the effect
+        {
+            // If the avoid test is marked as opposed, it has to win, not just succeed
+            if (transferData.avoidTest.opposed)
+            {
+                // TODO
+            }
+            else 
+            {
+                return !test.succeeded;
+            }
         }
     }
+
+
+    // /** @override 
+    //  * Adds support for referencing actor data
+    //  * */
+    // apply(actor, change) {
+    //     if (change.value.includes("@"))
+    //     {
+    //         log(`Deferring ${this.name} for ${this.parent?.name}`)
+    //         if (change.value == "@doom" && !game.ready)
+    //             actor.postReadyEffects.push(change)
+    //         else
+    //             actor.derivedEffects.push(change)
+    //     }
+    //     else
+    //     {
+    //         log(`Applying ${this.name} to ${this.parent?.name}`)
+    //         super.apply(actor, change)
+    //     }
+    // }
 
     fillDerivedData(actor, change) {
 
@@ -56,7 +128,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
     /**
      * Takes a test object and returns effect data populated with the results and overcasts computed
      * 
-     * @param {Test} test 
+     * @param {SoulboundTest} test 
      */
     static async populateEffectData(effectData, test, item)
     {
@@ -134,4 +206,77 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
     get isCondition() {
         return CONFIG.statusEffects.map(i => i.id).includes(Array.from(this.statuses)[0])
     }
+}
+
+function _migrateEffect(data, context)
+{
+    if (getProperty(data, "age-of-sigmar-soulbound.migrated"))
+    {
+        return;
+    }
+    let changeConditon = foundry.utils.getProperty(data, "flags.age-of-sigmar-soulbound.changeCondition");
+    let changes = data.changes;
+
+    let transferData = {};
+
+    if (context.parent.documentName == "Item")
+    {
+        // if (data.transfer == false)
+        // {
+        //     setProperty(data, "flags.age-of-sigmar-soulbound.migrated", true)
+        //     transferData.type = "target"
+        //     transferData.documentType = "Item"
+        // }
+    }
+
+
+
+    let scriptData = []
+
+    for (let i in changeConditon)
+    {
+
+        if (changes[i]?.mode >= 6)
+        {
+            scriptData.push({
+                trigger : "dialog",
+                label : changeConditon[i].description,
+                script : `args.fields.${changes[i].key} += (${changes[i].value})`,
+                options : {
+                    targeter : changes[i].mode == 7,
+                    activateScript : changeConditon[i].script,
+                    hideScript : changeConditon[i].hide
+                }
+            })
+        }
+    }
+
+    for(let script of scriptData)
+    {
+        // // Previously scripts could reference the source test with a janky {{path}} statement
+        // // Now, all scripts have a `this.effect` reference, which has a `sourceTest` getter
+        // let script = flags.script
+        // let regex = /{{(.+?)}}/g
+        // let matches = [...script.matchAll(regex)]
+        // matches.forEach(match => {
+        //     script = script.replace(match[0], `this.effect.sourceTest.data.result.${match[1]}`)
+        // })
+        // newScript.script = script;
+
+        
+        // if (flags.effectTrigger == "prefillDialog")
+        // {
+        //     // Old prefill triggers always ran for every dialog with conditional logic inside to add modifiers or not
+        //     // To reflect that, migrated prefill tiggers need to always be active in the dialog
+        //     foundry.utils.setProperty(newScript, "options.dialog.activateScript", "return true")
+        // }
+
+    }
+
+
+
+    // setProperty(data, "system.transferData", transferData);
+    setProperty(data, "system.scriptData", scriptData)
+   
+    delete data?.flags?.["age-of-sigmar-soulbound"]?.changeCondition;
 }

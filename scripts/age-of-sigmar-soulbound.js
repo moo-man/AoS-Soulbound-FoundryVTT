@@ -9,17 +9,7 @@ import hooks from "./system/hooks.js"
 import AOS from "./system/config.js"
 import Migration from "./system/migrations.js";
 import SoulboundUtility from "./system/utility.js";
-import Test from "./system/tests/test.js";
-import CombatTest from "./system/tests/combat-test.js";
-import SpellTest from "./system/tests/spell-test.js";
-import MiracleTest from "./system/tests/miracle-test.js";
-import ItemTraits from "./apps/item-traits.js"
 import SoulboundCounter from "./apps/counter.js";
-import ModuleUpdater from "./apps/module-updater.js";
-import ModuleInitializer from "./apps/module-initialization.js";
-import TagManager from "./system/tag-manager.js";
-import ZoneConfig from "./apps/zone-config.js";
-import CharacterCreation from "./apps/character-creation.js";
 import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 import { PlayerModel } from "./model/actor/player.js";
 import { NPCModel } from "./model/actor/npc.js";
@@ -54,6 +44,7 @@ Hooks.once("init", () => {
     CONFIG.Actor.dataModels["npc"] = NPCModel;
     CONFIG.Actor.dataModels["party"] = PartyModel;
 
+    
     CONFIG.Item.dataModels["aethericDevice"] = AethericDeviceModel;
     CONFIG.Item.dataModels["armour"] = ArmourModel;
     CONFIG.Item.dataModels["equipment"] = EquipmentModel;
@@ -64,8 +55,9 @@ Hooks.once("init", () => {
     CONFIG.Item.dataModels["weapon"] = WeaponModel;
     CONFIG.Item.dataModels["partyItem"] = PartyItemModel;
     CONFIG.Item.dataModels["archetype"] = ArchetypeModel;
-
+    
     CONFIG.ActiveEffect.dataModels["base"] = SoulboundActiveEffectModel
+    CONFIG.ChatMessage.dataModels["test"] = WarhammerTestMessageModel;
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
@@ -80,21 +72,7 @@ Hooks.once("init", () => {
     game.aos = {
         config : AOS,
         migration : Migration,
-        utility : SoulboundUtility,
-        rollClass : {
-            Test,
-            CombatTest,
-            SpellTest,
-            MiracleTest
-        },
-        apps: {
-            ItemTraits,
-            ModuleUpdater,
-            ModuleInitializer,
-            ZoneConfig,
-            CharacterCreation
-        },
-        tags: new TagManager()
+        utility : SoulboundUtility
     };
     
     game.counter = new SoulboundCounter()

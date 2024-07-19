@@ -16,13 +16,8 @@ export class SoulboundItem extends WarhammerItem {
 
   // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
   async _preCreate(data, options, user) {
-        if (data._id && !this.isOwned)
-        options.keepId = SoulboundUtility._keepID(data._id, this)
-
         await super._preCreate(data, options, user)
-        
         this.updateSource(await this.system.preCreateData())
-        
     }
 
     async _onCreate(data, options, user)
@@ -108,7 +103,7 @@ export class SoulboundItem extends WarhammerItem {
           effect.name = game.i18n.localize(effect.name)
           effect.statuses = [effect.id];
           delete effect.id
-          return this.createEmbeddedDocuments("ActiveEffect", [effect])
+          return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
         }
       }
     
@@ -282,11 +277,6 @@ export class SoulboundItem extends WarhammerItem {
         }
         journal.sheet.render(true, {pageId : page?.id})
     }
-
-    get nonTransferEffects() {
-        return this.effects.filter(i => !i.transfer)
-    }
-
     
     get equippable() { return hasProperty(this, "system.equipped") }
     // @@@@@@ TYPE GETTERS @@@@@@

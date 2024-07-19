@@ -14,4 +14,8 @@ export class TestDataModel extends StandardItemModel
         return schema;
     }
 
+    get difficulty()
+    {
+        return game.aos.utility.DNToObject(this.dn)
+    }
 }

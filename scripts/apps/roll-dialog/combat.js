@@ -112,6 +112,9 @@ export class CombatRollDialog extends CommonRollDialog {
         let skill = weapon.category === "melee" ? "weaponSkill" : "ballisticSkill"
         let attribute = weapon.system.attribute || game.aos.config.skillAttributes[skill]
 
+        
+        options.title = options.title || `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
+        options.title += options.appendTitle || "";
         let {data, fields} = super.setupData({skill, attribute}, actor, options)
 
         data.weapon = weapon;
@@ -148,9 +151,6 @@ export class CombatRollDialog extends CommonRollDialog {
 
             fields.dualWeapon = data.otherWeapons[0]?.id;
         }
-
-        options.title = options.title || `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
-        options.title += options.appendTitle || "";
         
         return {data, fields, options};
     }

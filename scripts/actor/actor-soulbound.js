@@ -1,10 +1,8 @@
-import { RollDialog, CombatDialog, SpellDialog } from "../system/dialog.js";
-import Test from "../system/tests/test.js";
+import SoulboundTest from "../system/tests/test.js";
 import CombatTest from "../system/tests/combat-test.js";
 import SpellTest from "../system/tests/spell-test.js";
 import MiracleTest from "../system/tests/miracle-test.js";
 import SoulboundUtility from "../system/utility.js";
-import TokenHelpers from "../system/token-helpers.js";
 import { CommonRollDialog } from "../apps/roll-dialog/common.js";
 import { SpellRollDialog } from "../apps/roll-dialog/spell.js";
 import { MiracleRollDialog } from "../apps/roll-dialog/miracle.js";
@@ -12,24 +10,9 @@ import { CombatRollDialog } from "../apps/roll-dialog/combat.js";
 
 export class SoulboundActor extends WarhammerActor {
 
-    async _preCreate(data, options, user) {
-        if (data._id)
-            options.keepId = SoulboundUtility._keepID(data._id, this)
-        
-        await super._preCreate(data, options, user)
-
-        this.updateSource(await this.system.preCreateData(data, options, user))
-    }
-
-    async _onCreate(data, options, user)
-    {
-        await super._onCreate(data, options, user);
-        await this.system.createChecks(data, options, user);
-    }
 
     async _preUpdate(updateData, options, user) {
-        await super._preUpdate(updateData, options, user)
-        await this.system.preUpdateChecks(updateData, options, user);
+        await super._preUpdate(updateData, options, user);
 
         // Treat the custom default token as a true default token
         // If you change the actor image from the default token, it will automatically set the same image to be the token image
@@ -38,23 +21,16 @@ export class SoulboundActor extends WarhammerActor {
         }
     }
 
-    async _onUpdate(data, options, user)
-    {
-        await super._onUpdate(data, options, user);
-        await this.update(await this.system.updateChecks(data, options));
-    }
-
 
     prepareBaseData() {
-        this._itemTypes = null;
+        super.prepareBaseData();
         this.derivedEffects = [];
-        this.postReadyEffects = []
         this.system.computeBase();
     }
 
     prepareDerivedData() {
-        this.applyDerivedEffects()
-        this.system.computeDerived();
+        this.applyDerivedEffects();
+        super.prepareDerivedData();
     }
 
 
@@ -66,16 +42,9 @@ export class SoulboundActor extends WarhammerActor {
     }
 
     //#region Rolling Setup
-    async setupAttributeTest(attribute, options={}) 
+    async setupCommonTest({skill, attribute}, options={}) 
     {
-        let test = await this._setupTest(CommonRollDialog, Test, {attribute}, options);
-        test.sendToChat();
-        return test;
-    }
-
-    async setupSkillTest(skill, attribute, options={}) 
-    {
-        let test = await this._setupTest(CommonRollDialog, Test, {skill, attribute}, options)
+        let test = await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, options)
         test.sendToChat();
         return test;
     }
@@ -100,13 +69,26 @@ export class SoulboundActor extends WarhammerActor {
         test.sendToChat();
         return test;
     }
+
+    async setupTestFromItem(item, options={})
+    {
+        if (typeof item == "string")
+        {
+            item = await fromUuid(item);
+        }
+        if (item.system.test)
+        {
+            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, options));
+        }
+    }
+
     //#endregion
 
     /**
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false}={}) {
+    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, effects=[]}={}) {
         let armour = this.combat.armour.value
         
         armour -= penetrating;
@@ -148,16 +130,16 @@ export class SoulboundActor extends WarhammerActor {
                 remaining = -1 // ineffective can only cause minor wounds          
             await this.update(this.system.combat.computeNewWound(remaining));
         }
+
+        this.applyEffect({effectData : effects.map(i => i.convertToApplied())})
+
         return ret;
     }
 
-    
     /**
      * applies healing to the actor
      */
     async applyHealing(healing) {
-
-        
          // Update the Actor
          const updates = {};
 
@@ -200,7 +182,7 @@ export class SoulboundActor extends WarhammerActor {
           effect.statuses = [effect.id];
           effect.origin = options.origin || "";
           delete effect.id
-          return this.createEmbeddedDocuments("ActiveEffect", [effect])
+          return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
         }
       }
     

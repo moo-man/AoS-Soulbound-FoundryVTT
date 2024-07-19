@@ -476,5 +476,11 @@
         "groupId" : "root"
       }
     }
+  },
+  "ChatMessage" : {
+    "types" : [
+      "base",
+      "test"
+    ]
   }
 }

@@ -1,4 +1,9 @@
-let AOS = {}
+import CombatTest from "./tests/combat-test"
+import MiracleTest from "./tests/miracle-test"
+import SpellTest from "./tests/spell-test"
+import SoulboundTest from "./tests/test"
+
+let AOS = defaultWarhammerConfig
 
 
 AOS.attributes = {
@@ -234,81 +239,34 @@ AOS.transferTypes = {
     other : "WH.EffectApplicationOther"
 },
 
-AOS.scriptTriggers = {
-    manual : "WH.TriggerManual",
-    immediate : "WH.TriggerImmediate",
-    prepareBaseData : "WH.TriggerPrepareBaseData",
-    prePrepareDerivedData : "WH.TriggerPrePrepareDerivedData",
-    postPrepareDerivedData : "WH.TriggerPostPrepareDerivedData",
-
-    prepareOwnedItemBaseData : "WH.TriggerPrepareOwnedItemBaseData",
-    prePrepareOwnedItemDerivedData : "WH.TriggerPrePrepareOwnedItemDerivedData",
-    postPrepareOwnedItemDerivedData : "WH.TriggerPostPrepareOwnedItemDerivedData",
-
+mergeObject(AOS.scriptTriggers, {
     computeCharacteristics : "Compute Characteristics",
     computeEncumbrance : "Compute Encumbrance",
     computeCombat : "Compute Combat",
-    computeWarpState : "Compute Warp State",
-    prepareOwnedItems : "Prepare Owned Items",
-    prepareOwnedData : "Prepare Owned Data",
-
-    dialog : "WH.TriggerDialog",
 
     preRollTest : "WH.TriggerPreRollTest",
-    preRollSkillTest : "WH.TriggerPreRollSkillTest",
     preRollWeaponTest : "WH.TriggerPreRollWeaponTest",
-    preRollTraitTest : "WH.TriggerPreRollTraitTest",
-    preRollPowerTest : "WH.TriggerPreRollPowerTest",
+    preRollSpellTest : "WH.TriggerPreRollTraitTest",
+    preRollMiracleTest : "WH.TriggerPreRollTraitTest",
 
     rollTest : "WH.TriggerRollTest",
-    rollSkillTest : "WH.TriggerRollSkillTest",
-    rollWeaponTest : "WH.TriggerRollWeaponTest",
-    rollTraitTest : "WH.TriggerRollTraitTest",
-    rollPowerTest : "WH.TriggerRollPowerTest",
-
-    // preAttackerEvaluateOpposed : "WH.TriggerPreAttackerEvaluateOpposed",
-    // preAttackerComputeOpposedDamage : "WH.TriggerPreAttackerComputeOpposedDamage",
-    // postAttackerEvaluateOpposed : "WH.TriggerAttackerEvaluateOpposed",
-
-    // preDefenderEvaluateOpposed : "WH.TriggerPreDefenderEvaluateOpposed",
-    // preDefenderComputeOpposedDamage : "WH.TriggerPreDefenderComputeOpposedDamage",
-    // postDefenderEvaluateOpposed : "WH.TriggerDefenderEvaluateOpposed",
-
-    preApplyDamage : "WH.TriggerPreApplyDamage",
-    applyDamage : "WH.TriggerApplyDamage",
-    preTakeDamage : "WH.TriggerPreTakeDamage",
-    takeDamage : "WH.TriggerTakeDamage",
-
-    createToken : "WH.TriggerCreateToken",
-    createItem : "WH.TriggerCreateItem",
-    preUpdateDocument : "WH.TriggerPreUpdateDocument",
-    updateDocument : "WH.TriggerUpdateDocument",
-    createCondition : "WH.TriggerCreateCondition",
-    deleteEffect : "WH.TriggerDeleteEffect",
-
-    startRound : "WH.TriggerStartRound",
-    endRound : "WH.TriggerEndRound",
-    startTurn : "WH.TriggerStartTurn",
-    endTurn : "WH.TriggerEndTurn",
-    updateCombat  : "WH.UpdateCombat"
-},
-
-AOS.syncTriggers = ["prepareBaseData",
-"prePrepareDerivedData",
-"postPrepareDerivedData",
-"prepareOwnedItemBaseData",
-"prePrepareOwnedItemDerivedData",
-"postPrepareOwnedItemDerivedData",
-"computeCharacteristics",
-"computeEncumbrance",
-"computeCombat",
-"computeWarpState",
-"prepareOwnedItems",
-"prepareOwnedData"]
+    rollRollWeaponTest : "WH.TriggerRollSkillTest",
+    rollRollSpellTest : "WH.TriggerRollWeaponTest",
+    rollRollMiracleTest : "WH.TriggerRollTraitTest",
+}),
 
 AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-key-options.hbs",
 AOS.avoidTestTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-avoid-test.hbs",
 AOS.effectScripts = [],
+
+AOS.logFormat = [`%cSoulbound` + `%c | @MESSAGE`, "color: gold", "color: unset"],
+
+AOS.rollClasses = {
+    SoulboundTest,
+    CombatTest,
+    SpellTest,
+    MiracleTest
+},
 
 AOS.systemEffects = {
     "partial" : {
@@ -392,15 +350,18 @@ CONFIG.statusEffects = [
         name : "CONDITION.BLINDED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
-            {key: "difficulty", mode : 6, value : 2},
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
             {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
             {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
-            }
+        system : {
+            scriptdata : [{
+                label : "Mind (Awareness) Tests that rely on sight",
+                script : "args.fields.difficulty -= 2",
+                options : {
+                    hideScript : "args.fields.attribute != 'mind' || args.fields.skill != 'awareness'"
+                }
+            }]
         }
     },
     {
@@ -412,22 +373,22 @@ CONFIG.statusEffects = [
         id : "deafened",
         name : "CONDITION.DEAFENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
-        changes : [{key: "bonusDice", mode : 6, value : -1}],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Requires Hearing", script : ""}
-            }
+        system : {
+            scriptdata : [{
+                label : "Tests that require hearing",
+                script : "args.fields.bonusDice -= 1",
+            }]
         }
     },
     {
         id : "frightened",
         name : "CONDITION.FRIGHTENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
-        changes : [{key: "bonusDice", mode : 6, value : -1}],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Within line of sight of the source of fear", script : ""}
-            }
+        system : {
+            scriptdata : [{
+                label : "Within line of sight of the source of fear",
+                script : "args.fields.bonusDice -= 1",
+            }]
         }
     },
     {
@@ -439,11 +400,14 @@ CONFIG.statusEffects = [
         id : "poisoned",
         name : "CONDITION.POISONED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
-        changes : [{key: "bonusDice", mode : 6, value : -1}],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "All Tests", script : "return true"}
-            }
+        system : {
+            scriptdata : [{
+                label : "Within line of sight of the source of fear",
+                script : "args.fields.bonusDice -= 1",
+                options : {
+                    activateScript : "return true;"
+                }
+            }]
         }
     },
     {

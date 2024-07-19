@@ -13,13 +13,13 @@ export default class SoulboundChat {
 
         let canResetFocus = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest();
+            let test = message.system.test;
             return test && test.context.focusAllocated && message.isAuthor
         }
 
         let canClearFocus = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest();
+            let test = message.system.test;
             if(!test || test.context.focusAllocated)
                 return false
             let hasFocusCounter = false;
@@ -33,28 +33,28 @@ export default class SoulboundChat {
 
         let canReroll = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest();
+            let test = message.system.test;
             return test && !(test.context.rerolled || test.context.maximized) && message.isAuthor
         }
 
         let canMaximize = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest();
+            let test = message.system.test;
             return test && !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isAuthor
         }
 
         let canApplyDamage = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest()
+            let test = message.system.test
             return message.isRoll
                 && message.isContentVisible //can be seen
-                && canvas.tokens?.controlled.length //has something selected
+                && (test.targets.length || game.user.targets.size > 0) //has something selected
                 && test && (test.result.damage || test.result.primary?.damage || test.result.secondary?.damage); //is damage roll
         };
 
         let canApplyHealing = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest()
+            let test = message.system.test
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
@@ -63,7 +63,7 @@ export default class SoulboundChat {
 
         let canApplyCleave = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest()
+            let test = message.system.test
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
@@ -72,7 +72,7 @@ export default class SoulboundChat {
 
         let canApplyBlast = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest()
+            let test = message.system.test
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
@@ -81,7 +81,7 @@ export default class SoulboundChat {
 
         let canApplyRend = li => {
             const message = game.messages.get(li.data("messageId"));
-            let test = message.getTest()
+            let test = message.system.test
             return message.isRoll
                 && message.isContentVisible //can be seen
                 && canvas.tokens?.controlled.length //has something selected
@@ -95,7 +95,7 @@ export default class SoulboundChat {
                 condition: canResetFocus,
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     test.resetFocus();
                     SoulboundChat._clearFocusCounters(li)
                 }
@@ -110,7 +110,7 @@ export default class SoulboundChat {
                 condition: canMaximize,
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
-                    let test = message.getTest();
+                    let test = message.system.test;
 
                     if (!game.user.isGM)
                         SoulboundCounter.changeCounter(-1, "soulfire")
@@ -126,7 +126,7 @@ export default class SoulboundChat {
                 condition: canReroll,
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     new Reroller(test).render(true)
                 }
             }
@@ -152,7 +152,7 @@ export default class SoulboundChat {
                 condition: canApplyFocus,
                 callback: li => {
                     const message = game.messages.get(li.data("messageId"));
-                    let test = message.getTest();
+                    let test = message.system.test;
                     test.allocateFocus(Array.from(li.find(".focus-counter")).sort((a, b) => parseInt(a.parentElement.dataset.index) - parseInt(b.parentElement.dataset.index)).map(i => parseInt(i.textContent) || 0))
                 }
             }
@@ -244,36 +244,33 @@ export default class SoulboundChat {
     static async applyChatCardDamage(li, multiplier, options={}) {
 
         const message = game.messages.get(li.data("messageId"));
-        let test = message.getTest();
+        let test = message.system.test;
         let damage
         let item
 
         if (test.result.primary?.damage && test.result.secondary?.damage) // If both primary and secondary, give choice
         {
-            await new Promise((resolve) => {
-                new Dialog({
-                    title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
-                    content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
-                    buttons : {
-                        primary : {
-                            label : game.i18n.localize("DIALOG.PRIMARY"),
-                            callback : () => {
-                                damage = test.result.primary.damage.total
-                                item = test.item
-                                resolve()
-                            }
-                        },
-                        secondary : {
-                            label : game.i18n.localize("DIALOG.SECONDARY"),
-                            callback : () => {
-                                damage = test.result.secondary.damage.total
-                                item = test.secondaryWeapon
-                                resolve()
-                            }
+            await Dialog.prompt({
+                title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
+                content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
+                buttons : {
+                    primary : {
+                        label : game.i18n.localize("DIALOG.PRIMARY"),
+                        callback : () => {
+                            damage = test.result.primary.damage.total
+                            item = test.item
+                            resolve()
+                        }
+                    },
+                    secondary : {
+                        label : game.i18n.localize("DIALOG.SECONDARY"),
+                        callback : () => {
+                            damage = test.result.secondary.damage.total
+                            item = test.secondaryWeapon
+                            resolve()
                         }
                     }
-    
-                }).render(true)
+                }
             })
         }
         else if (test.result.primary?.damage) // If only primary
@@ -297,12 +294,11 @@ export default class SoulboundChat {
         options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
         options.ineffective = test.item?.traitList?.ineffective
         options.restraining = test.item?.traitList?.restraining
+        options.effects = test.item?.damageEffects;
 
         // apply to any selected actors
-        return Promise.all(canvas.tokens.controlled.map(t => {
-            const a = t.actor;
-            return a.applyDamage(damage, options);
-        }));
+        let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets
+        return Promise.all(targets.filter(a => a).map(a => a.applyDamage(damage, options)));
     }
 
         /**
@@ -312,7 +308,7 @@ export default class SoulboundChat {
     static async applyChatCardHealing(li, multiplier, options={}) {
 
         const message = game.messages.get(li.data("messageId"));
-        let test = message.getTest();
+        let test = message.system.test;
         let healing = test.result.healing
 
         // apply to any selected actors
@@ -328,7 +324,7 @@ export default class SoulboundChat {
      */
     static async applyCleaveDamage(li) {    
         const message = game.messages.get(li.data("messageId"));
-        let test = message.getTest();
+        let test = message.system.test;
         let result
         let item
 
@@ -390,7 +386,7 @@ export default class SoulboundChat {
      */
     static async applyBlastDamage(li) {    
         const message = game.messages.get(li.data("messageId"));
-        let test = message.getTest();
+        let test = message.system.test;
 
         let item
 
@@ -447,7 +443,7 @@ export default class SoulboundChat {
      */
     static async applyRend(li) {    
         const message = game.messages.get(li.data("messageId"));
-        let test = message.getTest();
+        let test = message.system.test;
 
         let result
         let item
@@ -526,8 +522,9 @@ export default class SoulboundChat {
         html.on("mouseover", ".target-selector", SoulboundChat._onAllTargetHoverChange.bind(this))
         html.on("mouseout", ".target-selector", SoulboundChat._onAllTargetHoverChange.bind(this))
         html.on("click", ".target-selector", SoulboundChat._onAllTargetClick.bind(this))
-        
 
+        html.on("click", ".apply-effect", WarhammerChatListeners.onApplyTargetEffect)
+        html.on("click", ".apply-zone", WarhammerChatListeners.onApplyTargetEffect)
 
     }
 
@@ -536,7 +533,7 @@ export default class SoulboundChat {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
         let counter = $(ev.currentTarget).find(".focus-counter")
-        let test = msg.getTest()
+        let test = msg.system.test
         const MAX_FOCUS = test.result.focus
         let current = this._sumFocus($(ev.currentTarget).parents(".message"))
         let num = parseInt(counter[0].textContent) || 0
@@ -594,7 +591,7 @@ export default class SoulboundChat {
     {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         let itemTest = test.itemTest
         if (ev.currentTarget.dataset.source == "secondary")
             itemTest = test.secondaryItemTest
@@ -634,7 +631,7 @@ export default class SoulboundChat {
     {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         let diceNum = test.testData.dn.complexity - test.result.successes;
         let formula  = `${diceNum}d6`
         let tableRoll = new Roll(formula)
@@ -653,7 +650,7 @@ export default class SoulboundChat {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let effectId = $(ev.currentTarget).attr("data-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         let item = test.item
         if (ev.currentTarget.dataset.source == "secondary")
             item = test.secondaryWeapon
@@ -679,7 +676,7 @@ export default class SoulboundChat {
     {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         let index = parseInt($(ev.currentTarget).parents(".overcast-group").attr("data-index"))
         test.allocateOvercast(index)
     }
@@ -688,7 +685,7 @@ export default class SoulboundChat {
     {
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         test.resetOvercasts()
     }
 
@@ -701,7 +698,7 @@ export default class SoulboundChat {
     static _onAllTargetHoverChange(ev){
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         let tokenIds = test.targetTokens.map(i => i.id)
         this._toggleTokenHover(tokenIds, {toggleIn : event.type == "mouseover", toggleOut : event.type == "mouseout"})
     }
@@ -720,7 +717,7 @@ export default class SoulboundChat {
     static _onAllTargetClick(ev){
         let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
         let msg = game.messages.get(id)
-        let test = msg.getTest();
+        let test = msg.system.test;
         let tokenIds = test.targetTokens.map(i => i.id)
         this._toggleTokenControl(tokenIds)
     }

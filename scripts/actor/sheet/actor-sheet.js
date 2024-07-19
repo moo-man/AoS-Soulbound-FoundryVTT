@@ -382,13 +382,13 @@ export class SoulboundActorSheet extends WarhammerSheetMixin(ActorSheet) {
     _onAttributeClick(event) {
         event.preventDefault();
         const attribute = $(event.currentTarget).data("attribute");
-        this.actor.setupAttributeTest(attribute)
+        this.actor.setupCommonTest({attribute})
     }
 
     async _onSkillClick(event) {
         event.preventDefault();
         const skill = $(event.currentTarget).data("skill");
-        this.actor.setupSkillTest(skill)
+        this.actor.setupCommonTest({skill})
     }
 
     async _onWeaponClick(event) {

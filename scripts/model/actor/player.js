@@ -1,3 +1,4 @@
+import CharacterCreation from "../../apps/character-creation";
 import { StandardActorModel } from "./standard";
 let fields = foundry.data.fields;
 
@@ -88,7 +89,7 @@ export class PlayerModel extends StandardActorModel
 
         if (apply)
         {
-            new game.aos.apps.CharacterCreation({actor: this.parent, archetype}).render(true)
+            new CharacterCreation({actor: this.parent, archetype}).render(true)
         }
         else
         {
