@@ -30,6 +30,11 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             return false;
         }
 
+        let options = {
+            appendTitle : " - " + this.name,
+            skipTargets: true
+        };
+
         let test;
         if (transferData.avoidTest.value == "script")
         {
@@ -38,18 +43,12 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
         }
         else if (transferData.avoidTest.value == "item")
         {
-            test = await this.actor.setupTestFromItem(this.item.uuid, options);
+            test = await this.actor.setupTestFromItem(this.system.sourceData.item, options);
         }
         else if (transferData.avoidTest.value == "custom")
         {
-            let options = {
-                appendTitle : " - " + this.name,
-                skipTargets: true
-            };
-            test = this.actor.setupCommonTest({attribute : transferData.avoidTest.attribute, skill : transferData.avoidTest.skill}, options)
+            test = await this.actor.setupCommonTest({attribute : transferData.avoidTest.attribute, skill : transferData.avoidTest.skill}, options)
         }
-
-        await test.roll();
 
         if (!transferData.avoidTest.reversed)
         {
@@ -210,7 +209,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
 
 function _migrateEffect(data, context)
 {
-    if (getProperty(data, "age-of-sigmar-soulbound.migrated"))
+    if (getProperty(data, "age-of-sigmar-soulbound.migrated") || getProperty(data, "system.scriptData")?.length > 0)
     {
         return;
     }

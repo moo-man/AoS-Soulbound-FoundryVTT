@@ -2,7 +2,6 @@ import AOS_MacroUtil from "./macro.js"
 
 import SoulboundChat from "./chat.js";
 import Migration from "./migrations.js";
-import BugReportFormSoulbound from "../apps/bug-report.js"
 import TokenHelpers from "./token-helpers.js";
 import socketHandlers from "./socket-handlers.js";
 
@@ -99,6 +98,14 @@ export default function registerHooks() {
         config: true,
         default: true,
         type: Boolean
+      });
+
+      game.settings.register("age-of-sigmar-soulbound", "postedIssues", {
+        name: "Posted Issues",
+        scope: "world",
+        config: false,
+        default: [],
+        type: Array
       });
 
 
@@ -251,19 +258,7 @@ export default function registerHooks() {
         }
     })
 
-    Hooks.on("renderSidebarTab", async (app, html) => {
-        if (app.options.id == "settings")
-        {
-            let button = $(`<button class='bug-report'>${game.i18n.localize("BUTTON.PostBug")}</button>`)
-            
-            button.click(ev => {
-                new BugReportFormSoulbound().render(true);
-            })
-            
-            button.insertAfter(html.find("#game-details"))
-            
-        }
-    })
+    Hooks.on("renderSidebarTab", WarhammerBugReport.addSidebarButton)
 
     Hooks.on("preCreateScene", (scene, data) => {
         scene.updateSource({gridDistance : 5, gridUnits : "ft"})

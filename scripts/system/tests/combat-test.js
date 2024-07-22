@@ -13,6 +13,18 @@ export default class CombatTest extends SoulboundTest {
 
     }
 
+    async runPreScripts()
+    {
+        super.runPreScripts();
+        await Promise.all(this.actor.runScripts("preRollCombatTest", this));
+    }
+
+    async runPostScripts()
+    {
+        super.runPostScripts();
+        await Promise.all(this.actor.runScripts("rollCombatTest", this));
+    }
+
     computeResult()
     {
         super.computeResult()

@@ -1,7 +1,7 @@
 import ActorConfigure from "../../apps/actor-configure.js";
 import SpeedConfig from "../../apps/speed-config.js";
 
-export class SoulboundActorSheet extends WarhammerSheetMixin(ActorSheet) {
+export class SoulboundActorSheet extends WarhammerActorSheet {
 
 
     static get defaultOptions() {
@@ -131,12 +131,12 @@ export class SoulboundActorSheet extends WarhammerSheetMixin(ActorSheet) {
     
     constructEffectLists(sheetData) 
     {
-        let effects = {}
+        sheetData.effects = {}
+        sheetData.effects.temporary = []
+        sheetData.effects.passive = []
+        sheetData.effects.disabled = []
 
-        effects.temporary = sheetData.actor.effects.filter(i => i.isTemporary && !i.disabled && !i.isCondition)
-        effects.disabled = sheetData.actor.effects.filter(i => i.disabled)
-        effects.passive = sheetData.actor.effects.filter(i => !i.isTemporary && !i.disabled && !i.isCondition)
-        effects.conditions = CONFIG.statusEffects.map(i => {
+        sheetData.effects.conditions = CONFIG.statusEffects.map(i => {
             return {
                 name : i.name,
                 key : i.id,
@@ -145,8 +145,13 @@ export class SoulboundActorSheet extends WarhammerSheetMixin(ActorSheet) {
                 tooltip : game.aos.config.conditionDescriptions[i.id]
             }
         })
-
-        sheetData.effects = effects;
+    
+        for (let e of Array.from(this.actor.allApplicableEffects(true)))
+        {
+          if (e.disabled) sheetData.effects.disabled.push(e)
+          else if (e.isTemporary) sheetData.effects.temporary.push(e)
+          else sheetData.effects.passive.push(e);
+        }
     }
 
     _sortItemLists(items)

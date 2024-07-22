@@ -3,7 +3,7 @@ import { SoulboundItem } from "../item-soulbound.js";
 import ArchetypeGroups from "../../apps/archetype-groups.js"
 import ArchetypeGeneric from "../../apps/archetype-generic.js";
 
-export class SoulboundItemSheet extends WarhammerSheetMixin(ItemSheet) {
+export class SoulboundItemSheet extends WarhammerItemSheet {
 
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {

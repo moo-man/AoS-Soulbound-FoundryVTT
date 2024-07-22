@@ -49,11 +49,13 @@ export default class SoulboundTest extends WarhammerTestBase {
     async roll() {
         this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
         this.testData.roll = this.roll.toJSON()
+        await this.runPreScripts()
         await this.roll.evaluate()  
         this.roll.dice[0].results.forEach((result, i) => {
             result.index = i;
         })
         this.computeResult()   
+        await this.runPostScripts()
     }
 
 

@@ -4,7 +4,6 @@
         <select name="system.transferData.avoidTest.attribute">
             {{#select system.transferData.avoidTest.attribute}}
                 {{#each (config "attributes")}}
-                    {{log this}}
                     <option value="{{@key}}">{{this}}</option>
                 {{/each}}
             {{/select}}

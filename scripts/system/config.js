@@ -240,19 +240,13 @@ AOS.transferTypes = {
 },
 
 mergeObject(AOS.scriptTriggers, {
-    computeCharacteristics : "Compute Characteristics",
-    computeEncumbrance : "Compute Encumbrance",
-    computeCombat : "Compute Combat",
-
     preRollTest : "WH.TriggerPreRollTest",
-    preRollWeaponTest : "WH.TriggerPreRollWeaponTest",
+    preRollCombatTest : "WH.TriggerPreRollWeaponTest",
     preRollSpellTest : "WH.TriggerPreRollTraitTest",
-    preRollMiracleTest : "WH.TriggerPreRollTraitTest",
 
     rollTest : "WH.TriggerRollTest",
-    rollRollWeaponTest : "WH.TriggerRollSkillTest",
+    rollRollCombatTest : "WH.TriggerRollSkillTest",
     rollRollSpellTest : "WH.TriggerRollWeaponTest",
-    rollRollMiracleTest : "WH.TriggerRollTraitTest",
 }),
 
 AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-key-options.hbs",
@@ -267,6 +261,23 @@ AOS.rollClasses = {
     SpellTest,
     MiracleTest
 },
+
+AOS.bugReporterConfig = {
+    endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/soulbound",
+    githubURL : "https://api.github.com/repos/moo-man/AoS-Soulbound-FoundryVTT/",
+    successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
+    troubleshootingURL : ""
+}
+
+AOS.premiumModules = {
+    "age-of-sigmar-soulbound" : "Age of Sigmar: Soulbound System",
+    "soulbound-core" : "Core Rulebook",
+    "soulbound-starter-set" : "Starter Set",
+    "soulbound-order" : "Champions of Order",
+    "soulbound-bestiary" : "Soulbound Bestiary",
+    "soulbound-artefacts" : "Artefacts of Power",
+
+}
 
 AOS.systemEffects = {
     "partial" : {

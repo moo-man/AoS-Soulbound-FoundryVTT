@@ -16,6 +16,18 @@ export default class SpellTest extends SoulboundTest{
         return "systems/age-of-sigmar-soulbound/template/chat/spell/spell-roll.hbs"
     }
 
+    async runPreScripts()
+    {
+        super.runPreScripts();
+        await Promise.all(this.actor.runScripts("preRollSpellTest", this));
+    }
+
+    async runPostScripts()
+    {
+        super.runPostScripts();
+        await Promise.all(this.actor.runScripts("rollSpellTest", this));
+    }
+
     computeResult()
     {
         super.computeResult()
