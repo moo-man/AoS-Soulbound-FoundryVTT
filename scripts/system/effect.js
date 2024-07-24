@@ -77,50 +77,49 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
     }
 
 
-    // /** @override 
-    //  * Adds support for referencing actor data
-    //  * */
-    // apply(actor, change) {
-    //     if (change.value.includes("@"))
-    //     {
-    //         log(`Deferring ${this.name} for ${this.parent?.name}`)
-    //         if (change.value == "@doom" && !game.ready)
-    //             actor.postReadyEffects.push(change)
-    //         else
-    //             actor.derivedEffects.push(change)
-    //     }
-    //     else
-    //     {
-    //         log(`Applying ${this.name} to ${this.parent?.name}`)
-    //         super.apply(actor, change)
-    //     }
-    // }
+    /** @override 
+     * Adds support for referencing actor data
+     * */
+    apply(actor, change) {
+        if (change.value.includes("@"))
+        {
+            log(`Deferring ${this.name} for ${this.parent?.name}`)
+            if (change.value == "@doom" && !game.ready)
+                actor.postReadyEffects.push(change)
+            else
+                actor.derivedEffects.push(change)
+        }
+        else
+        {
+            log(`Applying ${this.name} to ${this.parent?.name}`)
+            super.apply(actor, change)
+        }
+    }
 
     fillDerivedData(actor, change) {
+        try {
 
-        // See if change references an ID
-        let matches = Array.from(change.value.matchAll(/@UUID\[Actor\.(.+?)\]\.system\.(.+)/gm));
+            if (change.value.includes("@test")) {
+                let path = change.value.replace("@test.", "");
+                change.value = getProperty(this.sourceTest, path)?.toString() || "0";
+            }
+            else {
 
-        if (matches[0])
-        {
-            let [, id, path] = matches[0]
-            // If matches, replace values
-            actor = game.actors.get(id)
-            
-            if (!actor)
-            return console.error(`ERROR.ReferencedActorNotFound`);
-            change.value = "@" + path;
+
+                let data = (0, eval)(Roll.replaceFormulaData(change.value, actor.getRollData()))
+                //Foundry Expects to find a String for numbers
+                //Raw Numbers don't work anymore
+                if (typeof data === "number") {
+                    change.value = data.toString();
+                } else {
+                    change.value = data;
+                }
+            }
+        }
+        catch (e) {
+            change.value = "0";
         }
 
-        let data = (0, eval)(Roll.replaceFormulaData(change.value, actor.getRollData()))
-        //Foundry Expects to find a String for numbers
-        //Raw Numbers don't work anymore
-        if(typeof data === "number") {
-            change.value = data.toString();
-        } else {
-            change.value = data;
-        }
-        
     }
     
 
@@ -213,69 +212,64 @@ function _migrateEffect(data, context)
     {
         return;
     }
-    let changeConditon = foundry.utils.getProperty(data, "flags.age-of-sigmar-soulbound.changeCondition");
-    let changes = data.changes;
-
-    let transferData = {};
-
-    if (context.parent.documentName == "Item")
+    let changes = data?.changes || [];
+    let migrateScripts = false;
+    if (changes.some(c => c.mode == 6 || c.mode == 7) || data.system?.scriptData?.length == 0)
     {
-        // if (data.transfer == false)
-        // {
-        //     setProperty(data, "flags.age-of-sigmar-soulbound.migrated", true)
-        //     transferData.type = "target"
-        //     transferData.documentType = "Item"
-        // }
+        migrateScripts = true;
     }
 
-
-
-    let scriptData = []
-
-    for (let i in changeConditon)
+    if (migrateScripts)
     {
-
-        if (changes[i]?.mode >= 6)
+        let scriptData = []
+        let changeConditon = foundry.utils.getProperty(data, "flags.age-of-sigmar-soulbound.changeCondition");
+        for (let i in changeConditon)
         {
-            scriptData.push({
-                trigger : "dialog",
-                label : changeConditon[i].description,
-                script : `args.fields.${changes[i].key} += (${changes[i].value})`,
-                options : {
-                    targeter : changes[i].mode == 7,
-                    activateScript : changeConditon[i].script,
-                    hideScript : changeConditon[i].hide
-                }
-            })
-        }
-    }
+            if (changes[i]?.mode >= 6)
+            {
+                let script;
 
-    for(let script of scriptData)
-    {
-        // // Previously scripts could reference the source test with a janky {{path}} statement
-        // // Now, all scripts have a `this.effect` reference, which has a `sourceTest` getter
-        // let script = flags.script
-        // let regex = /{{(.+?)}}/g
-        // let matches = [...script.matchAll(regex)]
-        // matches.forEach(match => {
-        //     script = script.replace(match[0], `this.effect.sourceTest.data.result.${match[1]}`)
-        // })
-        // newScript.script = script;
+                if (changes[i].value === "true" || changes[i].value === "false")
+                {
+                    script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize(): i).join("")} = ${changes[i].value}`
+                }
+                else 
+                {
+                    script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize(): i).join("")} += (${changes[i].value})`
+                }
+                scriptData.push({
+                    trigger : "dialog",
+                    label : changeConditon[i].description,
+                    script : script,
+                    options : {
+                        targeter : changes[i].mode == 7,
+                        activateScript : changeConditon[i].script,
+                        hideScript : changeConditon[i].hide
+                    }
+                })
+            }
+        }
 
         
-        // if (flags.effectTrigger == "prefillDialog")
-        // {
-        //     // Old prefill triggers always ran for every dialog with conditional logic inside to add modifiers or not
-        //     // To reflect that, migrated prefill tiggers need to always be active in the dialog
-        //     foundry.utils.setProperty(newScript, "options.dialog.activateScript", "return true")
-        // }
+        for(let newScript of scriptData)
+        {
+            // Previously scripts could reference the source test with a janky {{path}} statement
+            // Now, all scripts have a `this.effect` reference, which has a `sourceTest` getter
+            let script = newScript.script
+            script = script.replace("@test", "this.effect.sourceTest")
+            script = script.replace("data.", "args.")
+            script = script.replace("attributeKey", "fields.attribute")
+            script = script.replace("skillKey", "fields.skill")
 
+            newScript.script = script;
+        }
+        
+        data.changes = data.changes.filter(i => i.mode < 6);
+        setProperty(data, "system.scriptData", scriptData)
     }
-
 
 
     // setProperty(data, "system.transferData", transferData);
-    setProperty(data, "system.scriptData", scriptData)
    
-    delete data?.flags?.["age-of-sigmar-soulbound"]?.changeCondition;
+    // delete data?.flags?.["age-of-sigmar-soulbound"]?.changeCondition;
 }

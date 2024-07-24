@@ -4,6 +4,17 @@ export class SpellRollDialog extends CommonRollDialog {
 
     dialogTitle = "DIALOG.SPELL_ROLL"
 
+    get item()
+    {
+        return this.data.spell;
+    }
+
+    get weapon()
+    {
+        return this.data.spell;
+    }
+
+
     static setupData(spell, actor, options={})
     {
         if (typeof spell == "string")
@@ -25,6 +36,7 @@ export class SpellRollDialog extends CommonRollDialog {
         options.title = options.title || `${spell.name}`
         options.title += options.appendTitle || "";
         let {data, fields} = super.setupData({skill, attribute}, actor, options)
+        data.scripts = data.scripts.concat(spell?.getScripts("dialog"));
 
         mergeObject(fields, spell.system.difficulty, {overwrite : false});
 

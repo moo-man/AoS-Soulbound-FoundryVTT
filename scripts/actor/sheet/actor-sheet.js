@@ -186,8 +186,8 @@ export class SoulboundActorSheet extends WarhammerActorSheet {
     activateListeners(html) {
         super.activateListeners(html);
         html.find(".item-create").click(this._onItemCreate.bind(this));
-        html.find(".item-edit").click(this._onItemEdit.bind(this));
-        html.find(".item-edit-right").contextmenu(this._onItemEdit.bind(this));
+        html.find(".item-edit").click(this._onEditItem.bind(this));
+        html.find(".item-edit-right").contextmenu(this._onEditItem.bind(this));
         html.find(".item-delete").click(this._onItemDelete.bind(this));
         html.find(".item-post").click(this._onItemPost.bind(this));
         html.find(".state").click(ev => this._onStateClick(ev));
@@ -248,7 +248,7 @@ export class SoulboundActorSheet extends WarhammerActorSheet {
         this.actor.createEmbeddedDocuments("Item", [data], { renderSheet: true });
     }
 
-    _onItemEdit(event) {
+    _onEditItem(event) {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const item = this.actor.items.get(div.data("itemId"));
@@ -294,60 +294,6 @@ export class SoulboundActorSheet extends WarhammerActorSheet {
         const target = $(event.currentTarget).data("target")
         let item = this.actor.items.get(itemId)
         return item.update({[target] : event.target.value})
-    }
-
-    async _onEffectCreate(ev) {
-        let type = ev.currentTarget.attributes["data-type"].value
-        let effectData = { label: game.i18n.localize("QUICKEFFECT.NEW") , icon: "icons/svg/aura.svg"}
-        if (type == "temporary") {
-            effectData["duration.rounds"] = 1;
-          }
-
-        let html = await renderTemplate("systems/age-of-sigmar-soulbound/template/dialog/quick-effect.hbs")
-        let dialog = new Dialog({
-            title : game.i18n.localize("QUICKEFFECT.TITLE"),
-            content : html,
-            buttons : {
-                "create" : {
-                    label : game.i18n.localize("BUTTON.CREATE"),
-                    callback : html => {
-                        let mode = 2
-                        let label = html.find(".label").val()
-                        let key = html.find(".key").val()
-                        let value = parseInt(html.find(".modifier").val())
-                        effectData.name = label
-                        effectData.changes = [{key, mode, value}]
-                        this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
-                    }
-                },
-                "skip" : {
-                    label : game.i18n.localize("BUTTON.SKIP"),
-                    callback : () => this.actor.createEmbeddedDocuments("ActiveEffect", [effectData])
-                }
-            }
-        })
-        await dialog._render(true)
-        dialog._element.find(".label").select() 
-      }
-
-    _onEffectEdit(ev)
-    {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        this.object.effects.get(id).sheet.render(true)
-    }
-
-    _onEffectDelete(ev)
-    {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        this.object.deleteEmbeddedDocuments("ActiveEffect", [id])
-    }
-
-    _onEffectToggle(ev)
-    {
-        let id = $(ev.currentTarget).parents(".item").attr("data-effect-id")
-        let effect = this.object.effects.get(id)
-
-        effect.update({"disabled" : !effect.disabled})
     }
 
     _onStateClick(event) {

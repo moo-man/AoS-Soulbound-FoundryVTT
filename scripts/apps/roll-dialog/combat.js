@@ -10,6 +10,16 @@ export class CombatRollDialog extends CommonRollDialog {
       return "systems/age-of-sigmar-soulbound/template/apps/dialog/combat-dialog.hbs";
     }
 
+    get item()
+    {
+        return this.data.weapon;
+    }
+
+    get weapon()
+    {
+        return this.data.weapon;
+    }
+
     async computeFields() 
     {
         if (this.data.primaryTarget)
@@ -116,6 +126,7 @@ export class CombatRollDialog extends CommonRollDialog {
         options.title = options.title || `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
         options.title += options.appendTitle || "";
         let {data, fields} = super.setupData({skill, attribute}, actor, options)
+        data.scripts = data.scripts.concat(weapon?.getScripts("dialog"));
 
         data.weapon = weapon;
         data.item = weapon;

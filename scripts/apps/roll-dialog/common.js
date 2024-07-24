@@ -14,6 +14,19 @@ export class CommonRollDialog extends WarhammerRollDialog {
       return "systems/age-of-sigmar-soulbound/template/apps/dialog/common-dialog.hbs";
     }
 
+    // Backwards compatibility with migrated scripts
+    get skillKey()
+    {
+        return this.fields.skill;
+    }
+
+    // Backwards compatibility with migrated scripts
+    get attributeKey()
+    {
+        return this.fields.attribute;
+    }
+
+
     async getData()
     {
         let data = await super.getData();

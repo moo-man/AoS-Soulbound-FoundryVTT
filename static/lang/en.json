@@ -601,12 +601,6 @@
   "EFFECT.ActivateHint" : "Function must return true for automatic activation. Leave blank for manual selection.",
   "EFFECT.HideHint" : "Function must return true to prevent the effect script from showing in the dialog.",
 
-  "QUICKEFFECT.CHANGE": "Change",
-  "QUICKEFFECT.NAME": "Name",
-  "QUICKEFFECT.MODIFIER": "Modifier",
-  "QUICKEFFECT.NEW": "New Effect",
-  "QUICKEFFECT.TITLE": "Quick Effect",
-
   "INITIALIZER.Complete": "Initialization Complete",
   "INITIALIZER.Skipped": "Skipped Initialization.",
 
