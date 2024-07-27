@@ -627,6 +627,31 @@
       }
 }
 
+.active-effect-sheet .add-script {
+   width: 30%;
+   height: 2rem;
+   line-height: 1.5rem;
+   margin: 0px 35%;
+}
+
+ .active-effect-sheet .script {
+   display: flex;
+   margin: 5px;
+   padding: 4px 3px;
+   background-color: rgba(218, 165, 32, 0.5);
+   border:  1px solid #2e64b1;
+   width: 100%;
+ }
+
+ .active-effect-sheet .script > *{
+   flex: 1;
+ }
+ 
+ .active-effect-sheet .script .script-delete,
+   .active-effect-sheet .script .script-edit{
+   flex: 0 0 20px;
+ }
+
 @-webkit-keyframes glow-medium{
    from {
      box-shadow: 0 0 5px #2e64b1;

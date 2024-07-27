@@ -25,6 +25,7 @@ export class SoulboundActor extends WarhammerActor {
     prepareBaseData() {
         super.prepareBaseData();
         this.derivedEffects = [];
+        this.postReadyEffects = [];
         this.system.computeBase();
     }
 
@@ -163,7 +164,7 @@ export class SoulboundActor extends WarhammerActor {
         return ret;
     }
 
-    async addCondition(effect, options={}) {
+    async addCondition(effect, options={}, mergeData={}) {
         if (typeof (effect) === "string")
             effect = CONFIG.statusEffects.concat(Object.values(game.aos.config.systemEffects)).find(e => e.id == effect)
         if (!effect)
@@ -182,7 +183,7 @@ export class SoulboundActor extends WarhammerActor {
           effect.statuses = [effect.id];
           effect.origin = options.origin || "";
           delete effect.id
-          return this.createEmbeddedDocuments("ActiveEffect", [effect], {condition: true})
+          return this.createEmbeddedDocuments("ActiveEffect", [mergeObject(effect, mergeData)], {condition: true})
         }
       }
     

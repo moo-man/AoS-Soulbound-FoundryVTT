@@ -250,19 +250,24 @@ function _migrateEffect(data, context)
             }
         }
 
+        const convertScript = (str = "") => {
+            str = str.replaceAll("@test", "this.effect.sourceTest");
+            str = str.replaceAll("data.", "args.");
+            str = str.replaceAll("attributeKey", "fields.attribute");
+            str = str.replaceAll("skillKey", "fields.skill");
+            return str;
+        }
+
         
         for(let newScript of scriptData)
         {
-            // Previously scripts could reference the source test with a janky {{path}} statement
-            // Now, all scripts have a `this.effect` reference, which has a `sourceTest` getter
-            let script = newScript.script
-            script = script.replace("@test", "this.effect.sourceTest")
-            script = script.replace("data.", "args.")
-            script = script.replace("attributeKey", "fields.attribute")
-            script = script.replace("skillKey", "fields.skill")
-
-            newScript.script = script;
+            newScript.script = convertScript(newScript.script);
+            newScript.options.hideScript = convertScript(newScript.options.hideScript);
+            newScript.options.activateScript = convertScript(newScript.options.activateScript);
+            newScript.options.submissionScript = convertScript(newScript.options.submissionScript);
         }
+
+        
         
         data.changes = data.changes.filter(i => i.mode < 6);
         setProperty(data, "system.scriptData", scriptData)

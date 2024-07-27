@@ -232,21 +232,21 @@ AOS.conditionDescriptions = {}
 AOS.traitsWithValue = ["range", "thrown", "blast"]
 
 AOS.transferTypes = {
-    document : "WH.EffectApplicationDocument",
-    damage : "WH.EffectApplicationDamage",
-    target : "WH.EffectApplicationTarget",
-    zone : "WH.EffectApplicationZone",
-    other : "WH.EffectApplicationOther"
+    document : "WH.TransferType.Document",
+    damage : "WH.TransferType.Damage",
+    target : "WH.TransferType.Target",
+    zone : "WH.TransferType.Zone",
+    other : "WH.TransferType.Other"
 },
 
 mergeObject(AOS.scriptTriggers, {
-    preRollTest : "WH.TriggerPreRollTest",
-    preRollCombatTest : "WH.TriggerPreRollWeaponTest",
-    preRollSpellTest : "WH.TriggerPreRollTraitTest",
+    preRollTest : "WH.Trigger.PreRollTest",
+    preRollCombatTest : "WH.Trigger.PreRollWeaponTest",
+    preRollSpellTest : "WH.Trigger.PreRollTraitTest",
 
-    rollTest : "WH.TriggerRollTest",
-    rollRollCombatTest : "WH.TriggerRollSkillTest",
-    rollRollSpellTest : "WH.TriggerRollWeaponTest",
+    rollTest : "WH.Trigger.RollTest",
+    rollRollCombatTest : "WH.Trigger.RollSkillTest",
+    rollRollSpellTest : "WH.Trigger.RollWeaponTest",
 }),
 
 AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-key-options.hbs",

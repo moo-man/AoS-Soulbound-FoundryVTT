@@ -42,7 +42,9 @@ export default class Migration {
             try {
                 console.log(`Migrating Actor ${actor.name}`)
                 let updateData = await this.migrateActor(actor)
+                await this.migrateActorEffectRefactor(actor);
                 await actor.update(updateData)
+
             }
             catch (e) {
                 console.error(`Failed migration for Actor ${actor.name}: ${e.message}`)
@@ -54,6 +56,8 @@ export default class Migration {
             try {
                 console.log(`Migrating Item ${i.name}`)
                 let updateData = this.migrateItem(i)
+                await this.migrateItemEffectRefactor(actor);
+
                 await i.update(updateData)
             }
             catch (e) {
@@ -181,6 +185,107 @@ export default class Migration {
                 updateData.results.push({ _id: result.id, documentCollection: this.v10Conversions[result.documentCollection] });
             }
         }
+    }
+
+    static async migrateActorEffectRefactor(actor)
+    {
+        let effectsToDelete = [];
+
+        for(let effect of actor.effects)
+        {
+            let originItem = await fromUuid(actor.pack ? `Compendium.${actor.pack}.${effect.origin}` : effect.origin);
+            if (originItem)
+            {
+                let originEffect = originItem.effects.getName(effect.name);
+                if (originEffect)
+                {
+                    let effectData = effect.toObject();
+                    effectData.transfer = originEffect.transfer;
+                    originEffect.update(this.migrateEffectRefactor(effectData, effect));
+                    effectsToDelete.push(effect.id);
+                }
+            }
+        }
+        await actor.deleteEmbeddedDocuments("ActiveEffect", effectsToDelete);
+    }
+
+    static async migrateItemEffectRefactor(item)
+    {
+        for(let effect of item.effects)
+        {
+            effect.update(this.migrateEffectRefactor(effect.toObject(), effect));
+        }
+    }
+
+    static migrateEffectRefactor(data, document)
+    {
+        let changes = data?.changes || [];
+        let migrateScripts = false;
+        if (changes.some(c => c.mode == 6 || c.mode == 7) || data.system?.scriptData?.length == 0)
+        {
+            migrateScripts = true;
+        }
+
+        if (document.parent.documentName == "Item" && !document.getFlag("age-of-sigmar-soulbound", "migrated"))
+        {
+            if (data.transfer == false)
+            {
+                setProperty(data, "system.transferData.type", "target");
+            }
+            setProperty(data, "flags.age-of-sigmar-soulbound.migrated", true);
+        }
+    
+
+        if (migrateScripts) 
+        {
+            let scriptData = []
+
+            let changeConditon = foundry.utils.getProperty(data, "flags.age-of-sigmar-soulbound.changeCondition");
+            for (let i in changeConditon) {
+                if (changes[i]?.mode >= 6) {
+                    let script;
+
+                    if (changes[i].value === "true" || changes[i].value === "false") {
+                        script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} = ${changes[i].value}`
+                    }
+                    else {
+                        script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value})`
+                    }
+                    scriptData.push({
+                        trigger: "dialog",
+                        label: changeConditon[i].description,
+                        script: script,
+                        options: {
+                            targeter: changes[i].mode == 7,
+                            activateScript: changeConditon[i].script,
+                            hideScript: changeConditon[i].hide
+                        }
+                    })
+                }
+            }
+
+            const convertScript = (str = "") => {
+                str = str.replaceAll("@test", "this.effect.sourceTest");
+                str = str.replaceAll("data.", "args.");
+                str = str.replaceAll("attributeKey", "fields.attribute");
+                str = str.replaceAll("skillKey", "fields.skill");
+                return str;
+            }
+
+
+            for (let newScript of scriptData) {
+                newScript.script = convertScript(newScript.script);
+                newScript.options.hideScript = convertScript(newScript.options.hideScript);
+                newScript.options.activateScript = convertScript(newScript.options.activateScript);
+                newScript.options.submissionScript = convertScript(newScript.options.submissionScript);
+            }
+
+
+
+            data.changes = data.changes.filter(i => i.mode < 6);
+            setProperty(data, "system.scriptData", scriptData)
+        }
+        return data;
     }
 
 

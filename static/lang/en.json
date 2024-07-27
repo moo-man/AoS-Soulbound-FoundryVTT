@@ -634,5 +634,16 @@
   "BugReport.ErrorForm": "Please fill out the form",
   "BugReport.ErrorName1": "Please include your Discord tag or email in the Name section.",
   "BugReport.ErrorName2": "Discord Tag or email is required in the name section.",
-  "BUTTON.PostBug": "Soulbound Bug Report"
+  "BUTTON.PostBug": "Soulbound Bug Report",
+
+  "WH" : {
+    "Trigger" : {
+      "PreRollTest" : "Pre-Roll Test",
+      "PreRollWeaponTest" : "Pre-Roll Weapon Test",
+      "PreRollTraitTest" : "Pre-Roll Trait Test",
+      "RollTest" : "Roll-Test",
+      "RollSkillTest" : "Roll Skill Test",
+      "RollWeaponTest" : "Roll Weapon Test"
+    }
+  }
 }
