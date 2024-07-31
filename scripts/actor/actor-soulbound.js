@@ -45,30 +45,22 @@ export class SoulboundActor extends WarhammerActor {
     //#region Rolling Setup
     async setupCommonTest({skill, attribute}, options={}) 
     {
-        let test = await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, options)
-        test.sendToChat();
-        return test;
+        return await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, options)
     }
 
     async setupCombatTest(weapon, options={})
     {
-        let test = await this._setupTest(CombatRollDialog, CombatTest, weapon, options)
-        test.sendToChat();
-        return test;
+        return await this._setupTest(CombatRollDialog, CombatTest, weapon, options)
     }
 
     async setupSpellTest(power, options={})
     {
-        let test = await this._setupTest(SpellRollDialog, SpellTest, power, options)
-        test.sendToChat();
-        return test;
+        return await this._setupTest(SpellRollDialog, SpellTest, power, options)
     }
 
     async setupMiracleTest(miracle, options={})
     {
-        let test = await this._setupTest(MiracleRollDialog, MiracleTest, miracle, options)
-        test.sendToChat();
-        return test;
+        return await this._setupTest(MiracleRollDialog, MiracleTest, miracle, options)
     }
 
     async setupTestFromItem(item, options={})
@@ -89,9 +81,22 @@ export class SoulboundActor extends WarhammerActor {
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, effects=[]}={}) {
+    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test}={}) {
         let armour = this.combat.armour.value
         
+        let abort = undefined;
+        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test}
+        await Promise.all(this.runScripts("preTakeDamage", args) || []);
+        await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
+        await Promise.all(test?.item?.runScripts("preApplyDamage", args) || []);
+        ({damage, armour, ignoreArmour, penetrating, ineffective, restraining, abort} = args);
+
+        if (abort)
+        {
+            ui.notifications.notify(abort);
+            return;
+        }
+
         armour -= penetrating;
         
         if(armour < 0) { armour = 0; }            
@@ -106,7 +111,7 @@ export class SoulboundActor extends WarhammerActor {
 
          // Update the Actor
          const updates = {
-            "system.combat.health.toughness.value": remaining >= 0 ? remaining : 0
+            "system.combat.health.toughness.value": remaining
         };
 
         if (damage > 0 && restraining)
@@ -124,15 +129,20 @@ export class SoulboundActor extends WarhammerActor {
 
         let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
-
+        let wounds;
         // Doing this here because foundry throws an error if wounds are added before the update
         if(remaining < 0 && this.combat.health.wounds.max > 0) {
             if (ineffective)
                 remaining = -1 // ineffective can only cause minor wounds          
-            await this.update(this.system.combat.computeNewWound(remaining));
+            wounds = await this.update(this.system.combat.computeNewWound(remaining));
         }
 
-        this.applyEffect({effectData : effects.map(i => i.convertToApplied())})
+        this.applyEffect({effectData : test?.damageEffects.map(i => i.convertToApplied())})
+
+
+        await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test}) || []);
+        await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test}) || []);
+        await Promise.all(test?.item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test}) || []);
 
         return ret;
     }

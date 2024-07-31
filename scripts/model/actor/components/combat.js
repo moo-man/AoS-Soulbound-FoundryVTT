@@ -1,4 +1,3 @@
-import TokenHelpers from "../../../system/token-helpers";
 
 let fields = foundry.data.fields;
 
@@ -113,6 +112,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             this.mettle.max += Math.ceil(parent.attributes.soul.value / 2);
         }
         this.mettle.max += this.mettle.bonus;
+        this.computeSpeedModifier();
     }
 
     computeWounds()
@@ -131,6 +131,11 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.melee.ability = this._getCombatAbility("melee")
         this.accuracy.ability = this._getCombatAbility("accuracy")
         this.defence.ability = this._getCombatAbility("defence")
+    }
+
+    spendMettle(amount=1)
+    {
+        return {"system.combat.mettle.value" : this.mettle.value - amount};
     }
     
     _getCombatAbility(combatStat)
@@ -196,7 +201,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             valueNum = Math.clamped(valueNum + modifier, 1, 3)
         else return value
 
-        return game.aos.utility.findKey(valueNum, speedNum)
+        return warhammer.utility.findKey(valueNum, speedNum)
     }
 
 
@@ -241,7 +246,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         let wounds = duplicate(this.wounds)
         wounds.unshift({type, damage})
 
-        TokenHelpers.displayScrollingText(-1, this.parent.parent, {color: "0xFF0000"})
+        TokenHelpers.displayScrollingText(-1, this.parent.parent, {fill: "0xAA0055", direction: CONST.TEXT_ANCHOR_POINTS.BOTTOM})
 
         return {"system.combat.wounds" : wounds}
     }

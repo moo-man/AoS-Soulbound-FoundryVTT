@@ -1,4 +1,3 @@
-import TokenHelpers from "../../system/token-helpers";
 import { BaseSoulboundActorModel } from "./base";
 import { AttributesModel } from "./components/attributes";
 import { StandardCombatModel } from "./components/combat";
@@ -39,32 +38,43 @@ export class StandardActorModel extends BaseSoulboundActorModel
     }
 
 
-    async preUpdateChecks(data, options)
+    async _preUpdate(data, options, user)
     {
-        await super.preUpdateChecks(data, options);
+        await super._preUpdate(data, options, user);
 
         // Prevent wounds from exceeding max
         if (hasProperty(data, "system.combat.health.toughness.value"))
         {
+            data.system.combat.health.toughness.value = Math.clamp(data.system.combat.health.toughness.value, 0, this.combat.health.toughness.max)
             options.deltaToughness = data.system.combat.health.toughness.value - this.combat.health.toughness.value;
         }
         if (hasProperty(data, "system.combat.mettle.value"))
         {
+            data.system.combat.mettle.value = Math.clamp(data.system.combat.mettle.value, 0, this.combat.mettle.max)
             options.deltaMettle = data.system.combat.mettle.value - this.combat.mettle.value;
         }
     }
 
-    async updateChecks(data, options)
+    async _onUpdate(data, options)
     {
-        await super.updateChecks(data, options);
+        await super._onUpdate(data, options);
 
-        if (options.deltaToughness)
+        if (options.deltaToughness > 0)
         {
-            TokenHelpers.displayScrollingText(options.deltaToughness > 0 ? "+" + options.deltaToughness : options.deltaToughness, this.parent, {color: options.deltaToughness > 0 ? "0x00FF00" : "0xFF0000"});
+            TokenHelpers.displayScrollingText("+" + options.deltaToughness, this.parent, {fill: "0x00FF00", direction : CONST.TEXT_ANCHOR_POINTS.TOP});
         }
-        if (options.deltaMettle)
+        else if (options.deltaToughness < 0)
         {
-            TokenHelpers.displayScrollingText(options.deltaMettle, this.parent, {color: "0x6666FF"});
+            TokenHelpers.displayScrollingText(options.deltaToughness, this.parent, {fill: "0xFF0000", direction : CONST.TEXT_ANCHOR_POINTS.BOTTOM});
+        }
+
+        if (options.deltaMettle > 0)
+        {
+            TokenHelpers.displayScrollingText("+" + options.deltaMettle, this.parent, {fill: "0x6666FF", direction : CONST.TEXT_ANCHOR_POINTS.TOP});
+        }
+        else if (options.deltaMettle < 0)
+        {
+            TokenHelpers.displayScrollingText(options.deltaMettle, this.parent, {fill: "0x6666FF", direction : CONST.TEXT_ANCHOR_POINTS.BOTTOM});
         }
     }
     

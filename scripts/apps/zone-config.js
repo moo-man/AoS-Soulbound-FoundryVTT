@@ -16,35 +16,71 @@ export default class ZoneConfig extends FormApplication
         })
     }
 
-
+    async getData()
+    {
+        return getProperty(this.object, this.options.path || `flags.age-of-sigmar-soulbound`);
+    }
+    
     _updateObject(event, formData)
     {
-        this.object.update(formData)
+        this.object.update({[this.options.path || `flags.age-of-sigmar-soulbound`] : formData})
     }
 
     activateListeners(html) {
         super.activateListeners(html);
 
         html.find(".effect-create").on("click", ev => {
-            ui.notifications.error("Custom Effects on Zones are not supported yet")
+            ui.notifications.error("Effects must be created via an Active Effect with the 'Zone' Transfer Type")
+        })
+
+        html.find(".effect-delete").on("click", ev => {
+            let index = ev.currentTarget.dataset.index;
+            this.object.setFlag("age-of-sigmar-soulbound", "effects", this.object.flags["age-of-sigmar-soulbound"].effects.filter((effect, i) => i != index)).then(() => this.render(true));
         })
     }
 }
 
+foundry.applications.sheets.RegionConfig.DEFAULT_OPTIONS.window.controls = [
+    {
+        icon: 'fa-solid fa-game-board-simple',
+        label: "Zone",
+        action: "zoneConfig"
+    }
+]
 
-Hooks.on('renderDrawingHUD', (hud, html) => {
+Hooks.on('setup', (app, html) => {
 
-    const button = $(
-    `<div class='control-icon'><i class="fas fa-cog"></i></div>`
-    );
-    button.attr(
-    'title',
-    'Zone Config'
-    );
+    foundry.applications.sheets.RegionConfig.DEFAULT_OPTIONS.actions.zoneConfig = function (event, target) {
+        new ZoneConfig(this.document).render(true);
+    }
 
-    button.mousedown(event => {
-        new ZoneConfig(hud.object.document).render(true)
-    })
-    html.find('.col.right').append(button);
+//     foundry.applications.sheets.RegionConfig.DEFAULT_OPTIONS.window.controls = [
+// {        icon: 'fa-solid fa-game-board-simple',
+//         label: "Zone",
+//         action: "zoneConfig",}
+//     ]
+
+    // app.options.actions.zoneConfig = (event, target) => {
+    //     console.log(app.document);
+    // }
+
+    // app.options.window.controls.push({
+    //     icon: 'fa-solid fa-game-board-simple',
+    //     label: "Zone",
+    //     action: "zoneConfig",
+    // })
+
+    // const button = $(
+    // `<div class='control-icon'><i class="fas fa-cog"></i></div>`
+    // );
+    // button.attr(
+    // 'title',
+    // 'Zone Config'
+    // );
+
+    // button.mousedown(event => {
+    //     new ZoneConfig(hud.object.document).render(true)
+    // })
+    // html.find('.col.right').append(button);
 })
 

@@ -14,18 +14,6 @@ export class SoulboundItem extends WarhammerItem {
         }
     }
 
-  // Upon creation, assign a blank image if item is new (not duplicated) instead of mystery-man default
-  async _preCreate(data, options, user) {
-        await super._preCreate(data, options, user)
-        this.updateSource(await this.system.preCreateData())
-    }
-
-    async _onCreate(data, options, user)
-    {
-        await super._onCreate(data, options, user);
-        await this.system.createChecks(data, options, user);
-    }
-
 
     /**
      * Override update to account for archetype parent

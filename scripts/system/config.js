@@ -241,12 +241,12 @@ AOS.transferTypes = {
 
 mergeObject(AOS.scriptTriggers, {
     preRollTest : "WH.Trigger.PreRollTest",
-    preRollCombatTest : "WH.Trigger.PreRollWeaponTest",
-    preRollSpellTest : "WH.Trigger.PreRollTraitTest",
+    preRollCombatTest : "WH.Trigger.PreRollCombatTest",
+    preRollSpellTest : "WH.Trigger.PreRollSpellTest",
 
     rollTest : "WH.Trigger.RollTest",
-    rollRollCombatTest : "WH.Trigger.RollSkillTest",
-    rollRollSpellTest : "WH.Trigger.RollWeaponTest",
+    rollCombatTest : "WH.Trigger.RollCombatTest",
+    rollSpellTest : "WH.Trigger.RollSpellTest",
 }),
 
 AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-key-options.hbs",
@@ -266,7 +266,7 @@ AOS.bugReporterConfig = {
     endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/soulbound",
     githubURL : "https://api.github.com/repos/moo-man/AoS-Soulbound-FoundryVTT/",
     successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
-    troubleshootingURL : ""
+    troubleshootingURL : "https://moo-man.github.io/AoS-Soulbound-FoundryVTT/pages/troubleshooting.html"
 }
 
 AOS.premiumModules = {
@@ -279,9 +279,37 @@ AOS.premiumModules = {
 
 }
 
+AOS.getZoneTraitEffects = (region) => 
+    {
+        let effects = [];
+        let systemEffects = game.aos.config.systemEffects;
+        let flags = region.flags["age-of-sigmar-soulbound"] || {};
+        if (flags.cover)
+        {
+            effects.push(systemEffects[flags.cover]);
+        }
+        if (flags.difficult)
+        {
+            effects.push(systemEffects.difficult);
+        }
+        if (flags.hazard)
+        {
+            let hazard = foundry.utils.deepClone(systemEffects[flags.hazard]);
+            setProperty(hazard, "flags.age-of-sigmar-soulbound.ignoreArmour", flags.ignoreArmour)
+            effects.push(hazard);
+        }
+        if (flags.obscured)
+        {
+            effects.push(systemEffects[flags.obscured])
+        }
+        return effects;
+    }
+    
+
 AOS.systemEffects = {
     "partial" : {
         id : "partial",
+        statuses : ["partial"],
         name : "EFFECT.PartialCover",
         icon : "icons/svg/tower.svg",
         changes : [
@@ -297,6 +325,7 @@ AOS.systemEffects = {
     },
     "total" : {
         id : "total",
+        statuses : ["total"],
         name : "EFFECT.TotalCover",
         icon : "icons/svg/tower.svg",
         changes : [
@@ -312,6 +341,7 @@ AOS.systemEffects = {
     },
     "light" : {
         id : "light",
+        statuses : ["light"],
         name : "EFFECT.LightlyObscured",
         icon : "icons/svg/blind.svg",
         changes : [
@@ -325,6 +355,7 @@ AOS.systemEffects = {
     },
     "heavy" : {
         id : "heavy",
+        statuses : ["heavy"],
         name : "EFFECT.HeavilyObscured",
         icon : "icons/svg/blind.svg",
         changes : [
@@ -341,6 +372,7 @@ AOS.systemEffects = {
     },
     "difficult" : {
         id : "difficult",
+        statuses : ["difficult"],
         name : "EFFECT.DifficultTerrain",
         icon : "icons/svg/downgrade.svg",
         changes : [
@@ -354,10 +386,10 @@ AOS.systemEffects = {
     },
 }
 
-
 CONFIG.statusEffects = [
     {
         id : "blinded",
+        statuses : ["blinded"],
         name : "CONDITION.BLINDED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
@@ -377,11 +409,13 @@ CONFIG.statusEffects = [
     },
     {
         id : "charmed",
+        statuses : ["charmed"],
         name : "CONDITION.CHARMED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/charmed.svg"
     },
     {
         id : "deafened",
+        statuses : ["deafened"],
         name : "CONDITION.DEAFENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
         system : {
@@ -393,6 +427,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "frightened",
+        statuses : ["frightened"],
         name : "CONDITION.FRIGHTENED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
         system : {
@@ -404,11 +439,13 @@ CONFIG.statusEffects = [
     },
     {
         id : "incapacitated",
+        statuses : ["incapacitated"],
         name : "CONDITION.INCAPACITATED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/incapacitated.svg"
     },
     {
         id : "poisoned",
+        statuses : ["poisoned"],
         name : "CONDITION.POISONED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
         system : {
@@ -423,6 +460,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "prone",
+        statuses : ["prone"],
         name : "CONDITION.PRONE",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
         changes : [
@@ -432,6 +470,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "restrained",
+        statuses : ["restrained"],
         name : "CONDITION.RESTRAINED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
         changes : [
@@ -442,6 +481,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "stunned",
+        statuses : ["stunned"],
         name : "CONDITION.STUNNED",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
@@ -451,6 +491,7 @@ CONFIG.statusEffects = [
     },
     {
         id : "unconscious",
+        statuses : ["unconscious"],
         name : "CONDITION.UNCONSCIOUS",
         icon : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
     },

@@ -2,7 +2,6 @@ import AOS_MacroUtil from "./macro.js"
 
 import SoulboundChat from "./chat.js";
 import Migration from "./migrations.js";
-import TokenHelpers from "./token-helpers.js";
 import socketHandlers from "./socket-handlers.js";
 
 export default function registerHooks() {
@@ -191,22 +190,29 @@ export default function registerHooks() {
         }
     }
 
-    Hooks.on("i18nInit", () => {
-        for (let key in game.aos.config) {
-            if (typeof game.aos.config[key] == "object")
-            {
-                for (let prop in game.aos.config[key]) {
-                    if (typeof game.aos.config[key][prop] == "string")
-                        game.aos.config[key][prop] = game.i18n.localize(game.aos.config[key][prop])
-                }
-            }
-        }
+    Hooks.on("i18nInit", () => 
+    {
+        localizeConfig(game.aos.config);
 
         for (let effect of CONFIG.statusEffects)
         {
             effect.name = game.i18n.localize(effect.name)
         }
     })
+
+    function localizeConfig(config) 
+    {
+        for (let key in config) {
+            if (typeof config[key] == "object")
+            {
+                localizeConfig(config[key])
+            }
+            else if (typeof config[key] == "string")
+            {
+                config[key] = game.i18n.localize(config[key])
+            }
+        } 
+    }
 
     Hooks.on("ready", () => {
         Migration.checkMigration()
@@ -264,19 +270,19 @@ export default function registerHooks() {
         scene.updateSource({gridDistance : 5, gridUnits : "ft"})
     })
 
-    Hooks.on("updateCombat", (combat) => {
-        let actor = combat.combatant.actor
-        if (actor.combat.mettle.value < actor.combat.mettle.max)
-            actor.update({"system.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
+    // Hooks.on("updateCombat", (combat) => {
+    //     let actor = combat.combatant.actor
+    //     if (actor.combat.mettle.value < actor.combat.mettle.max)
+    //         actor.update({"system.combat.mettle.value" : actor.combat.mettle.value + actor.combat.mettle.regain})
         
-        let zones = TokenHelpers.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
-        zones.forEach(z => {
-            let hazard = z.getFlag("age-of-sigmar-soulbound", "hazard")
-            let ignoreArmour = z.getFlag("age-of-sigmar-soulbound", "ignoreArmour")
-            let damage = game.aos.config.zoneHazardDamage[hazard]
-            actor.applyDamage(damage, {ignoreArmour})
-        })
-    })
+    //     let zones = TokenHelpers.withinDrawings(combat.combatant.token).filter(d => d.getFlag("age-of-sigmar-soulbound", "hazard"))
+    //     zones.forEach(z => {
+    //         let hazard = z.getFlag("age-of-sigmar-soulbound", "hazard")
+    //         let ignoreArmour = z.getFlag("age-of-sigmar-soulbound", "ignoreArmour")
+    //         let damage = game.aos.config.zoneHazardDamage[hazard]
+    //         actor.applyDamage(damage, {ignoreArmour})
+    //     })
+    // })
 
     Hooks.on("preUpdateToken", (token, updateData) => {
         if(Number.isNumeric(updateData.x) || Number.isNumeric(updateData.y))

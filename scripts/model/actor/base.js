@@ -32,25 +32,14 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
         return true;
     }
 
+    /**
+     * @abstract
+     */
     initialize() 
     {
 
     }
 
-    async preUpdateChecks(data)
-    {
-        return data;
-    }
-
-    async updateChecks()
-    {
-        return {};
-    }
-
-    createChecks()
-    {
-        
-    }
     
     checkSingletonItems(item)
     {

@@ -181,7 +181,7 @@ export class SoulboundItemSheet extends WarhammerItemSheet {
       return {
         name : i.name,
         key: i.id,
-        img: i.icon,
+        img: i.img,
         existing: this.item.hasCondition(i.id)
       }
     })

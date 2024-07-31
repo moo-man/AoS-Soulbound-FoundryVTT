@@ -12,8 +12,8 @@
             <div class="entry-vertical">
               <h3>{{localize "ZONE.COVER"}}</h3>
               <div class="entry-inputs">
-                <select name="flags.age-of-sigmar-soulbound.cover">
-                  {{#select object.flags.age-of-sigmar-soulbound.cover}}
+                <select name="cover">
+                  {{#select cover}}
                     <option value=""></option>
                     {{#each (config "zoneCover") as |value k|}}
                       <option value="{{k}}">{{value}}</option>
@@ -28,8 +28,8 @@
             <div class="entry-vertical">
               <h3>{{localize "ZONE.HAZARD"}}</h3>
               <div class="entry-inputs">
-                <select name="flags.age-of-sigmar-soulbound.hazard">
-                  {{#select object.flags.age-of-sigmar-soulbound.hazard}}
+                <select name="hazard">
+                  {{#select hazard}}
                     <option value=""></option>
                     {{#each (config "zoneHazard") as |value k|}}
                       <option value="{{k}}">{{value}}</option>
@@ -41,8 +41,8 @@
             <div class="entry-vertical">
               <h3>{{localize "ZONE.HAZARD_IGNORE_ARMOUR"}}</h3>
               <div class="entry-inputs">
-                <input type="checkbox" name="flags.age-of-sigmar-soulbound.ignoreArmour" {{checked
-                  object.flags.age-of-sigmar-soulbound.ignoreArmour}} />
+                <input type="checkbox" name="ignoreArmour" {{checked
+                  ignoreArmour}} />
               </div>
             </div>
           </div>
@@ -51,8 +51,8 @@
             <div class="entry-vertical">
               <h3>{{localize "ZONE.OBSCURED"}}</h3>
               <div class="entry-inputs">
-                <select name="flags.age-of-sigmar-soulbound.obscured">
-                  {{#select object.flags.age-of-sigmar-soulbound.obscured}}
+                <select name="obscured">
+                  {{#select obscured}}
                     <option value=""></option>
                     {{#each (config "zoneObscured") as |value k|}}
                       <option value="{{k}}">{{value}}</option>
@@ -68,8 +68,8 @@
             <div class="entry-vertical">
               <h3>{{localize "ZONE.DIFFICULT_TERRAIN"}}</h3>
               <div class="entry-inputs">
-                <input type="checkbox" name="flags.age-of-sigmar-soulbound.difficult" {{checked
-                  object.flags.age-of-sigmar-soulbound.difficult}} />
+                <input type="checkbox" name="difficult" {{checked
+                  difficult}} />
               </div>
             </div>
           </div>
@@ -77,7 +77,7 @@
         </div>
       </div>
       <div class="tab" data-group="primary" data-tab="effects">
-        {{> systems/age-of-sigmar-soulbound/template/sheet/tab/item-effects.hbs}}
+        {{> systems/age-of-sigmar-soulbound/template/sheet/tab/zone-effects.hbs}}
       </div>
     </div>
   </div>

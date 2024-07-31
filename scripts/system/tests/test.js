@@ -40,18 +40,18 @@ export default class SoulboundTest extends WarhammerTestBase {
     {
         let test = new game.aos.rollClass[data.context.rollClass]()
         test.data = data;
-        test.roll = Roll.fromData(test.testData.roll)
+        test.dice = Roll.fromData(test.testData.dice)
         if (test.context.rerolled)
             test.rerolledDice = Roll.fromData(test.testData.reroll)
         return test
     }
 
     async roll() {
-        this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
-        this.testData.roll = this.roll.toJSON()
+        this.dice = this.testData.dice ? Roll.fromData(this.testData.dice) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
+        this.testData.dice = this.dice.toJSON()
         await this.runPreScripts()
-        await this.roll.evaluate()  
-        this.roll.dice[0].results.forEach((result, i) => {
+        await this.dice.evaluate()  
+        this.dice.dice[0].results.forEach((result, i) => {
             result.index = i;
         })
         this.computeResult()   
@@ -75,14 +75,15 @@ export default class SoulboundTest extends WarhammerTestBase {
             triggers : 0,
             dice : [],
             focus : this.skill?.focus || 0,
-            triggerToDamage : this.testData.triggerToDamage || false
+            triggerToDamage : this.testData.triggerToDamage || false,
+            other : [],
         }
         result.focus = (this.testData.doubleFocus ? result.focus * 2 : result.focus) + this.testData.bonusFocus
         let dn = this.testData.dn
         
         // Sorted to effiencently apply success not filtered since we would need 
         // to make another function to highlight dice in chat 
-        let sorted = SoulboundTest._getSortedDiceFromRoll(this.roll);
+        let sorted = SoulboundTest._getSortedDiceFromRoll(this.dice);
 
         if (this.context.rerolled) 
         {
@@ -136,27 +137,27 @@ export default class SoulboundTest extends WarhammerTestBase {
         return result;
     }
 
-    allocateFocus(allocation)
+    async allocateFocus(allocation)
     {
         if (allocation.reduce((prev, current) => prev + current, 0) > this.result.focus)
             return ui.notifications.error(game.i18n.localize("ERROR.NotEnoughFocus"))
         this.testData.allocation = allocation;
         this.context.focusAllocated = true;
-        this.computeResult();
+        await this.roll();
         this.sendToChat();
     }
 
-    resetFocus()
+    async resetFocus()
     {
         this.testData.allocation = [];
         this.context.focusAllocated = false;
-        this.computeResult();
+        await this.roll();
         this.sendToChat();
     }
 
     async reroll(shouldReroll)
     {
-        this.rerolledDice = await this.roll.reroll();
+        this.rerolledDice = await this.dice.reroll();
         this.rerolledDice.dice[0].results.forEach((result, i) => {
             result.index = i
         })
@@ -172,14 +173,15 @@ export default class SoulboundTest extends WarhammerTestBase {
             await game.dice3d.showForRoll(dsnReroll)
         }
 
-        this.computeResult();
+        await this.roll();
+        // this.computeResult();
         this.sendToChat();
     }
 
-    maximize()
+    async maximize()
     {
         this.context.maximized = true;
-        this.computeResult();
+        await this.roll();
         this.sendToChat();
     }
 
@@ -190,7 +192,7 @@ export default class SoulboundTest extends WarhammerTestBase {
             user: game.user.id,
             type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             speaker : this.context.speaker,
-            rolls: [this.roll],
+            rolls: [this.dice],
             rollMode: game.settings.get("core", "rollMode"),
             content: html,
             type : "test",

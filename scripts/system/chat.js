@@ -93,10 +93,10 @@ export default class SoulboundChat {
                 name: "CHAT.RESET_FOCUS",
                 icon: '<i class="fas fa-redo"></i>',
                 condition: canResetFocus,
-                callback: li => {
+                callback: async li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.system.test;
-                    test.resetFocus();
+                    await test.resetFocus();
                     SoulboundChat._clearFocusCounters(li)
                 }
             }
@@ -108,13 +108,13 @@ export default class SoulboundChat {
                 name: "CHAT.MAXIMIZE",
                 icon: '<i class="fas fa-sort-numeric-up-alt"></i>',
                 condition: canMaximize,
-                callback: li => {
+                callback: async li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.system.test;
 
                     if (!game.user.isGM)
                         SoulboundCounter.changeCounter(-1, "soulfire")
-                    test.maximize();
+                    await test.maximize();
                 }
             }
         );
@@ -150,10 +150,10 @@ export default class SoulboundChat {
                 name: "CHAT.APPLY_FOCUS",
                 icon: '<i class="fas fa-angle-double-up"></i>',
                 condition: canApplyFocus,
-                callback: li => {
+                callback: async li => {
                     const message = game.messages.get(li.data("messageId"));
                     let test = message.system.test;
-                    test.allocateFocus(Array.from(li.find(".focus-counter")).sort((a, b) => parseInt(a.parentElement.dataset.index) - parseInt(b.parentElement.dataset.index)).map(i => parseInt(i.textContent) || 0))
+                    await test.allocateFocus(Array.from(li.find(".focus-counter")).sort((a, b) => parseInt(a.parentElement.dataset.index) - parseInt(b.parentElement.dataset.index)).map(i => parseInt(i.textContent) || 0))
                 }
             }
         );
@@ -294,7 +294,7 @@ export default class SoulboundChat {
         options.penetrating = test.item?.traitList?.penetrating ? 1 : 0
         options.ineffective = test.item?.traitList?.ineffective
         options.restraining = test.item?.traitList?.restraining
-        options.effects = test.item?.damageEffects;
+        options.test = test;
 
         // apply to any selected actors
         let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets
@@ -374,10 +374,8 @@ export default class SoulboundChat {
 
         let damage = result.triggers
         // apply to any selected actors
-        return Promise.all(canvas.tokens.controlled.map(t => {
-            const a = t.actor;
-            return a.applyDamage(damage);
-        }));
+        let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets
+        return Promise.all(targets.filter(a => a).map(a => a.applyDamage(damage)));
     }
 
         /**
@@ -431,10 +429,8 @@ export default class SoulboundChat {
 
         let damage = item.traitList.blast.rating
         // apply to any selected actors
-        return Promise.all(canvas.tokens.controlled.map(t => {
-            const a = t.actor;
-            return a.applyDamage(damage);
-        }));
+        let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets
+        return Promise.all(targets.filter(a => a).map(a => a.applyDamage(damage)));
     }
 
     /**
@@ -524,7 +520,7 @@ export default class SoulboundChat {
         html.on("click", ".target-selector", SoulboundChat._onAllTargetClick.bind(this))
 
         html.on("click", ".apply-effect", WarhammerChatListeners.onApplyTargetEffect)
-        html.on("click", ".apply-zone", WarhammerChatListeners.onApplyTargetEffect)
+        html.on("click", ".apply-zone", WarhammerChatListeners.onApplyZoneEffect)
 
     }
 

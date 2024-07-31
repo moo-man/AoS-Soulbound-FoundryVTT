@@ -113,6 +113,10 @@ li.directory-item.folder:not(.collapsed) {
     border-color: var(--color-active);
 }
 
+h4.document-name {
+    color: Black;
+}
+
 
 .block-popout li.folder > .folder-header h3 {
     color: black;

@@ -22,16 +22,6 @@ export class CombatRollDialog extends CommonRollDialog {
 
     async computeFields() 
     {
-        if (this.data.primaryTarget)
-        {
-            this.fields.primaryDefence = this.userEntry.primaryDefence || this.data.primaryTarget.defence;
-            this.fields.primaryArmour = this.userEntry.primaryArmour || this.data.primaryTarget.armour;
-        }
-        if (this.data.secondaryTarget)
-        {
-            this.fields.secondaryDefence = this.userEntry.secondaryDefence || this.data.secondaryTarget.defence;
-            this.fields.secondaryArmour = this.userEntry.secondaryArmour || this.data.secondaryTarget.armour;
-        }
 
         if (this.fields.dualWielding)
         {
@@ -159,6 +149,17 @@ export class CombatRollDialog extends CommonRollDialog {
             }
             else // Populate secondary target with the same as the primary target
                 data.secondaryTarget = duplicate(data.primaryTarget)
+
+            if (data.primaryTarget)
+            {
+                fields.primaryDefence = data.primaryTarget.defence;
+                fields.primaryArmour = data.primaryTarget.armour;
+            }
+            if (data.secondaryTarget)
+            {
+                fields.secondaryDefence = data.secondaryTarget.defence;
+                fields.secondaryArmour = data.secondaryTarget.armour;
+            }
 
             fields.dualWeapon = data.otherWeapons[0]?.id;
         }

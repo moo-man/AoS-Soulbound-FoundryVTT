@@ -140,7 +140,7 @@ export class SoulboundActorSheet extends WarhammerActorSheet {
             return {
                 name : i.name,
                 key : i.id,
-                img : i.icon,
+                img : i.img,
                 existing : this.actor.hasCondition(i.id),
                 tooltip : game.aos.config.conditionDescriptions[i.id]
             }
@@ -346,9 +346,7 @@ export class SoulboundActorSheet extends WarhammerActorSheet {
         event.preventDefault();
         const div = $(event.currentTarget).parents(".item");
         const weaponId = div.data("itemId");
-        let test = await this.actor.setupCombatTest(weaponId)
-        await test.roll()
-        test.sendToChat()
+        this.actor.setupCombatTest(weaponId)
     }
 
     async _onSpellMiracleClick(event) {
@@ -357,14 +355,10 @@ export class SoulboundActorSheet extends WarhammerActorSheet {
         const powerId = div.data("itemId");
         let item = this.actor.items.get(powerId)
 
-        let test
         if (item.type == "spell")
-            test = await this.actor.setupSpellTest(powerId)
+            this.actor.setupSpellTest(powerId)
         else if (item.type == "miracle")
-            test = await this.actor.setupMiracleTest(powerId)
-
-        await test.roll()
-        test.sendToChat()
+            this.actor.setupMiracleTest(powerId)
     }
 	
 	_prepareShowPower(event) {

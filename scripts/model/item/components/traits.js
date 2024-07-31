@@ -20,6 +20,11 @@ export class TraitItemModel extends EquippableItemModel
         return Object.values(this.traitList).map(i => i.display)
     }
 
+    get isMagical()
+    {
+        return this.traitList.magical || this.traitList.realmstone
+    }
+
     get traitList () {
         let traits = {}
         if (!this.traits || !Array.isArray(this.traits))

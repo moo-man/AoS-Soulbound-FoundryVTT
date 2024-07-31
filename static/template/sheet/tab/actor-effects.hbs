@@ -29,7 +29,7 @@
         <div class="item-content">
           <div class="item-property item-name">
             <div class="item-image">
-              <img src={{effect.icon}} />
+              <img src={{effect.img}} />
             </div>
             <a class="effect-edit">{{effect.name}}</a>
           </div>
@@ -39,7 +39,9 @@
             {{#if effect.item}}
               <a class="item-edit source" data-uuid="{{effect.item.uuid}}"><i class="fa-solid fa-suitcase"></i>
                 {{effect.source}}</a>
-            {{else}}
+              {{else if system.sourceData.zone}}
+                  <a><i class="fa-solid fa-game-board-simple"></i> {{this.source}}</a>
+              {{else}}
               {{effect.source}}
             {{/if}}
           </div>
@@ -73,7 +75,7 @@
         <div class="item-content">
           <div class="item-property item-name">
             <div class="item-image">
-              <img src={{effect.icon}} />
+              <img src={{effect.img}} />
             </div>
             <a class="effect-edit">{{effect.name}}</a>
           </div>
@@ -113,7 +115,7 @@
         <div class="item-content">
           <div class="item-property item-name">
             <div class="item-image">
-              <img src={{effect.icon}} />
+              <img src={{effect.img}} />
             </div>
             <a class="effect-edit">{{effect.name}}</a>
           </div>

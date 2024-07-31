@@ -639,11 +639,11 @@
   "WH" : {
     "Trigger" : {
       "PreRollTest" : "Pre-Roll Test",
-      "PreRollWeaponTest" : "Pre-Roll Weapon Test",
-      "PreRollTraitTest" : "Pre-Roll Trait Test",
+      "PreRollCombatTest" : "Pre-Roll Combat Test",
+      "PreRollSpellTest" : "Pre-Roll Spell Test",
       "RollTest" : "Roll-Test",
-      "RollSkillTest" : "Roll Skill Test",
-      "RollWeaponTest" : "Roll Weapon Test"
+      "RollCombatTest" : "Roll Combat Test",
+      "RollSpellTest" : "Roll Spell Test"
     }
   }
 }

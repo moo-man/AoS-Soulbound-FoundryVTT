@@ -10,4 +10,14 @@ export class EquippableItemModel extends PhysicalItemModel
         schema.equipped = new fields.BooleanField();
         return schema;
     }
+
+    get isEquipped()
+    {
+        return this.equipped;
+    }
+
+    shouldTransferEffect(effect)
+    {
+        return super.shouldTransferEffect(effect) && (!effect.system.transferData.equipTransfer || this.isEquipped)
+    }
 }

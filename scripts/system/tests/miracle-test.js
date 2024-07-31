@@ -11,20 +11,20 @@ export default class MiracleTest extends SoulboundTest{
     async roll() {
         if (this.item.test.opposed)
         {
-            this.roll = this.testData.roll ? Roll.fromData(this.testData.roll) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);
-            await this.roll.evaluate({async:true})  
-            this.roll.dice[0].results.forEach((result, i) => {
+            this.dice = this.testData.dice ? Roll.fromData(this.testData.dice) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);
+            await this.dice.evaluate({async:true})  
+            this.dice.dice[0].results.forEach((result, i) => {
                 result.index = i;
             })  
             this.computeResult();
         }
         else 
         {
-            this.roll = new Roll("0");
-            await this.roll.evaluate({async: true}); // Chat Messages must have an evaluated test
+            this.dice = new Roll("0");
+            await this.dice.evaluate({async: true}); // Chat Messages must have an evaluated test
         }
 
-        this.testData.roll = this.roll.toJSON();
+        this.testData.dice = this.dice.toJSON();
 
         if (!this.context.mettleSubtracted)
         {
