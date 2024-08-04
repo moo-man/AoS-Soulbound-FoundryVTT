@@ -11,6 +11,14 @@ export class EquippableItemModel extends PhysicalItemModel
         return schema;
     }
 
+    _onUpdate(update, options, user)
+    {
+        if (hasProperty(update, "system.equipped"))
+        {
+            this.runScripts("equipToggle", {equipped : update.system.equipped});
+        }
+    }
+
     get isEquipped()
     {
         return this.equipped;

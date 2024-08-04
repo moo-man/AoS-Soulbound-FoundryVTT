@@ -4,7 +4,7 @@ export class SoulboundAvoidTestModel extends AvoidTestModel {
     static defineSchema() {
         let schema = super.defineSchema();
         schema.dn = new fields.StringField({});
-        schema.attibute = new fields.StringField({});
+        schema.attribute = new fields.StringField({});
         schema.skill = new fields.StringField({});
 
         return schema;

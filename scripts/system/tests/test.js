@@ -14,7 +14,8 @@ export default class SoulboundTest extends WarhammerTestBase {
                 itemId : data.itemId,
                 doubleTraining : data.doubleTraining || false,
                 doubleFocus : data.doubleFocus || false,
-                triggerToDamage: data.triggerToDamage || false
+                triggerToDamage: data.triggerToDamage || false,
+                options : data.options || {}
             },
             context : {
                 speaker : data.speaker,

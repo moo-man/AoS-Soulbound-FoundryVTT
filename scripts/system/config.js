@@ -240,6 +240,12 @@ AOS.transferTypes = {
 },
 
 mergeObject(AOS.scriptTriggers, {
+
+    equipToggle : "WH.Trigger.EquipToggle",
+
+    takeDamageMod : "WH.Trigger.TakeDamageMod",
+    applyDamageMod : "WH.Trigger.ApplyDamageMod",
+
     preRollTest : "WH.Trigger.PreRollTest",
     preRollCombatTest : "WH.Trigger.PreRollCombatTest",
     preRollSpellTest : "WH.Trigger.PreRollSpellTest",
@@ -279,31 +285,40 @@ AOS.premiumModules = {
 
 }
 
-AOS.getZoneTraitEffects = (region) => 
+AOS.getZoneTraitEffects = (region, getGreatestTrait) => 
     {
         let effects = [];
         let systemEffects = game.aos.config.systemEffects;
         let flags = region.flags["age-of-sigmar-soulbound"] || {};
-        if (flags.cover)
+
+        let cover = getGreatestTrait([flags.cover].concat(flags.effects.map(i => i.system.zone.traits.cover)).filter(i => i));
+        let hazard = getGreatestTrait([flags.hazard].concat(flags.effects.map(i => i.system.zone.traits.hazard)).filter(i => i));
+        let obscured = getGreatestTrait([flags.obscured].concat(flags.effects.map(i => i.system.zone.traits.obscured)).filter(i => i));
+        let difficult = [flags.difficult].concat(flags.effects.map(i => i.system.zone.traits.difficult)).some(i => i);
+        let ignoreArmour = [flags.ignoreArmour].concat(flags.effects.map(i => i.system.zone.traits.ignoreArmour)).some(i => i);
+
+        if (cover)
         {
-            effects.push(systemEffects[flags.cover]);
+            effects.push(systemEffects[cover]);
         }
-        if (flags.difficult)
+        if (difficult)
         {
             effects.push(systemEffects.difficult);
         }
-        if (flags.hazard)
+        if (hazard)
         {
-            let hazard = foundry.utils.deepClone(systemEffects[flags.hazard]);
-            setProperty(hazard, "flags.age-of-sigmar-soulbound.ignoreArmour", flags.ignoreArmour)
-            effects.push(hazard);
+            let hazardEffect = foundry.utils.deepClone(systemEffects[hazard]);
+            setProperty(hazardEffect, "flags.age-of-sigmar-soulbound.ignoreArmour", ignoreArmour)
+            effects.push(hazardEffect);
         }
-        if (flags.obscured)
+        if (obscured)
         {
-            effects.push(systemEffects[flags.obscured])
+            effects.push(systemEffects[obscured])
         }
         return effects;
     }
+
+AOS.traitOrder = ["partial", "total", "light", "heavy", "minor", "major", "deadly"];
     
 
 AOS.systemEffects = {
@@ -311,7 +326,7 @@ AOS.systemEffects = {
         id : "partial",
         statuses : ["partial"],
         name : "EFFECT.PartialCover",
-        icon : "icons/svg/tower.svg",
+        img : "icons/svg/tower.svg",
         changes : [
             {key: "defence", mode : 7, value : 1},
             {key: "difficulty", mode : 6, value : -1}
@@ -327,7 +342,7 @@ AOS.systemEffects = {
         id : "total",
         statuses : ["total"],
         name : "EFFECT.TotalCover",
-        icon : "icons/svg/tower.svg",
+        img : "icons/svg/tower.svg",
         changes : [
             {key: "defence", mode : 7, value : 2},
             {key: "difficulty", mode : 6, value : -2}
@@ -343,7 +358,7 @@ AOS.systemEffects = {
         id : "light",
         statuses : ["light"],
         name : "EFFECT.LightlyObscured",
-        icon : "icons/svg/blind.svg",
+        img : "icons/svg/blind.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 1},
         ],
@@ -357,7 +372,7 @@ AOS.systemEffects = {
         id : "heavy",
         statuses : ["heavy"],
         name : "EFFECT.HeavilyObscured",
-        icon : "icons/svg/blind.svg",
+        img : "icons/svg/blind.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 2},
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
@@ -374,7 +389,7 @@ AOS.systemEffects = {
         id : "difficult",
         statuses : ["difficult"],
         name : "EFFECT.DifficultTerrain",
-        icon : "icons/svg/downgrade.svg",
+        img : "icons/svg/downgrade.svg",
         changes : [
             {key: "difficulty", mode : 6, value : 1}
         ],
@@ -384,6 +399,21 @@ AOS.systemEffects = {
             }
         }
     },
+    "minor" : {
+        name : "ZONE.MINOR_HAZARD",
+        statuses : ["minor"],
+        img : "icons/svg/hazard.svg",
+    },
+    "major" : {
+        name : "ZONE.MAJOR_HAZARD",
+        statuses : ["major"],
+        img : "icons/svg/hazard.svg",
+    },
+    "deadly" : {
+        name : "ZONE.DEADLY_HAZARD",
+        statuses : ["deadly"],
+        img : "icons/svg/hazard.svg",
+    },
 }
 
 CONFIG.statusEffects = [
@@ -391,7 +421,7 @@ CONFIG.statusEffects = [
         id : "blinded",
         statuses : ["blinded"],
         name : "CONDITION.BLINDED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/blinded.svg",
         changes : [
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
             {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
@@ -411,13 +441,13 @@ CONFIG.statusEffects = [
         id : "charmed",
         statuses : ["charmed"],
         name : "CONDITION.CHARMED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/charmed.svg"
+        img : "systems/age-of-sigmar-soulbound/asset/icons/charmed.svg"
     },
     {
         id : "deafened",
         statuses : ["deafened"],
         name : "CONDITION.DEAFENED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
         system : {
             scriptdata : [{
                 label : "Tests that require hearing",
@@ -429,7 +459,7 @@ CONFIG.statusEffects = [
         id : "frightened",
         statuses : ["frightened"],
         name : "CONDITION.FRIGHTENED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
         system : {
             scriptdata : [{
                 label : "Within line of sight of the source of fear",
@@ -441,13 +471,13 @@ CONFIG.statusEffects = [
         id : "incapacitated",
         statuses : ["incapacitated"],
         name : "CONDITION.INCAPACITATED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/incapacitated.svg"
+        img : "systems/age-of-sigmar-soulbound/asset/icons/incapacitated.svg"
     },
     {
         id : "poisoned",
         statuses : ["poisoned"],
         name : "CONDITION.POISONED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
         system : {
             scriptdata : [{
                 label : "Within line of sight of the source of fear",
@@ -462,7 +492,7 @@ CONFIG.statusEffects = [
         id : "prone",
         statuses : ["prone"],
         name : "CONDITION.PRONE",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/prone.svg",
         changes : [
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
             {key: "system.combat.accuracy.bonus", mode : 2, value : -1}
@@ -472,7 +502,7 @@ CONFIG.statusEffects = [
         id : "restrained",
         statuses : ["restrained"],
         name : "CONDITION.RESTRAINED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/restrained.svg",
         changes : [
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
             {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
@@ -483,7 +513,7 @@ CONFIG.statusEffects = [
         id : "stunned",
         statuses : ["stunned"],
         name : "CONDITION.STUNNED",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
+        img : "systems/age-of-sigmar-soulbound/asset/icons/stunned.svg",
         changes : [
             {key: "system.combat.speeds.foot", mode : 5, value : "slow"},
             {key: "system.combat.defence.bonus", mode : 2, value : -1}
@@ -493,7 +523,7 @@ CONFIG.statusEffects = [
         id : "unconscious",
         statuses : ["unconscious"],
         name : "CONDITION.UNCONSCIOUS",
-        icon : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
+        img : "systems/age-of-sigmar-soulbound/asset/icons/unconscious.svg"
     },
     {       
         id: "dead",

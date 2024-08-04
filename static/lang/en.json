@@ -593,6 +593,9 @@
   "ZONE.MINOR" : "Minor",
   "ZONE.MAJOR" : "Major",
   "ZONE.DEADLY" : "Deadly",
+  "ZONE.MINOR_HAZARD" : "Minor Hazard",
+  "ZONE.MAJOR_HAZARD" : "Major Hazard",
+  "ZONE.DEADLY_HAZARD" : "Deadly Hazard",
   "ZONE.LIGHTLY_OBSCURED" : "Lightly Obscured",
   "ZONE.HEAVILY_OBSCURED" : "Heavily Obscured",
 
@@ -638,6 +641,9 @@
 
   "WH" : {
     "Trigger" : {
+      "EquipToggle" : "Equip Toggle",
+      "TakeDamageMod" : "Take Damage Modifier",
+      "ApplyDamageMod" : "Apply Damage Modifier",
       "PreRollTest" : "Pre-Roll Test",
       "PreRollCombatTest" : "Pre-Roll Combat Test",
       "PreRollSpellTest" : "Pre-Roll Spell Test",

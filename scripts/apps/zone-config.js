@@ -48,6 +48,15 @@ foundry.applications.sheets.RegionConfig.DEFAULT_OPTIONS.window.controls = [
     }
 ]
 
+Hooks.on("renderRegionLegend", (app, html) => {
+    html.querySelectorAll(".region").forEach(region => {
+        $(`<button class="icon" data-tooltip="Configure Zone"><i class="fa-solid fa-game-board-simple"></i></button>`).insertBefore(region.querySelector("button")).on("click", (ev) => {
+            let region = canvas.scene.regions.get(ev.currentTarget.parentElement.dataset.regionId);
+            new ZoneConfig(region).render(true);
+        })
+    })
+})
+
 Hooks.on('setup', (app, html) => {
 
     foundry.applications.sheets.RegionConfig.DEFAULT_OPTIONS.actions.zoneConfig = function (event, target) {

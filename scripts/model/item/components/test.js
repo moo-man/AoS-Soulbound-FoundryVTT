@@ -18,4 +18,9 @@ export class TestDataModel extends StandardItemModel
     {
         return game.aos.utility.DNToObject(this.dn)
     }
+
+    roll(actor, options={})
+    {
+        return actor.setupCommonTest({attribute: this.attribute, skill : this.skill}, mergeObject({fields : this.difficulty}, options))
+    }
 }

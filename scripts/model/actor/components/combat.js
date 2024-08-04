@@ -240,7 +240,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     // Add new wound according to the given type, 'minor' 'serious' or 'deadly'
     addWound(type = "", damage = 0)
     {
-        if (isNaN(damage) && type)
+        if ((isNaN(damage) || !damage) && type)
             damage = game.aos.config.woundDamage[type] || 0
         
         let wounds = duplicate(this.wounds)

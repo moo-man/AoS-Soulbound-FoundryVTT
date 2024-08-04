@@ -1,3 +1,4 @@
+import SoulboundUtility from "./utility";
 
 export default class SoulboundEffect extends WarhammerActiveEffect {
 
@@ -47,6 +48,8 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
         }
         else if (transferData.avoidTest.value == "custom")
         {
+            let dnObject = SoulboundUtility.DNToObject(transferData.avoidTest.dn)
+            options.fields = dnObject;
             test = await this.actor.setupCommonTest({attribute : transferData.avoidTest.attribute, skill : transferData.avoidTest.skill}, options)
         }
 

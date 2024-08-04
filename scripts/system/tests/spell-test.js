@@ -20,12 +20,14 @@ export default class SpellTest extends SoulboundTest{
     {
         super.runPreScripts();
         await Promise.all(this.actor.runScripts("preRollSpellTest", this));
+        await Promise.all(this.item.runScripts("preRollSpellTest", this));
     }
 
     async runPostScripts()
     {
         super.runPostScripts();
         await Promise.all(this.actor.runScripts("rollSpellTest", this));
+        await Promise.all(this.item.runScripts("rollSpellTest", this));
     }
 
     computeResult()
