@@ -191,7 +191,7 @@ export class SoulboundItem extends WarhammerItem {
         // Get all archetype talents, merge with diff
         let talents = this.talents.core.concat(this.talents.list)
         items = items.concat(talents.map(async t => {
-            let item = (await game.aos.utility.findItem(t.id, "talent"))?.toObject();
+            let item = (await warhammer.utility.findItemId(t.id, "talent"))?.toObject();
             if (item)
                 mergeObject(item, t.diff, {overwrite : true})
             return item
@@ -199,10 +199,17 @@ export class SoulboundItem extends WarhammerItem {
 
         // Get all archetype talents, merge with diff
         items = items.concat(this.equipment.map( async i => {
-            let item = (await game.aos.utility.findItem(i.id, "equipment"))?.toObject();
-            if (item)
-                mergeObject(item, i.diff, {overwrite : true})
-            return item
+            if (i.type == "item")
+            {
+                let item = (await warhammer.utility.findItemId(i.id, "equipment"))?.toObject();
+                if (item)
+                    mergeObject(item, i.diff, {overwrite : true})
+                return item
+            }
+            else 
+            {
+                return {type : "equipment", name : i.name}
+            }
         }))
 
         return (await Promise.all(items)).filter(i => i);

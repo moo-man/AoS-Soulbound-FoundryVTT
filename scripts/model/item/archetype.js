@@ -49,9 +49,9 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         return { "system.groups": {type: "and", groupId: "root", items : Array.fromRange(equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} } // Reset item groupings
     }
 
-    async createChecks(data, options, user)
+    async _onCreate(data, options, user)
     {   
-        await super.createChecks(data, options, user);
+        await super._onCreate(data, options, user);
         if (this.parent.isOwned)
         {
             await Dialog.confirm({

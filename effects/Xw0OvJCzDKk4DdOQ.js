@@ -1,0 +1,1 @@
+return this.item.setFlag(game.system.id, "mode", "gozrakk")

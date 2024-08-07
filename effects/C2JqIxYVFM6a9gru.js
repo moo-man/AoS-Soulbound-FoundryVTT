@@ -1,0 +1,1 @@
+args.fields.bonusDice += (@skills.channelling.training)

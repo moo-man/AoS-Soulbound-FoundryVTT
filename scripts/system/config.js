@@ -257,7 +257,7 @@ mergeObject(AOS.scriptTriggers, {
 
 AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-key-options.hbs",
 AOS.avoidTestTemplate = "systems/age-of-sigmar-soulbound/template/apps/effect-avoid-test.hbs",
-AOS.effectScripts = [],
+AOS.effectScripts = {},
 
 AOS.logFormat = [`%cSoulbound` + `%c | @MESSAGE`, "color: gold", "color: unset"],
 

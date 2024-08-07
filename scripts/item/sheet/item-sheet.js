@@ -329,7 +329,7 @@ export class SoulboundItemSheet extends WarhammerItemSheet {
           {
             let item = await fromUuid(obj.id)
             if (!item)
-              item = await game.aos.utility.findItem(obj.id)
+              item = await warhammer.utility.findItemId(obj.id)
 
             if (!item)
               throw Error("Could not find Item reference")

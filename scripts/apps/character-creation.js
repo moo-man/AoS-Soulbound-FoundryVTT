@@ -49,8 +49,8 @@ export default class CharacterCreation extends FormApplication {
         data.actor = this.actor;
         data.character = this.character
         data.archetype = this.archetype;
-        data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new SoulboundItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
-        data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new SoulboundItem(mergeObject((await game.aos.utility.findItem(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new SoulboundItem(mergeObject((await warhammer.utility.findItemId(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new SoulboundItem(mergeObject((await warhammer.utility.findItemId(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
         data.talentDescriptions = await this.handleTalentEnrichment(data.coreTalents.concat(data.chooseTalents));
         data.equipmentHTML = this.constructEquipmentHTML();
         return data
@@ -80,11 +80,11 @@ export default class CharacterCreation extends FormApplication {
 
 
         let equipment = await Promise.all(this.retrieveChosenEquipment());
-        let talents = this.archetype.talents.core.map(t => game.aos.utility.findItem(t.id, "talent"))
+        let talents = this.archetype.talents.core.map(t => warhammer.utility.findItemId(t.id, "talent"))
 
         $(this.form).find(".talent input").each((i, e) => {
             if (e.checked)
-                talents.push(game.aos.utility.findItem(e.dataset.id, "talent"))
+                talents.push(warhammer.utility.findItemId(e.dataset.id, "talent"))
         })
 
         talents = await Promise.all(talents);
@@ -181,7 +181,7 @@ export default class CharacterCreation extends FormApplication {
             }
             else {
 
-                let document = await game.aos.utility.findItem(e.id)
+                let document = await warhammer.utility.findItemId(e.id)
 
                 // Create a temp item and incorporate the diff
                 if (document)
@@ -246,7 +246,7 @@ export default class CharacterCreation extends FormApplication {
         let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
         let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
         let equipmentObject = this.archetype.equipment[group.index]
-        let item = await game.aos.utility.findItem(id)
+        let item = await warhammer.utility.findItemId(id)
 
         if (element && item) {
             element.classList.remove("generic")
@@ -367,7 +367,7 @@ export default class CharacterCreation extends FormApplication {
                 new FilterResults({ equipment, app: this }).render(true)
             }
             else if (equipment.type == "item")
-                new SoulboundItem((await game.aos.utility.findItem(equipment.id)).toObject()).sheet.render(true, { editable: false })
+                new SoulboundItem((await warhammer.utility.findItemId(equipment.id)).toObject()).sheet.render(true, { editable: false })
         })
     }
 

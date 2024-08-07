@@ -1,0 +1,1 @@
+args.fields.bonusDamage += (@combat.health.wounds.value)

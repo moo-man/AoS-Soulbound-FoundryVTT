@@ -1,0 +1,1 @@
+args.fields.bonusFocus += (@skills.arcana.focus)

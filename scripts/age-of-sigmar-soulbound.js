@@ -27,6 +27,7 @@ import { ArchetypeModel } from "./model/item/archetype.js";
 import SoulboundActiveEffectConfig from "./apps/active-effect-config.js";
 import SoulboundEffect from "./system/effect.js";
 import { SoulboundActiveEffectModel } from "./model/effect/effect.js";
+import loadEffects from "./loadEffects.js"
 
 Hooks.once("init", () => {
 
@@ -85,3 +86,4 @@ Hooks.once("init", () => {
 });
 
 hooks();
+loadEffects();

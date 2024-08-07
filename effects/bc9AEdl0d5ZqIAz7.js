@@ -1,0 +1,1 @@
+args.fields.bonusFocus += (@args.skills.theology.focus)

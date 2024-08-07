@@ -1,0 +1,1 @@
+args.fields.bonusDice += (@skills.guile.training)

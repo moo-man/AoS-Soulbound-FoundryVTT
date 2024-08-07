@@ -225,12 +225,6 @@ export default function registerHooks() {
                 a._initialize();
             }
         })
-
-        
-        if (game.release.generation == 12)
-        {
-            ui.notifications.warn("Please note that the <strong>Soulbound</strong> system has not been made fully compatible with V12 and issues may occur.")
-        }
     })
 
       /**

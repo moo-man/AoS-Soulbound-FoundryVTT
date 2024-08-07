@@ -1,0 +1,1 @@
+args.fields.bonusDamage += (@attributes.soul.value)

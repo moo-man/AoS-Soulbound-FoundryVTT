@@ -1,0 +1,1 @@
+args.fields.triggerToDamage = true

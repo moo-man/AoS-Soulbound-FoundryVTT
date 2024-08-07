@@ -1,0 +1,1 @@
+args.fields.bonusDice += (this.effect.sourceTest.result.bonusDice)

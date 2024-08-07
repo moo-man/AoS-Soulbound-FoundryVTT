@@ -1,0 +1,1 @@
+this.actor.system.combat.health.toughness.bonus += this.effect.sourceActor?.system.attributes.soul.value;

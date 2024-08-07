@@ -1,4 +1,4 @@
-#bug-report {
+.bug-report {
     
     .matching {
         display: flex;
@@ -18,10 +18,10 @@
     align-items: center;
     height: 100px;
     color: white;
-    background: rgba(221, 226, 143, 0.2);
+    background: rgba(24, 48, 81, 0.8);
     min-width: 150px;
     max-width: 150px;
-    border: 2px dashed var(--color-header-gold);
+    border: 2px dashed goldenrod;
     border-radius: 10px;
     overflow: hidden;
     margin: 5px;
