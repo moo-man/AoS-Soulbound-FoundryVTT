@@ -7,7 +7,7 @@
     "requires": [{
       "id": "warhammer-lib",
       "type": "module",
-      "manifest": "https://github.com/moo-man/WarhammerLibrary-FVTT/releases/download/1.0.0/warhammer-lib.zip",
+      "manifest": "https://raw.githubusercontent.com/moo-man/WarhammerLibrary-FVTT/1.0.0/module.json",
       "compatibility": {
         "minimum" : "1.0.0",
         "verified": "1.0.0"
