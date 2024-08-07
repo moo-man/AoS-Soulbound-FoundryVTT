@@ -509,7 +509,6 @@ export default class SoulboundChat {
         html.on("click" , ".diceClick", SoulboundChat._onDiceClick.bind(this));
         html.on("click", ".test-button", SoulboundChat._onTestButtonClick.bind(this))
         html.on("click", ".spell-fail-button", SoulboundChat._onSpellFailClick.bind(this))
-        html.on("click", ".effect-button", SoulboundChat._onEffectButtonClick.bind(this))
         html.on("click", ".overcast-button", SoulboundChat._onOvercastButtonClick.bind(this))
         html.on("click", ".overcast-reset", SoulboundChat._onOvercastResetClick.bind(this))
         html.on("mouseover", ".target", SoulboundChat._onTargetHoverChange.bind(this))
@@ -639,33 +638,6 @@ export default class SoulboundChat {
         }
         else
             ui.notifications.error("No Table Found")
-    }
-
-    static async _onEffectButtonClick(ev)
-    {
-        let id = $(ev.currentTarget).parents(".message").attr("data-message-id")
-        let effectId = $(ev.currentTarget).attr("data-id")
-        let msg = game.messages.get(id)
-        let test = msg.system.test;
-        let item = test.item
-        if (ev.currentTarget.dataset.source == "secondary")
-            item = test.secondaryWeapon
-
-        let effect = item.effects.get(effectId).toObject()
-        await AgeOfSigmarEffect.populateEffectData(effect, test, item)
-
-        if (canvas.tokens.controlled.length)
-        {
-            for (let t of canvas.tokens.controlled)
-                t.actor.createEmbeddedDocuments("ActiveEffect", [effect])
-        }
-        else if (game.user.character)
-            game.user.character.createEmbeddedDocuments("ActiveEffect", [effect])
-
-        else
-            return ui.notifications.warn(game.i18n.localize("WARN.NoActorsToApply"))
-
-   
     }
 
     static _onOvercastButtonClick(ev)

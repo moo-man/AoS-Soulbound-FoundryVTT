@@ -1,11 +1,13 @@
 export default class Migration {
 
     static async checkMigration() {
-        let migrationTarget = "6.0.0"
+        let migrationTarget = "7.0.0"
         let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
 
-        if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) {
+        if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) 
+        {
             this.migrateWorld();
+            ChatMessage.create({content : "<h3>The Effect Refactor</h3><p>The Soulbound System has undergone a major refactoring on how it handles effects. Read more <a href='https://github.com/moo-man/AoS-Soulbound-FoundryVTT/releases/tag/7.0.0'>here</a></p>"})
         }
 
         // if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) {
@@ -36,7 +38,7 @@ export default class Migration {
     // }
 
     static async migrateWorld() {
-        console.log(`Applying AOS:Soulbound System Migration for version ${game.system.version}. Please be patient and do not close your game or shut down your server.`)
+        ui.notifications.notify(`Applying AOS:Soulbound System Migration for version ${game.system.version}. Please be patient and do not close your game or shut down your server.`)
 
         for (let actor of game.actors.contents) {
             try {
@@ -88,13 +90,15 @@ export default class Migration {
                 console.error(`Failed migration for Table ${i.name}: ${e.message}`)
             }
         }
+
+        ui.notifications.notify(`Migration Complete`)
+
     }
 
     static async migrateActor(actor) {
         let updateData = {
             items: []
         }
-        updateData.effects = actor.effects.map(this.migrateEffect)
         let html = this._migrateV10Links(actor.system.notes)
         if (html != actor.system.notes) {
             updateData["system.notes"] = html;
@@ -131,27 +135,8 @@ export default class Migration {
             updateData["system.description"] = html;
         }
 
-        updateData.effects = item.effects.map(this.migrateEffect)
-
         return updateData
     }
-
-    static migrateEffect(effect) {
-        let effectData = effect.toObject()
-
-        let description = effect.getFlag("age-of-sigmar-soulbound", "description")
-        effectData.changes.forEach((c, i) => {
-            if (c.mode == 0) {
-                if (c.key.includes("target"))
-                    c.mode = 7
-                else
-                    c.mode = 6
-                setProperty(effectData, `flags.age-of-sigmar-soulbound.changeCondition.${i}`, { description, script: "" })
-            }
-        })
-        return effectData
-    }
-
 
     static migrateJournalData(journal) {
         let updateData = { _id: journal.id, pages: [] };
@@ -207,13 +192,19 @@ export default class Migration {
             }
         }
         await actor.deleteEmbeddedDocuments("ActiveEffect", effectsToDelete);
+        debugger;
+        for(let item of actor.items)
+        {
+            await this.migrateItemEffectRefactor(item);
+        }
+
     }
 
     static async migrateItemEffectRefactor(item)
     {
         for(let effect of item.effects)
         {
-            effect.update(this.migrateEffectRefactor(effect.toObject(), effect));
+            await effect.update(this.migrateEffectRefactor(effect.toObject(), effect));
         }
     }
 
@@ -235,7 +226,6 @@ export default class Migration {
             setProperty(data, "flags.age-of-sigmar-soulbound.migrated", true);
         }
     
-
         if (migrateScripts) 
         {
             let scriptData = []
@@ -247,6 +237,10 @@ export default class Migration {
 
                     if (changes[i].value === "true" || changes[i].value === "false") {
                         script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} = ${changes[i].value}`
+                    }
+                    else if (changes[i].value.includes("@"))
+                    {
+                        script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value.replace("@", "args.actor.system.")})`
                     }
                     else {
                         script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value})`
