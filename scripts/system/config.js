@@ -291,11 +291,11 @@ AOS.getZoneTraitEffects = (region, getGreatestTrait) =>
         let systemEffects = game.aos.config.systemEffects;
         let flags = region.flags["age-of-sigmar-soulbound"] || {};
 
-        let cover = getGreatestTrait([flags.cover].concat(flags.effects.map(i => i.system.zone.traits.cover)).filter(i => i));
-        let hazard = getGreatestTrait([flags.hazard].concat(flags.effects.map(i => i.system.zone.traits.hazard)).filter(i => i));
-        let obscured = getGreatestTrait([flags.obscured].concat(flags.effects.map(i => i.system.zone.traits.obscured)).filter(i => i));
-        let difficult = [flags.difficult].concat(flags.effects.map(i => i.system.zone.traits.difficult)).some(i => i);
-        let ignoreArmour = [flags.ignoreArmour].concat(flags.effects.map(i => i.system.zone.traits.ignoreArmour)).some(i => i);
+        let cover = getGreatestTrait([flags.cover].concat(flags.effects?.map(i => i.system.zone.traits.cover)).filter(i => i));
+        let hazard = getGreatestTrait([flags.hazard].concat(flags.effects?.map(i => i.system.zone.traits.hazard)).filter(i => i));
+        let obscured = getGreatestTrait([flags.obscured].concat(flags.effects?.map(i => i.system.zone.traits.obscured)).filter(i => i));
+        let difficult = [flags.difficult].concat(flags.effects?.map(i => i.system.zone.traits.difficult)).some(i => i);
+        let ignoreArmour = [flags.ignoreArmour].concat(flags.effects?.map(i => i.system.zone.traits.ignoreArmour)).some(i => i);
 
         if (cover)
         {
@@ -327,15 +327,27 @@ AOS.systemEffects = {
         statuses : ["partial"],
         name : "EFFECT.PartialCover",
         img : "icons/svg/tower.svg",
-        changes : [
-            {key: "defence", mode : 7, value : 1},
-            {key: "difficulty", mode : 6, value : -1}
-        ],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Ranged Attacks", script : "return data.weapon && data.weapon.traitList.range"},
-                1 : {description : "Being Detected", script : ""}
-            }
+        system : {
+                "scriptData": [
+                    {
+                        trigger: "dialog",
+                        label: "+1 Defence against Ranged Attacks",
+                        script: "args.fields.defence += 1",
+                        options: {
+                            targeter: true,
+                            activateScript: "return args.weapon && args.weapon.traitList.range",
+                            hideScript: "return !args.weapon || !args.weapon.traitList.range",
+                        },
+                    },
+                    {
+                        trigger: "dialog",
+                        label: "Advantage against being detected",
+                        script: "args.fields.difficulty += -1",
+                        options: {
+                            hideScript: "return args.fields.skill != 'stealth'",
+                        }
+                    }
+                ]
         }
     },
     "total" : {
@@ -343,15 +355,27 @@ AOS.systemEffects = {
         statuses : ["total"],
         name : "EFFECT.TotalCover",
         img : "icons/svg/tower.svg",
-        changes : [
-            {key: "defence", mode : 7, value : 2},
-            {key: "difficulty", mode : 6, value : -2}
-        ],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Ranged Attacks", script : "return !!(data.weapon && data.weapon.traitList.range)"},
-                1 : {description : "Being Detected", script : ""}
-            }
+        system : {
+            "scriptData": [
+                {
+                    trigger: "dialog",
+                    label: "+2 Defence agaisnt Ranged Attacks",
+                    script: "args.fields.defence += 2",
+                    options: {
+                        "targeter": true,
+                        "activateScript": "return args.weapon && args.weapon.traitList.range",
+                        "hideScript": "return !args.weapon || !args.weapon.traitList.range"
+                    }
+                },
+                {
+                    trigger: "dialog",
+                    label: "Greater Advantage against being detected",
+                    script: "args.fields.difficulty += -2",
+                    options: {
+                        "hideScript": "return args.fields.skill != 'stealth'",
+                    }
+                }
+            ]
         }
     },
     "light" : {
@@ -359,30 +383,37 @@ AOS.systemEffects = {
         statuses : ["light"],
         name : "EFFECT.LightlyObscured",
         img : "icons/svg/blind.svg",
-        changes : [
-            {key: "difficulty", mode : 6, value : 1},
-        ],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
-            }
+        system : {
+            scriptData : [
+                {
+                    trigger: "dialog",
+                    label: "Mind (Awareness) Tests that rely on sight",
+                    script: "args.fields.difficulty += 1",
+                    options: {
+                        hideScript: "return args.fields.attribute != 'mind' || args.fields.skill != 'awareness'",
+                    }
+                }
+            ]
         }
     },
     "heavy" : {
         id : "heavy",
-        statuses : ["heavy"],
+        statuses : ["heavy", "blinded"],
         name : "EFFECT.HeavilyObscured",
         img : "icons/svg/blind.svg",
         changes : [
-            {key: "difficulty", mode : 6, value : 2},
             {key: "system.combat.melee.bonus", mode : 2, value : -1},
             {key: "system.combat.accuracy.bonus", mode : 2, value : -1},
             {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Mind (Awareness) Tests that rely on sight", script : ""}
-            }
+        system : {
+            scriptdata : [{
+                label : "Mind (Awareness) Tests that rely on sight",
+                script : "args.fields.difficulty -= 2",
+                options : {
+                    hideScript : "return args.fields.attribute != 'mind' || args.fields.skill != 'awareness'"
+                }
+            }]
         }
     },
     "difficult" : {
@@ -391,28 +422,82 @@ AOS.systemEffects = {
         name : "EFFECT.DifficultTerrain",
         img : "icons/svg/downgrade.svg",
         changes : [
-            {key: "difficulty", mode : 6, value : 1}
-        ],
-        flags : { 
-            "age-of-sigmar-soulbound.changeCondition" : { 
-                0 : {description : "Body (Reflexes) Tests", script : "return data.skillKey == 'reflexes'"}
+            {
+                mode : 2,
+                key : "system.combat.speeds.modifier",
+                value : "-1"
             }
+        ],
+        system : {
+            scriptData : [
+                {
+                    "trigger": "dialog",
+                    "label": "Body (Reflexes) Tests",
+                    "script": "args.fields.difficulty += 1",
+                    "options": {
+                        "activateScript": "return args.fields.skill == 'reflexes' && args.fields.attribute == 'body'",
+                        "hideScript": "return args.fields.attribute != 'body' || args.fields.skill != 'reflexes'",
+                    },
+                }
+            ]
         }
     },
     "minor" : {
         name : "ZONE.MINOR_HAZARD",
         statuses : ["minor"],
         img : "icons/svg/hazard.svg",
+        system : {
+            scriptData : [
+                {
+                    "script": "this.actor.applyDamage(1);",
+                    "label": "Damage",
+                    "trigger": "immediate",
+                },
+                {
+                    "script": "this.actor.applyDamage(1);",
+                    "label": "Damage (Start Turn)",
+                    "trigger": "startTurn",
+                }
+            ]
+        }
     },
     "major" : {
         name : "ZONE.MAJOR_HAZARD",
         statuses : ["major"],
         img : "icons/svg/hazard.svg",
+        system : {
+            scriptData : [
+                {
+                    "script": "this.actor.applyDamage(3);",
+                    "label": "Damage",
+                    "trigger": "immediate",
+                },
+                {
+                    "script": "this.actor.applyDamage(3);",
+                    "label": "Damage (Start Turn)",
+                    "trigger": "startTurn",
+                }
+            ]
+        }
     },
     "deadly" : {
         name : "ZONE.DEADLY_HAZARD",
         statuses : ["deadly"],
         img : "icons/svg/hazard.svg",
+        system : {
+            scriptData : [
+                {
+                    "script": "this.actor.applyDamage(5);",
+                    "label": "Damage",
+                    "trigger": "immediate",
+                },
+                {
+                    "script": "this.actor.applyDamage(5);",
+                    "label": "Damage (Start Turn)",
+                    "trigger": "startTurn",
+                }
+            ]
+        }
     },
 }
 
@@ -432,7 +517,7 @@ CONFIG.statusEffects = [
                 label : "Mind (Awareness) Tests that rely on sight",
                 script : "args.fields.difficulty -= 2",
                 options : {
-                    hideScript : "args.fields.attribute != 'mind' || args.fields.skill != 'awareness'"
+                    hideScript : "return args.fields.attribute != 'mind' || args.fields.skill != 'awareness'"
                 }
             }]
         }

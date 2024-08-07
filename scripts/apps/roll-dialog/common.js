@@ -1,3 +1,5 @@
+import SoulboundUtility from "../../system/utility";
+
 export class CommonRollDialog extends WarhammerRollDialog {
 
     dialogTitle = "DIALOG.COMMON_ROLL"
@@ -40,8 +42,22 @@ export class CommonRollDialog extends WarhammerRollDialog {
 
         
         mergeObject(fields, options.fields || {});
+
+        if (options.dn)
+        {
+            let {difficulty, complexity} = SoulboundUtility.DNToObject(options.dn);
+            if (!fields.difficulty) 
+            {
+                fields.difficulty = difficulty;
+            }
+            if (!fields.complexity) 
+            {
+                fields.complexity = complexity;
+            }
+        }   
+
         fields.attribute = attribute || game.aos.config.skillAttributes[skill];
-        fields.skill = skill
+        fields.skill = skill;
 
         options.title = options.title || `${game.aos.config.attributes[fields.attribute]} ${fields.skill ? "(" + game.aos.config.skills[fields.skill] + ")" : ""}`
         options.title += options.appendTitle || "";

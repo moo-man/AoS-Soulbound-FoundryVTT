@@ -29,4 +29,17 @@ export class AethericDeviceModel extends TraitItemModel
     {
         return this.category == "ranged";
     }
+
+    computeOwned(actor) {
+        if (this.category === "melee") {
+            this.pool = actor.skills.weaponSkill.total;
+            this.focus = actor.skills.weaponSkill.focus;
+        } else {
+            this.pool = actor.skills.ballisticSkill.total;
+            this.focus = actor.skills.ballisticSkill.focus;
+        }
+        if(actor.isSwarm) {
+            this.pool += actor.combat.health.toughness.value;
+        }
+    }
 }

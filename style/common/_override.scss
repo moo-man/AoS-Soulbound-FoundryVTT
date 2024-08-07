@@ -2,7 +2,9 @@
     /*--color-text-light-3: var(--color-header-blue)*/
 }
 
-li.folder > .folder-header .create-folder, li.folder > .folder-header .create-document
+li.folder > .folder-header .create-folder, 
+li.folder > .folder-header .create-document,
+li.folder > .folder-header .create-entry
 {
     color: var(--color-header-blue)
 }
@@ -63,6 +65,11 @@ input[type="time"]:focus {
     background-image: url('./asset/image/header-background.webp');
     background-size: cover;
     border-bottom: none
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #806b3a #183051;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -389,6 +396,17 @@ h4.document-name {
     text-align: center;
 }
 
+.entry-list {
+    label {
+        margin: 0px 5px;
+        display : flex;
+        align-items: center;
+        input {
+            width: 50px;
+        }
+    }
+}
+
 .entry-list .inline-list{
     display: flex;
     flex-wrap: wrap;
@@ -612,9 +630,28 @@ padding-top: 4px;
     color: white;
     font-size: 20px;
     font-family: var(--font-header);
+    a.content-link {
+        i {
+            color: goldenrod;
+        }
+        color: goldenrod;
+    }
 }
 table tr:nth-child(even) {
     background-color: rgba(0, 0, 0, 0.1);
+}
+
+.locked-tooltip.active,
+#tooltip.active {
+    background-color: var(--color-header-blue);
+    color: whitesmoke;
+
+    a.content-link {
+        i {
+            color: whitesmoke;
+        }
+        color: whitesmoke;
+    }
 }
 
 
@@ -773,7 +810,6 @@ a.inline-roll {
 a.content-link i,
 a.inline-roll i {
     color: darkslategrey;
-    vertical-align: middle;
 }
 .editor .block a.content-link i,
 .journal-entry-page.text .block a.content-link i {

@@ -79,6 +79,28 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
         }
     }
 
+    convertToApplied(test)
+    {
+        let effectData = super.convertToApplied(test);
+        if (test)
+        {
+            // Prioritize test result duration over item duration (test result might be overcasted)
+            let duration = test.result.duration || test.item?.duration
+            if (duration)
+            {
+                if (duration.unit == "round")
+                    effectData.duration.rounds = parseInt(duration.value)
+                else if  (duration.unit == "minute")
+                    effectData.duration.seconds = parseInt(duration.value) * 60
+                else if (duration.unit == "hour")
+                    effectData.duration.seconds = parseInt(duration.value) * 60 * 60
+                else if (duration.unit == "day")
+                    effectData.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+            }
+    }
+        return effectData
+    }
+
 
     /** @override 
      * Adds support for referencing actor data

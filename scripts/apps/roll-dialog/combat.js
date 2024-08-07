@@ -160,9 +160,8 @@ export class CombatRollDialog extends CommonRollDialog {
                 fields.secondaryDefence = data.secondaryTarget.defence;
                 fields.secondaryArmour = data.secondaryTarget.armour;
             }
-
-            fields.dualWeapon = data.otherWeapons[0]?.id;
         }
+        fields.dualWeapon = data.otherWeapons[0]?.id;
         
         return {data, fields, options};
     }
@@ -193,7 +192,8 @@ export class CombatRollDialog extends CommonRollDialog {
         return mergeObject(super._defaultFields(), {
             bonusDamage : 0,
             primaryDefence : 3,
-            secondaryDefence : 3
+            secondaryDefence : 3,
+            dualWeapon : ""
         });
     }
 }

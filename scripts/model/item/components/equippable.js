@@ -24,6 +24,11 @@ export class EquippableItemModel extends PhysicalItemModel
         return this.equipped;
     }
 
+    get equippable() 
+    {
+        return true;
+    }
+
     shouldTransferEffect(effect)
     {
         return super.shouldTransferEffect(effect) && (!effect.system.transferData.equipTransfer || this.isEquipped)

@@ -24,17 +24,16 @@ export class StandardActorModel extends BaseSoulboundActorModel
         return schema;
     }
 
-    async preCreateData(data, options, user) 
+    async _preCreate(data, options, user) 
     {
-        let preCreateData = await super.preCreateData(data, options, user);
+        super._preCreate(data, options);
         if (!data.prototypeToken)
         {
-            mergeObject(preCreateData, {
+            this.parent.updateSource({
                 "prototypeToken.bar1" :{ "attribute" : "combat.health.toughness" },
                 "prototypeToken.bar2" :{ "attribute" : "combat.mettle" }
-            });
+            })
         }
-        return preCreateData;
     }
 
 

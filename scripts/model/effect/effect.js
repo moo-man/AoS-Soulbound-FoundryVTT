@@ -26,4 +26,4 @@ export class SoulboundActiveEffectModel extends WarhammerActiveEffectModel {
         })
         return schema
     }
-}
+}   

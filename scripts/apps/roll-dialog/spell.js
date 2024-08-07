@@ -9,7 +9,7 @@ export class SpellRollDialog extends CommonRollDialog {
         return this.data.spell;
     }
 
-    get weapon()
+    get spell()
     {
         return this.data.spell;
     }

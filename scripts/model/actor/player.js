@@ -32,18 +32,17 @@ export class PlayerModel extends StandardActorModel
         return schema;
     }
 
-    async preCreateData(data, options) 
+    async _preCreate(data, options) 
     {
-        let preCreateData = await super.preCreateData(data, options);
+        super._preCreate(data, options);
         if (!data.prototypeToken)
         {
-            mergeObject(preCreateData, {
+            this.parent.updateSource({
                 "prototypeToken.sight" : {enabled : true},
                 "prototypeToken.actorLink" : true,
                 "prototypeToken.disposition" : CONST.TOKEN_DISPOSITIONS.FRIENDLY
-            });
+            })
         }
-        return preCreateData;
     }
 
     computeDerived()

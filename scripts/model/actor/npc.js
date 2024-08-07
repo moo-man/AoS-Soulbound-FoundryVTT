@@ -47,17 +47,13 @@ export class NPCModel extends StandardActorModel
         let size = this.bio.size; 
 
         if(size <= 2) {
-            this.parent.prototypeToken.height = 1;
-            this.parent.prototypeToken.width = 1;
+            this.parent.update({"prototypeToken.height" : 1, "prototypeToken.width" : 1});
         } else if(size === 3) {
-            this.parent.prototypeToken.height = 2;
-            this.parent.prototypeToken.width = 2;
+            this.parent.update({"prototypeToken.height" : 2, "prototypeToken.width" : 2});
         } else if(size === 4) {
-            this.parent.prototypeToken.height = 3;
-            this.parent.prototypeToken.width = 3;
+            this.parent.update({"prototypeToken.height" : 3, "prototypeToken.width" : 3});
         } else if(size === 5) {
-            this.parent.prototypeToken.height = 4;
-            this.parent.prototypeToken.width = 4;
+            this.parent.update({"prototypeToken.height" : 4, "prototypeToken.width" : 4});
         }
     }
 

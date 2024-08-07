@@ -15,16 +15,17 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
         return schema;
     }
     
-    async preCreateData(data, options, user) 
+    async _preCreate(data, options, user) 
     {
-        let preCreateData = {};
+        super._preCreate(data, options);
         if (!data.prototypeToken)
         {
-            mergeObject(preCreateData, {
+            this.parent.updateSource({
                 "prototypeToken.name" : data.name,
-            });
+                "prototypeToken.displayName" : CONST.TOKEN_DISPLAY_MODES.HOVER,
+                "prototypeToken.displayBars" : CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER
+            })
         }
-        return preCreateData;
     }
 
     async allowCreation(data, options, user)

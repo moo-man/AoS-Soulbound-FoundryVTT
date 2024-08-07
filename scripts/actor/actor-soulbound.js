@@ -85,7 +85,8 @@ export class SoulboundActor extends WarhammerActor {
         let armour = this.combat.armour.value
         
         let abort = undefined;
-        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test}
+        let text = [];
+        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test, text}
         await Promise.all(this.runScripts("preTakeDamage", args) || []);
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
         await Promise.all(test?.item?.runScripts("preApplyDamage", args) || []);
@@ -107,6 +108,20 @@ export class SoulboundActor extends WarhammerActor {
 
         if (damage < 0)
             damage = 0
+
+
+        args = {actor : this, damage, test, abort, text}
+        await Promise.all(this.runScripts("takeDamageMod", args) || []);
+        await Promise.all(test?.actor.runScripts("applyDamageMod", args) || []);
+        await Promise.all(test?.item?.runScripts("applyDamageMod", args) || []);
+        ({damage, abort} = args);
+
+        if (abort)
+        {
+            ui.notifications.notify(abort);
+            return;
+        }
+
         let remaining = this.combat.health.toughness.value - damage;
 
          // Update the Actor
@@ -129,6 +144,7 @@ export class SoulboundActor extends WarhammerActor {
 
         let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
+        text.push({description: note});
         let wounds;
         // Doing this here because foundry throws an error if wounds are added before the update
         if(remaining < 0 && this.combat.health.wounds.max > 0) {
@@ -137,12 +153,12 @@ export class SoulboundActor extends WarhammerActor {
             wounds = await this.update(this.system.combat.computeNewWound(remaining));
         }
 
-        this.applyEffect({effectData : test?.damageEffects.map(i => i.convertToApplied())})
+        this.applyEffect({effectData : test?.damageEffects.map(i => i.convertToApplied(test))})
 
 
-        await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test}) || []);
-        await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test}) || []);
-        await Promise.all(test?.item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test}) || []);
+        await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
+        await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
+        await Promise.all(test?.item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
 
         return ret;
     }

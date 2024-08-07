@@ -45,11 +45,17 @@ export class SoulboundItemSheet extends WarhammerItemSheet {
   }
   async _onDrop(ev) {
     let dragData = JSON.parse(ev.dataTransfer.getData("text/plain"));
+
+    if (dragData.data)
+    {
+      return this.item.createEmbeddedDocuments(dragData.type, [dragData.data]);
+    }
+
     let dropDocument = await fromUuid(dragData.uuid)
 
     if (!dropDocument)
       return
-    
+
     if (this.item.type === "archetype") {
       
       if (dropDocument.documentName == "JournalEntry" || dropDocument.documentName == "JournalEntryPage")
@@ -299,7 +305,7 @@ export class SoulboundItemSheet extends WarhammerItemSheet {
     })
 
     html.find(".reset").click(ev => {
-      this.item.system.resetGroups();
+      this.item.update(this.item.system.resetGroups());
     })
 
     html.find(".entry-element.talents,.equipment").mouseup(async ev => {
@@ -335,10 +341,11 @@ export class SoulboundItemSheet extends WarhammerItemSheet {
                 label: "Yes",
                 callback: async () => {
                   array.splice(index, 1)
-                  await this.item.update({ [`${path}`]: array })
+                  let updateData = { [`${path}`]: array }
                   if (path.includes("equipment")) {
-                    this.item.system.resetGroups();
+                    mergeObject(updateData, this.item.system.resetGroups(array))
                   }
+                  this.item.update(updateData);
                 }
               },
               no: {

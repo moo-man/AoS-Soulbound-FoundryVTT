@@ -185,11 +185,6 @@ export default class CombatTest extends SoulboundTest {
         return fromUuidSync(this.testData.dualWieldingData?.secondary?.itemId)
     }
 
-    
-    get secondaryTestEffects() {
-        return this._testEffects(this.secondaryWeapon)
-    }
-
     get secondaryItemTest() {
         return this._itemTest(this.secondaryWeapon)
     }

@@ -48,33 +48,6 @@ export class SoulboundItem extends WarhammerItem {
         return super.update(data, context)
     }
 
-    prepareData() {
-        super.prepareData()
-    }
-
-    prepareOwnedData() {
-        let functionName = `prepareOwned${this.type[0].toUpperCase() + this.type.slice(1)}`
-
-        if (this[functionName])
-            this[functionName]()
-
-        if (this.isAttack)
-            this.prepareAttack()
-    }
-
-    prepareAttack() {
-        if (this.category === "melee") {
-            this.pool = this.actor.skills.weaponSkill.total;
-            this.focus = this.actor.skills.weaponSkill.focus;
-        } else {
-            this.pool = this.actor.skills.ballisticSkill.total;
-            this.focus = this.actor.skills.ballisticSkill.focus;
-        }
-        if(this.isSwarm) {
-            this.pool += this.actor.combat.health.toughness.value;
-        }
-    }
-
     async addCondition(effect) {
         if (typeof (effect) === "string")
           effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
