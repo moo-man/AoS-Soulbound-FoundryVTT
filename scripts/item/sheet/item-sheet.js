@@ -112,6 +112,11 @@ export class SoulboundItemSheet extends WarhammerItemSheet {
     }
   }
 
+  _canDragDrop()
+  {
+    return true;
+  }
+
   activateListeners(html) {
     super.activateListeners(html);
     html.find("input").focusin(ev => this._onFocusIn(ev));

@@ -43,9 +43,10 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         return groups
     }
 
-    resetGroups()
+    resetGroups(newEquipment)
     {
-        this.parent.update({ "system.groups": {type: "and", groupId: "root", items : Array.fromRange(this.equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} }) // Reset item groupings
+        let equipment = newEquipment || this.equipment;
+        return { "system.groups": {type: "and", groupId: "root", items : Array.fromRange(equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} } // Reset item groupings
     }
 
     async createChecks(data, options, user)

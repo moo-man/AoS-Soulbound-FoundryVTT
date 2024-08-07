@@ -67,6 +67,15 @@ export default class ArchetypeGroups extends Application {
         return data
     }
 
+    _canDragDrop()
+    {
+        return true;
+    }
+
+    _canDragStart()
+    {
+        return true;
+    }
 
     _groupIndexToObjects() {
         return ArchetypeGroups.groupIndexToObjects(this.object.groups, this.object)
