@@ -63,33 +63,5 @@ Hooks.on('setup', (app, html) => {
         new ZoneConfig(this.document).render(true);
     }
 
-//     foundry.applications.sheets.RegionConfig.DEFAULT_OPTIONS.window.controls = [
-// {        icon: 'fa-solid fa-game-board-simple',
-//         label: "Zone",
-//         action: "zoneConfig",}
-//     ]
-
-    // app.options.actions.zoneConfig = (event, target) => {
-    //     console.log(app.document);
-    // }
-
-    // app.options.window.controls.push({
-    //     icon: 'fa-solid fa-game-board-simple',
-    //     label: "Zone",
-    //     action: "zoneConfig",
-    // })
-
-    // const button = $(
-    // `<div class='control-icon'><i class="fas fa-cog"></i></div>`
-    // );
-    // button.attr(
-    // 'title',
-    // 'Zone Config'
-    // );
-
-    // button.mousedown(event => {
-    //     new ZoneConfig(hud.object.document).render(true)
-    // })
-    // html.find('.col.right').append(button);
 })
 

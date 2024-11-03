@@ -95,7 +95,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         {
         this.health.toughness.max += parent.attributes.body.value + parent.attributes.mind.value + parent.attributes.soul.value
         } 
-        else if(!this.isSwarm) 
+        else if(!this.parent.isSwarm) 
         {
             this.health.toughness.max = 1;
         }

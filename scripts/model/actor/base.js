@@ -6,7 +6,7 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
 {
 
     static preventItemTypes = [];
-    static singletonItemTypes = [];
+    static singletonItemPaths = {};
     
     static defineSchema() 
     {
@@ -40,16 +40,6 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
     {
 
     }
-
-    
-    checkSingletonItems(item)
-    {
-        if (this.constructor.singletonItemTypes.includes(item.type))
-        {
-            return item.actor.update({[`system.${item.type}`] : this[item.type].updateSingleton(item)});
-        }
-    }
-
 
     computeBase() 
     {

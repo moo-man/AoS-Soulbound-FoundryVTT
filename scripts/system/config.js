@@ -407,7 +407,7 @@ AOS.systemEffects = {
             {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ],
         system : {
-            scriptdata : [{
+            scriptData : [{
                 label : "Mind (Awareness) Tests that rely on sight",
                 script : "args.fields.difficulty -= 2",
                 options : {
@@ -513,7 +513,7 @@ CONFIG.statusEffects = [
             {key: "system.combat.defence.bonus", mode : 2, value : -1}
         ],
         system : {
-            scriptdata : [{
+            scriptData : [{
                 label : "Mind (Awareness) Tests that rely on sight",
                 script : "args.fields.difficulty -= 2",
                 options : {
@@ -534,7 +534,7 @@ CONFIG.statusEffects = [
         name : "CONDITION.DEAFENED",
         img : "systems/age-of-sigmar-soulbound/asset/icons/deafened.svg",
         system : {
-            scriptdata : [{
+            scriptData : [{
                 label : "Tests that require hearing",
                 script : "args.fields.bonusDice -= 1",
             }]
@@ -546,7 +546,7 @@ CONFIG.statusEffects = [
         name : "CONDITION.FRIGHTENED",
         img : "systems/age-of-sigmar-soulbound/asset/icons/frightened.svg",
         system : {
-            scriptdata : [{
+            scriptData : [{
                 label : "Within line of sight of the source of fear",
                 script : "args.fields.bonusDice -= 1",
             }]
@@ -564,7 +564,7 @@ CONFIG.statusEffects = [
         name : "CONDITION.POISONED",
         img : "systems/age-of-sigmar-soulbound/asset/icons/poisoned.svg",
         system : {
-            scriptdata : [{
+            scriptData : [{
                 label : "Within line of sight of the source of fear",
                 script : "args.fields.bonusDice -= 1",
                 options : {

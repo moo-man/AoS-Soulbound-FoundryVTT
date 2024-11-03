@@ -192,7 +192,6 @@ export default class Migration {
             }
         }
         await actor.deleteEmbeddedDocuments("ActiveEffect", effectsToDelete);
-        debugger;
         for(let item of actor.items)
         {
             await this.migrateItemEffectRefactor(item);

@@ -5,7 +5,7 @@ let fields = foundry.data.fields;
 export class PlayerModel extends StandardActorModel 
 {
     static preventItemTypess = [];
-    static singletonItemTypess = [];
+    static singletonItemPaths = {};
 
     static defineSchema() 
     {

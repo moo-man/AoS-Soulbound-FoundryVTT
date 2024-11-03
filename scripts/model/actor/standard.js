@@ -44,7 +44,14 @@ export class StandardActorModel extends BaseSoulboundActorModel
         // Prevent wounds from exceeding max
         if (hasProperty(data, "system.combat.health.toughness.value"))
         {
-            data.system.combat.health.toughness.value = Math.clamp(data.system.combat.health.toughness.value, 0, this.combat.health.toughness.max)
+            if (this.isSwarm)
+            {
+                data.system.combat.health.toughness.value = Math.max(data.system.combat.health.toughness.value, 0)
+            }
+            else 
+            {
+                data.system.combat.health.toughness.value = Math.clamp(data.system.combat.health.toughness.value, 0, this.combat.health.toughness.max)
+            }
             options.deltaToughness = data.system.combat.health.toughness.value - this.combat.health.toughness.value;
         }
         if (hasProperty(data, "system.combat.mettle.value"))

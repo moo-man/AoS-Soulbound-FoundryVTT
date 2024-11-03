@@ -18,11 +18,4 @@ export default class SoulboundActiveEffectConfig extends WarhammerActiveEffectCo
         hidden.equipTransfer = !this.object.item?.system?.equippable;
         return hidden;
     }
-
-    activateListeners(html)
-    {
-        super.activateListeners(html);
-
-
-    }
 }
