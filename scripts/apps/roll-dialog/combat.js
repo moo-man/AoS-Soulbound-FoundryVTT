@@ -128,8 +128,6 @@ export class CombatRollDialog extends CommonRollDialog {
             swarmDice: actor.type === "npc" && actor.isSwarm ? actor.system.combat.health.toughness.value : 0,
         }
 
-        fields.bonusDice = data.combat.swarmDice;
-
         fields.attack = weapon.system.isMelee ? actor.system.combat.melee.relative : actor.system.combat.accuracy.relative
 
         data.showDualWielding = actor.items.filter(i => i.isAttack && i.equipped).length >= 2;
