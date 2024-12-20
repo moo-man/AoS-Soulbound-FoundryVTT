@@ -129,7 +129,7 @@ export class CombatRollDialog extends CommonRollDialog {
         }
 
         fields.bonusDice = data.combat.swarmDice;
-
+        
         fields.attack = weapon.system.isMelee ? actor.system.combat.melee.relative : actor.system.combat.accuracy.relative
 
         data.showDualWielding = actor.items.filter(i => i.isAttack && i.equipped).length >= 2;

@@ -169,7 +169,7 @@ export default class CombatTest extends SoulboundTest {
 
     get numberOfDice()
     {
-        return super.numberOfDice + this.testData.combat.swarmDice
+        return super.numberOfDice
     }
 
     get isDualWielding() 
