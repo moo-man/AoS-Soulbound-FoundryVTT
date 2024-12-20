@@ -167,11 +167,6 @@ export default class CombatTest extends SoulboundTest {
         };
     }
 
-    get numberOfDice()
-    {
-        return super.numberOfDice
-    }
-
     get isDualWielding() 
     {
         return !!this.testData.dualWieldingData
