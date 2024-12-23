@@ -100,6 +100,9 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             this.health.toughness.max = 1;
         }
         this.health.toughness.max += this.health.toughness.bonus;
+        if (this.parent.isSwarm) {
+            this.health.toughness.max = Number.MAX_VALUE;
+        }
         
         if(this.parent.autoCalc.wounds) 
         {
