@@ -20,6 +20,30 @@ export class CombatRollDialog extends CommonRollDialog {
         return this.data.weapon;
     }
 
+    get tooltipConfig() 
+    {
+        return foundry.utils.mergeObject(super.tooltipConfig, {
+            bonusDamage : {
+                label: "Damage",
+                type: 1,
+                path: "fields.bonusDamage",
+            },
+            attack : {
+                label: "Attack",
+                type: 1,
+                path: "fields.attack",
+                hideLabel : true
+            },
+            primaryDefence : {
+                label: "Defence",
+                type: 1,
+                path: "fields.primaryDefence",
+                hideLabel : true
+            },
+
+        })
+    }
+
     async computeFields() 
     {
 

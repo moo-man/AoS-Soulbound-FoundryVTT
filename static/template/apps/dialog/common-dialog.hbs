@@ -8,7 +8,7 @@
                 <div class="entry-vertical" style="width:100px;">
                     <h3>{{localize "DIALOG.DN"}}</h3>
                     <div class="dn-box">
-                        <select name="difficulty">
+                        <select name="difficulty" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.difficulty}}">
                             {{#select fields.difficulty}}
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -18,7 +18,7 @@
                             {{/select}}
                         </select>
                         :
-                        <select name="complexity">
+                        <select name="complexity" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.complexity}}">
                             {{#select fields.complexity}}
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -67,17 +67,16 @@
                 </div>
             </div>
             <div class="content-row">
-                <div class="entry-horizontal">
+                <div class="entry-horizontal" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.bonusDice}}">
                     <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
-                    <div class="dialog-value"><input name="bonusDice" type="number" value="{{fields.bonusDice}}" />
+                    <div class="dialog-value"><input name="bonusDice" type="number" value="{{fields.bonusDice}}"  />
                     </div>
                 </div>
             </div>
             <div class="content-row">
-                <div class="entry-horizontal">
+                <div class="entry-horizontal" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.bonusFocus}}">
                     <h3>{{localize "DIALOG.BONUSFOCUS"}}</h3>
-                    <div class="dialog-value"><input name="bonusFocus" name="bonusFocus" type="number"
-                            value="{{fields.bonusFocus}}" /></div>
+                    <div class="dialog-value"><input name="bonusFocus" name="bonusFocus" type="number" value="{{fields.bonusFocus}}"  /></div>
                 </div>
             </div>
 

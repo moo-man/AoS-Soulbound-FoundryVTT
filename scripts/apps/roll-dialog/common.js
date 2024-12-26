@@ -4,6 +4,37 @@ export class CommonRollDialog extends WarhammerRollDialog {
 
     dialogTitle = "DIALOG.COMMON_ROLL"
 
+    get tooltipConfig() 
+    {
+        return {
+            difficulty: {
+                label: "Difficulty",
+                type: 1,
+                path: "fields.difficulty",
+                hideLabel: true
+            },
+            complexity: {
+                label: "Complexity",
+                type: 1,
+                path: "fields.complexity",
+                hideLabel: true
+            },
+            bonusDice: {
+                label: "bonusDice",
+                type: 1,
+                path: "fields.bonusDice",
+                hideLabel: true
+
+            },
+            bonusFocus: {
+                label: "Bonus ",
+                type: 0,
+                path: "fields.bonusFocus",
+                hideLabel: true
+            }
+        }
+    }
+
     static get defaultOptions() {
         let options = super.defaultOptions;
         options.classes.push("soulbound")

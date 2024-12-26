@@ -26,7 +26,7 @@
                         {{/select}}
                     </select>
                 </div>
-                <div class="entry-vertical">
+                <div class="entry-vertical" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.attack}}">
                     <h3>{{localize "DIALOG.ATTACK"}}</h3>
                     <select name="attack">
                         {{#select fields.attack}}
@@ -48,31 +48,20 @@
                 </div>
             </div>
             <div class="content-row">
-                <div class="entry-horizontal">
+                <div class="entry-horizontal" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.bonusDice}}">
                     <h3>{{localize "DIALOG.BONUSDICE"}}</h3>
-                    <div class="dialog-value"><input name="bonusDice" type="number" value="{{fields.bonusDice}}" />
-                    </div>
+                    <div class="dialog-value"><input name="bonusDice" type="number" value="{{fields.bonusDice}}" /> </div>
                 </div>
             </div>
             <div class="content-row">
-                <div class="entry-horizontal">
+                <div class="entry-horizontal" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.bonusFocus}}">
                     <h3>{{localize "DIALOG.BONUSFOCUS"}}</h3>
-                    <div class="dialog-value"><input name="bonusFocus" name="bonusFocus" type="number"
-                            value="{{fields.bonusFocus}}" /></div>
+                    <div class="dialog-value"><input name="bonusFocus" name="bonusFocus" type="number" value="{{fields.bonusFocus}}" /></div>
                 </div>
             </div>
 
-
-
-
-
-
-
-
-
-
             <div class="content-row">
-                <div class="entry-horizontal">
+                <div class="entry-horizontal" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.bonusDamage}}">
                     <h3>{{localize "DIALOG.BONUSDAMAGE"}}</h3>
                     <div class="dialog-value"><input name="bonusDamage" type="number" value="{{fields.bonusDamage}}" />
                     </div>
@@ -98,7 +87,7 @@
                             data-token-id="{{data.primaryTarget.tokenId}}">{{#if data.primaryTarget.name}}({{data.primaryTarget.name}}){{/if}}</label>
                     </div>
                     <div class="content-row">
-                        <div class="entry-vertical">
+                        <div class="entry-vertical" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.bonusDice}}">
                             <h3>{{localize "DIALOG.DEFENCE"}}</h3>
                             <select name="primaryDefence">
                                 {{#select fields.primaryDefence}}
