@@ -19,7 +19,7 @@ export default class SoulboundTest extends WarhammerTestBase {
             },
             context : {
                 speaker : data.speaker,
-                targetSpeakers : data.targets.map(t => t.actor.speakerData(t))|| [],
+                targetSpeakers : data.targets || [],
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined,
