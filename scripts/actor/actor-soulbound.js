@@ -309,8 +309,8 @@ export class SoulboundActor extends WarhammerActor {
         if (token || this.isToken)
         {
             return {
-                token : (token?.document || this.token).id,
-                scene : (token?.document || this.token).parent.id
+                token : (token || this.token).id,
+                scene : (token || this.token).parent.id
             }
         }
         else
