@@ -613,7 +613,7 @@ CONFIG.statusEffects = [
     {       
         id: "dead",
         name: "EFFECT.StatusDead", // Foundry Default Text Key
-        icon: "systems/age-of-sigmar-soulbound/asset/icons/dead.svg"
+        img: "systems/age-of-sigmar-soulbound/asset/icons/dead.svg"
     }
 ]
 
