@@ -250,7 +250,7 @@ export default class SoulboundChat {
 
         if (test.result.primary?.damage && test.result.secondary?.damage) // If both primary and secondary, give choice
         {
-            await Dialog.prompt({
+            await Dialog.wait({
                 title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
                 content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
                 buttons : {
@@ -259,7 +259,6 @@ export default class SoulboundChat {
                         callback : () => {
                             damage = test.result.primary.damage.total
                             item = test.item
-                            resolve()
                         }
                     },
                     secondary : {
@@ -267,7 +266,6 @@ export default class SoulboundChat {
                         callback : () => {
                             damage = test.result.secondary.damage.total
                             item = test.secondaryWeapon
-                            resolve()
                         }
                     }
                 }
@@ -330,8 +328,7 @@ export default class SoulboundChat {
 
         if ((test.item?.traitList.cleave && test.result.primary?.triggers) && (test.secondaryWeapon?.traitList.cleave && test.result.secondary?.triggers)) // If both primary and secondary, give choice
         {
-            await new Promise((resolve) => {
-                new Dialog({
+                await Dialog.wait({
                     title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
                     content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
                     buttons : {
@@ -340,7 +337,6 @@ export default class SoulboundChat {
                             callback : () => {
                                 result = test.result.primary
                                 item = test.item
-                                resolve()
                             }
                         },
                         secondary : {
@@ -348,13 +344,11 @@ export default class SoulboundChat {
                             callback : () => {
                                 result = test.result.secondary
                                 item = test.secondaryWeapon
-                                resolve()
                             }
                         }
                     }
     
                 }).render(true)
-            })
         }
         else if (test.item?.traitList.cleave && test.result.primary?.triggers) // If only primary
         {
@@ -390,8 +384,7 @@ export default class SoulboundChat {
 
         if (test.item?.traitList?.blast?.rating && test.secondaryWeapon?.traitList?.blast?.rating) // If both primary and secondary, give choice
         {
-            await new Promise((resolve) => {
-                new Dialog({
+                await Dialog.wait({
                     title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
                     content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
                     buttons : {
@@ -399,20 +392,17 @@ export default class SoulboundChat {
                             label : game.i18n.localize("DIALOG.PRIMARY"),
                             callback : () => {
                                 item = test.item
-                                resolve()
                             }
                         },
                         secondary : {
                             label : game.i18n.localize("DIALOG.SECONDARY"),
                             callback : () => {
                                 item = test.secondaryWeapon
-                                resolve()
                             }
                         }
                     }
     
                 }).render(true)
-            })
         }
         else if (test.item?.traitList?.blast?.rating) // If only primary
         {
@@ -446,8 +436,7 @@ export default class SoulboundChat {
 
         if ((test.item?.traitList?.rend && test.result.primary?.triggers) && (test.secondaryWeapon?.traitList?.rend && test.result.secondary?.triggers)) // If both primary and secondary, give choice
         {
-            await new Promise((resolve) => {
-                new Dialog({
+                await Dialog.wait({
                     title : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT_TITLE"),
                     content : game.i18n.localize("DIALOG.PRIMARY_SECONDARY_SELECT"),
                     buttons : {
@@ -456,7 +445,6 @@ export default class SoulboundChat {
                             callback : () => {
                                 result = test.result.primary
                                 item = test.item
-                                resolve()
                             }
                         },
                         secondary : {
@@ -464,13 +452,11 @@ export default class SoulboundChat {
                             callback : () => {
                                 result = test.result.secondary
                                 item = test.secondaryWeapon
-                                resolve()
                             }
                         }
                     }
     
                 }).render(true)
-            })
         }
         else if (test.item?.traitList.rend && test.result.primary?.triggers) // If only primary
         {
