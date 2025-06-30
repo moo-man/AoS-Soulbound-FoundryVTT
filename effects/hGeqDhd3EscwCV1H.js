@@ -1,1 +1,1 @@
-args.fields.bonusDice += (@skills.theology.training)
+args.fields.bonusDice += (args.actor.system.skills.theology.training)

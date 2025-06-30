@@ -1,1 +1,1 @@
-args.fields.bonusDamage += (@doom)
+args.fields.bonusDamage += (args.actor.system.doom)

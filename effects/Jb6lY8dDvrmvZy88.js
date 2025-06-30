@@ -1,1 +1,1 @@
-args.fields.bonusFocus += (@skills.devotion.focus)
+args.fields.bonusFocus += (args.actor.system.skills.devotion.focus)

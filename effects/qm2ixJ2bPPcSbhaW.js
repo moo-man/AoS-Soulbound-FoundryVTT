@@ -1,1 +1,1 @@
-args.fields.bonusFocus += (@skills.intuition.focus)
+args.fields.bonusFocus += (args.actor.system.skills.intuition.focus)

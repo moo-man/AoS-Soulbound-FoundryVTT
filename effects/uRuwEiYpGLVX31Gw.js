@@ -1,1 +1,1 @@
-args.fields.bonusDamage += (@skills.weaponSkill.focus)
+args.fields.bonusDamage += (args.actor.system.skills.weaponSkill.focus)

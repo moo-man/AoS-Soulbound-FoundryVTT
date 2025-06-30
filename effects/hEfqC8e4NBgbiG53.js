@@ -1,1 +1,1 @@
-args.fields.attack += (@skills.dexterity.focus)
+args.fields.attack += (args.actor.system.skills.dexterity.focus)

@@ -1,1 +1,1 @@
-args.fields.bonusDice += (@skills.determination.training)
+args.fields.bonusDice += (args.actor.system.skills.determination.training)

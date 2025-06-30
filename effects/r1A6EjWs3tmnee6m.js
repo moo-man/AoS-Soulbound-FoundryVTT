@@ -1,1 +1,1 @@
-args.fields.bonusDamage += (@attributes.soul.value)
+args.fields.bonusDamage += (args.actor.system.attributes.soul.value)

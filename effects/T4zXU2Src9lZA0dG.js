@@ -1,1 +1,1 @@
-args.fields.bonusDice += (@doom)
+args.fields.bonusDice += (args.actor.system.doom)

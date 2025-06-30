@@ -1,1 +1,1 @@
-args.fields.bonusDice += (@skills.channelling.training)
+args.fields.bonusDice += (args.actor.system.skills.channelling.training)
