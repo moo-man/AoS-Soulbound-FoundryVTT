@@ -1,0 +1,15 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-rows">
+        <div class="header-name">
+            <input type="text" name="name" value="{{source.name}}">
+        </div>
+        <div class="header-details">
+            <div class="detail-group">
+                {{formInput fields.bio.fields.size value=system.bio.size choices=(config "actorSize")}}
+                {{formInput fields.bio.fields.type choices=(config "npcType")}}
+                {{formInput fields.bio.fields.faction placeholder=(localize "BIO.FACTION")}}
+                {{formInput fields.bio.fields.role placeholder=(localize "BIO.ROLE") }}
+            </div>
+        </div>
+</header>

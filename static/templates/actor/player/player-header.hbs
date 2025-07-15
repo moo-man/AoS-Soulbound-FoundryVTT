@@ -1,0 +1,18 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-rows">
+        <div class="header-name">
+            <input type="text" name="name" value="{{source.name}}">
+        </div>
+        <div class="header-details">
+            <div class="detail-group">
+                <input readonly type="text" value="{{system.bio.archetype}}" placeholder="{{localize 'BIO.ARCHETYPE'}}" />
+                <input name="system.bio.species" type="text" value="{{system.bio.species}}" placeholder="{{localize 'BIO.SPECIES'}}" />
+            </div>
+            <div class="detail-group experience">
+                <input name="header.experience.spent" type="number" value="{{system.experience.spent}}" data-dtype="Number" disabled /> 
+                /
+                <input name="header.experience.total" type="number" value="{{system.experience.total}}" data-dtype="Number" disabled /> {{localize "EXPERIENCE.XP"}}
+            </div>
+        </div>
+</header>

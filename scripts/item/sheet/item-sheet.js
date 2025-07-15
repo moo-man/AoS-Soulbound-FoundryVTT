@@ -1,5 +1,5 @@
 import ItemTraits from "../../apps/item-traits.js";
-import { SoulboundItem } from "../item-soulbound.js";
+import { SoulboundItem } from "../../document/item.js";
 import ArchetypeGroups from "../../apps/archetype-groups.js"
 import ArchetypeGeneric from "../../apps/archetype-generic.js";
 

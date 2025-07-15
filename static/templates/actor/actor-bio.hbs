@@ -1,0 +1,82 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section physical">
+        <div class="box-header">{{localize "TITLE.PHYSICAL"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 4">
+                    {{localize "BIO.AGE"}}
+                </div>
+
+                <div class="label" style="grid-column: 5 / span 4">
+                    {{localize "BIO.HEIGHT"}}
+
+                </div>
+                <div class="label" style="grid-column: 9 / span 4">
+                    {{localize "BIO.WEIGHT"}}
+
+                </div>
+
+                <div class="field" style="grid-column: 1 / span 4"><input name="system.bio.age" type="text" value="{{system.bio.age}}"></div>
+                <div class="field" style="grid-column: 5 / span 4"><input name="system.bio.height" type="text" value="{{system.bio.height}}"></div>
+                <div class="field" style="grid-column: 9 / span 4"><input name="system.bio.weight" type="text" value="{{system.bio.weight}}"></div>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 4">
+                    {{localize "BIO.EYETYPE"}}
+                </div>
+
+                <div class="label" style="grid-column: 5 / span 4">
+                    {{localize "BIO.EYES"}}
+
+                </div>
+                <div class="label" style="grid-column: 9 / span 4">
+                    {{localize "BIO.HAIR"}}
+
+                </div>
+
+                <div class="field" style="grid-column: 1 / span 4"><input name="system.bio.eyeType" type="text" value="{{system.bio.eyeType}}"></div>
+                <div class="field" style="grid-column: 5 / span 4"><input name="system.bio.eyes" type="text" value="{{system.bio.eyes}}"></div>
+                <div class="field" style="grid-column: 9 / span 4"><input name="system.bio.hair" type="text" value="{{system.bio.hair}}"></div>
+            </div>
+
+        </div>
+        <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 12">
+                    {{localize "BIO.DISTINGUISHING_FEATURES"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 12"><input name="system.bio.distinguishingFeatures" type="text" value="{{system.bio.distinguishingFeatures}}"></div>
+
+        </div>
+    </div>
+
+    <div class="box-section">
+        <div class="box-header">{{localize "BIO.BACKGROUND"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 6">
+                    {{localize "BIO.FACTION"}}
+                </div>
+
+                <div class="label" style="grid-column: 7 / span 6">
+                    {{localize "BIO.SUBFACTION"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 6"><input name="system.bio.faction" type="text" value="{{system.bio.faction}}"></div>
+                <div class="field" style="grid-column: 7 / span 6"><input name="system.bio.subfaction" type="text" value="{{system.bio.subfaction}}"></div>
+            </div>
+        </div>
+        <div class="box-editor">
+            {{formInput fields.bio.fields.background value=source.system.bio.background enriched=enriched.system.bio.background toggled=true}}
+        </div>
+    </div>
+
+        <div class="box-section">
+        <div class="box-header">{{localize "TITLE.CONNECTIONS"}}</div>
+        <div class="box-editor">
+            {{formInput fields.bio.fields.connections value=source.system.bio.connections enriched=enriched.system.bio.connections toggled=true}}
+            
+        </div>
+    </div>
+
+</section>

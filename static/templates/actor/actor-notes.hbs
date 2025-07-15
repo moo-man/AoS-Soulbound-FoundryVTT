@@ -1,0 +1,19 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    {{#if (eq document.type "player")}}
+    <div class="attribute-box titled">
+        <div class="title" style="grid-column: 1 / span 12"><label>{{localize "EXPERIENCE.EXPERIENCE"}}</label></div>
+        <div class="label" style="grid-column: 1 / span 4"><label>{{localize "EXPERIENCE.OUTSTANDING"}}</label></div>
+        <div class="label" style="grid-column: 5 / span 4"><label>{{localize "EXPERIENCE.SPENT"}}</label></div>
+        <div class="label" style="grid-column: 9 / span 4"><label>{{localize "EXPERIENCE.TOTAL"}}</label></div>
+        <div class="field" style="grid-column: 1 / span 4"><input name="system.experience.outstanding" type="number" value="{{system.experience.outstanding}}" type="number"></div>
+        <div class="field" style="grid-column: 5 / span 4"><input name="system.experience.spent" type="number" value="{{system.experience.spent}}" type="number"></div>
+        <div class="field" style="grid-column: 9 / span 4"><input name="system.experience.total" type="number" value="{{system.experience.total}}" type="number"></div>
+    </div>
+    {{/if}}
+
+    <div class="editor-section">
+        <div class="header">{{localize "TITLE.NOTES"}}</div>
+        {{formInput fields.notes value=source.system.notes enriched=enriched.system.notes toggled=true}}
+    </div>
+
+</section>

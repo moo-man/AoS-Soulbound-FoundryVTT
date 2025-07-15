@@ -1,0 +1,77 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+        <div class="conditions">
+            {{#each effects.conditions}}
+            {{log this}}
+            <div class="condition {{#if this.existing}}active{{/if}}" >
+                <img src="{{img}}">
+                <a data-condition="{{this.key}}" data-action="toggleCondition">{{this.name}}</a>
+            </div>
+            {{/each}}
+        </div>
+            <div class="sheet-list">
+                <div class="list-label">
+                    <div class="list-title">{{localize "HEADER.TEMPORARY_EFFECTS"}}</div>
+                    {{!-- <div>{{localize "HEADER.SOURCE"}}</div> --}}
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createEffect" data-category="temporary">
+                            <i class="fas fa-plus"></i> 
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.temporary}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                {{> listEffect effect=this}}
+                            </div>
+                            {{> sheetButtons document=this}}
+                            <div class="dropdown-content collapsed">
+
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+
+            <div class="sheet-list">
+                <div class="list-label">
+                    <div class="list-title">{{localize "HEADER.PASSIVE_EFFECTS"}}</div>
+                    {{!-- <div>{{localize "HEADER.SOURCE"}}</div> --}}
+                    <div class="list-controls">
+                        <a class="list-control" data-action="createEffect" data-category="passive">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.passive}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content">
+                                {{> listEffect effect=this}}
+                            </div>
+                            {{> sheetButtons document=this}}
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+
+            <div class="sheet-list">
+                <div class="list-label">
+                    <div class="list-title">{{localize "HEADER.DISABLED_EFFECTS"}}</div>
+                    {{!-- <div>{{localize "HEADER.SOURCE"}}</div> --}}
+                    <div class="list-controls"></div>
+                </div>
+                <div class="list-content">
+                    {{#each effects.disabled}}
+                        <div class="list-row" data-uuid="{{this.uuid}}">
+                            <div class="row-content inactive">
+                                {{> listEffect effect=this}}
+                            </div>
+                        </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+
+</section>

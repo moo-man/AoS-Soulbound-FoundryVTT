@@ -1,0 +1,191 @@
+.application.soulbound.actor.sheet {
+
+    section[data-tab]
+    {
+        overflow: auto;
+    }
+
+    --border: var(--color-cool-3);
+
+    .sheet-header {
+        display: flex;
+        img {
+            width: 72px;
+            height: 72px;
+        }
+
+        .header-rows {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .header-details {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+            .detail-group {
+                
+                flex: 1;
+                > * {
+                    flex: 1;
+                }
+                &.experience
+                {
+                    flex: 0.3
+                }
+
+                select,
+                input {
+                    text-align: center;
+                }
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
+    }
+
+    &.party {
+        .header-details {
+            .detail-group {
+                input {
+                    flex:  1;
+                }
+                label {
+                    flex: unset;
+                }
+            }
+        }
+    }
+
+    .sheet-list.skills {
+        border: 1px solid var(--attribute-border);
+        .list-header {
+            border: 0px;
+        }
+        .list-label {
+            background: var(--list-title)
+        }
+        .list-content {
+
+            .list-row {
+                width: 50%;
+            }
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            height: calc(24rem + 1px);
+        }
+    }
+
+    .attribute-box {
+
+        .melee,
+        .defence,
+        .accuracy {
+            display: flex;
+            justify-content: center;
+            input {
+                width: 50%;
+            }
+        }
+
+        .melee {
+            img {
+                content: url("./asset/image/melee.webp");
+            }
+        }
+        .defence {
+            img {
+                content: url("./asset/image/defence.webp");
+            }
+        }
+        .accuracy {
+            img {
+                content: url("./asset/image/accuracy.webp");
+            }
+        }
+    }
+
+
+    .combat.box-section {
+        .box-row {
+            margin-bottom: 0.5rem;
+            gap: 0.5rem;
+        }
+
+        .field.bonus {
+            input {
+                width: 2rem;
+                margin-left: 0.5rem;
+            }
+        }
+
+        .attribute-box:not(.single)
+        {
+
+            .field:not(.bonus) {
+                border-bottom: 1px solid var(--attribute-border);
+            }
+        }
+
+        .sheet-list.wounds {
+            flex: 1;
+        }
+    }
+
+    .tab[data-tab=bio]
+    {
+        .physical .attribute-box{
+            border-bottom: 0px;
+        }   
+
+        .physical.box-section
+        {
+            border-bottom: 1px solid var(--attribute-border)
+        }
+    }
+
+    .list-label.list-header {
+        .list-controls {
+            background: none;
+        }
+    }
+
+    .sheet-list .list-content {
+        border: 1px solid var(--attribute-border);
+        border-top: 0px;
+    }
+    
+    .sheet-list {
+        .description {
+            padding: 0px 0.5rem;
+        }
+    }
+    .test-box {
+    }
+}
+
+body.theme-dark .application.soulbound.actor {
+
+    .attribute-box {
+        .melee {
+            img {
+                content: url("./asset/image/melee-white.webp");
+            }
+        }
+        .defence {
+            img {
+                content: url("./asset/image/defence-white.webp");
+            }
+        }
+        .accuracy {
+            img {
+                content: url("./asset/image/accuracy-white.webp");
+            }
+        }
+    }
+
+}

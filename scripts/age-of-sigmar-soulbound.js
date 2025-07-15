@@ -1,8 +1,5 @@
-import { SoulboundActor } from "./actor/actor-soulbound.js";
-import { SoulboundItem } from "./item/item-soulbound.js";
-import { PlayerSheet } from "./actor/sheet/player-sheet.js";
-import { NpcSheet } from "./actor/sheet/npc-sheet.js";
-import { PartySheet } from "./actor/sheet/party-sheet.js";
+import { SoulboundActor } from "./document/actor.js";
+import { SoulboundItem } from "./document/item.js";
 import { SoulboundItemSheet } from "./item/sheet/item-sheet.js";
 import { initializeHandlebars } from "./system/handlebars.js";
 import hooks from "./system/hooks.js"
@@ -28,6 +25,9 @@ import SoulboundActiveEffectConfig from "./apps/active-effect-config.js";
 import SoulboundEffect from "./system/effect.js";
 import { SoulboundActiveEffectModel } from "./model/effect/effect.js";
 import loadEffects from "./loadEffects.js"
+import { PlayerSheet } from "./sheet/actor/player.js";
+import { NPCSheet } from "./sheet/actor/npc.js";
+import { PartySheet } from "./sheet/actor/party.js";
 
 Hooks.once("init", () => {
 
@@ -62,12 +62,11 @@ Hooks.once("init", () => {
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
-    Actors.registerSheet("age-of-sigmar-soulbound", NpcSheet, { types: ["npc"], makeDefault: true });
+    Actors.registerSheet("age-of-sigmar-soulbound", NPCSheet, { types: ["npc"], makeDefault: true });
     Actors.registerSheet("age-of-sigmar-soulbound", PartySheet, { types: ["party"], makeDefault: true });
     Items.unregisterSheet("core", ItemSheet);
     Items.registerSheet("age-of-sigmar-soulbound", SoulboundItemSheet, { makeDefault: true });
     DocumentSheetConfig.registerSheet(ActiveEffect, "age-of-sigmar-soulbound", SoulboundActiveEffectConfig, { makeDefault: true, label : "Soulbound Active Effect Config" });
-    DocumentSheetConfig.registerSheet(JournalEntryPage, "age-of-sigmar-soulbound", Level4TextPageSheet, { types : ["text"], makeDefault: true, label : "Soulbound Journal Sheet" });
     initializeHandlebars();
     
     game.aos = {

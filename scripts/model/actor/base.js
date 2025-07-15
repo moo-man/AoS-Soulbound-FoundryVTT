@@ -11,7 +11,7 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
     static defineSchema() 
     {
         let schema = {};
-        schema.notes = new fields.StringField();
+        schema.notes = new fields.HTMLField();
         return schema;
     }
     

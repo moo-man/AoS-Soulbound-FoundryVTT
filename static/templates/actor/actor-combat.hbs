@@ -1,0 +1,231 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section combat">
+        <div class="box-header">{{localize "TITLE.ABILITIES"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label melee" style="grid-column: 1 / span 4">
+                    <img src="systems/age-of-sigmar-soulbound/asset/image/melee.webp" width="24" height="24" /> 
+                    <input type="text" value="{{system.combat.melee.ability}}" disabled />
+                </div>
+
+                <div class="label accuracy" style="grid-column: 5 / span 4">
+                    <img src="systems/age-of-sigmar-soulbound/asset/image/accuracy.webp" width="24" height="24" />
+                    <input type="text" value="{{system.combat.accuracy.ability}}" disabled />
+                </div>
+                <div class="label defence" style="grid-column: 9 / span 4">
+                    <img src="systems/age-of-sigmar-soulbound/asset/image/defence.webp" width="24" height="24" /> 
+                    <input type="text" value="{{system.combat.defence.ability}}" disabled />
+                </div>
+
+                <div class="field bonus" style="grid-column: 1 / span 4">{{localize "HEADER.BONUS"}}: <input name="system.combat.melee.bonus" type="number" value="{{system.combat.melee.bonus}}"></div>
+                <div class="field bonus" style="grid-column: 5 / span 4">{{localize "HEADER.BONUS"}}: <input name="system.combat.accuracy.bonus" type="number" value="{{system.combat.accuracy.bonus}}"></div>
+                <div class="field bonus" style="grid-column: 9 / span 4">{{localize "HEADER.BONUS"}}: <input name="system.combat.defence.bonus" type="number" value="{{system.combat.defence.bonus}}"></div>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="attribute-box combat">
+                <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.ARMOUR"}}</div>
+                <div class="field" style="grid-column: 1 / span 12"><input type="number" disabled name="system.combat.armour.value" value="{{system.combat.armour.value}}" /></div>
+                <div class="field bonus" style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.armour.bonus" type="number" value="{{system.combat.armour.bonus}}">
+                </div>
+            </div>
+
+            <div class="attribute-box combat">
+                <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.TOUGHNESS"}}</div>
+                {{#if actor.isSwarm}}
+                    <div class="field" style="grid-column: 1 / span 12">
+                        <input type="number" name="system.combat.health.toughness.max" value="{{system.combat.health.toughness.max}}" />
+                    </div>
+
+                {{else}}
+                    <div class="field" style="grid-column: 1 / span 6">
+                        <input type="number" name="system.combat.health.toughness.value" value="{{system.combat.health.toughness.value}}" />
+                    </div>
+                    <div class="field" style="grid-column: 7 / span 6">
+                        <input type="number" name="system.combat.health.toughness.max" value="{{system.combat.health.toughness.max}}" />
+                    </div>
+                {{/if}}
+
+                <div class="field bonus" style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.health.toughness.bonus" type="number" value="{{system.combat.health.toughness.bonus}}"></div>
+
+            </div>
+            <div class="attribute-box combat">
+                <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.WOUND"}}</div>
+                <div class="field" style="grid-column: 1 / span 6">
+                    <input type="number" name="system.combat.health.wounds.value" disabled value="{{system.combat.health.wounds.value}}" />
+                </div>
+                <div class="field" style="grid-column: 7 / span 6">
+                    <input type="number" name="system.combat.health.wounds.max" value="{{system.combat.health.wounds.max}}" />
+                </div>
+
+                <div class="field bonus" style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.health.wounds.bonus" type="number" value="{{system.combat.health.wounds.bonus}}"></div>
+            </div>
+
+            <div class="attribute-box combat">
+                <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.METTLE"}}</div>
+
+                <div class="field" style="grid-column: 1 / span 6">
+                    <input type="number" name="system.combat.mettle.value" value="{{system.combat.mettle.value}}" />
+                </div>
+                <div class="field" style="grid-column: 7 / span 6">
+                    <input type="number" name="system.combat.mettle.max" value="{{system.combat.mettle.max}}" />
+                </div>
+
+                <div class="field bonus" style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.mettle.bonus" type="number" value="{{system.combat.mettle.bonus}}"></div>
+            </div>
+        </div>
+
+        <div class="box-row">
+
+
+            <div class="attribute-box combat single">
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.INITIATIVE"}}</div>
+                <div class="field" style="grid-column: 9 / span 2"><input type="number" name="system.combat.initiative.bonus" value="{{system.combat.initiative.bonus}}" /></div>
+                <div class="field" style="grid-column: 11 / span 2"><input type="number" name="system.combat.initiative.total" value="{{system.combat.initiative.total}}" disabled></div>
+
+                <div class="label" style="grid-column: 1 / span 8">{{localize "HEADER.NATURAL_AWARENESS"}}</div>
+                <div class="field" style="grid-column: 9 / span 2"><input type="number" name="system.combat.naturalAwareness.bonus" value="{{system.combat.naturalAwareness.bonus}}" /></div>
+                <div class="field" style="grid-column: 11 / span 2"><input type="number" name="system.combat.naturalAwareness.total" value="{{system.combat.naturalAwareness.total}}" disabled></div>
+
+                <div class="label" style="grid-column: 1 / span 8"><a data-action="configureSpeed">{{localize "HEADER.SPEED"}} <i class="fas fa-cog"></i></a></div>
+                <div class="field" style="grid-column: 9 / span 4"><input type="text" value="{{actor.Speed}}" disabled></div>
+            </div>
+
+
+
+            <div class="sheet-list wounds">
+                <div class="sheet-list">
+                    <div class="list-header row-content">
+                        <div class="list-controls"></div>
+                        <div class="list-name">{{localize "WOUND.TYPE"}}</div>
+                        <div class="small">{{localize "WOUND.DAMAGE"}}</div>
+                        <div class="list-controls">
+                            <a class="list-control" data-action="listCreate" data-path="system.combat.wounds"><i class="fas fa-plus"></i></a>
+                        </div>
+                    </div>
+                    <div class="list-content" data-path="system.combat.wounds">
+                        {{#each system.combat.wounds}}
+                            <div class="list-row" data-index="{{@key}}">
+                                <div class="row-content">
+                                    <div class="list-name rollable">
+                                        <select data-action="editList" data-ipath="type" value="{{this.type}}">
+                                            {{selectOptions (config "woundType") selected=this.type blank=""}}
+                                        </select>
+                                    </div>
+                                    <div class="small">
+                                        <input type="number" data-action="editList" data-ipath="damage" value="{{this.damage}}" />
+                                    </div>
+                                    <div class="list-controls">
+                                        <a class="list-control" data-action="listDelete"><i class="fa-regular fa-xmark"></i></a>
+                                    </div>
+                                </div>
+                                {{> sheetButtons document=this}}
+                            </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.WEAPONS"}}</div>
+                <div class="list-name">{{localize "WEAPON.NAME"}}</div>
+                <div>{{localize "WEAPON.DAMAGE"}}</div>
+                <div class="flex large">{{localize "WEAPON.TRAITS"}}</div>
+            </div>
+        <div class="list-content">
+            {{#each items.attacks}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="attack">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+
+                        <div>{{item.Damage}}</div>
+                        <div class="flex large"></div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-title">{{localize "TITLE.TALENTS"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.talent}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+    <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.POWERS"}}</div>
+            <div class="list-name">{{localize "POWER.NAME"}}</div>
+            <div>{{localize "POWER.DAMAGE"}}</div>
+            <div>{{localize "POWER.TARGET"}}</div>
+            <div>{{localize "POWER.DURATION"}}</div>
+            <div>{{localize "POWER.DN_COST"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each items.spell}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="spell">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div>{{this.system.Damage}}</div>
+                        <div>{{this.system.target}}</div>
+                        <div>{{this.system.Duration}}</div>
+                        <div> {{"POWER.DN"}} {{this.system.dn}}</div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="description">
+                        {{{lookup ../enriched.items this.id}}}
+                    </div>
+                </div>
+            {{/each}}
+            {{#each items.miracle}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="miracle">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div>{{this.system.Damage}}</div>
+                        <div>{{this.system.target}}</div>
+                        <div>{{this.system.Duration}}</div>
+                        <div> {{this.system.cost}} {{"HEADER.Mettle"}}</div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                    <div class="description">
+                        {{{lookup ../enriched.items this.id}}}
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+</section>

@@ -53,7 +53,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         })
         schema.wounds = new fields.ArrayField(new fields.SchemaField({
             type : new fields.StringField(),
-            damage : new fields.NumberField()
+            damage : new fields.NumberField({initial : 0, min: 0})
         }))
         
         return schema;

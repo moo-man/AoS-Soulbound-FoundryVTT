@@ -1,0 +1,247 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="flexrow" style="gap: 0.5rem;">
+        <div class="attribute-box titled">
+            <div class="title" style="grid-column: 1 / span 12"><label class="centered">{{localize "TITLE.CURRENCIES"}}</label></div>
+            <div class="label" style="grid-column: 1 / span 4"><label class="centered">{{localize "CURRENCY.SPHERES"}}</label></div>
+            <div class="label" style="grid-column: 5 / span 4"><label class="centered">{{localize "CURRENCY.PHIALS"}}</label></div>
+            <div class="label" style="grid-column: 9 / span 4"><label class="centered">{{localize "CURRENCY.DROPS"}}</label></div>
+            <div class="field" style="grid-column: 1 / span 4"><input name="system.currencies.spheres" type="number" value="{{system.currencies.spheres}}"></div>
+            <div class="field" style="grid-column: 5 / span 4"><input name="system.currencies.phials" type="number" value="{{system.currencies.phials}}"></div>
+            <div class="field" style="grid-column: 9 / span 4"><input name="system.currencies.drops" type="number" value="{{system.currencies.drops}}"></div>
+        </div>
+
+        <div class="attribute-box titled">
+            <div class="title" style="grid-column: 1 / span 12"><label class="centered">{{localize "TITLE.ENERGY"}}</label></div>
+            <div class="label" style="grid-column: 1 / span 12"><label class="centered">{{localize "POWER.STATUS" consumed=system.power.consumed capacity=system.power.capacity}}</label></div>
+            <div class="field" style="grid-column: 1 / span 12">
+                <div class="progress-bar">
+                    <div class="fill {{system.power.state}}" style="width:{{system.power.pct}}%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.WEAPONS"}}</div>
+            <div class="list-name">{{localize "WEAPON.NAME"}}</div>
+            <div>{{localize "WEAPON.DAMAGE"}}</div>
+            <div class="flex large">{{localize "WEAPON.TRAITS"}}</div>
+            <div class="small">{{localize "EQUIPMENT.QUANTITY"}}</div>
+            <div class="small">{{localize "EQUIPMENT.EQUIPPED"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="weapon"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.weapon}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="attack">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+
+                        <div>{{this.system.Damage}}</div>
+                        <div class="flex large"></div> 
+
+                        <div class="small">
+                            <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">{{this.system.quantity}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.system.equipped}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-check-circle"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-circle"></i></a>
+                            {{/if}}
+                        </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.ARMOUR"}}</div>
+            <div class="list-name">{{localize "ARMOUR.NAME"}}</div>
+            <div>{{localize "ARMOUR.ARMOUR"}}</div>
+            <div class="flex large">{{localize "ARMOUR.TRAITS"}}</div>
+            <div class="small">{{localize "EQUIPMENT.QUANTITY"}}</div>
+            <div class="small">{{localize "EQUIPMENT.EQUIPPED"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="armour"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.armour}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="attack">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+
+                        <div>{{this.system.Damage}}</div>
+                        <div class="flex large"></div> 
+
+                        <div class="small">
+                            <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">{{this.system.quantity}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.system.equipped}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-check-circle"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-circle"></i></a>
+                            {{/if}}
+                        </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.EQUIPMENT"}}</div>
+            <div class="list-name">{{localize "EQUIPMENT.NAME"}}</div>
+            <div class="small">{{localize "EQUIPMENT.QUANTITY"}}</div>
+            <div class="small">{{localize "EQUIPMENT.EQUIPPED"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="equipment"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.equipment}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="attack">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+
+                        <div>{{this.system.Damage}}</div>
+                        <div class="flex large"></div> 
+
+                        <div class="small">
+                            <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">{{this.system.quantity}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.system.equipped}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-check-circle"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-circle"></i></a>
+                            {{/if}}
+                        </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.AETHERIC_DEVICES"}}</div>
+            <div class="list-name">{{localize "AETHERIC_DEVICE.NAME"}}</div>
+            <div>{{localize "AETHERIC_DEVICE.DAMAGE"}}</div>
+            <div>{{localize "AETHERIC_DEVICE.POWER"}}</div>
+            <div class="flex large">{{localize "AETHERIC_DEVICE.TRAITS"}}</div>
+            <div class="small">{{localize "EQUIPMENT.QUANTITY"}}</div>
+            <div class="small">{{localize "EQUIPMENT.EQUIPPED"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="aethericDevice"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.aethericDevice}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="attack">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+
+                        <div>{{this.system.Damage}}</div>
+
+
+                        <div>
+                            -{{this.system.power.consumption}} / +{{this.system.power.capacity}}
+                        </div>
+                        <div class="flex large"></div> 
+
+                        <div class="small">
+                            <a data-action="stepProperty" data-path="system.quantity" class="prevent-context">{{this.system.quantity}}</a>
+                        </div>
+                        <div class="small">
+                            {{#if this.system.equipped}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-check-circle"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-circle"></i></a>
+                            {{/if}}
+                        </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+      <div class="sheet-list">
+        <div class="list-label list-header row-content">
+            <div class="list-title">{{localize "TITLE.RUNES"}}</div>
+            <div class="list-name">{{localize "RUNE.NAME"}}</div>
+            <div class="small">{{localize "EQUIPMENT.EQUIPPED"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="rune"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.rune}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="attack">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+
+
+                        <div class="small">
+                            {{#if this.system.equipped}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-check-circle"></i></a>
+                            {{else}}
+                                <a data-action="toggleProperty" data-path="system.equipped"><i class="far fa-circle"></i></a>
+                            {{/if}}
+                        </div>
+
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+</section>

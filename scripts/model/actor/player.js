@@ -19,11 +19,11 @@ export class PlayerModel extends StandardActorModel
             height : new fields.StringField(),
             weight : new fields.StringField(),
             distinguishingFeatures : new fields.StringField(),
-            background : new fields.StringField(),
+            background : new fields.HTMLField(),
             faction : new fields.StringField(),
             subfaction : new fields.StringField(),
             eyeType : new fields.StringField(),
-            connections : new fields.StringField()
+            connections : new fields.HTMLField()
         });
         schema.experience = new fields.SchemaField({
             total : new fields.NumberField({min : 0, initial : 35})

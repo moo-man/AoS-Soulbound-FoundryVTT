@@ -1,5 +1,5 @@
-import { SoulboundActor } from "../actor/actor-soulbound.js";
-import { SoulboundItem } from "../item/item-soulbound.js";
+import { SoulboundActor } from "../document/actor.js";
+import { SoulboundItem } from "../document/item.js";
 import ArchetypeGroups from "./archetype-groups.js";
 import FilterResults from "./filter-results.js";
 

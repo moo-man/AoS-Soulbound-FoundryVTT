@@ -30,5 +30,7 @@ export const initializeHandlebars = () => {
         "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-result.hbs",
         "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-buttons.hbs"
     ];
-    return loadTemplates(templatePaths);
+    return loadTemplates({
+        listEffect : "systems/age-of-sigmar-soulbound/templates/partials/list-effect.hbs"
+    });
 };

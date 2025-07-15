@@ -1,0 +1,80 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-controls"></div>
+            <div class="list-title">{{localize "TITLE.TALENTS"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="talent"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.talent}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+        <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-controls"></div>
+            <div class="list-title">{{localize "TITLE.SPELLS"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="spell"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.spell}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+            <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-controls"></div>
+            <div class="list-title">{{localize "TITLE.MIRACLES"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="miracle"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.miracle}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+</section>

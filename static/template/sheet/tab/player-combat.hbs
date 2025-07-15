@@ -1,4 +1,38 @@
-<div class="content-box">
+        <div class="box-row">
+                <div class="attribute-box triple">
+                    <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.ARMOUR"}}</div>
+                    <div style="grid-column: 1 / span 12"><input type="text" name="system.combat.armour.value" type="number" value="{{system.combat.armour.value}}" /></div>
+                    <div style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.armour.bonus" type="number" value="{{system.combat.armour.bonus}}"></div>
+                </div>
+                <div class="attribute-box triple">
+                    <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.TOUGHNESS"}}</div>
+                    <div style="grid-column: 1 / span 12">
+                    <input type="text" name="system.combat.health.toughness.value" type="number" value="{{system.combat.health.toughness.value}}" />
+                    {{#unless actor.isSwarm}}
+                    <input type="text" name="system.combat.health.toughness.max" type="number" value="{{system.combat.health.toughness.max}}" />
+
+                    {{/unless}}
+                    </div>
+                    <div style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.health.toughness.bonus" type="number" value="{{system.combat.health.toughness.bonus}}"></div>
+                </div>
+                <div class="attribute-box triple">
+                    <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.WOUND"}}</div>
+                    <div style="grid-column: 1 / span 12">
+                    <input type="text" name="system.combat.health.wounds.value" type="number" value="{{system.combat.health.wounds.value}}" />
+                    <input type="text" name="system.combat.health.wounds.max" type="number" value="{{system.combat.health.wounds.max}}" />
+                    </div>
+                    <div style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.health.wounds.bonus" type="number" value="{{system.combat.health.wounds.bonus}}"></div>
+                </div>
+
+                <div class="attribute-box triple">
+                    <div class="label" style="grid-column: 1 / span 12">{{localize "HEADER.METTLE"}}</div>
+                    <div style="grid-column: 1 / span 12">
+                    <input type="text" name="system.combat.mettle.value" type="number" value="{{system.combat.mettle.value}}" />
+                    <input type="text" name="system.combat.mettle.max" type="number" value="{{system.combat.mettle.max}}" />
+                    </div>
+                    <div style="grid-column: 1 / span 12">{{localize "HEADER.BONUS"}}: <input name="system.combat.mettle.bonus" type="number" value="{{system.combat.mettle.bonus}}"></div>
+                </div>
+        </div> <div class="content-box">
     <div class="content-header">
         <h1>{{localize "TITLE.ABILITIES"}}</h1>
     </div>
@@ -6,8 +40,7 @@
         <div class="entry-vertical">
             <div class="segment-horizontal"><img src="systems/age-of-sigmar-soulbound/asset/image/melee.webp" width="24"
                     height="24" /><input type="text" value="{{system.combat.melee.ability}}" disabled /></div>
-            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input
-                        name="system.combat.melee.bonus" type="number" value="{{system.combat.melee.bonus}}"
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.melee.bonus" type="number" value="{{system.combat.melee.bonus}}"
                         data-dtype="Number" /></div>
             </div>
         </div>
@@ -15,8 +48,7 @@
             <div class="segment-horizontal"><img src="systems/age-of-sigmar-soulbound/asset/image/accuracy.webp"
                     width="24" height="24" /><input type="text" value="{{system.combat.accuracy.ability}}" disabled />
             </div>
-            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input
-                        name="system.combat.accuracy.bonus" type="number" value="{{system.combat.accuracy.bonus}}"
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.accuracy.bonus" type="number" value="{{system.combat.accuracy.bonus}}"
                         data-dtype="Number" /></div>
             </div>
         </div>
@@ -24,8 +56,7 @@
             <div class="segment-horizontal"><img src="systems/age-of-sigmar-soulbound/asset/image/defence.webp"
                     width="24" height="24" /><input type="text" value="{{system.combat.defence.ability}}" disabled />
             </div>
-            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input
-                        name="system.combat.defence.bonus" type="number" value="{{system.combat.defence.bonus}}"
+            <div class="segment-horizontal">{{localize "HEADER.BONUS"}}: <div class="sheet-table-value"><input name="system.combat.defence.bonus" type="number" value="{{system.combat.defence.bonus}}"
                         data-dtype="Number" /></div>
             </div>
         </div>

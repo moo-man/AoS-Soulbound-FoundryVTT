@@ -43,27 +43,27 @@ export class SoulboundActor extends WarhammerActor {
     }
 
     //#region Rolling Setup
-    async setupCommonTest({skill, attribute}, options={}) 
+    async setupCommonTest({skill, attribute}, context = {}, options={}) 
     {
-        return await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, options)
+        return await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, context = {}, options)
     }
 
-    async setupCombatTest(weapon, options={})
+    async setupCombatTest(weapon, context = {}, options={})
     {
-        return await this._setupTest(CombatRollDialog, CombatTest, weapon, options)
+        return await this._setupTest(CombatRollDialog, CombatTest, weapon, context = {}, options)
     }
 
-    async setupSpellTest(power, options={})
+    async setupSpellTest(power, context = {}, options={})
     {
-        return await this._setupTest(SpellRollDialog, SpellTest, power, options)
+        return await this._setupTest(SpellRollDialog, SpellTest, power, context = {}, options)
     }
 
-    async setupMiracleTest(miracle, options={})
+    async setupMiracleTest(miracle, context = {}, options={})
     {
-        return await this._setupTest(MiracleRollDialog, MiracleTest, miracle, options)
+        return await this._setupTest(MiracleRollDialog, MiracleTest, miracle, context = {}, options)
     }
 
-    async setupTestFromItem(item, options={})
+    async setupTestFromItem(item, context = {}, options={})
     {
         if (typeof item == "string")
         {
@@ -71,7 +71,7 @@ export class SoulboundActor extends WarhammerActor {
         }
         if (item.system.test)
         {
-            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, options));
+            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, context, options));
         }
     }
 

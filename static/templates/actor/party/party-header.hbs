@@ -1,0 +1,19 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-rows">
+        <div class="header-name">
+            <input type="text" name="name" value="{{source.name}}">
+        </div>
+        <div class="header-details">
+            <div class="detail-group">
+                <label>{{localize "PARTY.SOULFIRE"}}</label>
+                {{formInput fields.soulfire.fields.value value=system.soulfire.value}}
+                /
+                {{formInput fields.soulfire.fields.max value=system.soulfire.max}}
+            </div>
+            <div class="detail-group">
+                <label>{{localize "BIO.DOOM"}}</label>
+                {{formInput fields.doom.fields.value value=system.doom.value}}
+            </div>
+        </div>
+</header>

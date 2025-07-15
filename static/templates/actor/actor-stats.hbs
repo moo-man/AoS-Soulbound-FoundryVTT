@@ -1,0 +1,88 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="attribute-box titled">
+        <div class="title" style="grid-column: 1 / span 12"><label>{{localize "TITLE.ATTRIBUTES"}}</label></div>
+        <div class="label" style="grid-column: 1 / span 4"><label><a data-action="rollTest" data-type="attribute" data-attribute="body">{{localize "ATTRIBUTE.BODY"}}</a></label></div>
+        <div class="label" style="grid-column: 5 / span 4"><label><a data-action="rollTest" data-type="attribute" data-attribute="mind">{{localize "ATTRIBUTE.MIND"}}</a></label></div>
+        <div class="label" style="grid-column: 9 / span 4"><label><a data-action="rollTest" data-type="attribute" data-attribute="soul">{{localize "ATTRIBUTE.SOUL"}}</a></label></div>
+        <div class="field" style="grid-column: 1 / span 4"><input name="system.attributes.body.value" type="number" value="{{system.attributes.body.value}}" type="number"></div>
+        <div class="field" style="grid-column: 5 / span 4"><input name="system.attributes.mind.value" type="number" value="{{system.attributes.mind.value}}" type="number"></div>
+        <div class="field" style="grid-column: 9 / span 4"><input name="system.attributes.soul.value" type="number" value="{{system.attributes.soul.value}}" type="number"></div>
+    </div>
+
+
+    <div class="sheet-list skills">
+        <div class="list-label">
+            {{localize "TITLE.SKILLS"}}
+        </div>
+        <div class="list-header">
+            <div class="flexrow">
+
+                <div class="row-content">
+                    <div class="list-name">{{localize "HEADER.NAME"}}</div>
+                    <div class="tiny" data-tooltip-direction="UP" data-tooltip="HEADER.TRAINING">
+                        {{localize 'SKILL.TRAINING_ABBR'}}
+                    </div>
+                    <div class="tiny" data-tooltip-direction="UP" data-tooltip="HEADER.POOL">
+                        {{localize 'SKILL.POOL_ABBR'}}
+                    </div>
+                    <div class="tiny" data-tooltip-direction="UP" data-tooltip="HEADER.FOCUS">
+                        {{localize 'SKILL.FOCUS_ABBR'}}
+                    </div>
+                </div>
+                <div class="row-content">
+                    <div class="list-name">{{localize "HEADER.NAME"}}</div>
+                    <div class="tiny" data-tooltip="{{localize 'HEADER.TRAINING'}}">{{localize 'SKILL.TRAINING_ABBR'}}
+                    </div>
+                    <div class="tiny" data-tooltip="{{localize 'HEADER.POOL'}}">{{localize 'SKILL.POOL_ABBR'}}</div>
+                    <div class="tiny" data-tooltip="{{localize 'HEADER.FOCUS'}}">{{localize 'SKILL.FOCUS_ABBR'}}</div>
+                </div>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each system.skills as |skill|}}
+                <div class="list-row" data-uuid="{{this.uuid}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <a class="label" data-action="rollTest" data-type="skill" data-skill="{{@key}}">{{configLookup "skills" @key}}</a>
+                        </div>
+                        <div class="tiny"><input name="system.skills.{{key}}.training" type="number" value="{{skill.training}}" /><input> </div>
+                        <div class="tiny">({{skill.value}})</div>
+                        <div class="tiny"><input name="system.skills.{{key}}.focus" type="number" value="{{skill.focus}}" /><input> </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+
+    <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-controls"></div>
+            <div class="list-title">{{localize "TITLE.TALENTS"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="talent"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.talent}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name rollable">
+                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
+                            <a class="label">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    <div class="description">
+                        {{{lookup ../enriched.items this.id}}}
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+</section>

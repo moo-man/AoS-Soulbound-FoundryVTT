@@ -14,4 +14,9 @@ export class PhysicalItemModel extends StandardItemModel
 
         return schema;
     }
+
+    get isPhysical()
+    {
+        return true;
+    }
 }

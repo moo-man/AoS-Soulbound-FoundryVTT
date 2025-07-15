@@ -1,0 +1,112 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-title">{{localize "TITLE.MEMBERS"}}</div>
+        </div>
+        <div class="list-content">
+            {{#each members}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            <img src="{{this.prototypeToken.texture.src}}">
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                        <div class="flex large">{{this.system.bio.species}} - {{this.system.bio.archetype}}</div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fas fa-xmark"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+    <div class="flexrow" style="align-items: start; gap: 0.5rem;" >
+        <div class="sheet-list">
+            <div class="list-label">
+                <div class="list-title">{{localize "TITLE.ALLIES"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="partyItem" data-category="ally"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each items.party.ally}}
+                    <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                {{#if this.system.state}}
+                                    <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="STATE.ALIVE"><i class="fas fa-sun"></i></a>
+                                {{else}}
+                                    <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="STATE.DEAD"><i class="fas fa-skull"></i></a>
+                                {{/if}}
+                                <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+        <div class="sheet-list">
+            <div class="list-label">
+                <div class="list-title">{{localize "TITLE.ENEMIES"}}</div>
+                <div class="list-controls">
+                    <a class="list-control" data-action="createItem" data-type="partyItem" data-category="enemy"><i class="fas fa-plus"></i></a>
+                </div>
+            </div>
+            <div class="list-content">
+                {{#each items.party.enemy}}
+                    <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                        <div class="row-content">
+                            <div class="list-name">
+                                {{#if this.system.state}}
+                                    <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="STATE.ALIVE"><i class="fas fa-sun"></i></a>
+                                {{else}}
+                                    <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="STATE.DEAD"><i class="fas fa-skull"></i></a>
+                                {{/if}}
+                                <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                            </div>
+                            <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+
+    <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-controls"></div>
+            <div class="list-title">{{localize "TITLE.RESOURCES"}}</div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="partyItem" data-category="resource"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.party.resource}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            {{#if this.system.state}}
+                                <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="STATE.ACTIVE"><i class="fas fa-sun"></i></a>
+                            {{else}}
+                                <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="STATE.INACTIVE"><i class="fas fa-skull"></i></a>
+                            {{/if}}
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
+        </div>
+    </div>
+
+
+</section>
