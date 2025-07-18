@@ -1,0 +1,38 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section">
+        <div class="box-header">{{localize "TITLE.STATS"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 4">
+                    {{localize "WEAPON.CATEGORY"}}
+                </div>
+
+                <div class="label" style="grid-column: 5 / span 4">
+                    {{localize "WEAPON.DAMAGE"}}
+
+                </div>
+
+                <div class="label" style="grid-column: 9 / span 4">
+                    {{localize "WEAPON.ATTRIBUTE"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 4">{{formInput fields.category value=source.system.category}}</div>
+                <div class="field" style="grid-column: 5 / span 4">{{formInput fields.damage value=source.system.damage}}</div>
+                <div class="field" style="grid-column: 9 / span 4">{{formInput fields.attribute value=source.system.attribute choices=(config "attributes")}}</div>
+            </div>
+        </div>
+        <div class="box-row">
+            {{> itemTraits label="WEAPON.TRAITS" traits=document.system.traits}}
+        </div>
+        <div class="box-row">
+            {{> itemTest label="WEAPON.TEST" fields=fields.test.fields values=source.system.test}}
+        </div>
+    </div>
+
+    
+    <div class="box-section description">
+        <div class="box-header">{{localize "TITLE.DESCRIPTION"}}</div>
+        <div class="box-editor">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+    </div>
+</section>

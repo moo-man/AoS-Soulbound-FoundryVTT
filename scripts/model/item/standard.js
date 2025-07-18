@@ -7,7 +7,7 @@ export class StandardItemModel extends BaseSoulboundItemModel
     static defineSchema() 
     {
         let schema = super.defineSchema();
-        schema.description = new fields.StringField({});
+        schema.description = new fields.HTMLField({});
         return schema;
     }
 }

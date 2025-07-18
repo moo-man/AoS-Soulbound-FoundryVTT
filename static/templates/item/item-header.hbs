@@ -1,0 +1,25 @@
+<header class="sheet-header">
+    <img class="profile" data-action="editImage" src="{{source.img}}" data-edit="img">
+    <div class="header-rows">
+        <div class="header-name">
+            <input type="text" name="name" value="{{source.name}}">
+        </div>
+        <div class="header-details">
+            {{#if document.system.isPhysical}}
+                <div class="detail-group">
+                    <label>Availability</label>
+                    {{formInput fields.availability value=system.availability choices=(config "availability")}}
+                </div>
+                <div class="detail-group">
+                    <label>Cost</label>
+                    {{formInput fields.cost value=system.cost}}
+                    <label>Qty</label>
+                    {{formInput fields.quantity value=system.quantity}}
+                </div>
+            {{else}}
+                <div class="detail-group">
+                    {{typeLabel}}
+                </div>
+            {{/if}}
+        </div>
+</header>

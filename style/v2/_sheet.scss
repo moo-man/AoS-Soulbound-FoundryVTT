@@ -3,6 +3,7 @@
     --condition-active: var(--color-warm-3);
     --list-title: var(--color-cool-3);
     --list-header: var(--color-cool-4);
+    --border: var(--color-cool-3);
     
     .sheet-divider,
     .box-header {
@@ -13,12 +14,68 @@
         text-align: center;
     }
 
+
+    &.item,
+    &.actor {
+        .sheet-header {
+            display: flex;
+            img {
+                width: 72px;
+                height: 72px;
+            }
+    
+            .header-rows {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+    
+            .header-name {
+                input {
+                    text-align: center;
+                }
+            }
+
+            .header-details {
+                display: flex;
+                gap: 0.5rem;
+                width: 100%;
+                .detail-group {
+                    
+                    flex: 1;
+                    > * {
+                        flex: 1;
+                    }
+                    &.experience
+                    {
+                        flex: 0.3
+                    }
+    
+                    select,
+                    input {
+                        text-align: center;
+                    }
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    
+    }
+
     .box-section {
+        border-bottom: 1px solid var(--attribute-border);
 
         .box-row
         {
             display: flex;
             flex-wrap: wrap;
+            >:not(:first-child)
+            {
+                border-left: 0px;
+            }
         }
 
 
@@ -26,6 +83,8 @@
 
             .label {
             }
+
+            border-bottom: 0px;
 
 
             &.combat {
@@ -38,6 +97,7 @@
             min-height: 10rem;
             border: 1px solid var(--attribute-border);
             border-top: 0px;
+            border-bottom: 0px;
             .editor-content {
                 padding: 0px 0.5rem;
             }

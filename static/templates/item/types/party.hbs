@@ -1,0 +1,33 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section">
+        <div class="box-header">{{localize "TITLE.STATS"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 6">
+                    {{localize (configLookup "partyItemCategoryLabels" system.category)}}
+                </div>
+
+                <div class="label" style="grid-column: 7 / span 6">
+                    {{localize "PARTY.CATEGORY"}}
+
+                </div>
+
+                <div class="field" style="grid-column: 1 / span 6">
+                    {{formInput fields.state value=source.system.state}}
+                </div>
+                <div class="field" style="grid-column: 7 / span 6">
+                    {{formInput fields.category value=source.system.category choices=(config "partyItemCategories")}}
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="box-section description">
+        <div class="box-header">{{localize "TITLE.DESCRIPTION"}}</div>
+        <div class="box-editor">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+    </div>
+
+</section>

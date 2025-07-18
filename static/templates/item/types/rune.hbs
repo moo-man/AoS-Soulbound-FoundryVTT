@@ -1,0 +1,16 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section">
+        <div class="box-header">{{localize "TITLE.STATS"}}</div>
+        <div class="box-row">
+            {{> itemTest label="EQUIPMENT.TEST" fields=fields.test.fields values=source.system.test showSelf=true}}
+        </div>
+    </div>
+
+    <div class="box-section description">
+        <div class="box-header">{{localize "TITLE.DESCRIPTION"}}</div>
+        <div class="box-editor">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+    </div>
+
+</section>

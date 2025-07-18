@@ -5,47 +5,6 @@
         overflow: auto;
     }
 
-    --border: var(--color-cool-3);
-
-    .sheet-header {
-        display: flex;
-        img {
-            width: 72px;
-            height: 72px;
-        }
-
-        .header-rows {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            width: 100%;
-        }
-
-        .header-details {
-            display: flex;
-            gap: 0.5rem;
-            width: 100%;
-            .detail-group {
-                
-                flex: 1;
-                > * {
-                    flex: 1;
-                }
-                &.experience
-                {
-                    flex: 0.3
-                }
-
-                select,
-                input {
-                    text-align: center;
-                }
-                display: flex;
-                align-items: center;
-                gap: 0.5rem;
-            }
-        }
-    }
 
     &.party {
         .header-details {
@@ -121,11 +80,15 @@
                 width: 2rem;
                 margin-left: 0.5rem;
             }
+        }   
+
+        .attribute-box {
+            border-bottom: 1px solid var(--attribute-border);
+            border-left: 1px solid var(--attribute-border);
         }
 
         .attribute-box:not(.single)
         {
-
             .field:not(.bonus) {
                 border-bottom: 1px solid var(--attribute-border);
             }
@@ -136,17 +99,6 @@
         }
     }
 
-    .tab[data-tab=bio]
-    {
-        .physical .attribute-box{
-            border-bottom: 0px;
-        }   
-
-        .physical.box-section
-        {
-            border-bottom: 1px solid var(--attribute-border)
-        }
-    }
 
     .list-label.list-header {
         .list-controls {

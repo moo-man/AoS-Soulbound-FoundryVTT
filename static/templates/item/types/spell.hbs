@@ -1,0 +1,78 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section">
+        <div class="box-header">{{localize "TITLE.STATS"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 2">
+                    {{localize "SPELL.TARGET"}}
+                </div>
+
+                <div class="label" style="grid-column: 3 / span 4">
+                    {{localize "SPELL.RANGE"}}
+
+                </div>
+                <div class="label" style="grid-column: 7 / span 4">
+                    {{localize "SPELL.DURATION"}}
+                </div>
+
+                <div class="label" style="grid-column: 11 / span 2">
+                    {{localize "SPELL.DAMAGE"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 2">{{formInput fields.target value=source.system.target}}</div>
+                <div class="field" style="grid-column: 3 / span 4">{{formInput fields.range value=source.system.range choices=(config "range")}}</div>
+                <div class="field" style="grid-column: 7 / span 4">{{formInput fields.duration.fields.value value=source.system.duration.value style="flex: 0 0 1rem"}} {{formInput fields.duration.fields.unit value=source.system.duration.unit choices=(config "durations")}}</div>
+                <div class="field power" style="grid-column: 11 / span 2">{{formInput fields.damage value=source.system.damage}}</div>
+            </div>
+        </div>
+        <div class="box-row">
+            {{> itemTest label="SPELL.TEST" fields=fields.test.fields values=source.system.test}}
+        </div>
+    </div>
+        <div class="overcasts">
+            <label>Overcasts <a data-action="listCreate" data-path="system.overcasts"><i class="fas fa-plus"></i></a></label>
+            {{#if system.overcasts.length}}
+                    <div class="sheet-list">
+                        <div class="list-header row-content">
+                            <div>{{localize "SPELL.OVERCAST_RATIO"}} <i class="far fa-question-circle" data-tooltip="{{localize 'SPELL.OVERCAST_RATIO_HELP'}}"></i></div>
+                            <div>{{localize "SPELL.OVERCAST_INITIAL"}} <i class="far fa-question-circle" data-tooltip="{{localize 'SPELL.OVERCAST_INITIAL_HELP'}}"></i></div>
+                            <div>{{localize "SPELL.OVERCAST_PROPERTY"}} <i class="far fa-question-circle" data-tooltip="{{localize 'SPELL.OVERCAST_PROPERTY_HELP'}}"></i></div>
+                            <div>{{localize "SPELL.OVERCAST_TITLE"}} <i class="far fa-question-circle" data-tooltip="{{localize 'SPELL.OVERCAST_TITLE_HELP'}}"></i></div>
+                            <div class="list-controls">
+                            </div>
+                        </div>
+                    <div class="list-content">
+                        {{#each system.overcasts}}
+                            <div class="list-row" data-index="{{@key}}" data-path="system.overcasts">
+                                <div class="row-content">
+                                    <div class="ratio">
+                                        <input data-action="editList" data-ipath="ratio.success" placeholder="S" type="number" value="{{this.ratio.success}}">
+                                        :
+                                        <input data-action="editList" data-ipath="ratio.value" placeholder="V" type="number" value="{{this.ratio.value}}">
+                                    </div>
+
+                                    <input type="number" data-action="editList" data-ipath="initial" value="{{this.initial}}" placeholder='{{localize "SPELL.OVERCAST_INITIAL"}}' {{#if this.initialDisabled}} disabled style="opacity:0.5" {{/if}}>
+
+                                    <input type="text" data-action="editList" data-ipath="property" placeholder='{{localize "SPELL.OVERCAST_PROPERTY"}}' value="{{this.property}}">
+                                    <input type="text" data-action="editList" data-ipath="title" placeholder='{{localize "SPELL.OVERCAST_TITLE"}}' value="{{this.title}}">
+                                    <div class="list-controls">
+                                        <a data-action="listDelete"><i class="fas fa-times"></i></a>
+                                    </div>
+                                </div>
+                                <div class="row-content">
+                                    <input class="flex" type="text" data-action="editList" data-ipath="description" placeholder="Description" value="{{this.description}}">
+                                </div>
+                            </div>
+                        {{/each}}
+                </div>
+            {{/if}}
+        </div>
+    </div>
+
+
+    <div class="box-section description">
+        <div class="box-header">{{localize "TITLE.DESCRIPTION"}}</div>
+        <div class="box-editor">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+    </div>
+</section>

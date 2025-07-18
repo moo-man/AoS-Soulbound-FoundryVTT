@@ -31,6 +31,8 @@ export const initializeHandlebars = () => {
         "systems/age-of-sigmar-soulbound/template/chat/miracle/miracle-buttons.hbs"
     ];
     return loadTemplates({
-        listEffect : "systems/age-of-sigmar-soulbound/templates/partials/list-effect.hbs"
+        listEffect : "systems/age-of-sigmar-soulbound/templates/partials/list-effect.hbs",
+        itemTraits : "systems/age-of-sigmar-soulbound/templates/partials/item-traits.hbs",
+        itemTest : "systems/age-of-sigmar-soulbound/templates/partials/item-test.hbs"
     });
 };

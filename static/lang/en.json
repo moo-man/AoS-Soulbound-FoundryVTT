@@ -234,6 +234,7 @@
   "EQUIPMENT.DESCRIPTION": "Description",
   "EQUIPMENT.EQUIPPED": "Eqp.",
   "EQUIPMENT.QUANTITY": "Qty.",
+  "EQUIPMENT.TEST": "Test",
 
   "EXPERIENCE.EXPERIENCE": "Experience",
   "EXPERIENCE.XP": "XP",
@@ -531,6 +532,7 @@
   "WEAPON.COST": "Cost",
   "WEAPON.DESCRIPTION": "Description",
   "WEAPON.TEST": "Test",
+  "WEAPON.ATTRIBUTE": "Attribute",
 
   "WOUND.NAME": "Name",
   "WOUND.DAMAGE": "Wounds",

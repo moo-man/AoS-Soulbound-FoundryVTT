@@ -1,0 +1,36 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section">
+        <div class="box-header">{{localize "TITLE.STATS"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 4">
+                    {{localize "ARMOUR.TYPE"}}
+                </div>
+
+                <div class="label" style="grid-column: 5 / span 4">
+                    {{localize "ARMOUR.REQUIREMENTS"}}
+
+                </div>
+                <div class="label" style="grid-column: 9 / span 4">
+                    {{localize "ARMOUR.BENEFIT"}}
+                </div>
+
+                <div class="field" style="grid-column: 1 / span 4">{{formInput fields.type value=source.system.type choices=types localize=true}}</div>
+                <div class="field" style="grid-column: 5 / span 4">{{formInput fields.requirements value=source.system.requirements}}</div>
+                <div class="field" style="grid-column: 9 / span 4">{{formInput fields.benefit value=source.system.benefit}}</div>
+                
+            </div>
+        </div>
+        <div class="box-row">
+            {{> itemTraits label="ARMOUR.TRAITS" traits=document.system.traits}}
+        </div>
+    </div>
+
+    
+    <div class="box-section description">
+        <div class="box-header">{{localize "TITLE.DESCRIPTION"}}</div>
+        <div class="box-editor">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+    </div>
+</section>

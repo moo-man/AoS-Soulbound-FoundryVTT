@@ -1,0 +1,95 @@
+.soulbound.sheet.item {
+    
+    section[data-tab]
+    {
+        overflow: auto;
+        &[data-tab=description] {
+            height: 100%;
+            .box-section.description {
+                height: 100%;
+                border-bottom: 0px;
+            }
+            .box-editor {
+                // height: calc(100% - 2rem);
+                border-bottom: 1px solid var(--attribute-border);
+                prose-mirror {
+                    height: 100%;
+                }
+                .editor-content {
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+
+
+    &.archetype {
+
+        .box-row.attributes {
+            border-bottom: 1px solid var(--attribute-border);
+        }
+
+        .box-row.skills {
+            flex-direction: column;
+            margin-top: 0.5rem;
+            .skill-header {
+                display: flex;
+                > * {
+                    flex: 1;
+                    align-items: center;
+                    display: flex;    
+                    gap: 0.5rem;
+                }
+                .core {
+                    flex: 0.5;
+                }
+                label {
+                    justify-content: center;
+                    font-weight: bold;
+                }
+                .xp {
+                    flex: 0 0 5rem;
+                }
+            }
+
+            .skill-selection {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                height: 15rem;
+
+                .skill-group {
+                    display: flex;
+                    align-items: center;
+                }
+            }
+        }
+    }
+
+    &.spell {
+        .overcasts {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            line-height: 2rem;;
+            .list-row {
+                margin-bottom: 0.5rem;
+            }
+            .row-content {
+                gap: 5px;
+
+                .list-controls {
+                    flex: unset;
+                }
+                input {
+                    text-align: center;
+                }
+
+                .ratio {
+                    display: flex;
+                    gap: 5px;
+                }
+            }
+        }
+    }
+}

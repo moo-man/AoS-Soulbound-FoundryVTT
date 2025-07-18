@@ -28,6 +28,16 @@ import loadEffects from "./loadEffects.js"
 import { PlayerSheet } from "./sheet/actor/player.js";
 import { NPCSheet } from "./sheet/actor/npc.js";
 import { PartySheet } from "./sheet/actor/party.js";
+import AethericDeviceSheet from "./sheet/item/types/aethericDevice.js";
+import ArchetypeSheet from "./sheet/item/types/archetype.js";
+import ArmourSheet from "./sheet/item/types/armour.js";
+import EquipmentSheet from "./sheet/item/types/equipment.js";
+import MiracleSheet from "./sheet/item/types/miracle.js";
+import SpellSheet from "./sheet/item/types/spell.js";
+import TalentSheet from "./sheet/item/types/talent.js";
+import WeaponSheet from "./sheet/item/types/weapon.js";
+import PartyItemSheet from "./sheet/item/types/party.js";
+import RuneSheet from "./sheet/item/types/rune.js";
 
 Hooks.once("init", () => {
 
@@ -60,12 +70,24 @@ Hooks.once("init", () => {
     CONFIG.ActiveEffect.dataModels["base"] = SoulboundActiveEffectModel
     CONFIG.ChatMessage.dataModels["test"] = WarhammerTestMessageModel;
 
-    Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true });
-    Actors.registerSheet("age-of-sigmar-soulbound", NPCSheet, { types: ["npc"], makeDefault: true });
-    Actors.registerSheet("age-of-sigmar-soulbound", PartySheet, { types: ["party"], makeDefault: true });
-    Items.unregisterSheet("core", ItemSheet);
-    Items.registerSheet("age-of-sigmar-soulbound", SoulboundItemSheet, { makeDefault: true });
+    const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig
+
+    DocumentSheetConfig.registerSheet(Actor, "age-of-sigmar-soulbound", PlayerSheet, { types: ["player"], makeDefault: true, label : "Character Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "age-of-sigmar-soulbound", PartySheet, { types: ["party"], makeDefault: true, label : "Party Sheet" });
+    DocumentSheetConfig.registerSheet(Actor, "age-of-sigmar-soulbound", NPCSheet, { types: ["npc"], makeDefault: true, label : "NPC Sheet" });
+    
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", AethericDeviceSheet, { types: ["aethericDevice"], makeDefault: true, label : "Aetheric Device Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", ArchetypeSheet, { types: ["archetype"], makeDefault: true, label : "Archetype Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", ArmourSheet, { types: ["armour"], makeDefault: true, label : "Armour Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", EquipmentSheet, { types: ["equipment"], makeDefault: true, label : "Equipment Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", MiracleSheet, { types: ["miracle"], makeDefault: true, label : "Miracle Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", SpellSheet, { types: ["spell"], makeDefault: true, label : "Spell Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", TalentSheet, { types: ["talent"], makeDefault: true, label : "Talent Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", WeaponSheet, { types: ["weapon"], makeDefault: true, label : "Weapon Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", PartyItemSheet, { types: ["partyItem"], makeDefault: true, label : "Party Item Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", RuneSheet, { types: ["rune"], makeDefault: true, label : "Rune Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", TalentSheet, { types: ["talent"], makeDefault: true, label : "Talent Sheet" });
+
     DocumentSheetConfig.registerSheet(ActiveEffect, "age-of-sigmar-soulbound", SoulboundActiveEffectConfig, { makeDefault: true, label : "Soulbound Active Effect Config" });
     initializeHandlebars();
     

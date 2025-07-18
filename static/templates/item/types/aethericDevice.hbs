@@ -1,0 +1,67 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+    <div class="box-section">
+        <div class="box-header">{{localize "TITLE.STATS"}}</div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 3">
+                    {{localize "AETHERIC_DEVICE.CATEGORY"}}
+                </div>
+
+                <div class="label" style="grid-column: 4 / span 3">
+                    {{localize "AETHERIC_DEVICE.DAMAGE"}}
+
+                </div>
+                <div class="label" style="grid-column: 7 / span 3">
+                    {{localize "AETHERIC_DEVICE.ARMOUR"}}
+                </div>
+
+                <div class="label" style="grid-column: 10 / span 3">
+                    {{localize "AETHERIC_DEVICE.POWER"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 3">{{formInput fields.category value=source.system.category choices=categories localize=true}}</div>
+                <div class="field" style="grid-column: 4 / span 3">{{formInput fields.damage value=source.system.damage}}</div>
+                <div class="field" style="grid-column: 7 / span 3">{{formInput fields.armour value=source.system.armour}}</div>
+                <div class="field power" style="grid-column: 10 / span 3">
+                    -<input name="system.power.consumption" type="number" value="{{system.power.consumption}}" data-dtype="Number" />
+                    <span>/</span>
+                    +<input name="system.power.capacity" type="number" value="{{system.power.capacity}}" data-dtype="Number" />
+                </div>
+            </div>
+        </div>
+        <div class="box-row">
+            {{> itemTest label="AETHERIC_DEVICE.TEST" fields=fields.test.fields values=source.system.test}}
+        </div>
+        <div class="box-row">
+            {{> itemTraits label="AETHERIC_DEVICE.TRAITS" traits=document.system.traits}}
+        </div>
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 12">
+                    {{localize "AETHERIC_DEVICE.CRAFTING"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 12">
+                {{formInput fields.crafting value=source.system.crafting}}
+                </div>
+
+            </div>
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 12">
+                    {{localize "AETHERIC_DEVICE.REQUIREMENTS"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 12">
+                {{formInput fields.requirements value=source.system.requirements}}
+                
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="box-section description">
+        <div class="box-header">{{localize "TITLE.DESCRIPTION"}}</div>
+        <div class="box-editor">
+            {{formInput fields.description value=source.system.description enriched=enriched.system.description toggled=true}}
+        </div>
+    </div>
+</section>

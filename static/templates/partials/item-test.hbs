@@ -1,0 +1,36 @@
+<div class="attribute-box">
+    <div class="label" style="grid-column: 1 / span 12">
+        {{localize label}}
+    </div>
+
+    {{#if showOpposed}}
+        <div class="opposed field" style="grid-column: 1 / span 1">
+            <label>Opposed</label>
+            {{formInput fields.opposed values.opposed}}
+        </div>
+        <div class="field" style="grid-column: 2 / span 1">
+            {{formInput fields.dn value=values.opposed placeholder="DN"}}
+        </div>
+    {{else if showSelf}}
+        <div class="opposed field" style="grid-column: 1 / span 1">
+            <label>Self</label>
+            {{formInput fields.self value=values.self}}
+        </div>
+        <div class="field" style="grid-column: 2 / span 1">
+            {{formInput fields.dn value=values.dn placeholder="DN"}}
+        </div>
+    {{else}}
+        <div class="field" style="grid-column: 1 / span 2">
+            {{formInput fields.dn value=values.dn placeholder="DN"}}
+        </div>
+    {{/if}}
+
+
+    <div class="field" style="grid-column: 3 / span 5">
+        {{formInput fields.attribute value=values.attribute choices=(config "attributes")}}
+    </div>
+    <div class="field" style="grid-column: 8 / span 5">
+        {{formInput fields.skill value=values.skill choices=(config "skills")}}
+    </div>
+
+</div>

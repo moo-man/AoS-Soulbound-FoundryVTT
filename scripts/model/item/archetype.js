@@ -24,30 +24,16 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         });
 
         schema.talents = new fields.SchemaField({
-            core : new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeItem)),
-            list : new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeItem)),
+            core : new fields.EmbeddedDataField(DocumentReferenceListModel),
+            list : new fields.EmbeddedDataField(DocumentReferenceListModel),
             choose : new fields.NumberField(),
         }); 
 
-        schema.equipment = new fields.ArrayField(new fields.EmbeddedDataField(ArchetypeItem)),
+        schema.equipment = new fields.EmbeddedDataField(ChoiceModel);
 
-        schema.groups = new fields.ObjectField({});
         return schema;
     }
 
-    addToGroup(object)
-    {
-        let groups = duplicate(this.groups)
-        object.groupId = randomID()
-        groups.items.push(object)
-        return groups
-    }
-
-    resetGroups(newEquipment)
-    {
-        let equipment = newEquipment || this.equipment;
-        return { "system.groups": {type: "and", groupId: "root", items : Array.fromRange(equipment.length).map(i => {return {type: "item", index : i, groupId : randomID()}})} } // Reset item groupings
-    }
 
     async _onCreate(data, options, user)
     {   
@@ -63,24 +49,4 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         }
     }
 
-}
-
-export class ArchetypeItem extends foundry.abstract.DataModel 
-{
-    static defineSchema() 
-    {
-        let schema = {};
-        schema.id = new fields.StringField(),
-        schema.name = new fields.StringField(),
-        schema.type = new fields.StringField({nullable: true, choices : ["generic", "item"]}),
-        schema.groupId = new fields.StringField(),
-        schema.index = new fields.NumberField(),
-        schema.diff = new fields.ObjectField({})
-        schema.filters = new fields.ArrayField(new fields.SchemaField({
-            test : new fields.StringField(),
-            property : new fields.StringField(),
-            value : new fields.StringField(),
-        }))
-        return schema;
-    }
 }
