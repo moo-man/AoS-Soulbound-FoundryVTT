@@ -2,8 +2,6 @@ import { CommonRollDialog } from "./common";
 
 export class SpellRollDialog extends CommonRollDialog {
 
-    dialogTitle = "DIALOG.SPELL_ROLL"
-
     get item()
     {
         return this.data.spell;
@@ -15,13 +13,13 @@ export class SpellRollDialog extends CommonRollDialog {
     }
 
 
-    static setupData(spell, actor, options={})
+    static setupData(spell, actor, context={}, options={})
     {
         if (typeof spell == "string")
         {
             if (spell.includes("."))
             {
-                spell = fromUuidSync(spell);
+                spell = fonudry.utils.fromUuidSync(spell);
             }
             else
             {
@@ -33,19 +31,19 @@ export class SpellRollDialog extends CommonRollDialog {
         let attribute = spell.system.attribute || game.aos.config.skillAttributes[skill]
 
         
-        options.title = options.title || `${spell.name}`
-        options.title += options.appendTitle || "";
-        let {data, fields} = super.setupData({skill, attribute}, actor, options)
+        context.title = context.title || `${spell.name}`
+        context.title += context.appendTitle || "";
+        let {data, fields} = super.setupData({skill, attribute}, actor, context)
         data.scripts = data.scripts.concat(spell?.getScripts("dialog"));
 
-        mergeObject(fields, spell.system.difficulty, {overwrite : false});
+        foundry.utils.mergeObject(fields, spell.system.difficulty, {overwrite : false});
 
         data.spell = spell;
         data.item = spell;
         data.itemId = spell.uuid;
-        options.title = options.title || spell.name;
-        options.title += options.appendTitle || "";
+        context.title = context.title || spell.name;
+        context.title += context.appendTitle || "";
         
-        return {data, fields, options};
+        return {data, fields, context};
     }
 }

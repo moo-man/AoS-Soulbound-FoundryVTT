@@ -1,5 +1,6 @@
+@use "./mixins" as *; 
+
 .soulbound.sheet {
-    --divider: var(--color-cool-3);
     --condition-active: var(--color-warm-3);
     --list-title: var(--color-cool-3);
     --list-header: var(--color-cool-4);
@@ -7,11 +8,7 @@
     
     .sheet-divider,
     .box-header {
-        height: 1.5rem;
-        line-height: 1.5rem;
-        font-size: var(--font-size-18);
-        background: var(--divider);
-        text-align: center;
+        @include sheet-header;
     }
 
 

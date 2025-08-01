@@ -1,0 +1,201 @@
+<div class="dialog-combat">
+    <div class="dialog-header">{{localize "DIALOG.COMBAT_ROLL"}}</div>
+    <div class="dialog-row">
+        <div class="form-group stacked">
+            <label>
+                {{localize "DIALOG.ATTRIBUTE"}}
+            </label>
+
+            <div class="form-fields">
+                <select name="attribute">
+                    {{#select fields.attribute}}
+                        {{#each (config "attributes")}}
+                            <option value="{{@key}}">{{localize this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group stacked">
+
+            <label>
+                {{localize "DIALOG.SKILL"}}
+            </label>
+
+            <div class="form-fields">
+                <select name="skill">
+                    {{#select fields.skill}}
+                        {{#each (config "skills")}}
+                            <option value="{{@key}}">{{localize this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group stacked">
+            <label>
+                {{localize "DIALOG.ATTACK"}}
+            </label>
+            <select name="attack">
+                {{#select fields.attack}}
+                    {{#each (config "ratings") as | rating r|}}
+                        <option value="{{r}}">{{rating}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
+    </div>
+
+
+    <div class="dialog-row">
+        <div class="form-group">
+            <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
+            <div class="form-fields">
+                <input name="doubleTraining" type="checkbox" {{checked fields.doubleTraining}} />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
+            <div class="form-fields">
+                <input name="doubleFocus" type="checkbox" {{checked fields.doubleFocus}} />
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-row">
+        <div class="form-group">
+            <label>{{localize "DIALOG.BONUSDICE"}}</label>
+            <div class="form-fields">
+                <input name="bonusDice" type="number" value="{{fields.bonusDice}}" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "DIALOG.BONUSFOCUS"}}</label>
+            <div class="form-fields">
+                <input name="bonusFocus" name="bonusFocus" type="number" value="{{fields.bonusFocus}}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label>{{localize "DIALOG.BONUSDAMAGE"}}</label>
+        <div class="form-fields">
+            <input name="bonusDamage" name="bonusDamage" type="number" value="{{fields.bonusDamage}}" />
+        </div>
+    </div>
+
+
+    {{#if data.showDualWielding}}
+        <div class="form-group">
+            <label>{{localize "DIALOG.DUAL_WIELDING"}}</label>
+            <div class="form-fields">
+                <input name="dualWielding" type="checkbox" {{checked fields.dualWielding}} />
+            </div>
+        </div>
+    {{/if}}
+
+
+    {{#unless fields.dualWielding}}
+        <div class="dialog-header">{{localize "DIALOG.OPPONENT"}}</div>
+
+        <div class="dialog-row opponent">
+            <div class="form-group stacked">
+                <label>{{localize "DIALOG.DEFENCE"}}</label>
+                <div class="form-fields">
+                    <select name="primaryDefence">
+                        {{#select fields.primaryDefence}}
+                            {{#each (config "ratings") as | rating r|}}
+                                <option value="{{r}}">{{rating}}</option>
+                            {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group stacked">
+                <label>{{localize "DIALOG.ARMOUR"}}</label>
+                <div class="form-fields">
+                    <input name="primaryArmour" type="number" value="{{fields.primaryArmour}}" />
+                </div>
+            </div>
+        </div>
+    {{/unless}}
+
+    {{#if fields.dualWielding}}
+
+        <div class="form-group">
+            <label>{{localize "DIALOG.DUAL_WEAPON"}}</label>
+            <div class="form-fields">
+                <select name="dualWeapon">
+                    {{#each data.otherWeapons as |weapon|}}
+                        {{#select fields.dualWeapon}}
+                            <option value="{{weapon.id}}">{{weapon.name}}</option>
+                        {{/select}}
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+
+<div class="dialog-header">{{localize "DIALOG.PRIMARY"}} <span class="target-name" data-token-id="{{data.primaryTarget.tokenId}}">{{#if data.primaryTarget.name}}({{data.primaryTarget.name}}){{/if}}</span></div>
+
+
+<div class="dialog-row">
+    <div class="form-group stacked">
+        <label>{{localize "DIALOG.DEFENCE"}}</label>
+        <div class="form-fields">
+            <select name="primaryDefence">
+                {{#select fields.primaryDefence}}
+                    {{#each (config "ratings") as | rating r|}}
+                        <option value="{{r}}">{{rating}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group stacked">
+        <label>{{localize "DIALOG.ARMOUR"}}</label>
+        <div class="form-fields">
+            <input name="primaryArmour" type="number" value="{{fields.primaryArmour}}" />
+        </div>
+    </div>
+    <div class="form-group stacked">
+        <label>{{localize "DIALOG.POOL"}}</label>
+        <div class="form-fields">
+            <input name="primaryPool" type="number" value="{{fields.primaryPool}}" />
+        </div>
+    </div>
+</div>
+
+<div class="dialog-header">{{localize "DIALOG.SECONDARY"}} <span class="target-name" data-token-id="{{data.secondaryTarget.tokenId}}">{{#if data.secondaryTarget.name}}({{data.secondaryTarget.name}}){{/if}}</span></div>
+
+<div class="dialog-row">
+    <div class="form-group stacked">
+        <label>{{localize "DIALOG.DEFENCE"}}</label>
+        <div class="form-fields">
+            <select name="secondaryDefence">
+                {{#select fields.secondaryDefence}}
+                    {{#each (config "ratings") as | rating r|}}
+                        <option value="{{r}}">{{rating}}</option>
+                    {{/each}}
+                {{/select}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group stacked">
+        <label>{{localize "DIALOG.ARMOUR"}}</label>
+        <div class="form-fields">
+            <input name="secondaryArmour" type="number" value="{{fields.secondaryArmour}}" />
+        </div>
+    </div>
+    <div class="form-group stacked">
+        <label>{{localize "DIALOG.POOL"}}</label>
+        <div class="form-fields">
+            <input name="secondaryPool" type="number" value="{{fields.secondaryPool}}" />
+        </div>
+    </div>
+</div>
+
+{{/if}}
+</div>

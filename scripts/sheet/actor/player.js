@@ -14,12 +14,6 @@ export class PlayerSheet extends StandardSoulboundActorSheet  {
             }
           ],
         },
-        actions : {
-            rollTest : this._onRollTest,
-            toggleSummary : this._toggleSummary,
-            configureActor : this._onConfigureActor,
-            toggleCondition: this._onToggleCondition,
-        },
         defaultTab : "stats"
       }  
       

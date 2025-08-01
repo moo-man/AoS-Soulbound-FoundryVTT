@@ -1,0 +1,102 @@
+<div class="dialog-common">
+    <div class="dialog-header">{{localize "DIALOG.COMMON_ROLL"}}</div>
+    {{log this}}
+    <div class="dialog-row">
+        <div class="form-group stacked dn">
+            <label>
+                {{localize "DIALOG.DN"}}
+            </label>
+            <div class="form-fields">
+                <select name="difficulty" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.difficulty}}">
+                    {{#select fields.difficulty}}
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    {{/select}}
+                </select>
+                :
+                <select name="complexity" data-tooltip-direction="LEFT" data-tooltip="{{tooltips.complexity}}">
+                    {{#select fields.complexity}}
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group stacked">
+            <label>
+                {{localize "DIALOG.ATTRIBUTE"}}
+            </label>
+
+            <div class="form-fields">
+                <select name="attribute">
+                    {{#select fields.attribute}}
+                        {{#each (config "attributes")}}
+                            <option value="{{@key}}">{{localize this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group stacked">
+
+            <label>
+                {{localize "DIALOG.SKILL"}}
+            </label>
+
+            <div class="form-fields">
+                <select name="skill">
+                    {{#select fields.skill}}
+                        {{#each (config "skills")}}
+                            <option value="{{@key}}">{{localize this}}</option>
+                        {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="dialog-row">
+        <div class="form-group">
+            <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
+            <div class="form-fields">
+                <input name="doubleTraining" type="checkbox" {{checked fields.doubleTraining}} />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
+            <div class="form-fields">
+                <input name="doubleFocus" type="checkbox" {{checked fields.doubleFocus}} />
+            </div>
+        </div>
+    </div>
+
+    <div class="dialog-row">
+        <div class="form-group">
+            <label>{{localize "DIALOG.BONUSDICE"}}</label>
+            <div class="form-fields">
+                <input name="bonusDice" type="number" value="{{fields.bonusDice}}" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label>{{localize "DIALOG.BONUSFOCUS"}}</label>
+            <div class="form-fields">
+                <input name="bonusFocus" name="bonusFocus" type="number" value="{{fields.bonusFocus}}" />
+            </div>
+        </div>
+    </div>
+</div>

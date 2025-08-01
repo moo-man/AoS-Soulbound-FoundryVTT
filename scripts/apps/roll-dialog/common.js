@@ -1,8 +1,6 @@
 import SoulboundUtility from "../../system/utility";
 
-export class CommonRollDialog extends WarhammerRollDialog {
-
-    dialogTitle = "DIALOG.COMMON_ROLL"
+export class CommonRollDialog extends WarhammerRollDialogV2 {
 
     get tooltipConfig() 
     {
@@ -35,17 +33,23 @@ export class CommonRollDialog extends WarhammerRollDialog {
         }
     }
 
-    static get defaultOptions() {
-        let options = super.defaultOptions;
-        options.classes.push("soulbound")
-        options.resizable = true;
-        return options
-    } 
-
-    get template() 
-    {
-      return "systems/age-of-sigmar-soulbound/template/apps/dialog/common-dialog.hbs";
-    }
+    static PARTS = {
+        common : {
+            template : "systems/age-of-sigmar-soulbound/templates/dialog/common-dialog.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            modifiers: true
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    };
 
     // Backwards compatibility with migrated scripts
     get skillKey()
@@ -59,24 +63,28 @@ export class CommonRollDialog extends WarhammerRollDialog {
         return this.fields.attribute;
     }
 
-
-    async getData()
+    get title() 
     {
-        let data = await super.getData();
-        data.dialogTitle = game.i18n.localize(this.dialogTitle);
-        return data;
+        return this.context.title;
     }
 
-    static setupData({attribute, skill}, actor, options={})
+    async _prepareContext(options)
     {
-        let {data, fields} = this._baseDialogData(actor, options);
+        let context = await super._prepareContext(options);
+        context.title = this.context.title;
+        return context;
+    }
+
+    static setupData({attribute, skill}, actor, context={}, options={})
+    {
+        let {data, fields} = this._baseDialogData(actor, context, options);
 
         
-        mergeObject(fields, options.fields || {});
+        foundry.utils.mergeObject(fields, context.fields || {});
 
-        if (options.dn)
+        if (context.dn)
         {
-            let {difficulty, complexity} = SoulboundUtility.DNToObject(options.dn);
+            let {difficulty, complexity} = SoulboundUtility.DNToObject(context.dn);
             if (!fields.difficulty) 
             {
                 fields.difficulty = difficulty;
@@ -90,25 +98,19 @@ export class CommonRollDialog extends WarhammerRollDialog {
         fields.attribute = attribute || game.aos.config.skillAttributes[skill];
         fields.skill = skill;
 
-        options.title = options.title || `${game.aos.config.attributes[fields.attribute]} ${fields.skill ? "(" + game.aos.config.skills[fields.skill] + ")" : ""}`
-        options.title += options.appendTitle || "";
+        context.title = context.title || `${game.aos.config.attributes[fields.attribute]} ${fields.skill ? "(" + game.aos.config.skills[fields.skill] + ")" : ""}`
+        context.title += context.appendTitle || "";
         
-        return {data, fields, options};
+        return {data, fields, context, options};
     }
 
     _defaultFields() 
     {
-        return mergeObject(super._defaultFields(), {
+        return foundry.utils.mergeObject(super._defaultFields(), {
             difficulty : 4,
             complexity : 1,
             bonusDice : 0,
             bonusFocus : 0,
         });
     }
-
-    activateListeners(html)
-    {
-        super.activateListeners(html)
-    }
-
 }

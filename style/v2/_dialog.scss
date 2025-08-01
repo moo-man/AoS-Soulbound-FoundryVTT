@@ -1,0 +1,55 @@
+@use "./mixins" as *; 
+.warhammer.roll-dialog-v2 {
+    --divider: var(--color-cool-3);
+
+    .dialog-row {
+        display: flex;
+        gap: 0.5rem;
+        > * {
+            flex: 1;
+        }
+    }
+
+    .dialog-header {
+        text-align: center;
+        text-transform: uppercase;
+        @include sheet-header;
+    }
+
+    .form-group.stacked {
+        label {
+            text-align: center;
+        }
+    }
+
+    .form-group {
+        label {
+            flex: 8;
+            text-align: center;
+        }
+        input,
+        select {
+            text-align: center;
+        }
+
+        &.dn {
+            flex: 0.5;
+            .form-fields {
+                justify-content: center;
+            }
+            select  {
+                flex: 0 0 3rem;
+            }
+        }
+    }
+
+    .dialog-modifiers {
+        flex: 1 0 10rem;
+    }
+
+    .mode-field {
+        .form-fields {
+            flex: 8
+        }
+    }
+}

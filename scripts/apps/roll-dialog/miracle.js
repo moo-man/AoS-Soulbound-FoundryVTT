@@ -4,13 +4,13 @@ export class MiracleRollDialog extends CommonRollDialog {
 
     dialogTitle = "DIALOG.MIRACLE_ROLL";
 
-    static setupData(miracle, actor, options={})
+    static setupData(miracle, actor, context={}, options={})
     {
         if (typeof miracle == "string")
         {
             if (miracle.includes("."))
             {
-                miracle = fromUuidSync(miracle);
+                miracle = foundry.utils.fromUuidSync(miracle);
             }
             else
             {
@@ -20,11 +20,11 @@ export class MiracleRollDialog extends CommonRollDialog {
 
         if (miracle.cost > actor.combat.mettle.value)
         {
-            ui.notifications.error(game.i18n.localize("ERROR.NotEnoughMettle"))
+            ui.notifications.error("ERROR.NotEnoughMettle", {localize: true});
             throw Error(game.i18n.localize("ERROR.NotEnoughMettle"));
         }
         
-        let {data, fields} = super.setupData({skill : "devotion", attribute : "soul"}, actor, options)
+        let {data, fields} = super.setupData({skill : "devotion", attribute : "soul"}, actor, context)
 
         if (!miracle.system.test.opposed)
         {
@@ -34,21 +34,21 @@ export class MiracleRollDialog extends CommonRollDialog {
         data.miracle = miracle;
         data.item = miracle;
         data.itemId = miracle.uuid;
-        options.title = options.title || miracle.name;
-        options.title += options.appendTitle || "";
+        context.title = context.title || miracle.name;
+        context.title += context.appendTitle || "";
         
-        return {data, fields, options};
+        return {data, fields, context, options};
     }
 
-    activateListeners(html)
+    async _onRender(options)
     {
-        super.activateListeners(html)
+        await super._onRender(options)
 
         if (this.data.noRoll)
         {
-            let fields = html.find(".dialog-fields");
-            fields[0].classList.add("disabled", "inactive")
-            $(`<div style="text-align: center; font-size: 1rem; font-family: Quadrant-Regular">This Miracle is unopposed</div>`).insertBefore(html);
+            let fields = this.element.querySelector(".dialog-fields");
+            fields.classList.add("disabled", "inactive")
+            this.element.querySelector(".window-content").insertAdjacentHTML("afterbegin", `<div style="text-align: center; font-size: 1rem; font-family: Quadrant-Regular">This Miracle is unopposed</div>`);
         }
     }
 

@@ -2,14 +2,6 @@ import { CommonRollDialog } from "./common";
 
 export class CombatRollDialog extends CommonRollDialog {
 
-    dialogTitle = "DIALOG.COMBAT_ROLL";
-
-    
-    get template() 
-    {
-      return "systems/age-of-sigmar-soulbound/template/apps/dialog/combat-dialog.hbs";
-    }
-
     get item()
     {
         return this.data.weapon;
@@ -43,6 +35,26 @@ export class CombatRollDialog extends CommonRollDialog {
 
         })
     }
+
+    
+    static PARTS = {
+        combat : {
+            template : "systems/age-of-sigmar-soulbound/templates/dialog/combat-dialog.hbs",
+            fields: true
+        },
+        mode : {
+            template : "modules/warhammer-lib/templates/apps/dialog/dialog-mode.hbs",
+            fields: true
+        },
+        modifiers : {
+            template : "modules/warhammer-lib/templates/partials/dialog-modifiers.hbs",
+            modifiers: true
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    };
+
 
     async computeFields() 
     {
@@ -119,13 +131,13 @@ export class CombatRollDialog extends CommonRollDialog {
         return {name, difficulty, complexity : 1}
     }
 
-    static setupData(weapon, actor, options={})
+    static setupData(weapon, actor, context={}, options={})
     {
         if (typeof weapon == "string")
         {
             if (weapon.includes("."))
             {
-                weapon = fromUuidSync(weapon);
+                weapon = foundry.utils.fromUuidSync(weapon);
             }
             else
             {
@@ -137,9 +149,9 @@ export class CombatRollDialog extends CommonRollDialog {
         let attribute = weapon.system.attribute || game.aos.config.skillAttributes[skill]
 
         
-        options.title = options.title || `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
-        options.title += options.appendTitle || "";
-        let {data, fields} = super.setupData({skill, attribute}, actor, options)
+        context.title = context.title || `${weapon.name} ${game.i18n.localize("WEAPON.TEST")}`
+        context.title += context.appendTitle || "";
+        let {data, fields} = super.setupData({skill, attribute}, actor, context)
         data.scripts = data.scripts.concat(weapon?.getScripts("dialog"));
 
         data.weapon = weapon;
@@ -163,7 +175,7 @@ export class CombatRollDialog extends CommonRollDialog {
             defence : 3,
             armour : 0
         }
-        data.secondaryTarget = duplicate(data.primaryTarget)
+        data.secondaryTarget = foundry.utils.duplicate(data.primaryTarget)
 
         if (data.targets.length > 0) {
             let targets = data.targets;
@@ -174,7 +186,7 @@ export class CombatRollDialog extends CommonRollDialog {
                 data.secondaryTarget = this.tokenToData(targets[1])
             }
             else // Populate secondary target with the same as the primary target
-                data.secondaryTarget = duplicate(data.primaryTarget)
+                data.secondaryTarget = foundry.utils.duplicate(data.primaryTarget)
 
             if (data.primaryTarget)
             {
@@ -189,7 +201,7 @@ export class CombatRollDialog extends CommonRollDialog {
         }
         fields.dualWeapon = data.otherWeapons[0]?.id;
         
-        return {data, fields, options};
+        return {data, fields, context};
     }
 
     static tokenToData(token)
@@ -202,16 +214,19 @@ export class CombatRollDialog extends CommonRollDialog {
         }
     }
 
-    activateListeners(html)
+    _onFieldChange(ev) 
     {
-        super.activateListeners(html);
-        html.find("[name='primaryPool'").change(ev => {
+        if (ev.target.name == "primaryPool")
+        {
             this.poolModified = "primary";
-        })
-        html.find("[name='secondaryPool'").change(ev => {
-            this.poolModified = "secondary";
-        })
+        }
+        else if (ev.target.name == "secondaryPool")
+        {
+            this.poolModified = "secondary"
+        }
+        super._onFieldChange(ev);
     }
+
 
     _defaultFields() 
     {

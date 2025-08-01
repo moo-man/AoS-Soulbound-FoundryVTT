@@ -1,6 +1,27 @@
 <section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
     <div class="box-section">
         <div class="box-header">{{localize "TITLE.STATS"}}</div>
+
+        <div class="box-row">
+            <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 4">
+                    {{localize "SPELL.LORE"}}
+                </div>
+
+                <div class="label" style="grid-column: 5 / span 4">
+                    {{localize "SPELL.DN"}}
+                </div>
+                <div class="label" style="grid-column: 9 / span 4">
+                    {{localize "SPELL.ATTRIBUTE"}}
+                </div>
+
+                <div class="field" style="grid-column: 1 / span 4">{{formInput fields.lore value=source.system.lore}}</div>
+                <div class="field" style="grid-column: 5 / span 4">{{formInput fields.dn value=source.system.dn}}</div>
+                <div class="field" style="grid-column: 9 / span 4">{{formInput fields.attribute value=source.system.attribute choices=(config "attributes")}}</div>
+            </div>
+        </div>
+
+
         <div class="box-row">
             <div class="attribute-box">
                 <div class="label" style="grid-column: 1 / span 2">
