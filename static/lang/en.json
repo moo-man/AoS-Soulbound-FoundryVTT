@@ -118,6 +118,7 @@
   "BUTTON.YES": "Yes",
   
   "CATEGORY.MELEE": "Melee",
+  "CATEGORY.RANGED": "Ranged",
   "CATEGORY.RANGE": "Range",
 
   "PARTY.CATEGORY": "Category",
@@ -161,7 +162,9 @@
   "CHAT.APPLY_FOCUS": "Apply Focus",
   "CHAT.RESET_FOCUS": "Reset Focus",
   "CHAT.CLEAR_FOCUS": "Clear Focus",
-  "CHAT.REROLL": "Reroll (-1 Soulfire)",
+  "CHAT.REROLL" : "Reroll",
+  "CHAT.REROLL_SELECTED" : "Reroll Selected (-1 Soulfire)",
+  "CHAT.REROLL_FAILED" : "Reroll Failed (-1 Soulfire)",
   "CHAT.MAXIMIZE": "Maximize Success (-1 Soulfire)",
   "CHAT.APPLY_DAMAGE": "Apply Damage",
   "CHAT.APPLY_HEALING": "Apply Healing",
@@ -290,6 +293,7 @@
   "HEADER.ITEM_TRAITS": "Item Traits",
   "HEADER.ZONE_CONFIG": "Zone Config",
   "HEADER.SOURCE": "Source",
+  "HEADER.ALLOCATE": "Allocate Focus",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",
@@ -487,13 +491,13 @@
 
   "TRAIT.MAGICAL": "magical",
   "TRAIT.PENETRATING": "penetrating",
-  "TRAIT.PENETRATING_EFFECT": "Penetrating : 1 Point of Armour ignored",
+  "TRAIT.PENETRATING_EFFECT": "<strong>Penetrating</strong>: 1 Point of Armour ignored",
   "TRAIT.INEFFECTIVE": "ineffective",
-  "TRAIT.INEFFECTIVE_EFFECT": "Ineffective : Targets Armour doubled",
+  "TRAIT.INEFFECTIVE_EFFECT": "<strong>Ineffective</strong>: Targets Armour doubled",
   "TRAIT.CLEAVE": "cleave",
-  "TRAIT.CLEAVE_EFFECT": "Cleave: {triggers} Damage to enemies in close range",
+  "TRAIT.CLEAVE_EFFECT": "<strong>Cleave</strong>: {triggers} Damage to enemies in close range",
   "TRAIT.REND": "rend",
-  "TRAIT.REND_EFFECT": "Rend : Target loses {triggers} Points of nonmagical armour",
+  "TRAIT.REND_EFFECT": "<strong>Rend</strong>: Target loses {triggers} Points of nonmagical armour",
 
   "TRAITS.AETHERIC": "Aetheric",
   "TRAITS.BLAST": "Blast",
@@ -548,6 +552,7 @@
   "ERROR.NotEnoughSuccesses": "Not Enough Successes to Overcast",
   "ERROR.ScrollingText": "Error displaying scrolling text for",
   "ERROR.ReferencedActorNotFound" : "Fill Derived Data failed: Referenced Actor Not Found",
+  "ERROR.NotEnoughSoulfire" : "Not enough Soulfire!",
 
   "WARN.NoActorsToApply": "Tokens must be selected or a character must be assigned to apply an Effect.",
   "WARN.NoActorsToTest": "Tokens must be selected or a character must be assigned to roll a Test.",

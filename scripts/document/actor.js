@@ -45,22 +45,22 @@ export class SoulboundActor extends WarhammerActor {
     //#region Rolling Setup
     async setupCommonTest({skill, attribute}, context = {}, options={}) 
     {
-        return await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, context = {}, options)
+        return await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, context, options)
     }
 
     async setupCombatTest(weapon, context = {}, options={})
     {
-        return await this._setupTest(CombatRollDialog, CombatTest, weapon, context = {}, options)
+        return await this._setupTest(CombatRollDialog, CombatTest, weapon, context, options)
     }
 
     async setupSpellTest(power, context = {}, options={})
     {
-        return await this._setupTest(SpellRollDialog, SpellTest, power, context = {}, options)
+        return await this._setupTest(SpellRollDialog, SpellTest, power, context, options)
     }
 
     async setupMiracleTest(miracle, context = {}, options={})
     {
-        return await this._setupTest(MiracleRollDialog, MiracleTest, miracle, context = {}, options)
+        return await this._setupTest(MiracleRollDialog, MiracleTest, miracle, context, options)
     }
 
     async setupTestFromItem(item, context = {}, options={})
@@ -81,15 +81,15 @@ export class SoulboundActor extends WarhammerActor {
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test}={}) {
+    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test, item}={}) {
         let armour = this.combat.armour.value
         
         let abort = undefined;
         let text = [];
-        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test, text}
+        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test, item, text}
         await Promise.all(this.runScripts("preTakeDamage", args) || []);
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
-        await Promise.all(test?.item?.runScripts("preApplyDamage", args) || []);
+        await Promise.all(item?.runScripts("preApplyDamage", args) || []);
         ({damage, armour, ignoreArmour, penetrating, ineffective, restraining, abort} = args);
 
         if (abort)
@@ -110,10 +110,10 @@ export class SoulboundActor extends WarhammerActor {
             damage = 0
 
 
-        args = {actor : this, damage, test, abort, text}
+        args = {actor : this, damage, test, item, abort, text}
         await Promise.all(this.runScripts("takeDamageMod", args) || []);
         await Promise.all(test?.actor.runScripts("applyDamageMod", args) || []);
-        await Promise.all(test?.item?.runScripts("applyDamageMod", args) || []);
+        await Promise.all(item?.runScripts("applyDamageMod", args) || []);
         ({damage, abort} = args);
 
         if (abort)
@@ -153,12 +153,12 @@ export class SoulboundActor extends WarhammerActor {
             wounds = await this.update(this.system.combat.computeNewWound(remaining));
         }
 
-        this.applyEffect({effectData : test?.damageEffects.map(i => i.convertToApplied(test))})
+        this.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || []})
 
 
         await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
         await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
-        await Promise.all(test?.item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
+        await Promise.all(item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
 
         return ret;
     }

@@ -116,7 +116,13 @@
             padding: 0px 0.5rem;
         }
     }
-    .test-box {
+
+    [data-tab=combat] {
+
+        .item-trait
+        {
+            margin-left: 3px;       
+        }
     }
 }
 

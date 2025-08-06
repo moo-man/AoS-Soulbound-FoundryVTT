@@ -1,0 +1,47 @@
+<div class="soulbound chat roll">
+    <div class="title">
+        <p>DN {{testData.dn.difficulty}}:{{testData.dn.complexity}} {{testData.dn.name}} Test</p>
+    </div>
+
+    {{> systems/age-of-sigmar-soulbound/templates/chat/base/dice-container.hbs}}
+
+    <div class="test-results">
+        {{> systems/age-of-sigmar-soulbound/templates/chat/spell/spell-result.hbs}}
+        {{> systems/age-of-sigmar-soulbound/templates/chat/base/base-other.hbs}}
+    </div>
+
+    {{#if canOvercast}}
+        <div class="overcast-buttons">
+            <div class="overcast-labels">
+                <label>Overcasts <a data-action="resetOvercast"><i class="fas fa-redo"></i></a></label>
+                <p>Spent: {{result.overcasts.spent}}/{{result.degree}}</p>
+            </div>
+            <div class="overcast-groups">
+                {{#each result.overcasts.options as |option index|}}
+                    <div class="overcast-group" data-index={{index}}>
+                        <button type="button" data-action="allocateOvercast" class="overcast-button">{{option.title}}
+                            {{#if option.allocation}}({{option.allocation}}){{/if}}</button>
+
+                        <label> {{#if option.showTotal}} Total: {{lookup ../result option.property}} {{/if}}</label>
+
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    {{/if}}
+
+    {{#unless result.success}}
+        <div class="test-buttons">
+            <button data-action="spellFail" type="button">The Price of Failure</button>
+        </div>
+    {{/unless}}
+
+    {{#if hasTest}}
+        <div class="test-buttons">
+            <button data-action="rollTest" type="button">{{ItemTestDisplay}}</button>
+        </div>
+    {{/if}}
+
+    {{> effectButtons}}
+
+</div>

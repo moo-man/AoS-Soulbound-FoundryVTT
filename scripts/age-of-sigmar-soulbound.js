@@ -38,6 +38,9 @@ import TalentSheet from "./sheet/item/types/talent.js";
 import WeaponSheet from "./sheet/item/types/weapon.js";
 import PartyItemSheet from "./sheet/item/types/party.js";
 import RuneSheet from "./sheet/item/types/rune.js";
+import { SoulboundTestMessageModel } from "./model/message/test.js";
+import { PostedItemMessageModel } from "./model/message/item.js";
+import { SoulboundChatMessage } from "./document/message.js";
 
 Hooks.once("init", () => {
 
@@ -50,6 +53,7 @@ Hooks.once("init", () => {
     CONFIG.Actor.documentClass = SoulboundActor;
     CONFIG.Item.documentClass = SoulboundItem;
     CONFIG.ActiveEffect.documentClass = SoulboundEffect
+    CONFIG.ChatMessage.documentClass = SoulboundChatMessage;
 
     CONFIG.Actor.dataModels["player"] = PlayerModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
@@ -68,7 +72,8 @@ Hooks.once("init", () => {
     CONFIG.Item.dataModels["archetype"] = ArchetypeModel;
     
     CONFIG.ActiveEffect.dataModels["base"] = SoulboundActiveEffectModel
-    CONFIG.ChatMessage.dataModels["test"] = WarhammerTestMessageModel;
+    CONFIG.ChatMessage.dataModels["test"] = SoulboundTestMessageModel;
+    CONFIG.ChatMessage.dataModels["item"] = PostedItemMessageModel;
 
     const DocumentSheetConfig = foundry.applications.apps.DocumentSheetConfig
 

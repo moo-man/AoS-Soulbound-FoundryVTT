@@ -1,10 +1,12 @@
 import AOS_MacroUtil from "./macro.js"
 
-import SoulboundChat from "./chat.js";
+import SoulboundChat from "./chat-old.js";
 import Migration from "./migrations.js";
 import socketHandlers from "./socket-handlers.js";
 
+
 export default function registerHooks() {
+
     Hooks.once("init", () => {
         game.settings.register("age-of-sigmar-soulbound", "initiativeRule", {
             name: "SETTING.INIT_RULE",

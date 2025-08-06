@@ -13,7 +13,7 @@ export default class SpellTest extends SoulboundTest{
     }
 
     get template() {
-        return "systems/age-of-sigmar-soulbound/template/chat/spell/spell-roll.hbs"
+        return "systems/age-of-sigmar-soulbound/templates/chat/spell/spell-roll.hbs"
     }
 
     async runPreScripts()

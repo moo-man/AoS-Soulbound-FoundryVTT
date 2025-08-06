@@ -1,0 +1,32 @@
+{{> systems/age-of-sigmar-soulbound/templates/chat/base/base-result.hbs}}
+
+
+{{#if result.damage.total}}
+    <p><strong>{{localize "CHAT.DAMAGE"}}:</strong> {{result.damage.total}}<button class="apply" data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> Apply</button></p>
+{{/if}}
+
+{{#if result.traits}}
+    <p><strong>{{localize "CHAT.TRAITS"}}:</strong> {{result.traits}}</p>
+{{/if}}
+
+</div>
+{{#if result.damage.traitEffects.length}}
+    <div>
+        <p><strong>{{localize "CHAT.TRAIT_EFFECTS"}}:</strong></p>
+        <ul>
+            {{#each result.damage.traitEffects as |effect|}}
+                {{#if effect.isRend}}
+                    <li><p class="rend-value">{{{effect.text}}}<button class="apply" data-action="applyRend"><i class="fa-solid fa-crosshairs"></i> Apply</button></p></li>
+                {{/if}}
+                {{#if effect.isCleave}}
+                    <li><p class="cleave-value">{{{effect.text}}}<button class="apply" data-action="applyCleave"><i class="fa-solid fa-crosshairs"></i> Apply</button></p></li>
+                {{/if}}
+                {{#if effect.isPlain}}
+                    <li>{{{effect.text}}}</li>
+                {{/if}}
+
+            {{/each}}
+        </ul>
+    </div>
+{{/if}}
+{{> systems/age-of-sigmar-soulbound/templates/chat/base/base-targets.hbs}}

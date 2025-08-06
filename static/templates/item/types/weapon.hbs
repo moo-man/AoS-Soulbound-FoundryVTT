@@ -15,13 +15,13 @@
                 <div class="label" style="grid-column: 9 / span 4">
                     {{localize "WEAPON.ATTRIBUTE"}}
                 </div>
-                <div class="field" style="grid-column: 1 / span 4">{{formInput fields.category value=source.system.category}}</div>
+                <div class="field" style="grid-column: 1 / span 4">{{formInput fields.category value=source.system.category choices=categories localize=true}}</div>
                 <div class="field" style="grid-column: 5 / span 4">{{formInput fields.damage value=source.system.damage}}</div>
                 <div class="field" style="grid-column: 9 / span 4">{{formInput fields.attribute value=source.system.attribute choices=(config "attributes")}}</div>
             </div>
         </div>
         <div class="box-row">
-            {{> itemTraits label="WEAPON.TRAITS" traits=document.system.traits}}
+            {{> itemTraits label="WEAPON.TRAITS" traits=document.system.Traits}}
         </div>
         <div class="box-row">
             {{> itemTest label="WEAPON.TEST" fields=fields.test.fields values=source.system.test}}

@@ -45,9 +45,9 @@
                         <div class="list-name">
                             <a class="label" data-action="rollTest" data-type="skill" data-skill="{{@key}}">{{configLookup "skills" @key}}</a>
                         </div>
-                        <div class="tiny"><input name="system.skills.{{key}}.training" type="number" value="{{skill.training}}" /><input> </div>
+                        <div class="tiny"><input name="system.skills.{{@key}}.training" type="number" value="{{skill.training}}" /><input> </div>
                         <div class="tiny">({{skill.value}})</div>
-                        <div class="tiny"><input name="system.skills.{{key}}.focus" type="number" value="{{skill.focus}}" /><input> </div>
+                        <div class="tiny"><input name="system.skills.{{@key}}.focus" type="number" value="{{skill.focus}}" /><input> </div>
                     </div>
                 </div>
             {{/each}}

@@ -1,0 +1,49 @@
+<div class="soulbound chat roll primary">
+    <div class="title">
+        <p>DN {{result.primary.dn.difficulty}}:{{result.primary.dn.complexity}} {{result.primary.dn.name}} Test</p>
+        {{#if testData.dualWieldingData.primary.name}}
+            <div class="target" data-token-id="{{testData.dualWieldingData.primary.tokenId}}">{{testData.dualWieldingData.primary.name}}</div>
+        {{/if}}
+    </div>
+
+    {{> systems/age-of-sigmar-soulbound/templates/chat/base/dice-container.hbs result=result.primary}}
+
+    <div class="test-results">
+        {{> systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-result.hbs result=result.primary}}
+    </div>
+
+    {{#if hasTest}}
+        <div class="test-buttons">
+            <button data-action="rollTest" type="button">{{ItemTestDisplay}}</button>
+        </div>
+    {{/if}}
+
+
+    {{> effectButtons}}
+</div>
+<div class="soulbound chat roll secondary">
+
+    <div class="title">
+        <p>DN {{result.secondary.dn.difficulty}}:{{result.secondary.dn.complexity}} {{result.secondary.dn.name}} Test</p>
+        {{#if testData.dualWieldingData.secondary.name}}
+            <div class="target" data-token-id="{{testData.dualWieldingData.secondary.tokenId}}">{{testData.dualWieldingData.secondary.name}}</div>
+        {{/if}}
+    </div>
+
+    {{> systems/age-of-sigmar-soulbound/templates/chat/base/dice-container.hbs result=result.secondary}}
+
+    <div class="test-results">
+        {{> systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-result.hbs result=result.secondary}}
+    </div>
+
+    {{#if secondaryHasTest}}
+        <div class="test-buttons">
+            <button data-action="rollTest" data-source="secondary" type="button">{{secondaryItemTestDisplay}}</button>
+        </div>
+    {{/if}}
+
+
+    {{> effectButtons targetEffects=secondaryWeapon.targetEffects zoneEffects=secondaryWeapon.zoneEffects}}
+
+
+</div>

@@ -1,0 +1,22 @@
+<div class="soulbound chat roll">
+    <div class="title">
+        <p>DN {{testData.dn.difficulty}}:{{testData.dn.complexity}} {{testData.dn.name}} Test</p>
+    </div>
+
+    {{> systems/age-of-sigmar-soulbound/templates/chat/base/dice-container.hbs}}
+
+    <div class="test-results">
+        {{> systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-result.hbs}}
+        {{> systems/age-of-sigmar-soulbound/templates/chat/base/base-other.hbs}}
+    </div>
+
+    
+    {{#if hasTest}}
+        <div class="test-buttons">
+            <button data-action="rollTest" type="button">{{ItemTestDisplay}}</button>
+        </div>
+    {{/if}}
+
+    {{> effectButtons}}
+
+</div>

@@ -1,3 +1,5 @@
+import FocusAllocation from "../../apps/focus-allocation";
+
 export default class SoulboundTest extends WarhammerTestBase {
     constructor(data) {
         super(data);
@@ -9,13 +11,12 @@ export default class SoulboundTest extends WarhammerTestBase {
                 skill : data.skill,
                 bonusDice : data.bonusDice,
                 bonusFocus : data.bonusFocus,
-                dn : data.dn || {difficulty : data.difficulty, complexity : data.complexity, name : data.options.title},
+                dn : data.dn || {difficulty : data.difficulty, complexity : data.complexity, name : data.context.title},
                 allocation: data.allocation || [],
                 itemId : data.itemId,
                 doubleTraining : data.doubleTraining || false,
                 doubleFocus : data.doubleFocus || false,
                 triggerToDamage: data.triggerToDamage || false,
-                options : data.options || {}
             },
             context : {
                 speaker : data.speaker,
@@ -23,6 +24,7 @@ export default class SoulboundTest extends WarhammerTestBase {
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined,
+                rollMode : data.rollMode
             },
             result : {}
         }
@@ -34,12 +36,12 @@ export default class SoulboundTest extends WarhammerTestBase {
     }
 
     get template() {
-        return "systems/age-of-sigmar-soulbound/template/chat/base/base-roll.hbs"
+        return "systems/age-of-sigmar-soulbound/templates/chat/base/base-roll.hbs"
     }
 
     static recreate(data)
     {
-        let test = new game.aos.rollClass[data.context.rollClass]()
+        let test = new game.aos.config.rollClasses[data.context.rollClass]()
         test.data = data;
         test.dice = Roll.fromData(test.testData.dice)
         if (test.context.rerolled)
@@ -56,6 +58,7 @@ export default class SoulboundTest extends WarhammerTestBase {
             result.index = i;
         })
         this.computeResult()   
+        await this.promptAllocation();
         await this.runPostScripts()
     }
 
@@ -138,15 +141,29 @@ export default class SoulboundTest extends WarhammerTestBase {
         return result;
     }
 
-    async allocateFocus(allocation)
+    async promptAllocation()
     {
-        if (allocation.reduce((prev, current) => prev + current, 0) > this.result.focus)
-            return ui.notifications.error(game.i18n.localize("ERROR.NotEnoughFocus"))
-        this.testData.allocation = allocation;
-        this.context.focusAllocated = true;
-        await this.roll();
-        this.sendToChat();
+        if (this.context.focusAllocated)
+        {
+            return;
+        }
+
+        if (!this.message)
+        {
+            let message = await ChatMessage.create(ChatMessage.applyRollMode({content : "<em>Allocating Focus...</em>", type : "test", speaker : this.context.speaker}, this.context.rollMode));
+            this.context.messageId = message.id;
+        }
+
+        if (this.result.focus)
+        {
+            let pos = document.querySelector(`#chat-message`).getBoundingClientRect();
+            // let pos = document.querySelector(`[data-message-id="${message.id}"]`)?.getBoundingClientRect() || {};
+            this.testData.allocation = (await FocusAllocation.prompt(this, {position : {left : pos.x - (pos.width), top: pos.y - (pos.height * 2)}})) || [];
+            this.context.focusAllocated = true;
+            this.computeResult();
+        }
     }
+
 
     async resetFocus()
     {
@@ -189,22 +206,14 @@ export default class SoulboundTest extends WarhammerTestBase {
     async sendToChat({newMessage = false} = {})
     {
         const html = await renderTemplate(this.template, this);
-        let chatData = {
+        let chatData = ChatMessage.applyRollMode({
             user: game.user.id,
-            type: CONST.CHAT_MESSAGE_TYPES.ROLL,
             speaker : this.context.speaker,
             rolls: [this.dice],
-            rollMode: game.settings.get("core", "rollMode"),
             content: html,
             type : "test",
             system : this.data
-        };
-        chatData.speaker.alias = this.actor.token ? this.actor.token.name : this.actor.prototypeToken.name
-        if (["gmroll", "blindroll"].includes(chatData.rollMode)) {
-            chatData.whisper = ChatMessage.getWhisperRecipients("GM");
-        } else if (chatData.rollMode === "selfroll") {
-            chatData.whisper = [game.user];
-        }
+        }, this.context.rollMode);
 
         if (this.message && !newMessage)
         {
@@ -289,7 +298,19 @@ export default class SoulboundTest extends WarhammerTestBase {
     }
 
     get hasTest() {
-        return this._hasTest(this.item)
+
+        let effects = this.targetEffects.concat(this.damageEffects).concat(this.zoneEffects)
+    
+        // Effects already prompt a test
+        if (effects.some(e => e.system.transferData.avoidTest.value == "item"))
+        {
+            return false;
+        }
+        else
+        {
+            return this._hasTest(this.item)
+        }
+
     }
 
     _itemTest(item) {

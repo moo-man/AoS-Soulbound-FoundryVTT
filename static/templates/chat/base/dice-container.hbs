@@ -1,0 +1,15 @@
+<div class="dice-container">
+    {{#each result.dice as |dice|}}
+        <a class="die" data-action="toggleDie" data-index={{dice.index}}>
+            <img class="dice-img" src="{{dice.img}}">
+            <div class="die-icon focus-counter" {{#unless dice.focus}}style="display:none"{{/unless}}>
+                {{dice.focus}}
+            </div>
+            {{#if dice.rerolled}}
+                <div class="die-icon reroll-icon">
+                    <i class="fas fa-redo"></i>
+                </div>
+            {{/if}}
+        </a>
+    {{/each}}
+</div>

@@ -85,9 +85,9 @@ export default class CombatTest extends SoulboundTest {
 
     get template() {
         if (this.isDualWielding)
-            return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-dual-roll.hbs"
+            return "systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-dual-roll.hbs"
         else
-            return "systems/age-of-sigmar-soulbound/template/chat/weapon/weapon-roll.hbs"
+            return "systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-roll.hbs"
     }
 
     computeDamage(result)

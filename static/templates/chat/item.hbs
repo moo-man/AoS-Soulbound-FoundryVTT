@@ -1,0 +1,233 @@
+<div class="soulbound chat item">
+    <div class="content-box">
+        <div class="content-header">
+            {{#if item.img}}
+                <img src="{{item.img}}" data-tooltip="{{item.name}}" width="48" height="48"/>
+            {{/if}}
+
+            <div class="segment-vertical">
+                <h3>{{item.name}}</h3>
+                {{#if item.isGoal}}
+                    <h4>{{item.subtype}} {{localize "ITEM.GOAL"}}</h4>
+                {{/if}}
+                {{#if item.isConnection}}
+                    <h4>{{localize "ITEM.CONNECTION"}}</h4>
+                {{/if}}
+                {{#if item.isWound}}
+                    <h4>{{item.damage}} {{localize "WOUND.DAMAGE"}}</h4>
+                {{/if}}
+                {{#if item.isSpell}}
+                    <h4>{{item.lore}} {{localize "ITEM.SPELL"}}</h4>
+                {{/if}}
+                {{#if item.isMiracle}}
+                    <h4>{{item.god}} {{localize "ITEM.MIRACLE"}}</h4>
+                {{/if}}
+                {{#if item.isTalent}}
+                    <h4>{{localize "ITEM.TALENT"}}</h4>
+                {{/if}}
+                {{#if item.isArmour}}
+                    <h4>{{item.Type}} {{localize "ITEM.ARMOUR"}}</h4>
+                {{/if}}
+                {{#if item.isWeapon}}
+                    <h4>{{item.Category}} {{localize "ITEM.WEAPON"}}</h4>
+                {{/if}}
+                {{#if item.isAethericDevice}}
+                    <h4>{{localize "ITEM.AETHERIC_DEVICE"}}, {{item.Category}}</h4>
+                {{/if}}
+                {{#if item.isRune}}
+                    <h4>{{localize "ITEM.RUNE"}}</h4>
+                {{/if}}
+                {{#if item.isEquipment}}
+                    <h4>{{localize "ITEM.EQUIPMENT"}}</h4>
+                {{/if}}
+            </div>
+            
+        </div>
+
+        {{#if item.isGoal}}
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "GOAL.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+        {{/if}}
+
+        {{#if item.isConnection}}
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "CONNECTION.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+        {{/if}}
+
+        {{#if item.isWound}}
+        <div class="content-wrapper">
+            <div class="content-label-centered"><strong>{{localize "WOUND.DESCRIPTION"}}</strong></div>
+            {{{item.description}}}
+        </div>
+        {{/if}}
+
+        {{#if item.isSpell}}
+            <div class="content-row">
+                <div class="entry-vertical" style="width:50px">
+                    <div class="content-label-centered"><strong>{{localize "SPELL.DN"}}</strong></div>
+                    <div class="content-label-centered">{{item.DN}}</div>
+                </div>
+                <div class="entry-vertical" style="flex-grow:1;">
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.TARGET"}}: </strong> {{item.target}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.RANGE"}}: </strong> {{item.Range}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "SPELL.DURATION"}}: </strong> {{item.Duration}}</div>
+                </div>
+            </div>
+            <div class="content-row" style="flex-grow:1;">
+                <div class="entry-horizontal"><strong>{{localize "SPELL.OVERCAST"}}: </strong> {{item.overcast}}</div>
+            </div>
+            {{#if item.hasTest}}
+            <div class="content-row" style="flex-grow:1;">
+                <div class="entry-horizontal"><strong>{{localize "SPELL.TEST"}}: </strong> {{item.Test}}</div>
+            </div>
+            {{/if}}
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "SPELL.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+        {{/if}}
+
+        {{#if item.isMiracle}}
+            <div class="content-row">
+                <div class="entry-vertical" style="width:50px">
+                    <div class="content-label-centered"><strong>{{localize "MIRACLE.COST"}}</strong></div>
+                    <div class="content-label-centered">{{item.cost}} Mettle</div>
+                </div>
+                <div class="entry-vertical" style="flex-grow:1;">
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.TARGET"}}: </strong> {{item.target}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.RANGE"}}: </strong> {{item.Range}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "MIRACLE.DURATION"}}: </strong> {{item.duration}}</div>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "MIRACLE.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+        {{/if}}
+
+        {{#if item.isTalent}}
+            <div class="content-row" style="flex-grow:1;">
+                <div class="entry-horizontal"><strong>{{localize "TALENT.REQUIREMENT"}}: </strong> {{item.requirement}}</div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "TALENT.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+        {{/if}}
+
+        {{#if item.isArmour}}
+            <div class="content-row">
+                <div class="entry-vertical" style="width:50px">
+                    <div class="content-label-centered"><strong>{{localize "ARMOUR.BENEFIT"}}</strong></div>
+                    <div class="content-label-centered">{{item.benefit}}</div>
+                </div>
+                <div class="entry-vertical" style="flex-grow:1;">
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "ARMOUR.REQUIREMENTS"}}: </strong> {{item.requirements}}</div>
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "ARMOUR.TRAITS"}}: </strong> {{{arrayDisplay item.Traits}}}</div>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "ARMOUR.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <strong>{{localize "ARMOUR.COST"}}: </strong> {{item.cost}}
+                </div>
+                <div class="entry-horizontal">
+                    <strong>{{localize "ARMOUR.AVAILABILITY"}}: </strong> {{item.Availability}}
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if item.isWeapon}}
+            <div class="content-row">
+                <div class="entry-vertical" style="width:50px">
+                    <div class="content-label-centered"><strong>{{localize "WEAPON.DAMAGE"}}</strong></div>
+                    <div class="content-label-centered">{{item.Damage}}</div>
+                </div>
+                <div class="entry-vertical" style="flex-grow:1;">
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "WEAPON.TRAITS"}}: </strong> {{{arrayDisplay item.Traits}}}</div>
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "WEAPON.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <strong>{{localize "WEAPON.COST"}}: </strong> {{item.cost}}
+                </div>
+                <div class="entry-horizontal">
+                    <strong>{{localize "WEAPON.AVAILABILITY"}}: </strong> {{item.Availability}}
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if item.isAethericDevice}}
+            <div class="content-row">
+                <div class="entry-vertical" style="width:50px">
+                    <div class="content-label-centered"><strong>{{localize "AETHERIC_DEVICE.DAMAGE"}}</strong></div>
+                    <div class="content-label-centered">{{item.damage}}</div>
+                </div>
+                <div class="entry-vertical" style="flex-grow:1;">
+                    <div class="segment-horizontal" style="text-align:right;"><strong>{{localize "AETHERIC_DEVICE.TRAITS"}}: </strong> {{{arrayDisplay item.Traits}}}</div>
+                </div>
+            </div>
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <strong>{{localize "AETHERIC_DEVICE.POWER_CAPACITY"}}: </strong> {{item.power.capacity}}
+                </div>
+                <div class="entry-horizontal">
+                    <strong>{{localize "AETHERIC_DEVICE.POWER_CONSUMPTION"}}: </strong> {{item.power.consumption}}
+                </div>
+            </div>
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "AETHERIC_DEVICE.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <strong>{{localize "AETHERIC_DEVICE.COST"}}: </strong> {{item.cost}}
+                </div>
+                <div class="entry-horizontal">
+                    <strong>{{localize "AETHERIC_DEVICE.AVAILABILITY"}}: </strong> {{item.Availability}}
+                </div>
+            </div>
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <strong>{{localize "AETHERIC_DEVICE.CRAFTING"}}: </strong> {{item.crafting}}
+                </div>
+                <div class="entry-horizontal">
+                    <strong>{{localize "AETHERIC_DEVICE.REQUIREMENTS"}}: </strong> {{item.requirements}}
+                </div>
+            </div>
+        {{/if}}
+
+        {{#if item.isRune}}
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "RUNE.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+        {{/if}}
+
+        {{#if item.isEquipment}}
+            <div class="content-wrapper">
+                <div class="content-label-centered"><strong>{{localize "EQUIPMENT.DESCRIPTION"}}</strong></div> 
+                {{{item.description}}}
+            </div>
+            <div class="content-row">
+                <div class="entry-horizontal">
+                    <strong>{{localize "EQUIPMENT.COST"}}: </strong> {{item.cost}}
+                </div>
+                <div class="entry-horizontal">
+                    <strong>{{localize "EQUIPMENT.AVAILABILITY"}}: </strong> {{item.Availability}}
+                </div>
+            </div>
+        {{/if}}
+    </div>
+</div>

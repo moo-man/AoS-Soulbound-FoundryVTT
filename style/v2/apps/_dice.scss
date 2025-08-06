@@ -1,0 +1,20 @@
+@use "../mixins" as *;
+
+.soulbound.dice-menu 
+{
+    .window-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .text {
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .dice-container {
+        margin: 1rem;
+        @include dice-container();
+    }
+}

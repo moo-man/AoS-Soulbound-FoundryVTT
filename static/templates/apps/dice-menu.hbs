@@ -1,0 +1,10 @@
+<div>
+    <p class="text">{{text}}</p>
+    <div class="dice-container">
+        {{#each test.result.dice}}
+            <a class="die" data-action="clickDie" data-index={{this.index}}>
+                <img class="dice-img" src="{{this.img}}">
+            </a>
+        {{/each}}
+    </div>
+</div>

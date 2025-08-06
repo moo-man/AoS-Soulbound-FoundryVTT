@@ -1,0 +1,22 @@
+{{> systems/age-of-sigmar-soulbound/templates/chat/base/base-result.hbs}}
+
+
+{{#if result.damage.total}}
+    <p><strong>{{localize "CHAT.DAMAGE"}}:</strong> {{result.damage.total}}</p>
+{{/if}}
+
+{{#if result.healing.toughness}}
+    <p><strong>{{localize "CHAT.TOUGHNESS_HEALED"}}:</strong> {{result.healing.toughness}}</p>
+{{/if}}
+
+
+{{#if result.duration}}
+    <p><strong>{{localize "CHAT.DURATION"}}:</strong> {{result.duration.value}}
+        {{result.duration.unit}}
+    </p>
+{{/if}}
+
+{{#if item.overcasts.length}}
+    <p><strong>{{localize "CHAT.OVERCAST"}}:</strong> {{item.OvercastString}}</p>
+{{/if}}
+{{> systems/age-of-sigmar-soulbound/templates/chat/base/base-targets.hbs}}
