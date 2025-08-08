@@ -291,11 +291,11 @@ AOS.getZoneTraitEffects = (region, getGreatestTrait) =>
         let systemEffects = game.aos.config.systemEffects;
         let flags = region.flags["age-of-sigmar-soulbound"] || {};
 
-        let cover = getGreatestTrait([flags.cover].concat(flags.effects?.map(i => i.system.zone.traits.cover)).filter(i => i));
-        let hazard = getGreatestTrait([flags.hazard].concat(flags.effects?.map(i => i.system.zone.traits.hazard)).filter(i => i));
-        let obscured = getGreatestTrait([flags.obscured].concat(flags.effects?.map(i => i.system.zone.traits.obscured)).filter(i => i));
-        let difficult = [flags.difficult].concat(flags.effects?.map(i => i.system.zone.traits.difficult)).some(i => i);
-        let ignoreArmour = [flags.ignoreArmour].concat(flags.effects?.map(i => i.system.zone.traits.ignoreArmour)).some(i => i);
+        let cover = getGreatestTrait([flags.traits.cover].concat(flags.effects?.map(i => i.system.transferData.zone.traits.cover)).filter(i => i));
+        let hazard = getGreatestTrait([flags.traits.hazard].concat(flags.effects?.map(i => i.system.transferData.zone.traits.hazard)).filter(i => i));
+        let obscured = getGreatestTrait([flags.obscured].concat(flags.effects?.map(i => i.system.transferData.zone.traits.obscured)).filter(i => i));
+        let difficult = [flags.traits.difficult].concat(flags.effects?.map(i => i.system.transferData.zone.traits.difficult)).some(i => i);
+        let ignoreArmour = [flags.traits.ignoreArmour].concat(flags.effects?.map(i => i.system.transferData.zone.traits.ignoreArmour)).some(i => i);
 
         if (cover)
         {

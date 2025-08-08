@@ -1,15 +1,31 @@
-export default class ActorConfigure extends FormApplication
+export default class ActorConfigForm extends WHFormApplication
 {
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            id: "actor-configure",
-            template : "systems/age-of-sigmar-soulbound/template/apps/actor-configure.hbs",
-            width:420
-        })
-    }
+    static DEFAULT_OPTIONS = {
+        classes : ["soulbound", "actor-config"],
+        window : {
+            title : "Configure Actor"
+        },
+        position : {
+            width: 500
+        }
+    };
+
+    static PARTS = {
+        form: {
+            template: "systems/age-of-sigmar-soulbound/templates/apps/actor-configure.hbs",
+            classes : ["standard-form"]
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    };
 
     
-    async _updateObject(event, formData) {
-        this.object.update(formData)
+    async _prepareContext(options)
+    {
+        let context = await super._prepareContext(options);
+        context.fields = this.document.system.schema.fields.settings.fields;
+        context.values = this.document.system.settings;
+        return context;
     }
 }

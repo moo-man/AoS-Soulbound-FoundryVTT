@@ -1,15 +1,14 @@
-import ZoneConfig from "./zone-config";
-
 export default class SoulboundActiveEffectConfig extends WarhammerActiveEffectConfig 
 {
-    systemTemplate="systems/impmal/templates/partials/effect-zones.hbs"
+    effectKeysTemplate = "systems/age-of-sigmar-soulbound/templates/apps/effect-key-options.hbs";
+
+    systemTemplate="systems/age-of-sigmar-soulbound/templates/partials/effect-zones.hbs"
 
     static DEFAULT_OPTIONS = {
         advancedActions : {
             zoneConfig : this._onZoneConfig
         }
     };
-
 
     static _onZoneConfig(ev, target)
     {

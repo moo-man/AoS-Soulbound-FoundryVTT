@@ -5,15 +5,6 @@ export class PlayerSheet extends StandardSoulboundActorSheet  {
 
     static DEFAULT_OPTIONS = {
         classes: ["player"],
-        window : {
-          controls : [
-            {
-              icon : 'fa-solid fa-wrench',
-              label : "Actor Settings",
-              action : "configureActor"
-            }
-          ],
-        },
         defaultTab : "stats"
       }  
       

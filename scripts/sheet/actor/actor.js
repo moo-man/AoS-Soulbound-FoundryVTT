@@ -1,29 +1,18 @@
-import ActorConfigure from "../../apps/actor-configure.js";
+import ActorConfigForm from "../../apps/actor-configure.js";
 import SpeedConfig from "../../apps/speed-config.js";
 
 export class SoulboundActorSheet extends WarhammerActorSheetV2 {
 
     static DEFAULT_OPTIONS = {
         classes: ["soulbound"],
-        window : {
-          controls : [
-            {
-              icon : 'fa-solid fa-wrench',
-              label : "Actor Settings",
-              action : "configureActor"
-            }
-          ],
-        },
         actions : {
             rollTest : this._onRollTest,
             toggleSummary : this._toggleSummary,
-            configureActor : this._onConfigureActor,
-            configureSpeed : this._configureSpeed,
-            toggleCondition: this._onToggleCondition,
+            configureSpeed : this._onConfigureSpeed,
             changeState : this._onChangeState
         },
         defaultTab : "main"
-      }   
+      }
 
     async _prepareContext(options) {
     const context = await super._prepareContext(options);
@@ -78,7 +67,7 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
     }
 
     _getContextMenuOptions()
-    { 
+    {
       let getParent = this._getParent.bind(this);
       return [
         {
@@ -111,7 +100,7 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             }
             else return false;
           },
-          callback: async li => 
+          callback: async li =>
           {
             let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
             const document = await fromUuid(uuid);
@@ -130,7 +119,7 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             }
             else return false;
           },
-          callback: async li => 
+          callback: async li =>
           {
             let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
             const document = await fromUuid(uuid);
@@ -149,7 +138,7 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             }
             else return false;
           },
-          callback: async li => 
+          callback: async li =>
           {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
               const document = await fromUuid(uuid);
@@ -168,7 +157,7 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             }
             else return false;
           },
-          callback: async li => 
+          callback: async li =>
           {
               let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
               if (uuid)
@@ -182,7 +171,7 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
       ];
     }
 
-    constructItemLists(context) 
+    constructItemLists(context)
     {
         context.items.equipped = {
             weapons : this.actor.itemTypes["weapon"].filter(i => i.equipped),
@@ -196,19 +185,19 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
         let key = target.dataset.condition;
         if (this.actor.hasCondition(key))
             this.actor.removeCondition(key)
-        else 
+        else
             this.actor.addCondition(key);
     }
 
     activateListeners(html) {
         super.activateListeners(html);
-        
+
         html.find(".wound-create").click(this._onWoundCreate.bind(this));
         html.find(".wound-delete").click(this._onWoundDelete.bind(this));
         html.find(".wound-edit").change(this._onWoundEdit.bind(this));
 
         html.find(".speed-config").click(this._onSpeedConfigClick.bind(this));
-   
+
         html.find(".item-trait").click(this._onTraitClick.bind(this))
     }
 
@@ -233,23 +222,28 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
     {
         switch(target.dataset.type)
         {
-        
-            case "attribute" : 
+
+            case "attribute" :
                 return this.actor.setupCommonTest({attribute : target.dataset.attribute})
-                case "skill" : 
+                case "skill" :
                 return this.actor.setupCommonTest({skill : target.dataset.skill})
-            case "weapon" : 
+            case "weapon" :
                 return this.actor.setupCombatTest(this._getId(ev, target))
-            case "attack" : 
+            case "attack" :
                 return this.actor.setupCombatTest(this._getId(ev, target))
-            case "spell" : 
+            case "spell" :
                 return this.actor.setupSpellTest(this._getId(ev, target))
-            case "miracle" : 
+            case "miracle" :
                 return this.actor.setupMiracleTest(this._getId(ev, target))
         }
     }
 
-    static _configureSpeed(ev) {
-        new SpeedConfig(this.actor).render(true)
-    }    
+    static _onConfigureSpeed(ev) {
+        new SpeedConfig(this.actor).render({force: true})
+    }
+
+    static _onConfigureActor(ev)
+    {
+        new ActorConfigForm(this.actor).render({force: true});
+    }
 }

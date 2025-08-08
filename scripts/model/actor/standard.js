@@ -21,6 +21,15 @@ export class StandardActorModel extends BaseSoulboundActorModel
             phials : new fields.NumberField({min : 0, initial : 0}),
             spheres : new fields.NumberField({min : 0, initial : 0})
         })
+
+        schema.settings = new fields.SchemaField({
+            autoCalc : new fields.SchemaField({
+                wounds : new fields.BooleanField({initial: true}),
+                toughness : new fields.BooleanField({initial: true}),
+                mettle : new fields.BooleanField({initial: true}),
+                tokenSize: new fields.BooleanField({initial: true})
+            })
+        })
         return schema;
     }
 
@@ -141,12 +150,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
     }
 
     get autoCalc() {
-        return {
-            toughness : true,
-            mettle : true,
-            wounds : true,
-            tokenSize : true
-        }
+        return this.settings.autoCalc;
     }
 
 }

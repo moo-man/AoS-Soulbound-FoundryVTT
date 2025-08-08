@@ -1,10 +1,12 @@
 <div class="counter-body">
 
+  {{#if party}}
   <div class="party">
     <a class="party" style="{{#unless party}} visibility: hidden;{{/unless}}">
       Linked to {{party.name}}
     </a>
   </div>
+  {{/if}}
 
   <div class="counter-controls">
     <a class="handle"><i class="fas fa-grip-horizontal"></i></a>

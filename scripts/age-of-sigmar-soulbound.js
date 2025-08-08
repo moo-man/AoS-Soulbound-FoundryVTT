@@ -7,7 +7,6 @@ import AOS from "./system/config.js"
 import Migration from "./system/migrations.js";
 import SoulboundUtility from "./system/utility.js";
 import SoulboundCounter from "./apps/counter.js";
-import { Level4TextPageSheet } from "./apps/journal-sheet.js";
 import { PlayerModel } from "./model/actor/player.js";
 import { NPCModel } from "./model/actor/npc.js";
 import { PartyModel } from "./model/actor/party.js";
@@ -41,6 +40,7 @@ import RuneSheet from "./sheet/item/types/rune.js";
 import { SoulboundTestMessageModel } from "./model/message/test.js";
 import { PostedItemMessageModel } from "./model/message/item.js";
 import { SoulboundChatMessage } from "./document/message.js";
+import ZoneConfig from "./apps/zone-config.js";
 
 Hooks.once("init", () => {
 
@@ -113,3 +113,4 @@ Hooks.once("init", () => {
 
 hooks();
 loadEffects();
+ZoneConfig.addRegionControls();

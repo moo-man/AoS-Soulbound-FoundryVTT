@@ -1,6 +1,6 @@
 export default {
     updateCounter : () => {
-        game.counter.render(true)
+        game.counter.render({force: true})
     },
 
     setCounter: async (data) => {
@@ -15,6 +15,6 @@ export default {
                 await game.settings.set("age-of-sigmar-soulbound", data.type, data.value)
             }
         }
-        game.counter.render(true)
+        game.counter.render({force: true})
     }
 }

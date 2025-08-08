@@ -1,197 +1,181 @@
-export default class SoulboundCounter extends Application {
+export default class SoulboundCounter extends HandlebarsApplicationMixin(ApplicationV2) {
+  
 
-    constructor(...args)
-    {
-      super(...args)
+  static DEFAULT_OPTIONS = {
+    id: "counter",
+    classes : ["warhammer", "soulbound"],
+    actions: {
+      stepValue : this._onStepValue
     }
+  };
 
-    static get defaultOptions() {
-      const options = super.defaultOptions;
-      options.id = 'counter';
-      options.template = 'systems/age-of-sigmar-soulbound/template/apps/counter.hbs';
-      options.popOut = true;
-      return options;
-    }
-    /* -------------------------------------------- */
-    /**
-     * Provide data to the HTML template for rendering
-     * @type {Object}
-     */
-    getData() {
-      const data = super.getData();
-      if(this.party)
+  static PARTS = {
+    counter: {
+        template: "systems/age-of-sigmar-soulbound/templates/apps/counter.hbs"
+      },
+  };
+
+
+  /* -------------------------------------------- */
+  /**
+   * Provide data to the HTML template for rendering
+   * @type {Object}
+   */
+  async _prepareContext(options) 
+  {
+    const context = await super._prepareContext(options);
+    if(this.party)
       {
-        data.party = this.party
-        data.soulfire = this.party.soulfire.value
-        data.doom = this.party.doom.value
+        context.party = this.party
+        context.soulfire = this.party.soulfire.value
+        context.doom = this.party.doom.value
       }
       else
       {
-        data.soulfire = game.settings.get('age-of-sigmar-soulbound', 'soulfire');
-        data.doom = game.settings.get('age-of-sigmar-soulbound', 'doom');
+        context.soulfire = game.settings.get('age-of-sigmar-soulbound', 'soulfire');
+        context.doom = game.settings.get('age-of-sigmar-soulbound', 'doom');
       }
-      data.canEdit =
-        game.user.isGM || game.settings.get('age-of-sigmar-soulbound', 'playerCounterEdit');
+      context.canEdit = game.user.isGM || game.settings.get('age-of-sigmar-soulbound', 'playerCounterEdit');
   
-      return data;
-    }
+      return context;
+  }
 
+  get hasFrame() {
+    return false;
+  }
 
-    render(force=false, options={})
+  render(options={})
+  {
+    let userPosition = game.settings.get("age-of-sigmar-soulbound", "counterPosition")
+    options.position = userPosition
+
+    if (options.position.hide)
     {
-      if (game.settings.get("age-of-sigmar-soulbound", "showCounter"))
-      {
-        let position = game.settings.get("age-of-sigmar-soulbound", "counterPosition")
-        options.top = position.top || window.innerHeight - 200;
-        options.left = position.left || 250;
-        super.render(force, options);
-      }
-    }
-
-    async _render(...args)
-    {
-      await super._render(...args)
-      delete ui.windows[this.appId]
-    }
-
-    close() {
       return
     }
-
-    setCounterDrag()
+    else 
     {
-      new Draggable(this, this._element, this._element.find(".handle")[0], false)
+      delete options.position.hide;
+      super.render(options);
     }
 
-    setPosition(...args)
-    {
-      super.setPosition(...args)
-      game.settings.set("age-of-sigmar-soulbound", "counterPosition", this.position)
-    }
-  
-    activateListeners(html) {
-      super.activateListeners(html);
-      
-
-      new Draggable(this, html, html.find(".handle")[0], false)
-  
-      html.find('input').focusin(ev => {
-        ev.target.select()
-      })
-      // Call setCounter when input is used
-      this.input = html.find('input').change(async ev => {
-        const type = $(ev.currentTarget).attr('data-type');
-        SoulboundCounter.setCounter(ev.target.value, type);
-      });
-  
-      // Call changeCounter when +/- is used
-      html.find('.incr,.decr').mousedown(async ev => {
-        let input = $(ev.target.parentElement).find("input")
-        const type = input.attr('data-type');
-        const multiplier = $(ev.currentTarget).hasClass('incr') ? 1 : -1;
-        $(ev.currentTarget).toggleClass("clicked")
-        let newValue = await SoulboundCounter.changeCounter(1 * multiplier, type);
-        input[0].value = newValue
-      });
-  
-      html.find('.incr,.decr').mouseup(ev => {
-        $(ev.currentTarget).removeClass("clicked")
-      });
-      
-
-      html.find(".party a").mousedown(async ev => {
-        if (ev.button == 0)
-          this.party.sheet.render(true)
-        else 
-        {
-          await game.settings.set('age-of-sigmar-soulbound', 'counterParty', "")
-          game.counter.render(true)
-        }
-      })
-
-      // html.mousedown(ev => {
-      //   this.position = duplicate(this.app.position);
-      //   this._initial = {x: event.clientX, y: event.clientY};
-
-      //       // Add temporary handlers
-      //     window.addEventListener(...this.handlers.dragMove);
-      //     window.addEventListener(...this.handlers.dragUp);
-      // })
-    }
-  
-    // ************************* STATIC FUNCTIONS ***************************
-  
-    /**
-     * Set the counter of (type) to (value)
-     * @param value Value to set counter to
-     * @param type  Type of counter, "momentum" or "doom"
-     */
-    static async setCounter(value, type) {
-      value = Math.round(value);
-
-      if (!game.user.isGM) {
-        game.socket.emit('system.age-of-sigmar-soulbound', {
-          type: 'setCounter',
-          payload: {value, type},
-        });
-      }
-      else if (this.party)
-      {
-        if (type == "soulfire")
-          await this.party.update({"system.soulfire.value" : parseInt(value)})
-        else
-          await this.party.update({"system.doom.value" : parseInt(value)})
-      }
-      else
-        await game.settings.set('age-of-sigmar-soulbound', type, value);
-      
-      // Emit socket event for users to rerender their counters
-      game.socket.emit('system.age-of-sigmar-soulbound', {type: 'updateCounter'});
-  
-      // Some actors have effects based on doom, rerender their sheets to reflect the change
-      if (type == "doom")
-        Object.values(ui.windows).filter(i => i instanceof ActorSheet).forEach(s => {
-          s.actor.reset()
-          s.render(true)
-        })
-
-      return value
-    }
-  
-    /**
-     * Change the counter of (type) by (value)
-     * @param diff How much to change the counter
-     * @param type  Type of counter, "momentum" or "doom"
-     */
-    static async changeCounter(diff, type) {
-      let value = this.getValue(type)
-      return await SoulboundCounter.setCounter(value + diff, type)
-    }
-
-    static getValue(type)
-    {
-      if (this.party)
-          return parseInt(this.party[type].value)
-      else 
-        return game.settings.get('age-of-sigmar-soulbound', type);
-    }
-
-    get soulfire()
-    {
-      return SoulboundCounter.getValue("soulfire")
-    }
-
-    get doom()
-    {
-      return SoulboundCounter.getValue("doom")
-    }
-
-    static get party() {
-      return game.actors.get(game.settings.get('age-of-sigmar-soulbound', 'counterParty'));
-    }
-
-    get party() {
-      return SoulboundCounter.party
-    }
-  
   }
+
+
+  setPosition(...args) {
+    super.setPosition(...args);
+    game.settings.set("age-of-sigmar-soulbound", "counterPosition", this.position)
+  }
+
+
+  close(options)
+  {
+    if (options.fromControls)
+    {
+      super.close(options);
+    }
+  }
+
+  async _onRender(options)
+  {
+    await super._onRender(options);
+    new foundry.applications.ux.Draggable.implementation(this, this.element, this.element.querySelector(".handle"), false)
+
+
+    let inputs = this.element.querySelectorAll("input")
+    inputs.forEach(input => {
+      input.addEventListener("change", ev => {
+        let counter = ev.target.dataset.counter;
+        this.constructor.setCounter(ev.target.value, counter);
+      });
+
+      input.addEventListener("mousedown", ev => {
+        ev.target.classList.add("clicked");
+      })
+
+      input.addEventListener("mouseup", ev => {
+        ev.target.classList.remove("clicked");
+      })
+
+      input.addEventListener("focusin", ev => {
+        ev.target.select();
+      })
+    })
+  }
+
+  static async  _onStepValue(ev, target)
+  {
+    let input = target.parentElement.querySelector("input");
+    let counter = input.dataset.counter;
+    let multiplier = target.dataset.type == "incr" ? 1 : -1;
+    target.classList.toggle("clicked");
+    let newValue = await this.constructor.changeCounter(1 * multiplier, counter);
+    input.value = newValue;
+  }
+
+  // ************************* STATIC FUNCTIONS ***************************
+
+  /**
+   * Set the counter of (type) to (value)
+   * @param value Value to set counter to
+   * @param type  Type of counter, "glory" or "ruin"
+   */
+  static async setCounter(value, type) {
+    value = Math.round(value);
+
+    if (!game.user.isGM) {
+      game.socket.emit('system.age-of-sigmar-soulbound', {
+        type: 'setCounter',
+        payload: {value, type},
+      });
+    }
+    else
+    {
+      game.settings.set('age-of-sigmar-soulbound', type, value);
+    }
+
+    return value
+  }
+
+  /**
+   * Change the counter of (type) by (value)
+   * @param diff How much to change the counter
+   * @param type  Type of counter, "glory" or "ruin"
+   */
+  static async changeCounter(diff, type) {
+    let value = game.settings.get('age-of-sigmar-soulbound', type);
+    return await this.setCounter(value + diff, type)
+  }
+
+
+  static getValue(type)
+  {
+      return game.settings.get('age-of-sigmar-soulbound', type);
+  }
+
+  get soulfire()
+  {
+    return this.getValue("glory")
+  }
+
+  get doom()
+  {
+    return this.getValue("ruin")
+  }
+
+}
+
+
+Hooks.on("ready", (app, html, options) => {
+  let button = document.createElement("li")
+  button.innerHTML = `<button class='control ui-control layer icon fa-solid fa-input-numeric' data-tooltip="${game.i18n.localize("CONTROLS.WNGCounterToggle")}"></button>`
+  button.addEventListener("click", ev => {
+    // Retain show/hide on refresh by storing in settings
+    let position = game.settings.get("age-of-sigmar-soulbound", "counterPosition")
+    position.hide = game.counter.rendered;
+    game.settings.set("age-of-sigmar-soulbound", "counterPosition", position);
+    
+    game.counter.rendered ? game.counter.close({fromControls : true}) : game.counter.render({force : true});
+  })
+  document.querySelector("#scene-controls-layers").append(button)
+})

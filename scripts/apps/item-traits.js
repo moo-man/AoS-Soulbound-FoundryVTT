@@ -1,21 +1,37 @@
-export default class ItemTraits extends FormApplication {
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            id: "item-traits",
-            template: "systems/age-of-sigmar-soulbound/template/apps/item-traits.hbs",
-            height: "auto",
-            width: 285,
-            title: game.i18n.localize("HEADER.ITEM_TRAITS"),
-            resizable : true
-        })
-    }
+export default class ItemTraits extends WHFormApplication
+{
+    static DEFAULT_OPTIONS = {
+        classes : ["soulbound", "item-traits"],
+        window : {
+            title : "Item Traits",
+            resizable: true
+        },
+        position : {
+            width: 300,
+            height: 600
+        },
+        form: {
+            handler: this.submit,
+            closeOnSubmit: true,
+            submitOnChange : false
+        }
+    };
 
-    getData() {
-        let data = super.getData();
-        data.custom = this.constructCustomString(this.object.traits);
-        data.traits = Object.keys(game.aos.config.traits).map(i => {
+    static PARTS = {
+        form: {
+            template: "systems/age-of-sigmar-soulbound/templates/apps/item-traits.hbs"
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    };
+
+    async _prepareContext() {
+        let context = await super._prepareContext(); 
+        context.custom = this.constructCustomString(this.document.system.traits);
+        context.traits = Object.keys(game.aos.config.traits).map(i => {
             try {
-                let existing = this.object.traits.find(t => t.name == i)
+                let existing = this.document.traits.find(t => t.name == i)
                 return {
                     display: game.aos.config.traits[i],
                     key: i,
@@ -31,27 +47,30 @@ export default class ItemTraits extends FormApplication {
                 }
             }
         })
-        return data
+        return context
     }
 
-
-    _updateObject(event, formData) {
+    static submit(event, form, formData)
+    {
         let newTraits = []
-        for (let key in formData) {
-            
-            if (key == "custom-traits")
-                newTraits = newTraits.concat(this.parseCustomTraits(formData[key]))
 
-            else if (formData[key] && !key.includes("value"))
+        for (let key in formData.object)
+        {
+            if (key == "custom-traits")
+                newTraits = newTraits.concat(this.parseCustomTraits(formData.object[key]))
+
+            else if (formData.object[key] && !key.includes("value"))
             {
-                let traitObj = { name: key }
-                if (formData[`${key}-value`])
-                    traitObj.value = formData[`${key}-value`]
+                let traitObj = { name : key}
+                let value = formData.object[`${key}-value`]
+                if (value)
+                    traitObj.value = Number.isNumeric(value) ? parseInt(value) : value
                 newTraits.push(traitObj)
             }
         }
-        this.object.update({ "system.traits": newTraits })
+        this.document.update({"system.traits" : newTraits})
     }
+
     parseCustomTraits(string)
     {
         let regex = /(.+?):(.+?)(\||$)/gm

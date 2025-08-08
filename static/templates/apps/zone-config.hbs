@@ -1,0 +1,37 @@
+<section class="tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+  <div class="form-group">
+    <label for="{{rootId}}-{{basePath}}.cover">{{localize "ZONE.COVER"}}</label>
+    <div class="form-fields">
+      <select name="{{basePath}}.cover" id="{{rootId}}-{{basePath}}.cover">
+        {{selectOptions (config "zoneCover") selected=traits.cover}}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="{{rootId}}-{{basePath}}.difficult">{{localize "ZONE.DIFFICULT_TERRAIN"}}</label>
+    <div class="form-fields">
+      <input type="checkbox" name="{{basePath}}.difficult" {{checked traits.difficult}} id="{{rootId}}-{{basePath}}.difficult">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="{{rootId}}-{{basePath}}.obscured">{{localize "ZONE.OBSCURED"}}</label>
+    <div class="form-fields">
+      <select name="{{basePath}}.obscured" id="{{rootId}}-{{basePath}}.obscured">
+        {{selectOptions (config "zoneObscured") selected=traits.obscured}}
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="{{rootId}}-{{basePath}}.hazard">{{localize "ZONE.HAZARD"}}</label>
+    <div class="form-fields">
+      <select name="{{basePath}}.hazard" id="{{rootId}}-{{basePath}}.hazard">
+        {{selectOptions (config "zoneHazard") selected=traits.hazard}}
+      </select>
+      <label>{{localize "ZONE.HAZARD_IGNORE_ARMOUR"}}</label>
+      <input type="checkbox" name="{{basePath}}.ignoreArmour" {{checked traits.ignoreArmour}} />
+    </div>
+  </div>
+</section>

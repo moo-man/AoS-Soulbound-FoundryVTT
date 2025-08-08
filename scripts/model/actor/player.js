@@ -95,11 +95,5 @@ export class PlayerModel extends StandardActorModel
             this.parent.update({"system.bio.archetype" : archetype.name, "system.bio.species" : archetype.species })
         }
     }
-
-    get autoCalc() {
-        return mergeObject(super.autoCalc, {
-            tokenSize : this.parent.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
-        })
-    }
 }
 

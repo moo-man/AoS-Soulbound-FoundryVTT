@@ -102,12 +102,11 @@ export class NPCModel extends StandardActorModel
     get isSwarm() {return this.bio.type === 0}
 
     get autoCalc() {
-        return {
-            toughness : this.bio.type > 1,
-            mettle :  this.bio.type > 2,
-            wounds :  this.bio.type > 3,
-            tokenSize : !this.isSwarm && this.parent.getFlag("age-of-sigmar-soulbound", "autoCalcTokenSize")
-        }
+        return mergeObject(super.autoCalc, {
+                toughness : this.bio.type > 1,
+                mettle :  this.bio.type > 2,
+                wounds :  this.bio.type > 3
+        })
     }
 }
 

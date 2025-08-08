@@ -1,25 +1,31 @@
-export default class SpeedConfig extends FormApplication 
+export default class SpeedConfig extends WHFormApplication
 {
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            id: "item-traits",
-            template : "systems/age-of-sigmar-soulbound/template/apps/speed-config.hbs",
-            height : "auto",
-            width : "auto",
-            title : game.i18n.localize("HEADER.SPEED_CONFIG"),
-            
-        })
-    }
+    static DEFAULT_OPTIONS = {
+        classes : ["soulbound", "speed-config"],
+        window : {
+            title : "Configure Speed"
+        },
+        position : {
+            width: 500
+        }
+    };
 
+    static PARTS = {
+        form: {
+            template: "systems/age-of-sigmar-soulbound/templates/apps/speed-config.hbs",
+            classes : ["standard-form"]
+        },
+        footer : {
+            template : "templates/generic/form-footer.hbs"
+        }
+    };
 
-    _updateObject(event, formData)
+    
+    async _prepareContext(options)
     {
-        this.object.update(formData)
-    }
-
-    activateListeners(html) {
-        super.activateListeners(html);
-
-
+        let context = await super._prepareContext(options);
+        context.fields = this.document.system.schema.fields.combat.fields.speeds.fields
+        context.values = this.document.system.combat.speeds;
+        return context;
     }
 }

@@ -1,0 +1,16 @@
+@use "../mixins" as *;
+
+.soulbound.item-traits {
+    .window-content {
+        height: 100%;
+        > div[data-application-part="form"] {
+            height: 100%;
+            overflow: auto;
+
+            .form-group {
+                
+            }
+        }
+
+    }
+}
