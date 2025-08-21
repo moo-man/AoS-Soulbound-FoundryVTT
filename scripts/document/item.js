@@ -1,3 +1,4 @@
+import { PostedItemMessageModel } from "../model/message/item.js";
 import SoulboundUtility from "../system/utility.js";
 
 export class SoulboundItem extends WarhammerItem {
@@ -107,6 +108,11 @@ export class SoulboundItem extends WarhammerItem {
         ChatMessage.applyRollMode(chatData, chatData.rollMode)
         ChatMessage.create(chatData);
     }
+
+    async postItem() {
+        PostedItemMessageModel.postItem(this)
+    }
+
 
     
     dropdownData()

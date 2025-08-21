@@ -1,0 +1,152 @@
+@use "./mixins" as *;
+body.soulbound-theme
+{
+    #interface {
+
+ 
+        --color-scheme: light;
+        --color-text-emphatic: var(--color-dark-1);
+        --color-text-primary: var(--color-dark-2);
+        --color-text-secondary: var(--color-dark-3);
+        --color-text-subtle: var(--color-dark-5);
+        --color-text-selection: var(--color-light-1);
+        --color-text-selection-bg: var(--color-dark-6);
+        /* Context Menu */
+        --content-link-background: #ddd;
+        --content-link-border-color: var(--color-dark-4);
+        --content-link-icon-color: var(--color-dark-6);
+        --content-link-text-color: var(--color-dark-2);
+        /* UI */
+        --sidebar-folder-color: #a19e78;
+
+        --color-text-accent: darkslategrey;
+
+    }
+
+
+
+
+
+    &.soulbound-font {
+        --font-text: "MinionPro";
+        --font-header: "Quadrant-Regular";
+        --font-sidebar: "PompeiStd";
+    }
+
+    --color-shadow-primary: var(--color-active);
+    --button-hover-background-color: var(--color-active);
+    --border: 2px solid #7c6c42;
+
+    input {
+        --input-placeholder-color: var(--color-header-blue);
+        --input-focus-outline-color: var(--color-header-blue);
+        --input-text-color: var(--color-header-blue);
+    }
+
+    .ui-control {
+
+        @include control;
+    }
+    
+    #players {
+        color: whitesmoke;
+        button {
+            color: whitesmoke;
+        }
+        #players-inactive,
+        #players-active {
+
+            background: url(./assets/image/header-background-vertical.webp) repeat;
+            border: 1px solid var(--color-header-gold);
+        }
+    }
+    
+    .action-buttons {
+        button {
+            @include button;
+        }
+    }
+
+    .divider {
+        &::before,
+        &::after {
+            border-color: var(--color-active);
+        }
+    }
+
+    
+    button {
+        --button-text-color: var(--color-header-blue);
+        --button-hover-background-color: var(--color-active);
+    }
+
+
+    .directory {
+        color: black;
+        font-family: var(--font-header);
+
+        .directory-item {
+            border-color: Var(--color-header-gold);
+        }
+
+        .directory-item.entry:hover {
+
+            --sidebar-entry-hover-bg: linear-gradient(90deg, #18305155, transparent);
+            // --sidebar-entry-hover-bg: linear-gradient(90deg, #806b3aAA, transparent)
+        }
+
+        .folder > .folder-header {
+            background: var(--color-header-blue);
+        }
+    }
+            
+    .sidebar-tab {
+        background: url(./assets/image/background.webp) repeat;
+        border-left: var(--border);
+        .directory-item {
+            padding-left: 5px;
+        }
+
+      }
+
+      .combat-sidebar {
+        .combat-control-lg {
+            @include button;
+        }
+        .combatant,
+        .encounter-title {
+            color: var(--color-header-blue);
+        }
+
+
+        .combatant {
+            font-family: var(--font-header);
+            background: #806b3a33;
+        }
+      }
+
+
+      #settings-popout .window-content,
+      #settings {
+        --color-text-primary: darkslategrey;
+        --color-text-emphatic: darkslategrey;
+        --color-text-subtle: var(--color-header-gold);
+        --color-text-secondary: var(--color-header-gold);
+        button,
+        a.button 
+        {
+            @include button;
+        }
+      }
+  
+      .controls-dropdown,
+      #context-menu {
+        --hover-entry-background: var(--color-header-blue);
+        --hover-text-color:  whitesmoke;
+
+        --border-color: darkslategrey;
+        background: url(./assets/image/input.webp) repeat;
+        color: darkslategrey
+      }
+}
+

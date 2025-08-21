@@ -1,0 +1,182 @@
+@use "./mixins" as *;
+body.soulbound-theme .application{
+   --color-text-primary: black;
+   --color-text-secondary: black;
+   --color-form-label : black;
+   --color-form-hint: var(--color-dark-5);
+   --color-form-label-hover: var(--color-header-gold);
+   --color-form-hint-hover: var(--color-header-gold);
+   --color-text-emphatic: var(--color-header-gold);
+   --color-scrollbar: #806b3a;
+   --color-scrollbar-track: #183051;
+
+
+
+   .window-content {
+      background: url(./assets/image/background.webp) repeat;
+   }
+
+   .window-header {
+      background-image: url(./assets/image/header-background.webp);
+      background-size: cover;
+      font-family: var(--font-header);
+      button {
+         --button-text-color: whitesmoke;
+      }
+
+   }
+
+   button {
+      --button-background-color: transparent;
+   }
+   
+
+   input[type=number],
+   input[type=text],
+   input[type=search] {
+      @include input();
+   }
+
+   select {
+      @include select();
+   }
+
+   .form-group {
+      select,
+      input[type=number],
+      input[type=text] {
+         border: var(--border);
+      }
+
+      button {
+         @include button;
+      }
+   }
+
+   .form-footer {
+      button {
+         @include button;
+      }
+   }
+
+   prose-mirror {
+      --menu-background: var(--color-header-blue);
+      padding: 0px 0.5rem;
+      @include editor-text;
+      button {
+         --button-background-color: darkslategray;
+         --button-border-color: var(--color-header-gold);
+         margin: 5px;
+         color: whitesmoke;
+         border: var(--border);
+
+      }
+   }
+
+
+
+
+   &.roll-table-sheet {
+      --table-row-color-even: rgba(0, 0, 0, 0.1);
+      --table-header-bg-color: transparent;
+      border: 1px solid var(--table-header-border-color);
+      color: whitesmoke;
+
+      .window-content {
+
+         button:not(.inline-control) {
+            @include button;
+         }
+      }
+
+      table {
+         background: none;
+
+         thead {
+            background: url('./assets/image/header-background.webp');
+            background-size: cover;
+
+            .inline-control {
+               color: whitesmoke;
+            }
+         }
+
+         td {
+            color: black;
+         }
+
+         td.details .description {
+            @include editor-text;
+         }
+      }
+   }
+
+   &.active-effect-config {
+      .script {
+         background: var(--color-header-blue);
+         color: whitesmoke;
+      }
+   }
+
+   &.category-browser {
+      aside {
+         button {
+            --button-hover-background-color: transparent;
+         }
+      }
+   }
+
+   &.compendium-directory {
+      .compendium-name strong {
+         font-weight: normal;
+         font-family: var(--font-header);
+      }
+      .window-header {
+         background: transparent;
+      }
+   }
+
+   &.zone-config {
+      --list-header: var(--color-header-blue);
+      --list-header-border: var(--color-header-gold);
+      
+      .list-header {
+         color: whitesmoke;
+      }
+   }
+
+   &.compendium-browser {
+      --items-section-background-color: transparent;
+      .items-header .item-name {
+         color: whitesmoke;
+      }
+   }
+}
+
+
+body.soulbound-theme .application.warhammer {
+   
+   nav.sheet-tabs {
+      border-top: 0px;
+      border-bottom: 0px;
+      height: 1.5rem;
+
+      a[data-tab]
+      {
+         padding: 0px;
+         font-weight: bold;
+         border-bottom: 2px solid transparent;
+         margin: 0px 0.5rem;
+         &.active {
+            //  background: inear-gradient(45deg, var(--color-active), var(--color-header-gold));
+             color: black;
+             border-bottom: var(--border);
+             border-color: var(--color-header-gold);
+             box-shadow: 0px 10px 10px -5px var(--color-active)
+         }
+         border-bottom-color: var(--color-header-gold);
+         background: none;
+     }
+
+  }
+}

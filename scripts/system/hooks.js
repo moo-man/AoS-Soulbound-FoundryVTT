@@ -1,3 +1,4 @@
+import SoulboundThemeConfig from "../apps/theme.js";
 import AOS_MacroUtil from "./macro.js"
 
 import Migration from "./migrations.js";
@@ -107,6 +108,23 @@ export default function registerHooks() {
         default: [],
         type: Array
       });
+
+      game.settings.registerMenu("age-of-sigmar-soulbound", "themeConfig", {
+        name: "WH.Theme.Config",
+        label : "WH.Theme.ConfigButton",
+        hint : "WH.Theme.ConfigHint",
+        icon: "fa-solid fa-table-layout",
+        scope: "user",
+        config: true,
+        type: SoulboundThemeConfig
+      });
+    
+      game.settings.register("age-of-sigmar-soulbound", "theme", {
+        name: "Theme",
+        scope: "client",
+        config: false,
+        type: SoulboundThemeConfig.schema
+    });
 
 
         game.macro = AOS_MacroUtil;
@@ -218,6 +236,8 @@ export default function registerHooks() {
 
     Hooks.on("ready", () => {
         Migration.checkMigration()
+        SoulboundThemeConfig.setTheme();
+
         game.counter.render({force: true})
 
         game.actors.contents.forEach(a => {

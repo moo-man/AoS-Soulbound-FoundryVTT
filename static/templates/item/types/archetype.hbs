@@ -26,14 +26,7 @@
                 <div class="core">
                     <label>{{localize "ARCHETYPE.CORE_SKILL"}}:</label>
                     <select name="system.skills.core">
-                        <option value=""></option>
-                        {{#select system.skills.core}}
-                            {{#each (config "skills") as |skill sk|}}
-                                {{#if (lookup ../skills sk)}}
-                                    <option value="{{sk}}">{{skill}}</option>
-                                {{/if}}
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions (config "skills") selected=system.skills.core blank=""}}
                     </select>
                 </div>
 
@@ -44,10 +37,10 @@
                 </div>
             </div>
             <div class="skill-selection">
-                {{#each (config "skills") as |skill sk|}}
+                {{#each (config "skills")}}
                     <div class="skill-group">
-                        <input type="checkbox" class="skill-checkbox" data-skill="{{sk}}" {{checked (lookup ../skills sk)}} />
-                        <label class="skill-label">{{skill}}</label>
+                        <input type="checkbox" data-action="toggleSkill" data-skill="{{@key}}" {{checked (includes @root.system.skills.list @key)}} />
+                        <label class="skill-label">{{this}}</label>
                     </div>
                 {{/each}}
             </div>
@@ -66,15 +59,7 @@
             {{> choiceDisplay system.equipment label='ARCHETYPE.EQUIPMENT' display=document.system.equipment.textDisplay path='equipment'}}
         </div>
 
-        <div class="box-row">
-            <div class="attribute-box">
-                <div class="label" style="grid-column: 1 / span 12">
-                    {{localize "ARCHETYPE.AQUA_GHYRANIS"}}
-                </div>
-
-                <div class="field" style="grid-column: 1 / span 12">{{formInput fields.aqua value=source.system.aqua}}</div>
-            </div>
-        </div>
+        {{formGroup fields.aqua value=source.system.aqua label="ARCHETYPE.AQUA_GHYRANIS" localize=true}}
     </div>
 
 </section>

@@ -1,0 +1,71 @@
+@use "./mixins" as *;
+body.soulbound-theme 
+{
+
+    // font-family: var(--font-text);
+
+
+    .chat-scroll {
+        --color-scrollbar: var(--color-header-gold);
+    }
+
+    .chat-message {
+        border: 2px solid darkslategrey;
+        background: none;
+        font-family: var(--font-text);
+
+        .title {
+                color: whitesmoke;
+                border-bottom: var(--border);
+                background-image: url(./assets/image/header-background.webp);
+                background-size: cover;
+                padding: 0.5rem;
+                font-family: var(--font-header);
+                h3, h4 {
+                    font-weight: normal;
+                    font-family: var(--font-header);
+                    color: whitesmoke;
+                }
+
+                h4 {
+                    font-size: var(--font-size-20);
+                }
+        }
+    }
+
+    .soulbound.chat.item,
+    .soulbound.chat.roll {
+        background: url(./assets/image/input.webp) repeat;
+        border-left: var(--border);
+        border-right: var(--border);
+        border-bottom: var(--border);
+        border-style: solid;
+
+        .test-results,
+        .dice-container {
+            padding: 0.5rem;
+            padding-bottom: 0px;
+        }
+
+        .overcast-buttons,
+        .test-buttons {
+            margin: 0px;
+            button {
+                @include button;
+                margin: 0.5rem;
+            }
+        }
+        
+    }
+
+    #chat-message {
+        background: var(--color-header-blue);
+        color: var(--color-active);
+        &:focus {
+            outline-color: var(--color-active);
+        }
+    }
+
+
+}
+

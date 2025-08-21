@@ -42,12 +42,15 @@
             </div>
 
         </div>
+        <div class="box-row">
+
         <div class="attribute-box">
                 <div class="label" style="grid-column: 1 / span 12">
                     {{localize "BIO.DISTINGUISHING_FEATURES"}}
                 </div>
                 <div class="field" style="grid-column: 1 / span 12"><input name="system.bio.distinguishingFeatures" type="text" value="{{system.bio.distinguishingFeatures}}"></div>
 
+        </div>
         </div>
     </div>
 
@@ -68,6 +71,41 @@
         </div>
         <div class="box-editor">
             {{formInput fields.bio.fields.background value=source.system.bio.background enriched=enriched.system.bio.background toggled=true}}
+        </div>
+    </div>
+
+    
+    <div class="sheet-list">
+        <div class="list-label">
+            <div class="list-controls"></div>
+            <div class="list-title">{{localize "TITLE.GOALS"}}</div>
+            <div class="flex"></div>
+            <div class="list-controls">
+                <a class="list-control" data-action="createItem" data-type="partyItem" data-category="shortGoal"><i class="fas fa-plus"></i></a>
+            </div>
+        </div>
+        <div class="list-content">
+            {{#each items.partyItem}}
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="row-content">
+                        <div class="list-name">
+                            {{#if this.system.state}}
+                                <a class="state completed active" data-action="toggleProperty" data-path="system.state" data-tooltip="GOAL.COMPLETED"><i class="far fa-check-circle"></i></a>
+                            {{else}}
+                                <a class="state" data-action="toggleProperty" data-path="system.state" data-tooltip="GOAL.IN_PROGRESS"><i class="far fa-circle"></i></a>
+                            {{/if}}
+                            <a class="label" data-action="editEmbedded">{{this.name}}</a>
+                        </div>
+                            <div class="flex">
+                                {{this.Category}}
+                            </div>
+                        <div class="list-controls">
+                            <a class="list-control context-menu"><i class="fa-regular fa-ellipsis-vertical"></i></a>
+                        </div>
+                    </div>
+                    {{> sheetButtons document=this}}
+                </div>
+            {{/each}}
         </div>
     </div>
 

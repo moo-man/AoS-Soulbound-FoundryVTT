@@ -285,6 +285,13 @@ AOS.premiumModules = {
 
 }
 
+AOS.badgeInfo = {
+    img : "systems/age-of-sigmar-soulbound/assets/badge.webp",
+    notes : "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/releases",
+    issues : "https://github.com/moo-man/AoS-Soulbound-FoundryVTT/issues",
+    wiki : "https://moo-man.github.io/AoS-Soulbound-FoundryVTT/pages/home.html",
+},
+
 AOS.getZoneTraitEffects = (region, getGreatestTrait) => 
     {
         let effects = [];

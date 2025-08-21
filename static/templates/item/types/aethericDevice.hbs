@@ -22,9 +22,9 @@
                 <div class="field" style="grid-column: 4 / span 3">{{formInput fields.damage value=source.system.damage}}</div>
                 <div class="field" style="grid-column: 7 / span 3">{{formInput fields.armour value=source.system.armour}}</div>
                 <div class="field power" style="grid-column: 10 / span 3">
-                    -<input name="system.power.consumption" type="number" value="{{system.power.consumption}}" data-dtype="Number" />
+                    <div class="flexrow">-<input name="system.power.consumption" type="number" value="{{system.power.consumption}}" data-dtype="Number" /></div>
                     <span>/</span>
-                    +<input name="system.power.capacity" type="number" value="{{system.power.capacity}}" data-dtype="Number" />
+                    <div class="flexrow">+<input name="system.power.capacity" type="number" value="{{system.power.capacity}}" data-dtype="Number" /></div>
                 </div>
             </div>
         </div>

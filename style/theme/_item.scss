@@ -1,0 +1,37 @@
+@use "./mixins" as *;
+body.soulbound-theme .application.soulbound.item.sheet {
+  
+
+   .box-row {
+      margin-bottom: 0px;
+   }
+
+
+   .item-test {
+      input:not([type=checkbox]),
+      select {
+         border-top: var(--border);
+      }
+   }
+
+   .field.power {
+      padding: 0px 0.5rem;
+      > * {
+         flex: 1;
+      }
+      span {
+         flex: 0.5;
+         text-align: center;
+      }
+   }
+
+   .overcasts {
+      .sheet-list {
+         .list-header {
+            font-size: var(--font-size-16);
+         }
+      }
+   }
+
+
+}

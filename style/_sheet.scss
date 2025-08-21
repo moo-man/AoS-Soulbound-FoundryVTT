@@ -1,0 +1,189 @@
+@use "./mixins" as *; 
+
+.theme-light .soulbound.sheet {
+    --list-title: var(--color-dark-3);
+    --divider: var(--color-dark-3);
+
+}
+
+.soulbound.sheet {
+    --condition-active: var(--color-warm-3);
+    --list-title: var(--color-cool-3);
+    --list-header: var(--color-cool-4);
+    --border: var(--color-cool-3);
+    --divider: var(--color-cool-3);
+
+    
+    .sheet-divider,
+    .box-header {
+        @include sheet-header;
+    }
+
+
+    &.item,
+    &.actor {
+        .sheet-header {
+            display: flex;
+            align-items: center;
+            .profile {
+                margin-right: 5px;
+            }
+            img {
+                width: 72px;
+                height: 72px;
+            }
+    
+            .header-rows {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+            }
+    
+            .header-name {
+                input {
+                    text-align: center;
+                }
+            }
+
+            .header-details {
+                display: flex;
+                gap: 0.5rem;
+                width: 100%;
+                .detail-group {
+                    
+                    flex: 1;
+                    > * {
+                        flex: 1;
+                    }
+                    &.experience
+                    {
+                        flex: 0.3
+                    }
+    
+                    select,
+                    input {
+                        text-align: center;
+                    }
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    
+    }
+
+    .box-section {
+
+        .box-row
+        {
+            margin-bottom: 0.5rem;
+            display: flex;
+            flex-wrap: wrap;
+            >:not(:first-child)
+            {
+                border-left: 0px;
+            }
+        }
+
+
+        .attribute-box {
+
+            .label {
+            }
+
+            border-bottom: 0px;
+
+
+            &.combat {
+                --rows: 3;
+            }
+
+                border-bottom: 1px solid var(--attribute-border);
+        }
+
+        .box-editor {
+
+            min-height: 10rem;
+            border: 1px solid var(--attribute-border);
+            border-top: 0px;
+            .editor-content {
+                padding: 0px 0.5rem;
+            }
+        }
+
+        .box-row + .box-editor {
+            margin-top: -0.5rem;
+        }
+    }
+
+    .sheet-list {
+
+        &.wounds {
+            .wound-header {
+                font-weight: bold;
+            }
+        }
+
+        .list-label {
+            display: flex;
+            border: 1px solid var(--list-header-border);
+            height: 1.5rem;
+            line-height: 1.5rem;
+            text-align: center;
+            justify-content: center;
+            
+            .list-title {
+                flex: 1;
+                color: white;
+            background: var(--list-title);
+            text-align: center;
+                width: 100%;
+            }
+
+            .list-controls {
+            background: var(--list-title);
+            flex: 0 0 2rem;
+            font-size: var(--font-size-16);
+            }
+
+            &.list-header {
+                flex-wrap: wrap;
+                height: 3rem;
+                .list-title  {
+                    flex: 0 0 100%;                    
+                }
+            }
+        }
+    }
+
+    .conditions {
+        display: flex;
+
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        .condition {
+            display: flex;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 0.2rem 0.5rem;
+            gap: 0.5rem;
+            img {
+                opacity: 0.7;
+            }
+            img {
+                width: 1rem;
+            }
+
+            &.active {
+                background: var(--condition-active);
+                img {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+}

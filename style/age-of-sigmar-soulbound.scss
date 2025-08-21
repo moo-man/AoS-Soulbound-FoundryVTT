@@ -1,7 +1,11 @@
-@use "./v2/actor/actor";
-@use "./v2/sheet";
-@use "./v2/item/item";
-@use "./v2/dialog";
-@use "./v2/chat/test";
-@use "./v2/apps/dice";
-@use "./v2/apps/apps";
+@use "./actor/actor";
+@use "./sheet";
+@use "./item/item";
+@use "./dialog";
+@use "./chat/test";
+@use "./apps/dice";
+@use "./apps/apps";
+@use "./chat/post";
+@use "./theme/theme";
+@use "./theme/apps" as theme-apps;
+@use "./theme/chat";

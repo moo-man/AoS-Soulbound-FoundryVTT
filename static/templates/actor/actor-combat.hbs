@@ -95,9 +95,8 @@
 
             <div class="sheet-list wounds">
                 <div class="sheet-list">
-                    <div class="list-header row-content">
-                        <div class="list-controls"></div>
-                        <div class="list-name">{{localize "WOUND.TYPE"}}</div>
+                    <div class="row-content wound-header">
+                        <div class="flex">{{localize "WOUND.TYPE"}}</div>
                         <div class="small">{{localize "WOUND.DAMAGE"}}</div>
                         <div class="list-controls">
                             <a class="list-control" data-action="listCreate" data-path="system.combat.wounds"><i class="fas fa-plus"></i></a>
@@ -107,7 +106,7 @@
                         {{#each system.combat.wounds}}
                             <div class="list-row" data-index="{{@key}}">
                                 <div class="row-content">
-                                    <div class="list-name rollable">
+                                    <div class="flex">
                                         <select data-action="editList" data-ipath="type" value="{{this.type}}">
                                             {{selectOptions (config "woundType") selected=this.type blank=""}}
                                         </select>

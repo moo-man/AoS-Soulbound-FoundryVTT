@@ -18,7 +18,7 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
     actions: {
       toggleSummary: this._toggleSummary,
       configureTraits: this._onConfigureTraits,
-      postItem: this._onPostItem,
+      postItem : function() {this.item.postItem()},
       toggleCondition: this._onToggleCondition,
       changeState: this._onChangeState
     },

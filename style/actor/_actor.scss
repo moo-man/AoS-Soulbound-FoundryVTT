@@ -1,0 +1,149 @@
+.application.soulbound.actor.sheet {
+
+    section[data-tab]
+    {
+        overflow: auto;
+    }
+
+
+    &.party {
+        .header-details {
+            .detail-group {
+                input {
+                    flex:  1;
+                }
+                label {
+                    flex: unset;
+                }
+            }
+        }
+    }
+
+    .sheet-list.skills {
+        border: 1px solid var(--attribute-border);
+        .list-header {
+            border: 0px;
+        }
+        .list-label {
+            background: var(--list-title);
+            color: white;
+        }
+        .list-content {
+
+            .list-row {
+                width: 50%;
+            }
+            flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            height: calc(24rem + 1px);
+        }
+    }
+
+    .attribute-box {
+
+        .melee,
+        .defence,
+        .accuracy {
+            display: flex;
+            justify-content: center;
+            input {
+                width: 50%;
+            }
+        }
+
+        .melee {
+            img {
+                content: url("./assets/image/melee.webp");
+            }
+        }
+        .defence {
+            img {
+                content: url("./assets/image/defence.webp");
+            }
+        }
+        .accuracy {
+            img {
+                content: url("./assets/image/accuracy.webp");
+            }
+        }
+    }
+
+
+    .combat.box-section {
+        .box-row {
+            gap: 0.5rem;
+        }
+
+        .field.bonus {
+            input {
+                width: 2rem;
+                margin-left: 0.5rem;
+            }
+        }   
+
+        .attribute-box {
+            border-bottom: 1px solid var(--attribute-border);
+            border-left: 1px solid var(--attribute-border);
+        }
+
+        .attribute-box:not(.single)
+        {
+            .field:not(.bonus) {
+                border-bottom: 1px solid var(--attribute-border);
+            }
+        }
+
+        .sheet-list.wounds {
+            flex: 1;
+        }
+    }
+
+
+    .list-label.list-header {
+        .list-controls {
+            background: none;
+        }
+    }
+
+    .sheet-list .list-content {
+        border: 1px solid var(--attribute-border);
+        border-top: 0px;
+    }
+    
+    .sheet-list {
+        .description {
+            padding: 0px 0.5rem;
+        }
+    }
+
+    [data-tab=combat] {
+
+        .item-trait
+        {
+            margin-left: 3px;       
+        }
+    }
+}
+
+body.theme-dark .application.soulbound.actor {
+
+    .attribute-box {
+        .melee {
+            img {
+                content: url("./assets/image/melee-white.webp");
+            }
+        }
+        .defence {
+            img {
+                content: url("./assets/image/defence-white.webp");
+            }
+        }
+        .accuracy {
+            img {
+                content: url("./assets/image/accuracy-white.webp");
+            }
+        }
+    }
+
+}

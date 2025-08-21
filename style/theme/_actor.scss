@@ -1,0 +1,145 @@
+@use "./mixins" as *;
+body.soulbound-theme .application.soulbound.actor.sheet {
+   --attribute-input: transparent;
+   --attribute-input-border: transparent;
+   --list-row-alternate: transparent;
+   --list-title: transparent;
+
+
+   .attribute-box {
+      .melee {
+          img {
+              content: url("./assets/image/melee-white.webp");
+          }
+      }
+      .defence {
+          img {
+              content: url("./assets/image/defence-white.webp");
+          }
+      }
+      .accuracy {
+          img {
+              content: url("./assets/image/accuracy-white.webp");
+          }
+      }
+  }
+
+  
+  .sheet-header {
+   .profile {
+      margin-right: -2rem;
+      z-index: 1;
+
+      border: var(--border);
+      border-radius: 50%;
+      background: url(./assets/image/input.webp) repeat;
+      background-clip: border-box;
+      overflow: hidden;
+      img {
+      transform: scale(1.2);
+      }
+   }
+}
+
+   
+
+   .sheet-list.skills {
+      .list-label {
+         @include sheet-header;
+      }
+      border-color: #7c6c42;
+      border-bottom: 0px;
+      .list-header {
+         background: none;
+         border-right: var(--border);
+         border-left: var(--border);
+         border-bottom: var(--border);
+         font-weight: bold;
+         font-family: Signika;
+         font-size: var(--font-size-16);
+         color: black;
+         height: 1.5rem;
+         line-height: 1.5rem;
+         .row-content {
+            padding-left: 0.3rem;
+         }
+         .row-content:first-of-type {
+            border-right: var(--border);
+         }
+      }
+
+      .list-row {
+         border-bottom: var(--border);
+         border-right: var(--border);
+         height: 1.5rem;
+         line-height: 1.5rem;
+         margin-bottom: 0px;
+         .list-name {
+            font-weight: normal;
+         }
+      }
+
+      .list-content {
+         height: calc(18rem + 1px);
+         border-bottom: 0px;
+         border-right: 0px;
+         padding: 0px;
+         .list-row {
+            margin-bottom: 0px;
+         }
+      }
+   }
+
+
+
+   .physical.box-section,
+   .combat.box-section {
+      border-left: var(--border);
+      border-bottom:  var(--border);
+      .box-header {
+
+      }
+      .box-row {
+         gap: 0px;
+         margin-bottom: 0px;
+         .attribute-box
+         {
+            border-left: 0px;
+            &:last-of-type {
+               border-right: 0px;
+            }
+         }
+
+         &:last-of-type {
+            .attribute-box {
+               border-bottom: none;
+            }
+         }
+      }
+
+
+      .attribute-box.single {
+         .field { border: none; }
+      }
+   }
+
+   .sheet-list.wounds {
+      border: var(--border);
+      border-top: none;
+      border-bottom: none;
+      .list-header {
+         --list-header : transparent;  
+         --list-header-border : transparent;  
+      }
+
+      .list-content {
+         border: none;
+      }
+
+      .row-content {
+         gap: 0.5rem;
+      }
+   }
+
+
+}

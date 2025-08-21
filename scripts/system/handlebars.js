@@ -12,12 +12,8 @@ export const initializeHandlebars = () => {
         "systems/age-of-sigmar-soulbound/templates/chat/base/base-targets.hbs",
         "systems/age-of-sigmar-soulbound/templates/chat/base/dice-container.hbs",
         "systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-result.hbs",
-        "systems/age-of-sigmar-soulbound/templates/chat/weapon/weapon-buttons.hbs",
-        "systems/age-of-sigmar-soulbound/templates/chat/weapon/secondary-weapon-buttons.hbs",
         "systems/age-of-sigmar-soulbound/templates/chat/spell/spell-result.hbs",
-        "systems/age-of-sigmar-soulbound/templates/chat/spell/spell-buttons.hbs",
         "systems/age-of-sigmar-soulbound/templates/chat/miracle/miracle-result.hbs",
-        "systems/age-of-sigmar-soulbound/templates/chat/miracle/miracle-buttons.hbs"
     ];
     loadTemplates(templatePaths);
     loadTemplates({

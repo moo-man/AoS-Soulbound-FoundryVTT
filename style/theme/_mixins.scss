@@ -1,0 +1,194 @@
+@mixin sheet-header() {
+   background: none;
+   font-size: 1.25rem;
+   height: 2rem;
+   color: whitesmoke;
+   border-bottom: 2px solid #7c6c42;
+   background-image: url(./assets/image/header-background.webp);
+   background-size: cover;
+   border-right: 2px solid #7c6c42;   
+   border-top: 2px solid #7c6c42;
+   font-family: var(--font-header);
+}
+
+@mixin input() {
+   --input-text-color: var(--color-dark-1);
+   --input-placeholder-color: var(--color-dark-3);
+   min-height: unset;
+   border: none;
+   outline: none;
+   border-radius: 5px;
+   background: rgba(0, 0, 0, 0.05);
+
+   &::selection {
+      background: #7c6c42;
+   }
+}
+
+@mixin select() {
+   border-radius: 0px;
+   background: none;
+   font-weight: normal;
+   outline: none;
+   color: black;
+   background: rgba(0, 0, 0, 0.05);
+   border: 1px solid var(--color-header-gold);
+}
+
+@mixin button() {
+   background: url(./assets/image/header-background-vertical.webp) repeat;
+   border: 3px solid var(--color-header-gold);
+   border-radius: 0px;
+   color: white;
+  
+   :not(i)
+   {
+      font-family: var(--font-sidebar);
+   }
+}
+
+@mixin control() {
+
+   transition: none;
+   --control-hover-bg-color: var(--color-active);
+   --control-active-bg-color: url(../systems/age-of-sigmar-soulbound/assets/image/background.webp) repeat;
+   --control-active-border-color: var(--color-active);
+   --control-active-icon-color: var(--color-header-blue);
+   --control-bg-color: url(../systems/age-of-sigmar-soulbound/assets/image/header.webp) repeat;
+   --control-border-color: var(--color-active);
+   --control-icon-color: var(--color-light-1);
+
+}
+
+
+@mixin editor-text() {
+
+   font-family: var(--font-text);
+   // color: var(--color-text);
+
+   color: black;
+
+   h1 {
+      font-family: var(--font-header);
+      text-transform: uppercase;
+      color: var(--color-header-gold);
+      font-size: var(--font-size-40);
+      text-align: center;
+      border: 2px solid var(--color-header-gold);
+      border-left: 0px;
+      border-right: 0px;
+      line-height: 1.6rem;
+      padding-top: 0.3rem;
+   }
+
+   h2 {
+      font-family: var(--font-header);
+      text-transform: uppercase;
+      font-size: var(--font-size-28);
+      color: var(--color-header-gold);
+      border-bottom: 2px solid var(--color-header-gold);
+   }
+
+   h3 {
+      font-family: var(--font-header);
+      font-size: var(--font-size-28);
+      font-variant: small-caps;
+      color: var(--color-header-blue);
+      border: none;
+   }
+
+   h3.like-h1 {
+      font-family: var(--font-header);
+      text-transform: uppercase;
+      color: var(--color-header-gold);
+      font-size: var(--font-size-40);
+      text-align: center;
+      border: 2px solid var(--color-header-gold);
+      border-left: 0px;
+      border-right: 0px;
+   }
+
+   .block h3 {
+      font-family: var(--font-header);
+      margin: 20px 0px;
+      text-align: center;
+      font-variant: small-caps;
+      font-size: var(--font-size-24);
+      border: none;
+      color: var(--color-header-gold)
+   }
+
+   .sidebar {
+      border-left: 3px solid darkgoldenrod
+   }
+
+   sidebar h4 {
+      text-transform: unset;
+      font-size: var(--font-size-16);
+   }
+
+   .sidebar h3 {
+      font-size: initial;
+   }
+
+   h4 {
+      font-family: var(--font-header);
+      border: none;
+      font-size: var(--font-size-20);
+      text-transform: uppercase;
+      color: var(--color-header-blue)
+   }
+
+   h5 {
+      font-family: var(--font-header);
+      border: none;
+      font-size: var(--font-size-16);
+      text-transform: uppercase;
+      color: black;
+      margin: 0 0 0.5rem;
+      font-weight: normal
+   }
+
+   .block {
+      background-color: black;
+      font-family: var(--font-sidebar);
+      color: white;
+      border: 5px solid transparent;
+      border-image: url(./assets/image/sidebar-border.webp) 8 8 8 8 repeat repeat;
+      margin-right: 10px;
+   }
+
+   /* .block::before,
+.journal-entry-page.text .block::before {
+    content: "";
+    background-image: url(./assets/image/block-top.webp) ;
+} */
+
+   table {
+      background: none;
+      border: 1px solid var(--color-header-gold);
+
+      .table-header {
+
+         background: url(./assets/image/header-background.webp);
+         background-size: cover;
+         text-transform: uppercase;
+         color: white;
+         font-family: var(--font-header);
+      }
+
+      td {
+         border: 1px solid var(--color-header-gold)
+      }
+      
+   }
+
+   a.content-link {
+      background: none;
+      i {
+         color: var(--color-header-gold);
+      }
+
+         color: var(--color-header-gold);
+   }
+}

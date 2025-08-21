@@ -118,7 +118,7 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
   /**
    * Set the counter of (type) to (value)
    * @param value Value to set counter to
-   * @param type  Type of counter, "glory" or "ruin"
+   * @param type  Type of counter, "soulfire" or "doom"
    */
   static async setCounter(value, type) {
     value = Math.round(value);
@@ -140,7 +140,7 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
   /**
    * Change the counter of (type) by (value)
    * @param diff How much to change the counter
-   * @param type  Type of counter, "glory" or "ruin"
+   * @param type  Type of counter, "soulfire" or "doom"
    */
   static async changeCounter(diff, type) {
     let value = game.settings.get('age-of-sigmar-soulbound', type);
@@ -155,12 +155,12 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
 
   get soulfire()
   {
-    return this.getValue("glory")
+    return this.constructor.getValue("soulfire")
   }
 
   get doom()
   {
-    return this.getValue("ruin")
+    return this.constructor.getValue("doom")
   }
 
 }

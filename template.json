@@ -480,7 +480,8 @@
   "ChatMessage" : {
     "types" : [
       "base",
-      "test"
+      "test",
+      "item"
     ]
   }
 }

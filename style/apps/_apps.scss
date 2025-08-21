@@ -1,0 +1,59 @@
+@use "./dice";
+@use "./item-traits";
+
+
+.application#counter {
+    width: 220px;
+
+    .counter-body {
+        position: relative;
+    }
+
+    .handle {
+        &:hover {
+            cursor: move;
+            text-shadow: none;
+        }
+        
+    }
+
+    .window-header {
+        display: none;
+    }
+
+        .counter-body {
+        padding: 0.5rem;
+        font-size: var(--font-size-12);
+    }
+    .counters {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        .counter {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            align-items: center;
+            h3 {
+                margin: 0.5rem;
+                font-size: var(--font-size-20);
+            }
+            .input-controls {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 0.5rem;
+                input {
+                    padding: 0px;
+                    height: 1.5rem;
+                    width: 1.5rem;
+                }
+            }
+        }
+    }
+    
+    .counter-controls {
+        position: absolute;
+        right: 6px;
+    }
+}

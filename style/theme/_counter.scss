@@ -1,0 +1,39 @@
+body.soulbound-theme #counter {
+    .counter-body {
+        background: url(/systems/age-of-sigmar-soulbound/assets/image/background.webp) repeat;
+        border: 2px solid var(--color-header-gold);
+        border-radius: 0px;
+        box-shadow: 0 0 15px inset;
+        color: var(--color-header-blue);
+        input,
+        h3 {
+            font-family: var(--font-header);
+            font-weight: normal;
+            color: var(--color-header-blue);
+        }
+    }
+
+    .input-controls {
+        a {
+            background: url(./assets/image/header-background-vertical.webp);
+            border: 1px outset var(--color-active);
+            color: var(--color-active);
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+        }
+
+        input {
+            text-align: center;
+            width: 30px;
+            border: 1px outset var(--color-active);
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 0px;
+        }
+
+        a.clicked {
+            border: 1px inset var(--color-active);
+        }
+    }
+}

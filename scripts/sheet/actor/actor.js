@@ -9,7 +9,8 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             rollTest : this._onRollTest,
             toggleSummary : this._toggleSummary,
             configureSpeed : this._onConfigureSpeed,
-            changeState : this._onChangeState
+            changeState : this._onChangeState,
+            toggleCondition: this._onToggleCondition
         },
         defaultTab : "main"
       }

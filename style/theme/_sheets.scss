@@ -1,0 +1,201 @@
+@use "./mixins" as *;
+
+body.soulbound-theme .application.soulbound.sheet {
+      --tab-color: transparent;
+      --border: 2px solid #7c6c42;
+      --attribute-input: transparent;
+      --attribute-input-border: transparent;
+      --condition-active: linear-gradient(270deg, var(--color-header-gold), var(--color-active));
+      --list-row-alternate: transparent;
+      --form-input: url(./assets/image/input.webp) repeat;
+      --name-label: rgba(0, 0,0, 0.05);
+      --form-label: rgba(0, 0,0, 0.05);
+      --name-bg: url(./assets/image/input.webp) repeat;
+      --name-border: var(--color-header-blue);
+      --attribute-border: var(--color-header-blue);
+
+
+     .editor-section .header,
+     .list-label,
+     .list-header,
+     .attribute-box .title,
+     .sheet-divider,
+     .box-header {
+        line-height: 2rem;
+        @include sheet-header
+     }
+
+     .sheet-header {
+      select,
+      input {
+         height: 1.5rem;
+      }
+
+      .header-name {
+
+         background-image: url('./assets/image/header-background.webp');
+         background-size: cover;
+         border: var(--border);
+         box-sizing: content-box;
+         input {
+            --input-text-color: white;
+            height: 2rem;
+            line-height: 1.5rem;
+            font-weight: bold;
+         }
+      }
+
+      .header-details {
+         border: var(--border);
+         border-top: none;
+         padding: 0px 0.5rem;
+         .detail-group:not(:last-of-type) {
+            padding-right: 0.5rem;
+            border-right: var(--border);
+         }
+      }
+
+      .header-rows {
+         box-sizing: content-box;
+
+               gap: 0px;
+            > * {
+               height: 2rem;
+            }
+      }
+   }
+
+
+     .conditions {
+      .condition {
+         border: var(--border);
+         &.active {
+            color: white;
+         }
+      }
+     }
+
+   input {
+      @include input;
+      // padding: 0px;
+   }
+
+   select {
+      @include select;
+   }
+
+   
+   .sheet-list {
+      .list-content {
+         background: url(./assets/image/input.webp) repeat;
+         border: var(--border);
+         border-top: 0px;
+         padding-top: 0.3rem;
+         .list-row {
+            padding-left: 0.3rem;
+         }
+         .list-row:last-of-type {
+            padding-bottom: 0.3rem;
+         }
+         .list-row:not(:last-of-type) {
+            border-bottom: 3px groove rgba(0, 0, 0, 0.05);
+         }
+      }
+
+      .list-name {
+         font-weight: bold;
+      }
+
+      .list-label.list-header {
+         height:  3rem;
+         .list-title {
+            line-height: 1.5rem;
+         }
+         .list-name {
+            font-weight: normal;
+         }
+         :not(.list-title)
+         {
+            font-size: var(--font-size-12);
+            line-height: normal
+         }
+
+      }
+
+      input {
+         height: 1.5rem;
+         @include input;
+      }
+   
+      select {
+         height: 1.5rem;
+         @include select;
+      }
+
+      .list-controls {
+         color: darkslategrey
+      }
+
+      .list-header .list-controls,
+      .list-label .list-controls {
+         color: whitesmoke;
+      }
+
+      .description {
+         @include editor-text;
+      }
+   }
+
+
+   .attribute-box {
+      background: url(./assets/image/input.webp) repeat;
+      border: var(--border);
+      border-top: none;
+      border-right: none;
+      &.titled {
+         --title-height: 2rem;
+      }
+      .label {
+         font-weight: bold;
+         border-bottom: 0px;
+         &:not(:last-of-type)
+         {
+            border-right: var(--border);
+         }
+      }
+      .field {
+         border-right: var(--border);
+         background: rgba(0, 0, 0 ,0.05);
+         input {
+
+         }
+      }
+
+      input,
+      select {
+         border-bottom:  0px;
+         border-left: 0px;
+         border-right: 0px;
+         background: transparent;
+         border-radius: 0px;
+         border-top-width: 2px;
+      }
+      input + select {
+         border-left: var(--border);
+      }
+   }
+
+
+     
+   .editor-section .header {
+      text-align: center;
+   }
+   
+
+     .box-editor,
+     .editor-section prose-mirror{
+         border: var(--border);
+         border-top: none;
+         background: url(./assets/image/input.webp) repeat;           
+     }
+}

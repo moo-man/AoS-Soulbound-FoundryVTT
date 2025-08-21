@@ -1,0 +1,44 @@
+@use "./mixins" as *;
+
+body.soulbound-theme {
+    .application.journal-entry {
+
+        header .title {
+            margin: 0;
+            background: rgba(0, 0, 0, 0.1);
+            font-size: var(--font-size-32);
+            border-radius: 0px;
+            font-family: var(--font-header);
+            color: var(--color-header-gold);
+            border: 2px solid var(--color-header-gold);
+            border-left: 0px;
+            border-right: 0px;
+        }
+
+        .journal-sidebar {
+            font-family: var(--font-text);
+            color: black;
+            border-right: var(--border);
+
+            .toc {
+                .page-heading .page-title:hover {
+                    text-shadow: 0 0 8px var(--color-active);
+                }
+
+                li.page {
+                    border-top: 1px solid var(--color-header-gold);
+                    border-bottom: none;
+                    &:last-of-type
+                    {
+                        border-bottom: 1px solid var(--color-header-gold);
+                    }
+                }
+            }
+        }
+
+        .journal-entry-content {
+            background: none;   
+            @include editor-text;
+        }
+    }
+}
