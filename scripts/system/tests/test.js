@@ -24,7 +24,8 @@ export default class SoulboundTest extends WarhammerTestBase {
                 rollClass : this.constructor.name,
                 focusAllocated : false,
                 messageId : undefined,
-                rollMode : data.rollMode
+                rollMode : data.rollMode,
+                flags: data.context?.flags || {}
             },
             result : {}
         }
@@ -58,6 +59,10 @@ export default class SoulboundTest extends WarhammerTestBase {
             result.index = i;
         })
         this.computeResult()   
+        if (this.item)
+        {
+            this.context.description = await TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
+        }
         await this.promptAllocation();
         await this.runPostScripts()
     }

@@ -33,6 +33,29 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
         return expandObject(enrichment)
     }
 
+    
+    _addEventListeners()
+    {
+        super._addEventListeners();
+
+        this.element.querySelectorAll(".rollable").forEach(element => {
+            element.addEventListener("mouseenter", ev => {
+            let img = ev.target.matches("img") ? ev.target : ev.target.querySelector("img") ;
+            if (img)
+            {
+                this._icon = img.src;
+                img.src = "systems/age-of-sigmar-soulbound/assets/image/dice.svg";
+            }
+            })
+            element.addEventListener("mouseleave", ev => {
+            let img = ev.target.matches("img") ? ev.target : ev.target.querySelector("img") ;
+            if (img)
+            {
+                img.src = this._icon;
+            }
+            })
+        });
+    }
 
     _addWoundImages(context)
     {
@@ -79,33 +102,6 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
             const document = await fromUuid(uuid);
             document.sheet.render(true);
-          }
-        },
-        {
-          name: "Remove",
-          icon: '<i class="fas fa-times"></i>',
-          condition: li => {
-            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
-            if (uuid)
-            {
-              let parsed = foundry.utils.parseUuid(uuid);
-              if (parsed.type == "ActiveEffect")
-              {
-                return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
-              }
-              else if (parsed.type)
-              {
-                return true;
-              }
-              return false;
-            }
-            else return false;
-          },
-          callback: async li =>
-          {
-            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-            const document = await fromUuid(uuid);
-            document.delete();
           }
         },
         {
@@ -168,7 +164,34 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
                 doc.system.split(amt);
               }
           }
-        }
+        },
+        {
+          name: "Remove",
+          icon: '<i class="fas fa-times"></i>',
+          condition: li => {
+            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid
+            if (uuid)
+            {
+              let parsed = foundry.utils.parseUuid(uuid);
+              if (parsed.type == "ActiveEffect")
+              {
+                return parsed.primaryId == this.document.id; // If an effect's parent is not this document, don't show the delete option
+              }
+              else if (parsed.type)
+              {
+                return true;
+              }
+              return false;
+            }
+            else return false;
+          },
+          callback: async li =>
+          {
+            let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+            const document = await fromUuid(uuid);
+            document.delete();
+          }
+        },
       ];
     }
 
@@ -190,17 +213,16 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             this.actor.addCondition(key);
     }
 
-    activateListeners(html) {
-        super.activateListeners(html);
-
-        html.find(".wound-create").click(this._onWoundCreate.bind(this));
-        html.find(".wound-delete").click(this._onWoundDelete.bind(this));
-        html.find(".wound-edit").change(this._onWoundEdit.bind(this));
-
-        html.find(".speed-config").click(this._onSpeedConfigClick.bind(this));
-
-        html.find(".item-trait").click(this._onTraitClick.bind(this))
+    
+    /**
+     * Prevent effects from stacking up each form submission
+   * @override
+   */
+    async _processSubmitData(event, form, submitData) {
+      let diffData = foundry.utils.diffObject(this.document.toObject(false), submitData)
+      await this.document.update(diffData);
     }
+  
 
 
     static async _onChangeState(ev, target) {
@@ -236,6 +258,8 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
                 return this.actor.setupSpellTest(this._getId(ev, target))
             case "miracle" :
                 return this.actor.setupMiracleTest(this._getId(ev, target))
+            default : 
+              return this.actor.setupAbilityUse(this._getUUID(ev, target))
         }
     }
 
@@ -246,5 +270,12 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
     static _onConfigureActor(ev)
     {
         new ActorConfigForm(this.actor).render({force: true});
+    }
+
+    static async _toggleSummary(ev) 
+    {
+        ev.preventDefault();
+        let document = this._getDocument(ev);
+        this._toggleDropdown(ev, await TextEditor.enrichHTML(document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
     }
 }

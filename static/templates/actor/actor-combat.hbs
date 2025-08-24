@@ -4,16 +4,16 @@
         <div class="box-row">
             <div class="attribute-box">
                 <div class="label melee" style="grid-column: 1 / span 4">
-                    <img src="systems/age-of-sigmar-soulbound/asset/image/melee.webp" width="24" height="24" /> 
+                    <img src="systems/age-of-sigmar-soulbound/assets/image/melee.webp" width="24" height="24" /> 
                     <input type="text" value="{{system.combat.melee.ability}}" disabled />
                 </div>
 
                 <div class="label accuracy" style="grid-column: 5 / span 4">
-                    <img src="systems/age-of-sigmar-soulbound/asset/image/accuracy.webp" width="24" height="24" />
+                    <img src="systems/age-of-sigmar-soulbound/assets/image/accuracy.webp" width="24" height="24" />
                     <input type="text" value="{{system.combat.accuracy.ability}}" disabled />
                 </div>
                 <div class="label defence" style="grid-column: 9 / span 4">
-                    <img src="systems/age-of-sigmar-soulbound/asset/image/defence.webp" width="24" height="24" /> 
+                    <img src="systems/age-of-sigmar-soulbound/assets/image/defence.webp" width="24" height="24" /> 
                     <input type="text" value="{{system.combat.defence.ability}}" disabled />
                 </div>
 
@@ -142,7 +142,7 @@
                     <div class="row-content">
                         <div class="list-name rollable">
                             <img src="{{this.img}}" data-action="rollTest" data-type="attack">
-                            <a class="label">{{this.name}}</a>
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
 
                         <div>{{this.system.damage}}</div>
@@ -151,6 +151,9 @@
                         </div>
                     </div>
                     {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
                 </div>
             {{/each}}
         </div>
@@ -165,11 +168,14 @@
                 <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
                     <div class="row-content">
                         <div class="list-name rollable">
-                            <img src="{{this.img}}" data-action="rollTest" data-type="ability">
-                            <a class="label">{{this.name}}</a>
+                            <img src="{{this.img}}" data-action="rollTest">
+                            <a class="label" data-action="toggleSummary">{{this.name}}</a>
                         </div>
                     </div>
                     {{> sheetButtons document=this}}
+                    <div class="dropdown-content collapsed">
+
+                    </div>
                 </div>
             {{/each}}
         </div>
@@ -193,7 +199,7 @@
                             <img src="{{this.img}}" data-action="rollTest" data-type="spell">
                             <a class="label">{{this.name}}</a>
                         </div>
-                        <div>{{this.system.Damage}}</div>
+                        <div>{{this.Damage}}</div>
                         <div>{{this.system.target}}</div>
                         <div>{{this.system.Duration}}</div>
                         <div> {{"POWER.DN"}} {{this.system.dn}}</div>

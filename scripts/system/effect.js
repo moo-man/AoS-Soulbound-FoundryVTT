@@ -22,14 +22,18 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             test = this.item.system.test
         }
 
-        return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+        if (test)
+        {
+            return `DN ${test.dn} ${game.aos.config.attributes[test.attribute]} (${game.aos.config.skills[test.skill]})`
+        }
+        else return "";
     }
 
     async resistEffect() {
         let actor = this.actor;
 
-        // If no owning actor, no test can be done
-        if (!actor) {
+        // If no owning actor, no test can be done, or if an item directly owns the effect
+        if (!actor || this.parent.documentName == "Item") {
             return false;
         }
 
@@ -40,7 +44,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             return false;
         }
 
-        let options = {
+        let context = {
             appendTitle: " - " + this.name,
             skipTargets: true
         };
@@ -51,18 +55,27 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             return await script.execute();
         }
         else if (transferData.avoidTest.value == "item") {
-            test = await this.actor.setupTestFromItem(this.system.sourceData.item, options);
+            // let item = this.sourceItem?.toObject();
+            // if (item && item.system.test.difficulty.complexity == "S")
+            // {
+            //     context.fields = {complexity : 1 + this.sourceTest.result.degree};
+            // }
+            test = await this.actor.setupTestFromItem(this.system.sourceData.item, context);
         }
         else if (transferData.avoidTest.value == "custom") {
             let dnObject = SoulboundUtility.DNToObject(transferData.avoidTest.dn)
-            options.fields = dnObject;
-            test = await this.actor.setupCommonTest({ attribute: transferData.avoidTest.attribute, skill: transferData.avoidTest.skill }, options)
+            if (dnObject.complexity == "S")
+            {
+                dnObject.complexity = 1 + this.sourceTest.result.degree;
+            }
+            context.fields = dnObject;
+            test = await this.actor.setupCommonTest({ attribute: transferData.avoidTest.attribute, skill: transferData.avoidTest.skill }, context)
         }
 
         if (!transferData.avoidTest.reversed) {
             // If the avoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed) {
-                // TODO
+                return test.result.successes >= this.sourceTest?.result.successes
             }
             else {
                 return test.succeeded
@@ -72,7 +85,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
         {
             // If the avoid test is marked as opposed, it has to win, not just succeed
             if (transferData.avoidTest.opposed) {
-                // TODO
+                return test.result.successes < this.sourceTest?.result.successes
             }
             else {
                 return !test.succeeded;
@@ -144,12 +157,12 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
     }
 
     get source() {
-        if (!this.origin?.includes("Drawing"))
+        if (!this.origin?.includes("Region"))
             return super.source
         else {
-            let drawing = fromUuidSync(this.origin);
-            if (drawing) {
-                return drawing.text;
+            let region = fromUuidSync(this.origin);
+            if (region) {
+                return region.name;
             }
             else {
                 return super.source;
@@ -159,5 +172,20 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
 
     get isCondition() {
         return CONFIG.statusEffects.map(i => i.id).includes(Array.from(this.statuses)[0])
+    }
+
+    get zoneTags() 
+    {
+            return this.sourceZone?.flags[game.system.id]?.traits?.tags?.split(",").map(i => i.toLowerCase().trim()) || []
+    }
+
+    get sourceTest() 
+    {
+        let testData = this.system.sourceData.test.data;
+        if (testData)
+        {
+            let message = game.messages.get(testData.context?.messageId);
+            return message? message.system.test : game.wng.rollClasses[testData.class].recreate(testData);  
+        }
     }
 }

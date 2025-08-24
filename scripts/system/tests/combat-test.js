@@ -106,6 +106,7 @@ export default class CombatTest extends SoulboundTest {
 
         let damage = {
             total : 0,
+            tags : [],
             armour: this.testData.combat.armour,
             traitEffects : [] 
         }

@@ -9,6 +9,12 @@ body.soulbound-theme
         --color-scrollbar: var(--color-header-gold);
     }
 
+    #chat-notifications {
+        .chat-message {
+            background: url(./assets/image/background.webp) repeat;
+        }
+    }
+
     .chat-message {
         border: 2px solid darkslategrey;
         background: none;
@@ -31,16 +37,33 @@ body.soulbound-theme
                     font-size: var(--font-size-20);
                 }
         }
+
+        .message-header {
+            align-items: center;
+        
+            .message-token {
+              margin-right: 0.5rem;
+              display: flex;
+              flex: 0 0 50px;
+        
+              img {
+                height: 50px;
+                width: 50px;
+              }
+            }
+          }
     }
 
     .soulbound.chat.item,
     .soulbound.chat.roll {
+        margin-top: 0.5rem;
         background: url(./assets/image/input.webp) repeat;
         border-left: var(--border);
         border-right: var(--border);
         border-bottom: var(--border);
         border-style: solid;
 
+        .description,
         .test-results,
         .dice-container {
             padding: 0.5rem;
@@ -50,11 +73,14 @@ body.soulbound-theme
         .overcast-buttons,
         .test-buttons {
             margin: 0px;
+            margin-bottom: 0.5rem;
             button {
                 @include button;
-                margin: 0.5rem;
+                margin: 0px 0.5rem;
             }
         }
+
+        @include editor-text;
         
     }
 

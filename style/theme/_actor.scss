@@ -4,22 +4,23 @@ body.soulbound-theme .application.soulbound.actor.sheet {
    --attribute-input-border: transparent;
    --list-row-alternate: transparent;
    --list-title: transparent;
+   --hover-bg: var(--color-header-blue);
 
 
    .attribute-box {
       .melee {
           img {
-              content: url("./assets/image/melee-white.webp");
+              content: url("./assets/image/melee.webp");
           }
       }
       .defence {
           img {
-              content: url("./assets/image/defence-white.webp");
+              content: url("./assets/image/defence.webp");
           }
       }
       .accuracy {
           img {
-              content: url("./assets/image/accuracy-white.webp");
+              content: url("./assets/image/accuracy.webp");
           }
       }
   }
@@ -141,5 +142,16 @@ body.soulbound-theme .application.soulbound.actor.sheet {
       }
    }
 
+   .sheet-list {
+      @include editor-text;
+
+      .rollable {
+         &:hover {
+            img {
+               border: 2px solid var(--color-header-blue);
+            }
+         }
+      }
+   }
 
 }

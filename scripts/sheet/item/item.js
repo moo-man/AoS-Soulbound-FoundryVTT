@@ -84,16 +84,6 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
         }
       },
       {
-        name: "Remove",
-        icon: '<i class="fas fa-times"></i>',
-        condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
-        callback: async li => {
-          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
-          const document = await fromUuid(uuid);
-          document.delete();
-        }
-      },
-      {
         name: "Duplicate",
         icon: '<i class="fa-solid fa-copy"></i>',
         condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
@@ -103,6 +93,16 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
           this.item.createEmbeddedDocuments("ActiveEffect", [document.toObject()]);
         }
       },
+      {
+        name: "Remove",
+        icon: '<i class="fas fa-times"></i>',
+        condition: li => !!li.dataset.uuid || getParent(li, "[data-uuid]"),
+        callback: async li => {
+          let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
+          const document = await fromUuid(uuid);
+          document.delete();
+        }
+      }
     ];
   }
 

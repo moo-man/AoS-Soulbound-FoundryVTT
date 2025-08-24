@@ -46,7 +46,9 @@ export default class SpellTest extends SoulboundTest{
     }
 
     computeDamage(result) {
-        let damage = {}
+        let damage = {
+            tags: [this.item.system.lore?.toLowerCase()]
+        }
         if (result.success) {
             damage.total = parseInt(this.item.damage)
         }

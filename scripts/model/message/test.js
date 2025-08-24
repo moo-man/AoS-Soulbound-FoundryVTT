@@ -122,6 +122,7 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
     options.restraining = item?.traitList?.restraining
     options.test = test;
     options.item = item;
+    options.tags = result.damage.tags;
 
     // apply to any selected actors
     let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets
@@ -134,13 +135,12 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
 */
   static async applyHealing() {
 
-    let healing = this.test.result.healing;
+    let test = this.test;
+    let healing = test.result.healing;
 
     // apply to any selected actors
-    return Promise.all(canvas.tokens.controlled.map(t => {
-      const a = t.actor;
-      return a.applyHealing(healing);
-    }));
+    let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets
+    return Promise.all(targets.filter(a => a).map(a => a.applyHealing(healing)));
   }
 
   /**

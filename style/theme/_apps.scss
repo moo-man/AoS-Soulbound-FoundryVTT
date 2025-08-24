@@ -179,4 +179,24 @@ body.soulbound-theme .application.warhammer {
      }
 
   }
+
+  &.roll-dialog-v2 {
+   --modifier-bg: var(--color-active);
+   .dialog-header {
+      line-height: 2rem;
+      @include sheet-header;
+   }
+   .modifier-list {
+   }
+   .dialog-base {
+      gap: 0px;
+   }
+   .dialog-modifiers {
+      flex: 1 0 14rem;
+      label {
+         line-height: 2rem;
+         @include sheet-header;
+      }
+   }
+  }
 }

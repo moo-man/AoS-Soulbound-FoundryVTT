@@ -1,0 +1,20 @@
+<div class="soulbound chat roll">
+    <div class="title">
+        {{this.item.name}}
+    </div>
+
+    <div class="description">
+
+    {{{result.description}}}
+
+    </div>
+
+    {{#if hasTest}}
+        <div class="test-buttons">
+            <button data-action="rollTest" type="button">{{ItemTestDisplay}}</button>
+        </div>
+    {{/if}}
+
+    {{> effectButtons}}
+
+</div>

@@ -7,6 +7,7 @@ import { CommonRollDialog } from "../apps/roll-dialog/common.js";
 import { SpellRollDialog } from "../apps/roll-dialog/spell.js";
 import { MiracleRollDialog } from "../apps/roll-dialog/miracle.js";
 import { CombatRollDialog } from "../apps/roll-dialog/combat.js";
+import SoulboundItemUseTest from "../system/tests/item-use.js";
 
 export class SoulboundActor extends WarhammerActor {
 
@@ -71,7 +72,26 @@ export class SoulboundActor extends WarhammerActor {
         }
         if (item.system.test)
         {
-            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, context, options));
+            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, context), options);
+        }
+    }
+
+    async setupAbilityUse(item, context={}, options={})
+    {
+        if (typeof item == "string")
+        {
+            item = await fromUuid(item);
+        }
+
+        if (item.hasTest && item.system.test.self)
+        {
+            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty, itemId : item.uuid, appendTitle : ` - ${item.name}`}, context, options));
+        }
+        else
+        {
+            let use = SoulboundItemUseTest.fromItem(item, this);
+            await use.roll();
+            use.sendToChat();
         }
     }
 
@@ -81,12 +101,12 @@ export class SoulboundActor extends WarhammerActor {
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test, item}={}) {
+    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test, item, tags=[]}={}) {
         let armour = this.combat.armour.value
         
         let abort = undefined;
         let text = [];
-        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test, item, text}
+        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test, item, text, tags}
         await Promise.all(this.runScripts("preTakeDamage", args) || []);
         await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
         await Promise.all(item?.runScripts("preApplyDamage", args) || []);
@@ -94,7 +114,10 @@ export class SoulboundActor extends WarhammerActor {
 
         if (abort)
         {
-            ui.notifications.notify(abort);
+            if (typeof abort == "string")
+            {
+                ui.notifications.notify(abort);
+            }
             return;
         }
 
@@ -110,7 +133,7 @@ export class SoulboundActor extends WarhammerActor {
             damage = 0
 
 
-        args = {actor : this, damage, test, item, abort, text}
+        args = {actor : this, damage, test, item, abort, text, tags}
         await Promise.all(this.runScripts("takeDamageMod", args) || []);
         await Promise.all(test?.actor.runScripts("applyDamageMod", args) || []);
         await Promise.all(item?.runScripts("applyDamageMod", args) || []);
@@ -156,9 +179,9 @@ export class SoulboundActor extends WarhammerActor {
         this.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || []})
 
 
-        await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
-        await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
-        await Promise.all(item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text}) || []);
+        await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test, text, tags}) || []);
+        await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text, tags}) || []);
+        await Promise.all(item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text, tags}) || []);
 
         return ret;
     }
@@ -264,45 +287,6 @@ export class SoulboundActor extends WarhammerActor {
         
         let note = game.i18n.format("NOTIFICATION.APPLY_REND", {damage : damage, name : this.prototypeToken.name});
         ui.notifications.notify(note);
-    }
-
-    async onEnterDrawing(drawing)
-    {
-        let flags = drawing.flags["soulbound"]
-
-        let cover = flags.cover
-        let hazard = flags.hazard
-        let obscured = flags.obscured
-        let difficult = flags.difficult
-        let options = {origin : drawing.uuid}
-
-        if (cover)
-            await this.addCondition(cover, options)
-        if (hazard)
-            await this.addCondition(hazard, options)
-        if (obscured)
-            await this.addCondition(obscured, options)
-        if (difficult)
-            await this.addCondition("difficult", options)
-    }
-
-    async onLeaveDrawing(drawing)
-    {
-        let flags = drawing.flags["soulbound"]
-
-        let cover = flags.cover
-        let hazard = flags.hazard
-        let obscured = flags.obscured
-        let difficult = flags.difficult
-
-        if (cover)
-            await this.removeCondition(cover)
-        if (hazard)
-            await this.removeCondition(hazard)
-        if (obscured)
-            await this.removeCondition(obscured)
-        if (difficult)
-            await this.removeCondition("difficult")
     }
 
     speakerData(token) {

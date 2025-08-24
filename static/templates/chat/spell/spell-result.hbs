@@ -2,11 +2,11 @@
 
 
 {{#if result.damage.total}}
-    <p><strong>{{localize "CHAT.DAMAGE"}}:</strong> {{result.damage.total}}</p>
+    <p><strong>{{localize "CHAT.DAMAGE"}}:</strong> {{result.damage.total}} <button class="apply" data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> Apply</button></p>
 {{/if}}
 
 {{#if result.healing.toughness}}
-    <p><strong>{{localize "CHAT.TOUGHNESS_HEALED"}}:</strong> {{result.healing.toughness}}</p>
+    <p><strong>{{localize "CHAT.TOUGHNESS_HEALED"}}:</strong> {{result.healing.toughness}} <button class="apply" data-action="applyHealing"><i class="fa-solid fa-crosshairs"></i> Apply</button></p>
 {{/if}}
 
 

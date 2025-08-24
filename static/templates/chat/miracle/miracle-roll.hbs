@@ -8,6 +8,10 @@
         {{/if}}
 
     </div>
+    <div class="description">
+        {{{context.description}}}
+    </div>
+
 
     {{> systems/age-of-sigmar-soulbound/templates/chat/base/dice-container.hbs}}
 
@@ -18,7 +22,7 @@
     </div>
 
 
-     {{#if hasTest}}
+    {{#if hasTest}}
         <div class="test-buttons">
             <button class="test-button" type="button">{{ItemTestDisplay}}</button>
         </div>

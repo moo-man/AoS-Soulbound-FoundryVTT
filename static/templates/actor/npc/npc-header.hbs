@@ -9,9 +9,9 @@
         <div class="header-details">
             <div class="detail-group">
                 {{formInput fields.bio.fields.size value=system.bio.size choices=(config "actorSize")}}
-                {{formInput fields.bio.fields.type choices=(config "npcType")}}
-                {{formInput fields.bio.fields.faction placeholder=(localize "BIO.FACTION")}}
-                {{formInput fields.bio.fields.role placeholder=(localize "BIO.ROLE") }}
+                {{formInput fields.bio.fields.type choices=(config "npcType") value=system.bio.type }}
+                {{formInput fields.bio.fields.faction placeholder=(localize "BIO.FACTION") value=system.bio.faction}}
+                {{formInput fields.bio.fields.role placeholder=(localize "BIO.ROLE")  value=system.bio.role}}
             </div>
         </div>
 </header>

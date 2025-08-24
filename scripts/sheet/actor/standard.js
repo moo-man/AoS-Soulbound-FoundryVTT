@@ -14,7 +14,6 @@ export class StandardSoulboundActorSheet extends SoulboundActorSheet  {
           ],
         },
         actions : {
-            rollTest : this._onRollTest,
             configureActor : this._onConfigureActor,
         },
         defaultTab : "main"

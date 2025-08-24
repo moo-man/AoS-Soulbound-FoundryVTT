@@ -47,9 +47,6 @@
         .accuracy {
             display: flex;
             justify-content: center;
-            input {
-                width: 50%;
-            }
         }
 
         .melee {
@@ -124,6 +121,44 @@
             margin-left: 3px;       
         }
     }
+
+    .power {
+
+        .fill {
+
+        }
+
+         .fill.low {
+            background: linear-gradient(slategrey, darkslategray);
+         }
+         
+         .fill.medium {
+            background: url(./assets/image/header-background-vertical.webp);
+         
+            -webkit-animation: glow-medium 1s ease-in-out infinite alternate;
+            -moz-animation: glow-medium 1s ease-in-out infinite alternate;
+            animation: glow-medium 1s ease-in-out infinite alternate;
+            
+         }
+
+         .fill.high {
+            background: url(./assets/image/foreground.webp);
+
+            -webkit-animation: glow-high 0.5s ease-in-out infinite alternate;
+            -moz-animation: glow-high 0.5s ease-in-out infinite alternate;
+            animation: glow-high 0.5s ease-in-out infinite alternate;
+         }
+
+         .fill.over {
+            background: linear-gradient(red, darkred);
+         
+            -webkit-animation: glow-over 0.2s ease-in-out infinite alternate;
+            -moz-animation: glow-over 0.2s ease-in-out infinite alternate;
+            animation: glow-over 0.2s ease-in-out infinite alternate;
+         }
+    
+    }
+
 }
 
 body.theme-dark .application.soulbound.actor {
@@ -147,3 +182,32 @@ body.theme-dark .application.soulbound.actor {
     }
 
 }
+
+@keyframes glow-medium{
+    from {
+      box-shadow: 0 0 5px #2e64b1;
+    }
+    to {
+      box-shadow: 0 0 10px #2e64b1;
+    }
+  }
+ 
+
+ @keyframes glow-high{
+    from {
+      box-shadow: 0 0 5px var(--color-active);
+    }
+    to {
+      box-shadow: 0 0 15px var(--color-active);
+    }
+  }
+ 
+ 
+ @keyframes glow-over{
+     from {
+       box-shadow: 0 0 5px darkred;
+     }
+     to {
+       box-shadow: 0 0 10px darkred;
+     }
+   }

@@ -80,6 +80,11 @@ body.soulbound-theme
         --button-hover-background-color: var(--color-active);
     }
 
+    hr {
+        color: darkslategrey;
+        background-image: linear-gradient(90deg, transparent 0%, darkslategrey 50%, transparent 100%);
+    }
+
 
     .directory {
         color: black;
@@ -97,15 +102,15 @@ body.soulbound-theme
 
         .folder > .folder-header {
             background: var(--color-header-blue);
+            button {
+                color: whitesmoke;
+            }
         }
     }
             
     .sidebar-tab {
         background: url(./assets/image/background.webp) repeat;
         border-left: var(--border);
-        .directory-item {
-            padding-left: 5px;
-        }
 
       }
 

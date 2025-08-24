@@ -51,7 +51,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
         await super._preUpdate(data, options, user);
 
         // Prevent wounds from exceeding max
-        if (hasProperty(data, "system.combat.health.toughness.value"))
+        if (foundry.utils.hasProperty(data, "system.combat.health.toughness.value"))
         {
             if (this.isSwarm)
             {
@@ -63,7 +63,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
             }
             options.deltaToughness = data.system.combat.health.toughness.value - this.combat.health.toughness.value;
         }
-        if (hasProperty(data, "system.combat.mettle.value"))
+        if (foundry.utils.hasProperty(data, "system.combat.mettle.value"))
         {
             data.system.combat.mettle.value = Math.clamp(data.system.combat.mettle.value, 0, this.combat.mettle.max)
             options.deltaMettle = data.system.combat.mettle.value - this.combat.mettle.value;

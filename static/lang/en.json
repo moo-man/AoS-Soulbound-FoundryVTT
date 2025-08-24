@@ -606,6 +606,8 @@
   "ZONE.DEADLY_HAZARD" : "Deadly Hazard",
   "ZONE.LIGHTLY_OBSCURED" : "Lightly Obscured",
   "ZONE.HEAVILY_OBSCURED" : "Heavily Obscured",
+  "ZONE.TAGS" : "Tags",
+  "ZONE.FILTER" : "Filter",
 
   "EFFECT.ActivateIf" : "Activate If",
   "EFFECT.HideIf" : "Hide If",

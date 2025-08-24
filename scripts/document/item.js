@@ -120,6 +120,10 @@ export class SoulboundItem extends WarhammerItem {
         return {text : this.description}
     }
     
+    getTestData()
+    {
+        return this.system.test;
+    }
     
     get Traits () {
         return this.system.Traits
@@ -290,6 +294,7 @@ export class SoulboundItem extends WarhammerItem {
             return false;
         return true;
     }
+    
 
     // @@@@@@ DATA GETTERS @@@@@@
     get bonus() { return this.system.bonus }

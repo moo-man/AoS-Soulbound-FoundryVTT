@@ -190,5 +190,16 @@
       }
 
          color: var(--color-header-gold);
+
+         &.broken {
+            i {
+               color: darkred;
+            }
+            color: darkred;
+         }
+   }
+
+   blockquote {
+      border-left: var(--border);
    }
 }

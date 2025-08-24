@@ -98,6 +98,8 @@ export class CommonRollDialog extends WarhammerRollDialogV2 {
         fields.attribute = attribute || game.aos.config.skillAttributes[skill];
         fields.skill = skill;
 
+        data.itemId = context.itemId;
+
         context.title = context.title || `${game.aos.config.attributes[fields.attribute]} ${fields.skill ? "(" + game.aos.config.skills[fields.skill] + ")" : ""}`
         context.title += context.appendTitle || "";
         

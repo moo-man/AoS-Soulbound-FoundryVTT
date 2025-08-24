@@ -72,6 +72,15 @@
                 }
             }
         }
+
+        .sheet-effect-buttons
+        {
+            gap: 0.5rem;
+            height: 1.5rem;
+            button {
+                min-height: 1.5rem;
+            }
+        }
     
     }
 
@@ -119,8 +128,7 @@
         }
     }
 
-    .sheet-list {
-
+    .sheet-list {        
         &.wounds {
             .wound-header {
                 font-weight: bold;
