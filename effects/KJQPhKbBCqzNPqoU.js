@@ -1,0 +1,1 @@
+this.item.name = this.item.setSpecifier(this.actor.getFlag(game.system.id, "heads"))

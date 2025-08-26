@@ -1,0 +1,1 @@
+return args.actor.items.getName("Witch-Sight")

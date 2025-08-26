@@ -1,0 +1,1 @@
+return args.fields.attribute != 'body' || args.fields.skill != 'reflexes'

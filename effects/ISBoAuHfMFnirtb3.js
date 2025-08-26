@@ -1,0 +1,1 @@
+return args.weapon?.name != "Fanged Maw" || this.actor.getFlag(game.system.id, "heads") <= 0

@@ -1,0 +1,1 @@
+return args.item.uuid == this.item.uuid

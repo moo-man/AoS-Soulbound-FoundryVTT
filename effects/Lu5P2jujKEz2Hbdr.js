@@ -1,0 +1,1 @@
+args.fields.bonusDamage +=  this.actor.getFlag(game.system.id, "heads") || 0

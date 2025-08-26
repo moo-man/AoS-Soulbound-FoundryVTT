@@ -1,0 +1,1 @@
+this.actor.applyDamage(this.effect.sourceTest.result.triggers);

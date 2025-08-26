@@ -1,0 +1,1 @@
+await this.actor.applyDamage(6);

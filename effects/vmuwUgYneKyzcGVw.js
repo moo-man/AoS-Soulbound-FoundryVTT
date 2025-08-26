@@ -1,0 +1,1 @@
+this.actor.applyDamage(Math.ceil(this.effect.sourceTest.result.damage.total / 2), {ignoreArmour: true})

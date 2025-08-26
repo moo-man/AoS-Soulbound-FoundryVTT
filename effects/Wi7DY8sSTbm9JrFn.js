@@ -1,0 +1,1 @@
+this.actor.setFlag(game.system.id, "heads",  this.actor.getFlag(game.system.id, "heads") - 1)

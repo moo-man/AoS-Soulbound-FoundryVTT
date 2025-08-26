@@ -1,0 +1,1 @@
+return !["intimidation", "guile", "entertain"].includes(args.fields.skill)

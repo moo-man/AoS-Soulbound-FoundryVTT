@@ -1,0 +1,1 @@
+return (args.target.system.skills.intimidation.training + args.target.system.skills.intimidation.focus) > 0

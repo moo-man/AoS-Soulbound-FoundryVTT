@@ -1,0 +1,1 @@
+this.actor.applyHealing({toughness: 5});

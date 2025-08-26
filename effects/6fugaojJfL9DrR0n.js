@@ -1,0 +1,1 @@
+return (args.target?.system.bio.role || "").toLowerCase() == "daemon" || ["chaos", "skaven"].some(f => (args.target?.system.bio.faction || "").toLowerCase().includes(f))

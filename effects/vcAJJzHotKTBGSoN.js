@@ -1,0 +1,1 @@
+return !["guile", "intimidation", "intuition", "entertain", "lore", "theology"].includes(args.skillKey)
