@@ -18,7 +18,7 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
   }
 
   async getHeaderToken() {
-    if (this.test.actor) {
+    if (this.context.rollClass && this.test.actor) {
       let token = this.test.actor.getActiveTokens()[0]?.document || this.test.actor.prototypeToken;
 
       let path = token.hidden ? "modules/soulbound-core/assets/tokens/unknown1.webp" : token.texture.src;
@@ -50,8 +50,8 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
     }
 
 
-    if (!this.parent.isAuthor && !this.parent.isOwner) {
-      html.querySelectorAll("h3").forEach(e => e.dataset.tooltip = "");
+    if (!this.parent.isAuthor && !this.parent.isOwner && !this.test.actor?.isOwner) {
+      html.querySelector(".description")?.remove();
     }
   }
 
@@ -76,13 +76,13 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
       {
           for (let t of canvas.tokens.controlled)
           {
-              chatTest = await t.actor.setupCommonTest(itemTest, {fields : {difficulty, complexity}, resist : test.item?.type, appendTitle : test.item ? ` - ${test.item.name}` : ""});
+              chatTest = await t.actor.system.setupCommonTest(itemTest, {fields : {difficulty, complexity}, resist : test.item?.type, appendTitle : test.item ? ` - ${test.item.name}` : ""});
               await chatTest.roll();
           }
       }
       else if (game.user.character)
       {
-          chatTest = await t.actor.setupCommonTest(itemTest, {fields : {difficulty, complexity}, resist : test.item?.type, appendTitle : test.item ? ` - ${test.item.name}` : ""})            
+          chatTest = await t.actor.system.setupCommonTest(itemTest, {fields : {difficulty, complexity}, resist : test.item?.type, appendTitle : test.item ? ` - ${test.item.name}` : ""})            
           await chatTest.roll()
       }
       else

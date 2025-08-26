@@ -12,6 +12,9 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
             changeState : this._onChangeState,
             toggleCondition: this._onToggleCondition
         },
+        position: {
+          height: 700
+        },
         defaultTab : "main"
       }
 

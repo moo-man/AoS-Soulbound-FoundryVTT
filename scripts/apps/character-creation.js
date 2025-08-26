@@ -1,7 +1,5 @@
 import { SoulboundActor } from "../document/actor.js";
 import { SoulboundItem } from "../document/item.js";
-import ArchetypeGroups from "./archetype-groups.js";
-// import FilterResults from "./filter-results.js";
 
 export default class CharacterCreation extends FormApplication {
     constructor(object) {
@@ -16,7 +14,7 @@ export default class CharacterCreation extends FormApplication {
         return mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: game.i18n.localize("HEADER.CHARGEN"),
-            template: "systems/age-of-sigmar-soulbound/template/apps/character-creation.hbs",
+            template: "systems/age-of-sigmar-soulbound/templates/apps/character-creation.hbs",
             closeOnSubmit: false,
             width: 1400,
             height: 800,
@@ -49,8 +47,8 @@ export default class CharacterCreation extends FormApplication {
         data.actor = this.actor;
         data.character = this.character
         data.archetype = this.archetype;
-        data.coreTalents = await Promise.all(this.archetype.talents.core.map(async t => new SoulboundItem(mergeObject((await warhammer.utility.findItemId(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
-        data.chooseTalents = await Promise.all(this.archetype.talents.list.map(async t => new SoulboundItem(mergeObject((await warhammer.utility.findItemId(t.id, "talent")).toObject(), t.diff, {overwrite : true} ))))
+        data.coreTalents = await this.archetype.talents.core.awaitDocuments();
+        data.chooseTalents = await this.archetype.talents.list.awaitDocuments();
         data.talentDescriptions = await this.handleTalentEnrichment(data.coreTalents.concat(data.chooseTalents));
         data.equipmentHTML = this.constructEquipmentHTML();
         return data
@@ -80,7 +78,7 @@ export default class CharacterCreation extends FormApplication {
 
 
         let equipment = await Promise.all(this.retrieveChosenEquipment());
-        let talents = this.archetype.talents.core.map(t => warhammer.utility.findItemId(t.id, "talent"))
+        let talents = await this.archetype.talents.core.awaitDocuments();
 
         $(this.form).find(".talent input").each((i, e) => {
             if (e.checked)
@@ -116,19 +114,20 @@ export default class CharacterCreation extends FormApplication {
                 errors.push(game.i18n.localize("CHARGEN.ERROR.TOO_MANY_TALENTS"));
 
 
-            let unresolvedGenerics = false;
+            let unresolvedplaceholders = false;
             // EQUIPMENT
-            this.element.find(".equipment-item.generic").each((i, e) => {
+            this.element.find(".equipment-item.placeholder").each((i, e) => {
                 if (!this.isDisabled(e)) {
                     let id = e.dataset.id
-                    let group = ArchetypeGroups.search(id, this.archetype.groups)
-                    let equipment = this.archetype.equipment[group.index]
-                    if (equipment.filters.length)
-                        unresolvedGenerics = true;
+                    let option = this.archetype.equipment.options.find(i => i.id == id);
+                    if (option.type == "filter" && option.filters.length)
+                    {
+                        unresolvedplaceholders = true;
+                    }
                 }
             })
-            if (unresolvedGenerics)
-                errors.push(game.i18n.localize("CHARGEN.ERROR.UNRESOLVED_ITEMS"))
+            if (unresolvedplaceholders)
+                errors.push("Unresolved placeholder Items")
 
 
             if (errors.length) {
@@ -167,62 +166,55 @@ export default class CharacterCreation extends FormApplication {
 
     // Take the equipment of the archetype, check if it has the disabled class in the form (if it was not chosen), create a temporary item
     retrieveChosenEquipment() {
-        let equipment = this.archetype.equipment;
         // Filter equipment by whether it has a disabled ancestor, if not, add to actor
-        return equipment.filter(e => {
-            let element = this.element.find(`.equipment-item[data-id='${e.groupId}']`)
+        return this.archetype.equipment.options.filter(e => {
+            let element = this.element.find(`.equipment-item[data-id='${e.id}']`)
             let enabled = element.parents(".disabled").length == 0
             return enabled
         }).map(async e => {
-            let item;
-            // If chosen item is still generic, create a basic item for it
-            if (e.type == "generic") {
-                item = new SoulboundItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
+            let item = await this.archetype.equipment.getOptionDocument(e.id)
+            if (e.type != "placeholder")
+            {
+                return item;
             }
-            else {
-
-                let document = await warhammer.utility.findItemId(e.id)
-
-                // Create a temp item and incorporate the diff
-                if (document)
-                    item = new SoulboundItem(mergeObject(document.toObject(), e.diff, { overwrite: true }))
-                else 
-                {
-                    ui.notifications.warn(`Could not find ${e.name}, creating generic`)
-                    item = new SoulboundItem({ type: "equipment", name: e.name, img: "modules/soulbound-core/assets/icons/equipment/equipment.webp" })
-                }
+            else 
+            {
+                return new Item.implementation(item)
             }
-            return item
-        });
+        }).filter(i => i);
     }
 
     constructEquipmentHTML() {
         let html = ""
 
+
         let groupToHTML = (group, { selector = false } = {}) => {
             let html = ""
             if (["and", "or"].includes(group.type)) {
                 let connector = `<span class="connector">${group.type}</span>`
-                html += `<div class='equipment-group ${group.type == "or" ? "choice" : ""} ${group.groupId == "root" ? "root" : ""}' data-id="${group.groupId}">`
-                html += group.items.map(g => {
+                html += `<div class='equipment-group ${group.type == "or" ? "choice" : ""} ${group.id == "root" ? "root" : ""}' data-id="${group.id}">`
+                html += group.options.map(g => {
                     let groupHTML = groupToHTML(g)
                     if (group.type == "or") {
-                        groupHTML = `<div class="equipment-selection" data-id="${g.groupId}">${groupHTML}<a class="equipment-selector"><i class="far fa-circle"></i></a></div>`
+                        groupHTML = `<div class="equipment-selection" data-id="${g.id}">${groupHTML}<a class="equipment-selector"><i class="far fa-circle"></i></a></div>`
                     }
                     return groupHTML
-                }).join(group.groupId == "root" ? "" : connector)
+                }).join(group.id == "root" ? "" : connector)
                 html += "</div>"
                 return html
             }
-            else if (group.type == "item" || (group.type == "generic" && group.filters.length == 0)) {
-                return `<div class="equipment-item" data-id='${group.groupId}'>${group.name}</div>`
-            }
-            else if (group.type == "generic") {
-                return `<div class="equipment-item generic" data-id='${group.groupId}'><i class="fas fa-filter"></i> ${group.name}</div>`
+            else {
+                if (group.content.type == "filter") {
+                    return `<div class="equipment-item placeholder" data-id='${group.id}'><i class="fas fa-filter"></i> ${group.content.name}</div>`
+                }
+                else 
+                {
+                    return `<div class="equipment-item" data-id='${group.id}'>${group.content.name}</div>`
+                }
             }
         }
 
-        html += groupToHTML(ArchetypeGroups.groupIndexToObjects(this.archetype.groups, this.archetype), html)
+        html += groupToHTML(this.archetype.equipment.compileTree().structure)
         return html;
     }
 
@@ -236,25 +228,24 @@ export default class CharacterCreation extends FormApplication {
         return descriptions
     }
 
-    /**
+  /**
      * Replace a filter html with an item
      * 
      * @param {Object} filter Filter details (to replace with object)
      * @param {String} id ID of item chosen
      */
-    async chooseEquipment(filter, id) {
-        let element = this.element.find(`.generic[data-id=${filter.groupId}]`)[0]
-        let group = ArchetypeGroups.search(filter.groupId, this.archetype.groups)
-        let equipmentObject = this.archetype.equipment[group.index]
-        let item = await warhammer.utility.findItemId(id)
+    async chooseEquipment(option, document)
+    {
+        let element = this.element.find(`.placeholder[data-id=${option.id}]`)[0]
 
-        if (element && item) {
-            element.classList.remove("generic")
-            element.textContent = item.name
+        if (element && document) 
+        {
+            element.classList.remove("placeholder")
+            element.textContent = document.name
 
-            equipmentObject.type = "item"
-            equipmentObject.name = item.name;
-            equipmentObject.id = item.id;
+            option.type = "item";
+            option.name = document.name;
+            option.documentId = document.id;
         }
     }
 
@@ -360,14 +351,18 @@ export default class CharacterCreation extends FormApplication {
 
         html.find(".equipment-item").click(async ev => {
             let id = ev.currentTarget.dataset.id
-            let group = ArchetypeGroups.search(id, this.archetype.groups)
-            let equipment = this.archetype.equipment[group.index]
+            let option = this.archetype.equipment.options.find(i => i.id == id);
 
-            if (equipment.type == "generic" && equipment.filters.length) {
-                new FilterResults({ equipment, app: this }).render(true)
+            if (option.type == "filter")
+            {
+                let document = await this.archetype.equipment.getOptionDocument(id)
+                this.chooseEquipment(option, document);
             }
-            else if (equipment.type == "item")
-                new SoulboundItem((await warhammer.utility.findItemId(equipment.id)).toObject()).sheet.render(true, { editable: false })
+            else
+            {
+                let document = await this.archetype.equipment.getOptionDocument(id)
+                document.sheet.render(true, {editable : false});
+            }
         })
     }
 
@@ -400,15 +395,16 @@ export default class CharacterCreation extends FormApplication {
         })
     }
 
-    disableSiblingChoices(element) {
+    disableSiblingChoices(element)
+    {
         let parent = $(element).closest(".equipment-selection");
         let group = parent.find(".equipment-group,.equipment-item")
-        let groupId = group.attr("data-id")
+        let id = group.attr("data-id")
         let choice = parent.closest(".choice")
-
+        
         // Disable siblings
         choice.children().each((i, e) => {
-            if (e.dataset.id != groupId) {
+            if (e.dataset.id != id) {
                 this.disableElements(e)
             }
         })

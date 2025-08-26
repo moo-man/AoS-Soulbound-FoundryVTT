@@ -1,7 +1,8 @@
-const path = require('path');
-const fs = require('fs-extra');
+import path from 'path';
+import fs from 'fs-extra';
 
-function foundryConfig(systemId, version) {
+export default function foundryConfig(systemId, version) 
+{
   const configPath = path.resolve(process.cwd(), 'foundryconfig.json');
   let config;
 
@@ -16,11 +17,9 @@ function foundryConfig(systemId, version) {
   }
   else if (config?.path)
   {
-    foundryPath = path.join(config.path, "systems", systemId).replace("{version}", version);
+      foundryPath = path.join(config.path, "systems", systemId).replace("{version}", version);
   }
 
   console.log("Foundry Path: " + foundryPath)
   return foundryPath
 }
-
-exports.systemPath = foundryConfig

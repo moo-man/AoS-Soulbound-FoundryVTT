@@ -260,6 +260,11 @@ AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/templates/apps/effect-
 AOS.avoidTestTemplate = "systems/age-of-sigmar-soulbound/templates/apps/effect-avoid-test.hbs",
 AOS.effectScripts = {},
 
+AOS.placeholderItemData = {
+    type : "equipment",
+    img : "modules/soulbound-core/assets/icons/equipment/equipment.webp"
+}
+
 AOS.logFormat = [`%cSoulbound` + `%c | @MESSAGE`, "color: gold", "color: unset"],
 
 AOS.rollClasses = {
@@ -284,8 +289,27 @@ AOS.premiumModules = {
     "soulbound-order" : "Champions of Order",
     "soulbound-bestiary" : "Soulbound Bestiary",
     "soulbound-artefacts" : "Artefacts of Power",
+    "soulbound-sitm" : "Shadows in the Mist",
 
 }
+
+AOS.copyrightText = `
+
+<p>No part of this publication may be reproduced, distributed, stored in a retrieval system, or transmitted in any form by any means, electronic, mechanical, photocopying, recording or otherwise without the prior permission of the publishers.</p>        
+
+<p>Warhammer Age of Sigmar Roleplay: Soulbound © Copyright Games Workshop Limited 2025. Warhammer Age of Sigmar Roleplay: Soulbound, the Warhammer Age of Sigmar Roleplay: Soulbound logo, GW, Games Workshop, Warhammer, Stormcast Eternals, and all associated logos, illustrations, images, names, creatures, races, vehicles, locations, weapons, characters, and the distinctive likenesses thereof, are either ® or TM, and/or © Games Workshop</p>
+
+<div style="display: flex; justify-content: space-around;">
+    <img src="modules/warhammer-lib/assets/c7.png" height=50 width=50/>   
+    <img src="modules/warhammer-lib/assets/warhammer.png" height=50 width=50/>
+</div>
+
+<ul>
+<li>Published by: <strong>Cubicle 7 Entertainment Ltd</strong></li>
+<li>Foundry Edition by <strong>@AUTHORS@</strong></li>
+<li>Special thanks to: <strong>Games Workshop, Fatshark</strong></li>
+</ul>
+`
 
 AOS.badgeInfo = {
     img : "systems/age-of-sigmar-soulbound/assets/badge.webp",

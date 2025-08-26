@@ -1,13 +1,12 @@
-const fs = require("fs")
-const path = require("path")
-const foundryPath = require("./foundry-path.js");
+import fs from "fs";
+import getSystemPath from "./foundry-path.mjs";
 import copy from 'rollup-plugin-copy-watch'
 import postcss from "rollup-plugin-postcss"
 import jscc from 'rollup-plugin-jscc'
 
 let manifest = JSON.parse(fs.readFileSync("./system.json"))
 
-let systemPath = foundryPath.systemPath(manifest.id, manifest.compatibility.verified)
+let systemPath = getSystemPath(manifest.id, manifest.compatibility.verified);
 
 console.log("Bundling to " + systemPath)
 

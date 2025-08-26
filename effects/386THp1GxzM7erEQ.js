@@ -1,19 +1,12 @@
-let target = Array.from(game.user.targets)[0];
+let actor = await DragDialog.create({ text: "Provide Actor for Loyal Companion", title: this.effect.name, filter: (actor) => actor.documentName == "Actor", onError: "Must provide an Actor" })
 
-if (target?.actor)
+if (!actor.prototypeToken.actorLink)
 {
-    if (target.actor.isToken)
-    {
-        ui.notifications.warn("It is recommended that your companion is linked to their Actor (Link Actor Data checked)", {permanent: true})
-    }
-    await this.effect.setFlag(game.system.id, "companion", target.actor.uuid);
-    let effectData = this.item.effects.contents[1].convertToApplied();
-    effectData.name += ` (${this.actor.name})`
-    target.actor.applyEffect({effectData})
-    await this.effect.update({name : this.effect.baseName + ` (${target?.actor.name})`})
-    await this.item.update({name : this.item.baseName + ` (${target?.actor.name})`})
+    ui.notifications.warn("It is recommended that your companion is linked to their Actor (Link Actor Data checked)", {permanent: true})
 }
-else
-{
-    ui.notifications.notify("Must target a Token")
-}
+await this.effect.setFlag(game.system.id, "companion", actor.uuid);
+let effectData = this.item.effects.contents[1].convertToApplied();
+effectData.name += ` (${this.actor.name})`
+actor.applyEffect({effectData})
+await this.effect.update({name : this.effect.baseName + ` (${target?.actor.name})`})
+await this.item.update({name : this.item.baseName + ` (${target?.actor.name})`})

@@ -1,4 +1,5 @@
 import SoulboundThemeConfig from "../apps/theme.js";
+import { SoulboundChatMessage } from "../document/message.js";
 import AOS_MacroUtil from "./macro.js"
 
 import Migration from "./migrations.js";
@@ -254,7 +255,7 @@ export default function registerHooks() {
    */
   Hooks.on("getActorDirectoryEntryContext", async (html, options) => {
     let canLink = li => {
-      let actor = game.actors.get(li.attr("data-document-id"));
+      let actor = game.actors.get(li.dataset.documentId)
       return actor.type == "party"
     }
     options.push(
@@ -280,11 +281,11 @@ export default function registerHooks() {
         }
     })
 
-    Hooks.on("renderSidebarTab", WarhammerBugReport.addSidebarButton)
+    Hooks.on("getChatMessageContextOptions", (html, options) =>
+    {
+        SoulboundChatMessage.addTestContextOptions(options);
+    });
 
-    Hooks.on("preCreateScene", (scene, data) => {
-        scene.updateSource({gridDistance : 5, gridUnits : "ft"})
-    })
 
     // Hooks.on("updateCombat", (combat) => {
     //     let actor = combat.combatant.actor

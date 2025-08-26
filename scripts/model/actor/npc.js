@@ -41,7 +41,7 @@ export class NPCModel extends StandardActorModel
     }
 
     computeTokenSize() {
-        if(this.isSwarm || !this.autoCalc.tokenSize || !this.parent.pack) return; //Swarms are variable let the GM decide Size
+        if(this.isSwarm || !this.autoCalc.tokenSize || this.parent.pack) return; //Swarms are variable let the GM decide Size
 
         let size = this.bio.size; 
 

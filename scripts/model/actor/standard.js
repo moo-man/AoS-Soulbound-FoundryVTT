@@ -239,6 +239,12 @@ export class StandardActorModel extends BaseSoulboundActorModel
              }
              return;
          }
+
+         
+        if (test.actor?.system?.isVehicle)
+        {
+            damage *= 2;
+        }
  
          armour -= penetrating;
          

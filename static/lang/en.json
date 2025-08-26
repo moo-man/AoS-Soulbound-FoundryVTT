@@ -294,6 +294,9 @@
   "HEADER.ZONE_CONFIG": "Zone Config",
   "HEADER.SOURCE": "Source",
   "HEADER.ALLOCATE": "Allocate Focus",
+  "HEADER.STRUCTURE": "Structure",
+  "HEADER.MANOEUVRE": "Manoeuvre",
+  "HEADER.HULL": "Hull",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",
@@ -450,6 +453,7 @@
   "TAB.MEMBERS": "MEMBERS",
   "TAB.EFFECTS": "EFFECTS",
   "TAB.PROPERTIES": "PROPERTIES",
+  "TAB.CARGO": "CARGO",
 
   "TALENT.NAME": "Name",
   "TALENT.EFFECT": "Effect",
@@ -488,6 +492,11 @@
   "TITLE.RUMOURS": "RUMOURS",
   "TITLE.FEARS": "FEARS",
   "TITLE.THREATS": "THREATS",
+  "TITLE.TRAITS": "TRAITS",
+  "TITLE.ATTACKS": "ATTACKS",
+  "TITLE.ACTORS": "ACTORS",
+  "TITLE.ACTIONS": "ACTIONS",
+  "TITLE.ROLES": "ROLES",
 
   "TRAIT.MAGICAL": "magical",
   "TRAIT.PENETRATING": "penetrating",
@@ -590,6 +599,18 @@
   "EFFECT.ENABLE": "Enable Effect",
   "EFFECT.DISABLE": "Disable Effect",
 
+  "VEHICLE.NAME" : "Name",
+  "VEHICLE.DAMAGE" : "Damage",
+  "VEHICLE.RANGE" : "Range",
+  "VEHICLE.DICE" : "Dice",
+  "VEHICLE.FOCUS" : "Focus",
+  "VEHICLE.TEST" : "Test",
+  "VEHICLE.TRAIT" : "Trait",
+  "VEHICLE.ATTACK" : "Attack",
+  "VEHICLE.ROLE" : "Role",
+  "VEHICLE.ACTION" : "Action",
+  "VEHICLE.ACCURACY" : "Accuracy",
+  "VEHICLE.OTHER" : "Other",
 
   "ZONE.DIFFICULT_TERRAIN" : "Difficult Terrain",
   "ZONE.COVER" : "Cover",

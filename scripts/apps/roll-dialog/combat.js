@@ -208,8 +208,8 @@ export class CombatRollDialog extends CommonRollDialog {
     {
         return {
             name : token.name,
-            defence : token.actor.system.combat.defence.relative,
-            armour : token.actor.system.combat.armour.value,
+            defence : token.actor.system.isVehicle ? token.actor.system.defence : token.actor.system.combat?.defence.relative,
+            armour : token.actor.system.isVehicle ? token.actor.system.armour : token.actor.system.combat.armour.value,
             tokenId : token.id
         }
     }

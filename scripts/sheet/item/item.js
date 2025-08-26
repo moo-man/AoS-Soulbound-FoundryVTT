@@ -15,6 +15,9 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
         }
       ],
     },
+    position: {
+      height: 500
+    },
     actions: {
       toggleSummary: this._toggleSummary,
       configureTraits: this._onConfigureTraits,

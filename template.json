@@ -3,8 +3,7 @@
     "types": [
       "player",
       "npc",
-      "party",
-      "vehicle-simple"
+      "party"
     ],
     "templates": {
       "attributes": {
@@ -327,8 +326,7 @@
       "talent",
       "weapon",
       "partyItem",
-      "archetype",
-      "vehicleItem"
+      "archetype"
     ],
     "templates": {
       "equipped": {
@@ -481,7 +479,6 @@
   },
   "ChatMessage" : {
     "types" : [
-      "base",
       "test",
       "item"
     ]

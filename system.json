@@ -19,7 +19,6 @@
     "verified" : 13,
     "maximum" : 13    
   },
-  "templateVersion": 2,
   "authors" : [
     {
       "name": "Moo Man",
@@ -37,8 +36,8 @@
       "name": "Saylnrad"
     }
   ],
-  "scripts": [],
-  "esmodules": ["age-of-sigmar-soulbound.js"],
+  "esmodules": [],
+  "scripts": ["age-of-sigmar-soulbound.js"],
   "styles": ["age-of-sigmar-soulbound.css"],
   "packs": [],
   "languages": [
@@ -60,8 +59,12 @@
     }
   },
   "background" : "/modules/soulbound-core/assets/images/login.webp",
-  "gridDistance": 1,
-  "gridUnits": "m",
+  "grid": {
+    "distance": 5,
+    "units": "ft",
+    "type": 1,
+    "diagonals": 4
+  },
   "primaryTokenAttribute": null,
   "secondaryTokenAttribute": null,
   "url": "https://github.com/moo-man/AoS-Soulbound-FoundryVTT",

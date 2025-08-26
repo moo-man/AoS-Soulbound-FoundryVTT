@@ -1,6 +1,5 @@
 import { SoulboundActor } from "./document/actor.js";
 import { SoulboundItem } from "./document/item.js";
-import { SoulboundItemSheet } from "./item/sheet/item-sheet.js";
 import { initializeHandlebars } from "./system/handlebars.js";
 import hooks from "./system/hooks.js"
 import AOS from "./system/config.js"
@@ -107,9 +106,10 @@ Hooks.once("init", () => {
     CONFIG.fontDefinitions["Quadrant-Regular"] = {editor : true, fonts : []};
     CONFIG.defaultFontFamily = "Quadrant-Regular";
     CONFIG.canvasTextStyle._fontFamily = "Quadrant-Regular";
-    CONFIG.ActiveEffect.legacyTransferral = false;
-
-});
+    
+    warhammer.utility.registerPremiumModuleInitialization()
+    
+  });
 
 hooks();
 loadEffects();
