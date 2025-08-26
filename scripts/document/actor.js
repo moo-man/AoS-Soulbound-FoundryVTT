@@ -43,56 +43,37 @@ export class SoulboundActor extends WarhammerActor {
         })
     }
 
+
+
     //#region Rolling Setup
-    async setupCommonTest({skill, attribute}, context = {}, options={}) 
+    async setupCommonTest(...args) 
     {
-        return await this._setupTest(CommonRollDialog, SoulboundTest, {skill, attribute}, context, options)
+        return this.system.setupCommonTest(...args)
     }
 
-    async setupCombatTest(weapon, context = {}, options={})
+    async setupCombatTest(...args) 
     {
-        return await this._setupTest(CombatRollDialog, CombatTest, weapon, context, options)
+        return this.system.setupCombatTest(...args)
     }
 
-    async setupSpellTest(power, context = {}, options={})
+    async setupSpellTest(...args) 
     {
-        return await this._setupTest(SpellRollDialog, SpellTest, power, context, options)
+        return this.system.setupSpellTest(...args)
     }
 
-    async setupMiracleTest(miracle, context = {}, options={})
+    async setupMiracleTest(...args) 
     {
-        return await this._setupTest(MiracleRollDialog, MiracleTest, miracle, context, options)
+        return this.system.setupMiracleTest(...args)
     }
 
-    async setupTestFromItem(item, context = {}, options={})
+    async setupTestFromItem(...args) 
     {
-        if (typeof item == "string")
-        {
-            item = await fromUuid(item);
-        }
-        if (item.system.test)
-        {
-            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, context), options);
-        }
+        return this.system.setupTestFromItem(...args)
     }
 
-    async setupAbilityUse(item, context={}, options={})
+    async setupAbilityUse(...args) 
     {
-        if (typeof item == "string")
-        {
-            item = await fromUuid(item);
-        }
-
-        if (item.hasTest && item.system.test.self)
-        {
-            return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty, itemId : item.uuid, appendTitle : ` - ${item.name}`}, context, options));
-        }
-        else
-        {
-            let use = SoulboundItemUseTest.fromItem(item, this);
-            await use.roll();
-            use.sendToChat();
-        }
+        return this.system.setupAbilityUse(...args)
     }
 
     //#endregion
@@ -101,116 +82,15 @@ export class SoulboundActor extends WarhammerActor {
      * applies Damage to the actor
      * @param {int} damages 
      */
-    async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test, item, tags=[]}={}) {
-        let armour = this.combat.armour.value
-        
-        let abort = undefined;
-        let text = [];
-        let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this, abort, test, item, text, tags}
-        await Promise.all(this.runScripts("preTakeDamage", args) || []);
-        await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
-        await Promise.all(item?.runScripts("preApplyDamage", args) || []);
-        ({damage, armour, ignoreArmour, penetrating, ineffective, restraining, abort} = args);
-
-        if (abort)
-        {
-            if (typeof abort == "string")
-            {
-                ui.notifications.notify(abort);
-            }
-            return;
-        }
-
-        armour -= penetrating;
-        
-        if(armour < 0) { armour = 0; }            
-
-        if (ineffective) armour *= 2;
-
-        damage = ignoreArmour ? damage : damage - armour;
-
-        if (damage < 0)
-            damage = 0
-
-
-        args = {actor : this, damage, test, item, abort, text, tags}
-        await Promise.all(this.runScripts("takeDamageMod", args) || []);
-        await Promise.all(test?.actor.runScripts("applyDamageMod", args) || []);
-        await Promise.all(item?.runScripts("applyDamageMod", args) || []);
-        ({damage, abort} = args);
-
-        if (abort)
-        {
-            ui.notifications.notify(abort);
-            return;
-        }
-
-        let remaining = this.combat.health.toughness.value - damage;
-
-         // Update the Actor
-         const updates = {
-            "system.combat.health.toughness.value": remaining
-        };
-
-        if (damage > 0 && restraining)
-            await this.addCondition("restrained")
-
-        // Delegate damage application to a hook
-        const allowed = Hooks.call("modifyTokenAttribute", {
-            attribute: "combat.health.toughness.value",
-            value: this.combat.health.toughness.value,
-            isDelta: false,
-            isBar: true
-        }, updates);
-
-        let ret = allowed !== false ? await this.update(updates) : this;
-
-        let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.prototypeToken.name});
-        ui.notifications.notify(note);
-        text.push({description: note});
-        let wounds;
-        // Doing this here because foundry throws an error if wounds are added before the update
-        if(remaining < 0 && this.combat.health.wounds.max > 0) {
-            if (ineffective)
-                remaining = -1 // ineffective can only cause minor wounds          
-            wounds = await this.update(this.system.combat.computeNewWound(remaining));
-        }
-
-        this.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || []})
-
-
-        await Promise.all(this.runScripts("takeDamage", {actor : this, update: ret, wounds, remaining, damage, test, text, tags}) || []);
-        await Promise.all(test?.actor.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text, tags}) || []);
-        await Promise.all(item?.runScripts("applyDamage", {actor : this, update: ret, wounds, remaining, damage, test, text, tags}) || []);
-
-        return ret;
+    async applyDamage(...args) {
+        return this.system.applyDamage(...args)
     }
 
     /**
      * applies healing to the actor
      */
-    async applyHealing(healing) {
-         // Update the Actor
-         const updates = {};
-
-        if (healing.toughness)
-            updates["system.combat.health.toughness.value"] =  Math.min(this.combat.health.toughness.value + healing.toughness, this.combat.health.toughness.max)
-        else return
-
-        // Delegate damage application to a hook
-        const allowed = Hooks.call("modifyTokenAttribute", {
-            attribute: "combat.health.toughness.value",
-            value: this.combat.health.toughness.value,
-            isDelta: false,
-            isBar: true
-        }, updates);
-
-        let ret = allowed !== false ? await this.update(updates) : this;
-
-        let note = game.i18n.format("NOTIFICATION.APPLY_HEALING", {toughness : healing.toughness, name : this.prototypeToken.name});
-        ui.notifications.notify(note);
-
-        return ret;
+    async applyHealing(...args) {
+        return this.system.applyHealing(...args)
     }
 
     async addCondition(effect, options={}, mergeData={}) {

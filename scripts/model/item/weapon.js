@@ -1,8 +1,9 @@
 import { TestDataModel } from "./components/test";
-import { TraitItemModel } from "./components/traits";
+import { EquippableItemModel } from "./components/equippable";
+import TraitsMixin from "./components/traits";
 let fields = foundry.data.fields;
 
-export class WeaponModel extends TraitItemModel
+export class WeaponModel extends TraitsMixin(EquippableItemModel)
 {
     static defineSchema() 
     {

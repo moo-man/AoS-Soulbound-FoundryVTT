@@ -25,6 +25,28 @@ body.soulbound-theme .application.soulbound.actor.sheet {
       }
   }
 
+   &.vehicle {
+      section[data-tab=main]
+      {
+
+         .attribute-box:not(.single) .field:not(.bonus) {
+            border-bottom: 0px;
+         }
+         .box-row
+         {
+            border-top: var(--border);
+         }
+
+
+      }
+   }
+
+   &.party {
+      .header-details {
+         padding-left: 2rem;
+      }
+   }
+
   
   .sheet-header {
    .profile {
@@ -153,5 +175,42 @@ body.soulbound-theme .application.soulbound.actor.sheet {
          }
       }
    }
+
+   .power {
+
+      .fill {
+
+      }
+
+       .fill.low {
+          background: linear-gradient(slategrey, darkslategray);
+       }
+       
+       .fill.medium {
+          background: url(./assets/image/header-background-vertical.webp);
+       
+          -webkit-animation: glow-medium 1s ease-in-out infinite alternate;
+          -moz-animation: glow-medium 1s ease-in-out infinite alternate;
+          animation: glow-medium 1s ease-in-out infinite alternate;
+          
+       }
+
+       .fill.high {
+          background: url(./assets/image/foreground.webp);
+
+          -webkit-animation: glow-high 0.5s ease-in-out infinite alternate;
+          -moz-animation: glow-high 0.5s ease-in-out infinite alternate;
+          animation: glow-high 0.5s ease-in-out infinite alternate;
+       }
+
+       .fill.over {
+          background: linear-gradient(red, darkred);
+       
+          -webkit-animation: glow-over 0.2s ease-in-out infinite alternate;
+          -moz-animation: glow-over 0.2s ease-in-out infinite alternate;
+          animation: glow-over 0.2s ease-in-out infinite alternate;
+       }
+  
+  }
 
 }

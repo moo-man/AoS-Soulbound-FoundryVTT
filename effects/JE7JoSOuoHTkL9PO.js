@@ -1,7 +1,7 @@
 let testFailed;
 if ([3,4].includes(this.actor.system.bio.type))
 {
-    let test = await this.actor.setupCommonTest({skill : "determination"}, {fields : {difficulty : 6, complexity : 3}, appendTitle : ` - ${this.effect.name}`})
+    let test = await this.actor.system.setupCommonTest({skill : "determination"}, {fields : {difficulty : 6, complexity : 3}, appendTitle : ` - ${this.effect.name}`})
     testFailed = test.failed;
 }
 else 

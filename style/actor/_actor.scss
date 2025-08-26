@@ -19,6 +19,15 @@
         }
     }
 
+    &.vehicle {
+        section[data-tab=main]
+        {
+            .box-row .attribute-box {
+                border-bottom: 0px;
+            }
+        }
+    }
+
     .sheet-list.skills {
         border: 1px solid var(--attribute-border);
         .list-header {
@@ -120,43 +129,6 @@
         {
             margin-left: 3px;       
         }
-    }
-
-    .power {
-
-        .fill {
-
-        }
-
-         .fill.low {
-            background: linear-gradient(slategrey, darkslategray);
-         }
-         
-         .fill.medium {
-            background: url(./assets/image/header-background-vertical.webp);
-         
-            -webkit-animation: glow-medium 1s ease-in-out infinite alternate;
-            -moz-animation: glow-medium 1s ease-in-out infinite alternate;
-            animation: glow-medium 1s ease-in-out infinite alternate;
-            
-         }
-
-         .fill.high {
-            background: url(./assets/image/foreground.webp);
-
-            -webkit-animation: glow-high 0.5s ease-in-out infinite alternate;
-            -moz-animation: glow-high 0.5s ease-in-out infinite alternate;
-            animation: glow-high 0.5s ease-in-out infinite alternate;
-         }
-
-         .fill.over {
-            background: linear-gradient(red, darkred);
-         
-            -webkit-animation: glow-over 0.2s ease-in-out infinite alternate;
-            -moz-animation: glow-over 0.2s ease-in-out infinite alternate;
-            animation: glow-over 0.2s ease-in-out infinite alternate;
-         }
-    
     }
 
 }

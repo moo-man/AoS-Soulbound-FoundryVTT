@@ -49,4 +49,85 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         }
     }
 
+    static migrateData(data)
+    {
+        super.migrateData(data);
+
+        if (data.talents.core instanceof Array)
+        {
+            data.talents.core = {list : data.talents.core};
+        }
+
+        if (data.talents.list instanceof Array)
+        {
+            data.talents.list = {list : data.talents.list};
+        }
+
+
+
+        let _convertStructure = (structure, equipment) => {
+            structure.type = ["or", "and"].includes(structure.type) ? structure.type : "option";
+            if (!isNaN(structure.index))
+            {
+                structure.id = equipment[structure.index].groupId || equipment[structure.index].id || structure.groupId;
+                if (equipment[structure.index])
+                {
+                    equipment[structure.index].groupId = structure.id;
+                }
+            }
+            else 
+            {
+                structure.id = structure.groupId;
+            }
+            if (structure.items?.length)
+            {
+                structure.options = foundry.utils.deepClone(structure.items);
+                delete structure.items;
+                for(let opt of structure.options)
+                {
+                    _convertStructure(opt, equipment);
+                }
+            }
+            
+            return structure
+        }
+
+        if (data.equipment instanceof Array)
+        {
+            let oldEquipment = foundry.utils.deepClone(data.equipment);
+
+            data.equipment = {
+                structure : _convertStructure(data.groups, oldEquipment),
+                
+                options: oldEquipment.map(w => {
+                    let type = w.type;
+                    if (type == "generic")
+                    {
+                        type = w.filters?.length ? "filter" : "placeholder";
+                    }
+                    return {
+                        name : w.name,
+                        type : type,
+                        id : w.groupId || w.id,
+                        diff : w.diff,
+                        documentId : w.id,
+                        idType : "id",
+                        filters: (w.filters || []).map(i => {
+                            let opMap = {
+                                lt : "<",
+                                le : "<=",
+                                eq : "==",
+                                gt : ">",
+                                ge : ">="
+                            }
+                            return {
+                                path : i.property,
+                                value : i.value,
+                                operation : opMap[i.test]
+                            }
+                        })
+                    }
+            })}
+        }
+    }
 }

@@ -9,6 +9,8 @@ export default class SoulboundTest extends WarhammerTestBase {
             testData : {
                 attribute : data.attribute,
                 skill : data.skill,
+                numOfDice : data.dice,
+                focus : data.focus,
                 bonusDice : data.bonusDice,
                 bonusFocus : data.bonusFocus,
                 dn : data.dn || {difficulty : data.difficulty, complexity : data.complexity, name : data.context.title},
@@ -83,7 +85,7 @@ export default class SoulboundTest extends WarhammerTestBase {
         {
             triggers : 0,
             dice : [],
-            focus : this.skill?.focus || 0,
+            focus : this.testData.focus || this.skill?.focus || 0,
             triggerToDamage : this.testData.triggerToDamage || false,
             other : [],
         }
@@ -263,11 +265,11 @@ export default class SoulboundTest extends WarhammerTestBase {
     }
 
     get attribute() {
-        return this.actor.attributes[this.testData.attribute]
+        return this.actor.attributes?.[this.testData.attribute]
     }
 
     get skill() {
-        return this.actor.skills[this.testData.skill]
+        return this.actor.skills?.[this.testData.skill]
     }
 
     get item() {
@@ -284,6 +286,10 @@ export default class SoulboundTest extends WarhammerTestBase {
 
     get numberOfDice()
     {
+        if (this.testData.numOfDice)
+        {
+            return this.testData.numOfDice + this.testData.bonusDice;
+        }
         let num = this.attribute.value +  this.testData.bonusDice
         if (this.skill)
             num += (this.testData.doubleTraining ? this.skill.training * 2 : this.skill.training) + this.skill.bonus

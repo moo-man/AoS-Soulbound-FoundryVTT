@@ -60,7 +60,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             // {
             //     context.fields = {complexity : 1 + this.sourceTest.result.degree};
             // }
-            test = await this.actor.setupTestFromItem(this.system.sourceData.item, context);
+            test = await this.actor.system.setupTestFromItem(this.system.sourceData.item, context);
         }
         else if (transferData.avoidTest.value == "custom") {
             let dnObject = SoulboundUtility.DNToObject(transferData.avoidTest.dn)
@@ -69,7 +69,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
                 dnObject.complexity = 1 + this.sourceTest.result.degree;
             }
             context.fields = dnObject;
-            test = await this.actor.setupCommonTest({ attribute: transferData.avoidTest.attribute, skill: transferData.avoidTest.skill }, context)
+            test = await this.actor.system.setupCommonTest({ attribute: transferData.avoidTest.attribute, skill: transferData.avoidTest.skill }, context)
         }
 
         if (!transferData.avoidTest.reversed) {

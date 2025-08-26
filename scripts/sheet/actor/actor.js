@@ -247,19 +247,19 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
         {
 
             case "attribute" :
-                return this.actor.setupCommonTest({attribute : target.dataset.attribute})
+                return this.actor.system.setupCommonTest({attribute : target.dataset.attribute})
                 case "skill" :
-                return this.actor.setupCommonTest({skill : target.dataset.skill})
+                return this.actor.system.setupCommonTest({skill : target.dataset.skill})
             case "weapon" :
-                return this.actor.setupCombatTest(this._getId(ev, target))
+                return this.actor.system.setupCombatTest(this._getId(ev, target))
             case "attack" :
-                return this.actor.setupCombatTest(this._getId(ev, target))
+                return this.actor.system.setupCombatTest(this._getId(ev, target))
             case "spell" :
-                return this.actor.setupSpellTest(this._getId(ev, target))
+                return this.actor.system.setupSpellTest(this._getId(ev, target))
             case "miracle" :
-                return this.actor.setupMiracleTest(this._getId(ev, target))
+                return this.actor.system.setupMiracleTest(this._getId(ev, target))
             default : 
-              return this.actor.setupAbilityUse(this._getUUID(ev, target))
+              return this.actor.system.setupAbilityUse(this._getUUID(ev, target))
         }
     }
 

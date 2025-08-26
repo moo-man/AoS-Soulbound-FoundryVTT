@@ -3,7 +3,8 @@
     "types": [
       "player",
       "npc",
-      "party"
+      "party",
+      "vehicle-simple"
     ],
     "templates": {
       "attributes": {
@@ -326,7 +327,8 @@
       "talent",
       "weapon",
       "partyItem",
-      "archetype"
+      "archetype",
+      "vehicleItem"
     ],
     "templates": {
       "equipped": {

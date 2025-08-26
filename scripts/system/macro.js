@@ -34,14 +34,14 @@ export default class AOS_MacroUtil {
     }
 
     static async createWeaponDialog(actor, weapon) {
-        actor.setupCombatTest(weapon)
+        actor.system.setupCombatTest(weapon)
     }
 
     static async createSpellRoll(actor, spell) {
-        actor.setupSpellTest(spell)
+        actor.system.setupSpellTest(spell)
     }
 
     static async createMiracleRoll(actor, spell) {
-        actor.setupMiracleTest(spell)
+        actor.system.setupMiracleTest(spell)
     }
 }

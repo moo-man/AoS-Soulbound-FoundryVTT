@@ -1,8 +1,9 @@
-import { TestDataModel } from "./components/test";
-import { TraitItemModel } from "./components/traits";
 let fields = foundry.data.fields;
+import { EquippableItemModel } from "./components/equippable";
+import { TestDataModel } from "./components/test";
+import TraitsMixin  from "./components/traits";
 
-export class AethericDeviceModel extends TraitItemModel
+export class AethericDeviceModel extends TraitsMixin(EquippableItemModel)
 {
     static defineSchema() 
     {

@@ -32,69 +32,13 @@
                 </select>
             </div>
         </div>
-
-    {{log this}}
-        {{#unless context.dice}}
         <div class="form-group stacked">
-            <label>
-                {{localize "DIALOG.ATTRIBUTE"}}
-            </label>
-
-            <div class="form-fields">
-                <select name="attribute">
-                    {{#select fields.attribute}}
-                        {{#each (config "attributes")}}
-                            <option value="{{@key}}">{{localize this}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-        </div>
-
-
-        <div class="form-group stacked">
-
-            <label>
-                {{localize "DIALOG.SKILL"}}
-            </label>
-
-            <div class="form-fields">
-                <select name="skill">
-                    {{#select fields.skill}}
-                        {{#each (config "skills")}}
-                            <option value="{{@key}}">{{localize this}}</option>
-                        {{/each}}
-                    {{/select}}
-                </select>
-            </div>
-        </div>
-        {{/unless}}
-    </div>
-
-
-    <div class="dialog-row">
-        <div class="form-group">
-            <label>{{localize "DIALOG.DOUBLE_TRAINING"}}</label>
-            <div class="form-fields">
-                <input name="doubleTraining" type="checkbox" {{checked fields.doubleTraining}} />
-            </div>
-        </div>
-        <div class="form-group">
-            <label>{{localize "DIALOG.DOUBLE_FOCUS"}}</label>
-            <div class="form-fields">
-                <input name="doubleFocus" type="checkbox" {{checked fields.doubleFocus}} />
-            </div>
-        </div>
-    </div>
-
-    <div class="dialog-row">
-        <div class="form-group">
             <label>{{localize "DIALOG.BONUSDICE"}}</label>
             <div class="form-fields">
                 <input name="bonusDice" type="number" value="{{fields.bonusDice}}" />
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group stacked">
             <label>{{localize "DIALOG.BONUSFOCUS"}}</label>
             <div class="form-fields">
                 <input name="bonusFocus" name="bonusFocus" type="number" value="{{fields.bonusFocus}}" />

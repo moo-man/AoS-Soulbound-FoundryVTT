@@ -1,4 +1,4 @@
-let test = await this.actor.setupCommonTest({skill : "determination"}, {appendTitle: `- ${this.effect.name}`, fields : {difficulty : 5, complexity : 2}});
+let test = await this.actor.system.setupCommonTest({skill : "determination"}, {appendTitle: `- ${this.effect.name}`, fields : {difficulty : 5, complexity : 2}});
 if (test.failed)
 {
     await this.actor.addCondition("stunned")

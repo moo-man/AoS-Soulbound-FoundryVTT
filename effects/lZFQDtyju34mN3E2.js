@@ -1,1 +1,1 @@
-this.actor.setupCommonTest({skill : "awareness", attribute : "soul"}, {dn: "4:1", appendTitle : `- ${this.effect.name}`})
+this.actor.system.setupCommonTest({skill : "awareness", attribute : "soul"}, {dn: "4:1", appendTitle : `- ${this.effect.name}`})

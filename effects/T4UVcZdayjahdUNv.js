@@ -16,7 +16,7 @@ let attribute = (await Dialog.wait({
     }
 })) || "mind"
 
-let test = await this.actor.setupCommonTest({attribute, skill : attributeSkill[attribute]}, {appendTitle : ` - ${this.effect.name}`, dn : "5:4"})
+let test = await this.actor.system.setupCommonTest({attribute, skill : attributeSkill[attribute]}, {appendTitle : ` - ${this.effect.name}`, dn : "5:4"})
 if (test.failed)
 {
     await this.actor.applyDamage(5);

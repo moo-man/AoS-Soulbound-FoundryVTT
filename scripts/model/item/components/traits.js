@@ -1,8 +1,6 @@
-import { EquippableItemModel } from "./equippable";
-
 let fields = foundry.data.fields;
 
-export class TraitItemModel extends EquippableItemModel
+const TraitsMixin = (cls) => class extends cls 
 {
     static defineSchema() 
     {
@@ -15,7 +13,6 @@ export class TraitItemModel extends EquippableItemModel
         return schema;
     }
 
-    
     get Traits () {
         return Object.values(this.traitList).map(i => i.display)
     }
@@ -50,5 +47,6 @@ export class TraitItemModel extends EquippableItemModel
         })
         return traits
     }
+};
 
-}
+export default TraitsMixin;

@@ -1,3 +1,5 @@
+import SoulboundItemUseTest from "../../system/tests/item-use";
+
 let fields = foundry.data.fields;
 /**
  * Abstract class that interfaces with the Actor class
@@ -49,5 +51,17 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
     computeDerived() 
     {
         // Abstract
+    }
+
+    async setupAbilityUse(item, context={}, options={})
+    {
+        if (typeof item == "string")
+        {
+            item = await fromUuid(item);
+        }
+
+        let use = SoulboundItemUseTest.fromItem(item, this);
+        await use.roll();
+        use.sendToChat();
     }
 }

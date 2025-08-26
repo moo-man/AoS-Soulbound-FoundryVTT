@@ -6,7 +6,7 @@ if (roll <= 2)
 }
 else if (roll <= 11)
 {
-    let test = await this.actor.setupCommonTest({skill : "reflexes"}, {fields : {difficulty : 5, complexity : 2}, appendTitle : ` - Prone`})
+    let test = await this.actor.system.setupCommonTest({skill : "reflexes"}, {fields : {difficulty : 5, complexity : 2}, appendTitle : ` - Prone`})
     if (test.failed)
     {
         await this.actor.addCondition("prone");

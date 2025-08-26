@@ -1,7 +1,6 @@
 import SoulboundUtility from "../../system/utility";
-import { BaseRollDialog } from "./base";
 
-export class CommonRollDialog extends BaseRollDialog {
+export class BaseRollDialog extends WarhammerRollDialogV2 {
 
     get tooltipConfig() 
     {
@@ -35,8 +34,8 @@ export class CommonRollDialog extends BaseRollDialog {
     }
 
     static PARTS = {
-        common : {
-            template : "systems/age-of-sigmar-soulbound/templates/dialog/common-dialog.hbs",
+        base : {
+            template : "systems/age-of-sigmar-soulbound/templates/dialog/base-dialog.hbs",
             fields: true
         },
         mode : {
@@ -52,24 +51,25 @@ export class CommonRollDialog extends BaseRollDialog {
         }
     };
 
-    // Backwards compatibility with migrated scripts
-    get skillKey()
+    get title() 
     {
-        return this.fields.skill;
+        return this.context.title;
     }
 
-    // Backwards compatibility with migrated scripts
-    get attributeKey()
+    async _prepareContext(options)
     {
-        return this.fields.attribute;
+        let context = await super._prepareContext(options);
+        context.title = this.context.title;
+        return context;
     }
 
-    static setupData({attribute, skill}, actor, context={}, options={})
+    static setupData({dice=null, focus=null}={}, actor, context={}, options={})
     {
-        let dialogData = super.setupData({}, actor, context, options);
-        let fields = dialogData.fields;
-        let data = dialogData.data;
+        let {data, fields} = this._baseDialogData(actor, context, options);
 
+        data.dice = dice;
+        data.focus = focus;
+        
         foundry.utils.mergeObject(fields, context.fields || {});
 
         if (context.dn)
@@ -85,12 +85,21 @@ export class CommonRollDialog extends BaseRollDialog {
             }
         }   
 
-        fields.attribute = attribute || game.aos.config.skillAttributes[skill];
-        fields.skill = skill;
+        data.itemId = context.itemId;
 
-        context.title = context.title || `${game.aos.config.attributes[fields.attribute]} ${fields.skill ? "(" + game.aos.config.skills[fields.skill] + ")" : ""}`
-        context.title += context.appendTitle || "";
+        context.title = context.title || "";
+        // context.title += context.appendTitle || "";
         
         return {data, fields, context, options};
+    }
+
+    _defaultFields() 
+    {
+        return foundry.utils.mergeObject(super._defaultFields(), {
+            difficulty : 4,
+            complexity : 1,
+            bonusDice : 0,
+            bonusFocus : 0,
+        });
     }
 }
