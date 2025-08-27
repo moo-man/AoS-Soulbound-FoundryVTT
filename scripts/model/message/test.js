@@ -123,6 +123,7 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
     options.test = test;
     options.item = item;
     options.tags = result.damage.tags;
+    options.ignoreArmour = target.dataset.ignoreArmour;
 
     // apply to any selected actors
     let targets = game.user.targets.size ? game.user.targets.map(i => i.actor) : test.targets

@@ -2,7 +2,7 @@
 
 
 {{#if result.damage.total}}
-    <p><strong>{{localize "CHAT.DAMAGE"}}:</strong> {{result.damage.total}}<button class="apply" data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> Apply</button></p>
+    <p><strong>{{localize "CHAT.DAMAGE"}}:</strong> {{result.damage.total}}<button class="apply" data-action="applyDamage"><i class="fa-solid fa-crosshairs"></i> Apply</button><button class="apply" data-tooltip="Ignore Armour" data-action="applyDamage" data-ignore-armour="true"><i class="fa-solid fa-shield-halved"></i></button></p>
 {{/if}}
 
 {{#if result.traits}}
