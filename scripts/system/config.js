@@ -549,6 +549,7 @@ CONFIG.statusEffects = [
             scriptData : [{
                 label : "Mind (Awareness) Tests that rely on sight",
                 script : "args.fields.difficulty -= 2",
+                trigger : "dialog",
                 options : {
                     hideScript : "return args.fields.attribute != 'mind' || args.fields.skill != 'awareness'"
                 }
@@ -570,6 +571,7 @@ CONFIG.statusEffects = [
             scriptData : [{
                 label : "Tests that require hearing",
                 script : "args.fields.bonusDice -= 1",
+                trigger : "dialog"
             }]
         }
     },
@@ -582,6 +584,7 @@ CONFIG.statusEffects = [
             scriptData : [{
                 label : "Within line of sight of the source of fear",
                 script : "args.fields.bonusDice -= 1",
+                trigger : "dialog"
             }]
         }
     },
@@ -598,8 +601,9 @@ CONFIG.statusEffects = [
         img : "systems/age-of-sigmar-soulbound/assets/icons/poisoned.svg",
         system : {
             scriptData : [{
-                label : "Within line of sight of the source of fear",
+                label : "Penalty to all Tests",
                 script : "args.fields.bonusDice -= 1",
+                trigger : "dialog",
                 options : {
                     activateScript : "return true;"
                 }
