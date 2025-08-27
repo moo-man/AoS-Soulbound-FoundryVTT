@@ -279,6 +279,6 @@ export class SoulboundActorSheet extends WarhammerActorSheetV2 {
     {
         ev.preventDefault();
         let document = this._getDocument(ev);
-        this._toggleDropdown(ev, await TextEditor.enrichHTML(document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
+        this._toggleDropdown(ev, await TextEditor.enrichHTML(document.description || document.system.description, {secrets: this.document.owner, relativeTo : this.document}));
     }
 }

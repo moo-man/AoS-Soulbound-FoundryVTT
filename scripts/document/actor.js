@@ -111,6 +111,7 @@ export class SoulboundActor extends WarhammerActor {
           effect.name = game.i18n.localize(effect.name)
           effect.statuses = [effect.id];
           effect.origin = options.origin || "";
+          effect.description = game.aos.config.conditionDescriptions[effect.id];
           delete effect.id
           return this.createEmbeddedDocuments("ActiveEffect", [mergeObject(effect, mergeData)], {condition: true})
         }
