@@ -1,1 +1,1 @@
-args.fields.defence += (2)
+args.fields.primaryDefence += (2)

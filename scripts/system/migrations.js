@@ -239,9 +239,9 @@ export default class Migration {
         {
             if (data.transfer == false)
             {
-                setProperty(data, "system.transferData.type", "target");
+                foundry.utils.setProperty(data, "system.transferData.type", "target");
             }
-            setProperty(data, "flags.age-of-sigmar-soulbound.migrated", true);
+            foundry.utils.setProperty(data, "flags.age-of-sigmar-soulbound.migrated", true);
         }
     
         if (migrateScripts) 
@@ -295,7 +295,7 @@ export default class Migration {
 
 
             data.changes = data.changes.filter(i => i.mode < 6);
-            setProperty(data, "system.scriptData", scriptData)
+            foundry.utils.setProperty(data, "system.scriptData", scriptData)
         }
         return data;
     }

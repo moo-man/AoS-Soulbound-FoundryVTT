@@ -22,6 +22,6 @@ export class TestDataModel extends StandardItemModel
 
     roll(actor, options={})
     {
-        return actor.system.setupCommonTest({attribute: this.attribute, skill : this.skill}, mergeObject({fields : this.difficulty}, options))
+        return actor.system.setupCommonTest({attribute: this.attribute, skill : this.skill}, foundry.utils.mergeObject({fields : this.difficulty}, options))
     }
 }

@@ -240,7 +240,7 @@ AOS.transferTypes = {
     other : "WH.TransferType.Other"
 },
 
-mergeObject(AOS.scriptTriggers, {
+foundry.utils.mergeObject(AOS.scriptTriggers, {
 
     equipToggle : "WH.Trigger.EquipToggle",
 
@@ -276,11 +276,11 @@ AOS.rollClasses = {
 },
 
 AOS.bugReporterConfig = {
-    endpoint  : "https://aa5qja71ih.execute-api.us-east-2.amazonaws.com/Prod/soulbound",
-    githubURL : "https://api.github.com/repos/moo-man/AoS-Soulbound-FoundryVTT/",
+    repoEndpoint: "https://api.github.com/repos/moo-man/AoS-Soulbound-FoundryVTT",
+    troubleshooting : "https://moo-man.github.io/AoS-Soulbound-FoundryVTT/pages/troubleshooting.html",
     successMessage : "Thank you for your submission. If you wish to monitor or follow up with additional details like screenshots, you can find your issue here: @URL",
-    troubleshootingURL : "https://moo-man.github.io/AoS-Soulbound-FoundryVTT/pages/troubleshooting.html"
-}
+},
+
 
 AOS.premiumModules = {
     "age-of-sigmar-soulbound" : "Age of Sigmar: Soulbound System",
@@ -341,7 +341,7 @@ AOS.getZoneTraitEffects = (region, getGreatestTrait) =>
         if (hazard)
         {
             let hazardEffect = foundry.utils.deepClone(systemEffects[hazard]);
-            setProperty(hazardEffect, "flags.age-of-sigmar-soulbound.ignoreArmour", ignoreArmour)
+            foundry.utils.setProperty(hazardEffect, "flags.age-of-sigmar-soulbound.ignoreArmour", ignoreArmour)
             effects.push(hazardEffect);
         }
         if (obscured)
@@ -365,7 +365,7 @@ AOS.systemEffects = {
                     {
                         trigger: "dialog",
                         label: "+1 Defence against Ranged Attacks",
-                        script: "args.fields.defence += 1",
+                        script: "args.fields.primaryDefence += 1",
                         options: {
                             targeter: true,
                             activateScript: "return args.weapon && args.weapon.traitList.range",
@@ -393,7 +393,7 @@ AOS.systemEffects = {
                 {
                     trigger: "dialog",
                     label: "+2 Defence agaisnt Ranged Attacks",
-                    script: "args.fields.defence += 2",
+                    script: "args.fields.primaryDefence += 2",
                     options: {
                         "targeter": true,
                         "activateScript": "return args.weapon && args.weapon.traitList.range",

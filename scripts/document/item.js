@@ -32,7 +32,7 @@ export class SoulboundItem extends WarhammerItem {
 
             let list = getProperty(this.archetype.toObject(), this.archetypeItemPath)
             let item = list[this.archetypeItemIndex];
-            mergeObject( // Merge current diff with new diff
+            foundry.utils.mergeObject( // Merge current diff with new diff
             item.diff,
             diffObject(this.toObject(), data),
             { overwrite: true })
@@ -97,7 +97,7 @@ export class SoulboundItem extends WarhammerItem {
             item.img = null;
         }
 
-        const html = await renderTemplate("systems/age-of-sigmar-soulbound/templates/chat/item.hbs", { item, data: item.system });
+        const html = await foundry.applications.handlebars.renderTemplate("systems/age-of-sigmar-soulbound/templates/chat/item.hbs", { item, data: item.system });
         const chatData = {
             user: game.user.id,
             rollMode: game.settings.get("core", "rollMode"),
@@ -203,7 +203,7 @@ export class SoulboundItem extends WarhammerItem {
         items = items.concat(talents.map(async t => {
             let item = (await warhammer.utility.findItemId(t.id, "talent"))?.toObject();
             if (item)
-                mergeObject(item, t.diff, {overwrite : true})
+                foundry.utils.mergeObject(item, t.diff, {overwrite : true})
             return item
         }))
 
@@ -213,7 +213,7 @@ export class SoulboundItem extends WarhammerItem {
             {
                 let item = (await warhammer.utility.findItemId(i.id, "equipment"))?.toObject();
                 if (item)
-                    mergeObject(item, i.diff, {overwrite : true})
+                    foundry.utils.mergeObject(item, i.diff, {overwrite : true})
                 return item
             }
             else 
@@ -256,7 +256,7 @@ export class SoulboundItem extends WarhammerItem {
         journal.sheet.render(true, {pageId : page?.id})
     }
     
-    get equippable() { return hasProperty(this, "system.equipped") }
+    get equippable() { return foundry.utils.hasProperty(this, "system.equipped") }
     // @@@@@@ TYPE GETTERS @@@@@@
     /************** ITEMS *********************/
     get isTalent() { return this.type === "talent" }

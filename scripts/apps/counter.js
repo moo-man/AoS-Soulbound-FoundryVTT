@@ -124,15 +124,15 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
     value = Math.round(value);
 
     if (!game.user.isGM) {
-      game.socket.emit('system.age-of-sigmar-soulbound', {
-        type: 'setCounter',
-        payload: {value, type},
-      });
+      await SocketHandlers.call("setCounter", {value, type}, "GM")
     }
     else
     {
-      game.settings.set('age-of-sigmar-soulbound', type, value);
+      await game.settings.set('age-of-sigmar-soulbound', type, value);
     }
+
+    SocketHandlers.call("updateCounter", null, "ALL")
+
 
     return value
   }

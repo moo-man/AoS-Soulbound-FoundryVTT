@@ -63,7 +63,7 @@ export default class SoulboundTest extends WarhammerTestBase {
         this.computeResult()   
         if (this.item)
         {
-            this.context.description = await TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
+            this.context.description = await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
         }
         await this.promptAllocation();
         await this.runPostScripts()
@@ -212,7 +212,7 @@ export default class SoulboundTest extends WarhammerTestBase {
 
     async sendToChat({newMessage = false} = {})
     {
-        const html = await renderTemplate(this.template, this);
+        const html = await foundry.applications.handlebars.renderTemplate(this.template, this);
         let chatData = ChatMessage.applyRollMode({
             user: game.user.id,
             speaker : this.context.speaker,

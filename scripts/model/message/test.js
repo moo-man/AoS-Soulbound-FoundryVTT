@@ -3,6 +3,7 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
   static get actions() {
     return foundry.utils.mergeObject(super.actions, {
       applyDamage: this.applyDamage,
+      applyHealing: this.applyHealing,
       applyRend : this.applyRend,
       applyCleave : this.applyCleave,
       toggleDie: this._onToggleDie,

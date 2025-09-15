@@ -15,8 +15,8 @@ export const initializeHandlebars = () => {
         "systems/age-of-sigmar-soulbound/templates/chat/spell/spell-result.hbs",
         "systems/age-of-sigmar-soulbound/templates/chat/miracle/miracle-result.hbs",
     ];
-    loadTemplates(templatePaths);
-    loadTemplates({
+    foundry.applications.handlebars.loadTemplates(templatePaths);
+    foundry.applications.handlebars.loadTemplates({
         listEffect : "systems/age-of-sigmar-soulbound/templates/partials/list-effect.hbs",
         itemTraits : "systems/age-of-sigmar-soulbound/templates/partials/item-traits.hbs",
         itemTest : "systems/age-of-sigmar-soulbound/templates/partials/item-test.hbs"

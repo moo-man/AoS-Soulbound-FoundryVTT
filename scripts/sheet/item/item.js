@@ -111,9 +111,9 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
 
   async _handleEnrichment() {
     let enrichment = {}
-    enrichment["system.description"] = await TextEditor.enrichHTML(this.item.system.description, { async: true, secrets: this.item.isOwner, relativeTo: this.item })
+    enrichment["system.description"] = await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, { async: true, secrets: this.item.isOwner, relativeTo: this.item })
 
-    return expandObject(enrichment)
+    return foundry.utils.expandObject(enrichment)
   }
 
   static async _onConfigureTraits(ev, target) {

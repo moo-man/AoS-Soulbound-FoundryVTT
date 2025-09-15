@@ -37,14 +37,14 @@ export class StandardSoulboundActorSheet extends SoulboundActorSheet  {
       async _handleEnrichment()
       {
           let enrichment = await super._handleEnrichment()
-          enrichment["system.notes"] = await TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          enrichment["system.notes"] = await foundry.applications.ux.TextEditor.enrichHTML(this.actor.system.notes, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
           enrichment.items = {}
           for(let item of this.actor.items)
           {
-            enrichment.items[item.id] = await TextEditor.enrichHTML(item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: item})
+            enrichment.items[item.id] = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: item})
           }
   
-          return expandObject(enrichment)
+          return foundry.utils.expandObject(enrichment)
       }
   
 

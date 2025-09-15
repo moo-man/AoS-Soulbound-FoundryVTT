@@ -12,19 +12,23 @@ export default class MiracleTest extends SoulboundTest{
         if (this.item.test.opposed)
         {
             this.dice = this.testData.dice ? Roll.fromData(this.testData.dice) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);
-            await this.dice.evaluate({async:true})  
+            await this.dice.roll()  
             this.dice.dice[0].results.forEach((result, i) => {
                 result.index = i;
             })  
             this.computeResult();
+            await this.promptAllocation();
+
         }
         else 
         {
             this.dice = new Roll("0");
-            await this.dice.evaluate({async: true}); // Chat Messages must have an evaluated test
+            await this.dice.roll(); // Chat Messages must have an evaluated test
         }
 
         this.testData.dice = this.dice.toJSON();
+
+        this.context.description = await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
 
         if (!this.context.mettleSubtracted)
         {

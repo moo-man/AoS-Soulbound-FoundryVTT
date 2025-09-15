@@ -8,5 +8,5 @@ await this.effect.setFlag(game.system.id, "companion", actor.uuid);
 let effectData = this.item.effects.contents[1].convertToApplied();
 effectData.name += ` (${this.actor.name})`
 actor.applyEffect({effectData})
-await this.effect.update({name : this.effect.baseName + ` (${target?.actor.name})`})
-await this.item.update({name : this.item.baseName + ` (${target?.actor.name})`})
+await this.effect.update({name : this.effect.baseName + ` (${actor.name})`})
+await this.item.update({name : this.item.baseName + ` (${actor.name})`})

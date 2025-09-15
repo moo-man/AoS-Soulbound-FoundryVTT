@@ -11,7 +11,7 @@ export default class CharacterCreation extends FormApplication {
     }
 
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
+        return foundry.utils.mergeObject(super.defaultOptions, {
             id: "character-creation",
             title: game.i18n.localize("HEADER.CHARGEN"),
             template: "systems/age-of-sigmar-soulbound/templates/apps/character-creation.hbs",
@@ -89,7 +89,7 @@ export default class CharacterCreation extends FormApplication {
 
         let items = talents.concat(equipment).map(i => i.toObject())
 
-        await this.actor.update(mergeObject(this.character.toObject(), { overwrite: true }))
+        await this.actor.update(foundry.utils.mergeObject(this.character.toObject(), { overwrite: true }))
         this.actor.createEmbeddedDocuments("Item", items);
         this.close();
     }
@@ -223,7 +223,7 @@ export default class CharacterCreation extends FormApplication {
         let descriptions = {};
         for(let item of talents)
         {
-          descriptions[item.id] = await TextEditor.enrichHTML(item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: item})
+          descriptions[item.id] = await foundry.applications.ux.TextEditor.enrichHTML(item.system.description, {async: true, secrets: this.actor.isOwner, relativeTo: item})
         }
         return descriptions
     }

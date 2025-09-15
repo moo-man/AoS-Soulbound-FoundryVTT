@@ -53,7 +53,7 @@ export default class SoulboundItemUseTest extends SoulboundTest {
 
 
     async roll() {
-        this.result.description = await TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
+        this.result.description = await foundry.applications.ux.TextEditor.enrichHTML(this.item.system.description, {secrets: false, relativeTo: this.item})
     }
 
     _hasTest(item) {

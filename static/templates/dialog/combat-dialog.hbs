@@ -8,11 +8,7 @@
 
             <div class="form-fields">
                 <select name="attribute">
-                    {{#select fields.attribute}}
-                        {{#each (config "attributes")}}
-                            <option value="{{@key}}">{{localize this}}</option>
-                        {{/each}}
-                    {{/select}}
+                      {{selectOptions (config "attributes") selected=fields.attribute}}
                 </select>
             </div>
         </div>
@@ -26,11 +22,7 @@
 
             <div class="form-fields">
                 <select name="skill">
-                    {{#select fields.skill}}
-                        {{#each (config "skills")}}
-                            <option value="{{@key}}">{{localize this}}</option>
-                        {{/each}}
-                    {{/select}}
+                      {{selectOptions (config "skills") selected=fields.skill}}
                 </select>
             </div>
         </div>
@@ -40,11 +32,7 @@
                 {{localize "DIALOG.ATTACK"}}
             </label>
             <select name="attack">
-                {{#select fields.attack}}
-                    {{#each (config "ratings") as | rating r|}}
-                        <option value="{{r}}">{{rating}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions (config "ratings") selected=fields.attack}}
             </select>
         </div>
     </div>
@@ -106,11 +94,7 @@
                 <label>{{localize "DIALOG.DEFENCE"}}</label>
                 <div class="form-fields">
                     <select name="primaryDefence">
-                        {{#select fields.primaryDefence}}
-                            {{#each (config "ratings") as | rating r|}}
-                                <option value="{{r}}">{{rating}}</option>
-                            {{/each}}
-                        {{/select}}
+                        {{selectOptions (config "ratings") selected=fields.primaryDefence}}
                     </select>
                 </div>
             </div>
@@ -129,11 +113,7 @@
             <label>{{localize "DIALOG.DUAL_WEAPON"}}</label>
             <div class="form-fields">
                 <select name="dualWeapon">
-                    {{#each data.otherWeapons as |weapon|}}
-                        {{#select fields.dualWeapon}}
-                            <option value="{{weapon.id}}">{{weapon.name}}</option>
-                        {{/select}}
-                    {{/each}}
+                    {{selectOptions data.otherWeapons selected=fields.dualWeapon valueAttr="id" labelAttr="name"}}
                 </select>
             </div>
         </div>
@@ -146,11 +126,7 @@
         <label>{{localize "DIALOG.DEFENCE"}}</label>
         <div class="form-fields">
             <select name="primaryDefence">
-                {{#select fields.primaryDefence}}
-                    {{#each (config "ratings") as | rating r|}}
-                        <option value="{{r}}">{{rating}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions (config "ratings") selected=fields.primaryDefence}}
             </select>
         </div>
     </div>
@@ -175,11 +151,7 @@
         <label>{{localize "DIALOG.DEFENCE"}}</label>
         <div class="form-fields">
             <select name="secondaryDefence">
-                {{#select fields.secondaryDefence}}
-                    {{#each (config "ratings") as | rating r|}}
-                        <option value="{{r}}">{{rating}}</option>
-                    {{/each}}
-                {{/select}}
+                {{selectOptions (config "ratings") selected=fields.secondaryDefence}}
             </select>
         </div>
     </div>

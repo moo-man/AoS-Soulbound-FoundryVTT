@@ -159,7 +159,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
     _getCombatLadderValue(combatStat) {
         let value = this[combatStat].total
 
-        return Math.clamped(Math.ceil(value / 2), 1, this[combatStat].max);
+        return Math.clamp(Math.ceil(value / 2), 1, this[combatStat].max);
     }
 
     addArmour(item) {
@@ -201,7 +201,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
 
         let valueNum = speedNum[value] || 0;
         if (valueNum != 0)
-            valueNum = Math.clamped(valueNum + modifier, 1, 3)
+            valueNum = Math.clamp(valueNum + modifier, 1, 3)
         else return value
 
         return warhammer.utility.findKey(valueNum, speedNum)

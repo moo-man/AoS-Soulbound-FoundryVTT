@@ -127,7 +127,7 @@ export class CombatRollDialog extends CommonRollDialog {
 
     _getDN(name, rating, defence) {
         let difficulty = 4 - (rating - defence);
-        difficulty = Math.clamped(difficulty, 2, 6)
+        difficulty = Math.clamp(difficulty, 2, 6)
         return {name, difficulty, complexity : 1}
     }
 
@@ -230,7 +230,7 @@ export class CombatRollDialog extends CommonRollDialog {
 
     _defaultFields() 
     {
-        return mergeObject(super._defaultFields(), {
+        return foundry.utils.mergeObject(super._defaultFields(), {
             bonusDamage : 0,
             primaryDefence : 3,
             secondaryDefence : 3,

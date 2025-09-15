@@ -63,8 +63,8 @@ export class PlayerSheet extends StandardSoulboundActorSheet  {
       async _handleEnrichment()
       {
           let enrichment = await super._handleEnrichment()
-          enrichment["system.bio.background"] = await TextEditor.enrichHTML(this.actor.system.bio.background, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
-          enrichment["system.bio.connections"] = await TextEditor.enrichHTML(this.actor.system.bio.connections, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
-          return expandObject(enrichment)
+          enrichment["system.bio.background"] = await foundry.applications.ux.TextEditor.enrichHTML(this.actor.system.bio.background, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          enrichment["system.bio.connections"] = await foundry.applications.ux.TextEditor.enrichHTML(this.actor.system.bio.connections, {async: true, secrets: this.actor.isOwner, relativeTo: this.actor})
+          return foundry.utils.expandObject(enrichment)
       }
 }

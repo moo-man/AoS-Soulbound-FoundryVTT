@@ -2,11 +2,7 @@
     <label>{{localize "DIALOG.ATTRIBUTE"}}</label>
     <div class="form-fields">
         <select name="system.transferData.avoidTest.attribute">
-            {{#select system.transferData.avoidTest.attribute}}
-                {{#each (config "attributes")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+          {{selectOptions (config "attributes") selected=system.transferData.avoidTest.attribute blank=""}}
         </select>
     </div>
 </div>
@@ -14,11 +10,7 @@
     <label>{{localize "DIALOG.SKILL"}}</label>
     <div class="form-fields">
         <select name="system.transferData.avoidTest.skill">
-            {{#select system.transferData.avoidTest.skill}}
-                {{#each (config "skills")}}
-                    <option value="{{@key}}">{{this}}</option>
-                {{/each}}
-            {{/select}}
+          {{selectOptions (config "skills") selected=system.transferData.avoidTest.skill blank=""}}
         </select>
     </div>
 </div>

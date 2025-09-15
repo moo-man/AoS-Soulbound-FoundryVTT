@@ -1,5 +1,6 @@
 <div>
     <p class="text">{{text}}</p>
+    <p class="text">DN {{test.testData.dn.difficulty}}:{{test.testData.dn.complexity}}</p>
     <div class="dice-container">
         {{#each test.result.dice}}
             <a class="die" data-action="clickDie" data-index={{this.index}}>

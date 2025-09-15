@@ -13,7 +13,7 @@ export class EquippableItemModel extends PhysicalItemModel
 
     _onUpdate(update, options, user)
     {
-        if (hasProperty(update, "system.equipped"))
+        if (foundry.utils.hasProperty(update, "system.equipped"))
         {
             this.runScripts("equipToggle", {equipped : update.system.equipped});
         }

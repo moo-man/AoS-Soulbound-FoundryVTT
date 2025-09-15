@@ -42,11 +42,7 @@
 
             <div class="form-fields">
                 <select name="attribute">
-                    {{#select fields.attribute}}
-                        {{#each (config "attributes")}}
-                            <option value="{{@key}}">{{localize this}}</option>
-                        {{/each}}
-                    {{/select}}
+                    {{selectOptions (config "attributes") selected=fields.attribute}}
                 </select>
             </div>
         </div>
@@ -60,11 +56,7 @@
 
             <div class="form-fields">
                 <select name="skill">
-                    {{#select fields.skill}}
-                        {{#each (config "skills")}}
-                            <option value="{{@key}}">{{localize this}}</option>
-                        {{/each}}
-                    {{/select}}
+                      {{selectOptions (config "skills") selected=fields.skill}}
                 </select>
             </div>
         </div>

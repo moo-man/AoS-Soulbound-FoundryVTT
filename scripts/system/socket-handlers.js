@@ -8,7 +8,7 @@ export default {
         {
             if (game.counter.party)
             {
-                game.counter.party.update({[`data.${data.type}.value`] : parseInt(data.value)})
+                game.counter.party.update({[`system.${data.type}.value`] : parseInt(data.value)})
             }
             else
             {

@@ -193,7 +193,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
          }
          if (item.system.test)
          {
-             return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty}, context), options);
+             return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, foundry.utils.mergeObject({fields : item.system.test.difficulty}, context), options);
          }
      }
  
@@ -206,7 +206,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
  
          if (item.hasTest && item.system.test.self)
          {
-             return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, mergeObject({fields : item.system.test.difficulty, itemId : item.uuid, appendTitle : ` - ${item.name}`}, context, options));
+             return this.setupCommonTest({skill : item.system.test.skill, attribute : item.system.test.attribute}, foundry.utils.mergeObject({fields : item.system.test.difficulty, itemId : item.uuid, appendTitle : ` - ${item.name}`}, context, options));
          }
          else
          {
