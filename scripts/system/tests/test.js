@@ -157,7 +157,7 @@ export default class SoulboundTest extends WarhammerTestBase {
 
         if (!this.message)
         {
-            let message = await ChatMessage.create(ChatMessage.applyRollMode({content : "<em>Allocating Focus...</em>", type : "test", speaker : this.context.speaker}, this.context.rollMode));
+            let message = await ChatMessage.create(ChatMessage.applyRollMode({content : "<em>Allocating Focus...</em>", type : "test", rolls: [this.dice], speaker : this.context.speaker}, this.context.rollMode));
             this.context.messageId = message.id;
         }
 
