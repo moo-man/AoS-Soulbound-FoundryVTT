@@ -1,4 +1,4 @@
-if (args.test?.testData.context.backstab)
+if (args.test?.context.flags.backstab)
 {
     args.ignoreArmour = true;
 }

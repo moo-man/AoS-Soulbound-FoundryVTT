@@ -1,4 +1,4 @@
-if (args.testData.context.backstab && args.succeeded)
+if (args.context.flags.backstab && args.succeeded)
 {
     if (args.result.damage)
     {
