@@ -22,6 +22,7 @@
   "ACTOR.SPEED_NORMAL": "Normal",
   "ACTOR.SPEED_FAST": "Fast",
   "ACTOR.SPEED_MODIFIER": "Speed (Modifier)",
+  "ACTOR.SPEED_FLIGHT": "Speed (Flight)",
 
   "TYPES.Item.aethericDevice": "Aetheric Device",
   "TYPES.Item.armour": "Armour",

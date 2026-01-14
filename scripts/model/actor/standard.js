@@ -241,7 +241,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
          }
 
          
-        if (test.actor?.system?.isVehicle)
+        if (test?.actor?.system?.isVehicle)
         {
             damage *= 2;
         }
