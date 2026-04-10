@@ -29,12 +29,16 @@ body.soulbound-theme .application{
    button {
       --button-background-color: transparent;
    }
-   
 
    input[type=number],
    input[type=text],
+   color-picker,
    input[type=search] {
       @include input();
+
+      input[type=color] {
+         margin-left: 0.5rem;
+      }
    }
 
    select {

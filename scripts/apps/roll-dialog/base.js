@@ -60,6 +60,25 @@ export class BaseRollDialog extends WarhammerRollDialogV2 {
     {
         let context = await super._prepareContext(options);
         context.title = this.context.title;
+        context.difficulties = {
+           "2" : 2,
+           "3" : 3,
+           "4" : 4,
+           "5" : 5,
+           "6" : 6
+        },
+        context.complexities = {
+            "1": 1,
+            "2": 2,
+            "3": 3,
+            "4": 4,
+            "5": 5,
+            "6": 6,
+            "7": 7,
+            "8": 8,
+            "9": 9,
+            "10": 10
+        }
         return context;
     }
 

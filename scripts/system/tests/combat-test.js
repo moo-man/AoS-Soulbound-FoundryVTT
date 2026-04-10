@@ -51,9 +51,9 @@ export default class CombatTest extends SoulboundTest {
 
         // assign dice based on index to separate pool
         if (type == "primary")
-            result.dice = duplicate(this.result.dice.filter(i => i.index < testData.pool))
+            result.dice = foundry.utils.duplicate(this.result.dice.filter(i => i.index < testData.pool))
         else
-            result.dice = duplicate(this.result.dice.filter(i => i.index >= this.testData.dualWieldingData.primary.pool))
+            result.dice = foundry.utils.duplicate(this.result.dice.filter(i => i.index >= this.testData.dualWieldingData.primary.pool))
 
 
         result.dice.forEach(d => d.success = d.value >= testData.dn.difficulty) // Re (0, eval)uate whether the dice succeded or not with new difficulty

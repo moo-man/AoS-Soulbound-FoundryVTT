@@ -246,7 +246,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         if ((isNaN(damage) || !damage) && type)
             damage = game.aos.config.woundDamage[type] || 0
         
-        let wounds = duplicate(this.wounds)
+        let wounds = foundry.utils.duplicate(this.wounds)
         wounds.unshift({type, damage})
 
         TokenHelpers.displayScrollingText(-1, this.parent.parent, {fill: "0xAA0055", direction: CONST.TEXT_ANCHOR_POINTS.BOTTOM})

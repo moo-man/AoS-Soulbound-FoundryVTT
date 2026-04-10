@@ -130,4 +130,40 @@ export class ArchetypeModel extends BaseSoulboundItemModel
             })}
         }
     }
+
+    async toEmbed(config, options)
+    {
+
+        let coreTalents = await this.talents.core.awaitDocuments();
+        let talents = await this.talents.list.awaitDocuments();
+
+        let html = `
+
+
+        <div class="attributes">
+            <div class="values">
+                <div><p>${this.attributes.body}</p></div>
+                <div><p>${this.attributes.mind}</p></div>
+                <div><p>${this.attributes.soul}</p></div>
+            </div>
+            <div class="labels">
+                <div><p><strong>Body</strong></p></div>
+                <div><p><strong>Mind</strong></p></div>
+                <div><p><strong>Soul</strong></p></div>
+            </div>
+        </div>
+
+        <p><strong>Species</strong>: TODO</p>
+        <p><strong>Core Skill</strong>: ${game.aos.config.skills[this.skills.core]}</p>
+        <p><strong>Skills (${this.skills.xp} XP):</strong> ${this.skills.list.map(i => i).join(", ")}</p>
+        <p><strong>Core Talents</strong>: ${coreTalents.map(t => `@UUID[${t.uuid}]{${t.name}}`).join(", ")}</p>
+        <p><strong>Talents (Choose ${this.talents.choose})</strong>: ${talents.map(t => `@UUID[${t.uuid}]{${t.name}}`).join(", ")}</p>
+        <p><strong>Equipment</strong>: ${this.equipment.textDisplayWithLinks}</p>`
+        
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
 }

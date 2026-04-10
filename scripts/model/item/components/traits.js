@@ -30,7 +30,7 @@ const TraitsMixin = (cls) => class extends cls
 
             if (i.custom) 
             {
-                traits[i.name] = duplicate(i)
+                traits[i.name] = foundry.utils.duplicate(i)
             }
             else 
             {

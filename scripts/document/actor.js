@@ -99,7 +99,7 @@ export class SoulboundActor extends WarhammerActor {
         if (!effect)
           return "No Effect Found"
         else 
-            effect = duplicate(effect)
+            effect = foundry.utils.duplicate(effect)
     
         if (!effect.id)
           return "Conditions require an id field"
@@ -113,7 +113,7 @@ export class SoulboundActor extends WarhammerActor {
           effect.origin = options.origin || "";
           effect.description = game.aos.config.conditionDescriptions[effect.id];
           delete effect.id
-          return this.createEmbeddedDocuments("ActiveEffect", [mergeObject(effect, mergeData)], {condition: true})
+          return this.createEmbeddedDocuments("ActiveEffect", [foundry.utils.mergeObject(effect, mergeData)], {condition: true})
         }
       }
     
@@ -123,7 +123,7 @@ export class SoulboundActor extends WarhammerActor {
         if (!effect)
           return "No Effect Found"
         else
-            effect = duplicate(effect)
+            effect = foundry.utils.duplicate(effect)
     
         if (!effect.id)
           return "Conditions require an id field"

@@ -157,7 +157,7 @@ export default class SoulboundTest extends WarhammerTestBase {
 
         if (!this.message)
         {
-            let message = await ChatMessage.create(ChatMessage.applyRollMode({content : "<em>Allocating Focus...</em>", type : "test", rolls: [this.dice], speaker : this.context.speaker}, this.context.rollMode));
+            let message = await ChatMessage.create(ChatMessage.applyRollMode({content : "<em>Allocating Focus...</em>", type : "test", rolls: [this.dice], speaker : this.context.speaker,}, this.context.rollMode), {chatBubble: false});
             this.context.messageId = message.id;
         }
 
@@ -192,7 +192,7 @@ export default class SoulboundTest extends WarhammerTestBase {
         
         if (game.dice3d)
         {
-            let dsnRerollData = duplicate(this.testData.reroll);
+            let dsnRerollData = foundry.utils.duplicate(this.testData.reroll);
             dsnRerollData.terms[0].results = dsnRerollData.terms[0].results.filter((die) => this.testData.shouldReroll[die.index])
             let dsnReroll = Roll.fromData    (dsnRerollData)
             await game.dice3d.showForRoll(dsnReroll)

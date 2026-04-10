@@ -6,7 +6,7 @@ if (args.damage > 0)
     {
         let effect = this.item.effects.contents[1].convertToApplied();
         effect.system.transferData.type = "zone";
-        effect.system.zone.type = "tokens";
+        effect.system.transferData.zone.type = "tokens";
         ZoneHelpers.applyEffectToZone({effectData : [effect]}, region);
     }
 }

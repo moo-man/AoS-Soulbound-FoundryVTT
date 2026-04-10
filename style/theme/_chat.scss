@@ -96,6 +96,29 @@ body.soulbound-theme {
         &:focus {
             outline-color: var(--color-active);
         }
+
+        gap: 0px;
+
+        .editor-menu {
+            background: var(--color-header-blue);
+            padding: 0px 0.5rem;
+            button {
+                background: var(--color-header-blue);
+                border: 2px solid var(--color-header-gold);
+                color: whitesmoke;
+            }
+        }
+
+        .editor-container {
+            @include editor-text;
+            background: none;
+            .editor-content {
+                h1,h2,h3,h4,h5 {
+                    color: whitesmoke;
+                }
+                color: whitesmoke
+            }
+        }
     }
 
 

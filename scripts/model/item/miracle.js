@@ -20,4 +20,19 @@ export class MiracleModel extends StandardItemModel
 
         return schema;
     }
+
+    async toEmbed(config, options)
+    {
+        let html = `
+        <h4>@UUID[${this.parent.uuid}]{${config.label || this.parent.name}}</h4>
+        ${"<p><strong>Target</strong>: " + this.target + "</p>"}
+        ${"<p><strong>Range</strong>: " + game.aos.config.range[this.range] + "</p>"}
+        ${"<p><strong>Duration</strong>: " + this.duration + "</p>"}
+        ${this.description}`
+
+        let div = document.createElement("div");
+        div.style = config.style;
+        div.innerHTML = await foundry.applications.ux.TextEditor.implementation.enrichHTML(html, {relativeTo : this, async: true, secrets : options.secrets})
+        return div;
+    }
 }

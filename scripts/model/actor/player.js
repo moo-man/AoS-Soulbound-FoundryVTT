@@ -88,7 +88,7 @@ export class PlayerModel extends StandardActorModel
 
         if (apply)
         {
-            new CharacterCreation({actor: this.parent, archetype}).render(true)
+            new CharacterCreation({actor: this.parent, archetype}).render({force: true})
         }
         else
         {

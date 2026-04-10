@@ -135,7 +135,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
 
             if (change.value.includes("@test")) {
                 let path = change.value.replace("@test.", "");
-                change.value = getProperty(this.sourceTest, path)?.toString() || "0";
+                change.value = foundry.utils.getProperty(this.sourceTest, path)?.toString() || "0";
             }
             else {
 
@@ -187,5 +187,39 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             let message = game.messages.get(testData.context?.messageId);
             return message? message.system.test : game.wng.rollClasses[testData.class].recreate(testData);  
         }
+    }
+
+    get changeKeys()
+    {
+        return {choices: Object.keys(game.aos.config.attributes).map(i => {
+            return {
+                value: `system.attributes.${i}.value`,
+                label: game.aos.config.attributes[i],
+                group: game.i18n.localize("TITLE.ATTRIBUTES")
+            }
+        }).concat(Object.keys(game.aos.config.skills).map(i => {
+            return {
+                value: `system.skills.${i}.value`,
+                label: game.aos.config.skills[i],
+                group: game.i18n.localize("TITLE.SKILLS")
+            }
+        })).concat([
+            {value: "system.combat.melee.bonus", label: game.i18n.localize("HEADER.MELEE"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.accuracy.bonus", label: game.i18n.localize("HEADER.ACCURACY"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.defence.bonus", label: game.i18n.localize("HEADER.DEFENCE"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.mettle.bonus", label: game.i18n.localize("HEADER.METTLE"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.mettle.regain", label: game.i18n.localize("HEADER.METTLE_REGAIN"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.health.toughness.bonus", label: game.i18n.localize("HEADER.TOUGHNESS"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.health.wounds.bonus", label: game.i18n.localize("HEADER.WOUND"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.initiative.bonus", label: game.i18n.localize("HEADER.INITIATIVE"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.naturalAwareness.bonus", label: game.i18n.localize("HEADER.NATURAL_AWARENESS"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.armour.bonus", label: game.i18n.localize("HEADER.ARMOUR"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.speeds.modifier", label: game.i18n.localize("ACTOR.SPEED_MODIFIER"), group : game.i18n.localize("TAB.COMBAT")},
+            {value: "system.combat.speeds.flight", label: game.i18n.localize("ACTOR.SPEED_FLIGHT"), group : game.i18n.localize("TAB.COMBAT")},
+        ]), 
+        groups: ['TITLE.ATTRIBUTES',
+        'TITLE.SKILLS',
+        'TAB.COMBAT',
+        ].map(i => game.i18n.localize(i))};
     }
 }

@@ -203,4 +203,53 @@
    blockquote {
       border-left: var(--border);
    }
+
+   .age-of-sigmar-soulbound-embed {
+      h4 a.content-link {
+         background: none;
+         color: var(--color-header-blue);
+         border: none;
+         i {
+            color: var(--color-header-blue);
+         }
+      }
+
+      &.npc {
+         table {
+            border-width: 2px;
+            td {
+               border-width: 2px;
+   
+            }
+         }
+         .npc-header {
+            background-image: url(./assets/image/header-background.webp);
+            background-size: cover;
+            font-family: var(--font-header);
+            text-align: center;
+   
+            a {
+               color: whitesmoke;
+               border: none;
+               text-transform: uppercase;
+               font-size: var(--font-size-24);
+               i {
+                  color: whitesmoke;
+               }
+            }
+         }
+   
+         
+         tr:nth-of-type(even)
+         {
+            background-color: rgba(0, 0, 0, 0.1);
+         }
+   
+         .separator {
+            td {
+               font-weight: bold;
+            }
+         }
+      }
+   }
 }

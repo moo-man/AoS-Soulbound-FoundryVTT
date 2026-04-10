@@ -1,0 +1,46 @@
+.age-of-sigmar-soulbound-embed.archetype {
+    .attributes {
+        .values,
+        .labels {
+            display: flex;
+            justify-content: space-around;
+            font-size: var(--font-size-24);
+            font-weight: bold;
+            border: 1px solid black;
+        }
+
+        .values {
+            border-bottom: 0px;
+
+        }
+        .labels {
+            border-top: 0px;
+        }
+    }
+}
+
+.age-of-sigmar-soulbound-embed.npc {
+
+    .npc-header {
+
+    }
+
+    .npc-labels,
+    .npc-values {
+        text-align: center;
+
+        &.abilities {
+            td div {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 1rem;
+            }
+        }
+    }
+
+    .npc-labels {
+        font-weight: bold;
+    }
+
+}

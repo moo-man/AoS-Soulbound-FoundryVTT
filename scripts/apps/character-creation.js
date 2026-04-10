@@ -157,7 +157,7 @@ export default class CharacterCreation extends FormApplication {
                     render : (html) => {
                         html.parents(".dialog").find("header a").remove()
                     }
-                }).render(true)
+                }).render({force: true})
             }
             else resolve(true)
         })

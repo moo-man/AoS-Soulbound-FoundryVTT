@@ -7,7 +7,7 @@ if (flags.initiative)
         this.actor._initialize();
         if (this.actor.sheet.rendered)
         {
-            this.actor.sheet.render(true);
+            this.actor.sheet.render({force: true});
         }
     })
 }

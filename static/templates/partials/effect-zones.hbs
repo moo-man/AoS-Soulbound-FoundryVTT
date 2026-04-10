@@ -1,4 +1,4 @@
-{{#if (and (eq system.transferData.type "zone") (ne system.zone.type "tokens"))}}
+{{#if (and (eq system.transferData.type "zone") (ne system.transferData.zone.type "tokens"))}}
 <div class="form-group">
     <label><a data-action="zoneConfig">Zone Traits<i class="fa-solid fa-gear"></i></a></label>
     <input type="text" disabled value="{{system.transferData.zone.traits.text}}">

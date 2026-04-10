@@ -5,7 +5,7 @@ roll.toMessage(this.script.getChatData())
 let effectData = this.item.effects.contents[1].toObject();
 effectData.flags.roll = roll.total;
 effectData.system.transferData.type == "zone";
-effectData.system.zone.type == "tokens";
+effectData.system.transferData.zone.type == "tokens";
 
 if (currentZone)
 {

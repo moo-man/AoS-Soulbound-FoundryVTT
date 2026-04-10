@@ -83,7 +83,7 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
         callback: async li => {
           let uuid = li.dataset.uuid || getParent(li, "[data-uuid]").dataset.uuid;
           const document = await fromUuid(uuid);
-          document.sheet.render(true);
+          document.sheet.render({force: true});
         }
       },
       {
@@ -117,7 +117,7 @@ export default class SoulboundItemSheet extends WarhammerItemSheetV2
   }
 
   static async _onConfigureTraits(ev, target) {
-    new ItemTraits(this.item).render(true)
+    new ItemTraits(this.item).render({force: true})
   }
 
   static _onToggleCondition(ev, target)

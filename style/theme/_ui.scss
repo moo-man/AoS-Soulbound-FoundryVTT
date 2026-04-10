@@ -134,6 +134,20 @@ body.soulbound-theme
         }
       }
 
+    .placeables-sidebar search {
+        button {
+            background: none;
+            border: none;
+            &:hover {
+                background: goldenrod;
+                color: whitesmoke;
+            }
+        }
+        
+        input[type=search] {
+            @include input();
+         }
+    }
 
       #settings-popout .window-content,
       #settings {

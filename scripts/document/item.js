@@ -30,7 +30,7 @@ export class SoulboundItem extends WarhammerItem {
         if (this.archetype) {
             // Get the archetype's equipment, find the corresponding object, add to its diff
 
-            let list = getProperty(this.archetype.toObject(), this.archetypeItemPath)
+            let list = foundry.utils.getProperty(this.archetype.toObject(), this.archetypeItemPath)
             let item = list[this.archetypeItemIndex];
             foundry.utils.mergeObject( // Merge current diff with new diff
             item.diff,
@@ -51,7 +51,7 @@ export class SoulboundItem extends WarhammerItem {
 
     async addCondition(effect) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+          effect = foundry.utils.duplicate(CONFIG.statusEffects.find(e => e.id == effect))
         if (!effect)
           return "No Effect Found"
     
@@ -71,7 +71,7 @@ export class SoulboundItem extends WarhammerItem {
     
       async removeCondition(effect, value = 1) {
         if (typeof (effect) === "string")
-          effect = duplicate(CONFIG.statusEffects.find(e => e.id == effect))
+          effect = foundry.utils.duplicate(CONFIG.statusEffects.find(e => e.id == effect))
         if (!effect)
           return "No Effect Found"
     
