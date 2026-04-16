@@ -99,14 +99,40 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             // Prioritize test result duration over item duration (test result might be overcasted)
             let duration = test.result.duration || test.item?.duration
             if (duration) {
-                if (duration.unit == "round")
-                    effectData.duration.rounds = parseInt(duration.value)
-                else if (duration.unit == "minute")
-                    effectData.duration.seconds = parseInt(duration.value) * 60
-                else if (duration.unit == "hour")
-                    effectData.duration.seconds = parseInt(duration.value) * 60 * 60
-                else if (duration.unit == "day")
-                    effectData.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+
+                if (game.release.generation == 14) 
+                {
+
+                    if (duration.unit == "round") {
+                        effectData.duration.units = "rounds";
+                    }
+                    else if (duration.unit == "minute") {
+                        effectData.duration.units = "minutes";
+                    }
+                    else if (duration.unit == "hour") {
+                        effectData.duration.units = "hours";
+                    }
+                    else if (duration.unit == "day") {
+                        effectData.duration.units = "days";
+                    }
+
+                    effectData.duration.value = parseInt(duration.value)
+                }
+                else 
+                {
+                    if (duration.unit == "round") {
+                        effectData.duration.rounds = parseInt(duration.value)
+                    }
+                    else if (duration.unit == "minute") {
+                        effectData.duration.seconds = parseInt(duration.value) * 60
+                    }
+                    else if (duration.unit == "hour") {
+                        effectData.duration.seconds = parseInt(duration.value) * 60 * 60
+                    }
+                    else if (duration.unit == "day") {
+                        effectData.duration.seconds = parseInt(duration.value) * 60 * 60 * 24
+                    }
+                }
             }
         }
         return effectData
@@ -199,7 +225,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
             }
         }).concat(Object.keys(game.aos.config.skills).map(i => {
             return {
-                value: `system.skills.${i}.value`,
+                value: `system.skills.${i}.bonus`,
                 label: game.aos.config.skills[i],
                 group: game.i18n.localize("TITLE.SKILLS")
             }
