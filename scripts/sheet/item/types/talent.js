@@ -1,6 +1,6 @@
-import IMItemSheet from "../item.js";
+import SoulboundItemSheet from "../item.js";
 
-export default class TalentSheet extends IMItemSheet
+export default class TalentSheet extends SoulboundItemSheet
 {
     static type="talent"
 

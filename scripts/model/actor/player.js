@@ -5,7 +5,7 @@ let fields = foundry.data.fields;
 export class PlayerModel extends StandardActorModel 
 {
     static preventItemTypess = [];
-    static singletonItemPaths = {};
+    static singletonItemPaths = {"species" : "species", "archetype" : "archetype"};
 
     static defineSchema() 
     {
@@ -29,6 +29,9 @@ export class PlayerModel extends StandardActorModel
             total : new fields.NumberField({min : 0, initial : 35})
         })
 
+        schema.species = new fields.EmbeddedDataField(SingletonItemModel);
+        schema.archetype = new fields.EmbeddedDataField(SingletonItemModel);
+
         return schema;
     }
 
@@ -43,6 +46,13 @@ export class PlayerModel extends StandardActorModel
                 "prototypeToken.disposition" : CONST.TOKEN_DISPOSITIONS.FRIENDLY
             })
         }
+    }
+
+    _addModelProperties()
+    {
+        super._addModelProperties();
+        this.species.relative = this.parent.items
+        this.archetype.relative = this.parent.items
     }
 
     computeDerived()

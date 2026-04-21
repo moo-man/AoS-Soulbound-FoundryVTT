@@ -326,7 +326,8 @@
       "talent",
       "weapon",
       "partyItem",
-      "archetype"
+      "archetype",
+      "species"
     ],
     "templates": {
       "equipped": {
@@ -475,7 +476,8 @@
         "items": [],
         "groupId" : "root"
       }
-    }
+    },
+    "species" : {}
   },
   "ChatMessage" : {
     "types" : [

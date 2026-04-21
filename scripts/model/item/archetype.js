@@ -11,6 +11,8 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         schema.species = new fields.StringField();
         schema.aqua = new fields.NumberField();
 
+        schema.species = new fields.EmbeddedDataField(DeferredReferenceListModel)
+
         schema.attributes = new fields.SchemaField({
             body : new fields.NumberField(),
             mind : new fields.NumberField(),

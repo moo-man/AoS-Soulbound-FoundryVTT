@@ -1,6 +1,6 @@
-import IMItemSheet from "../item.js";
+import SoulboundItemSheet from "../item.js";
 
-export default class ArchetypeSheet extends IMItemSheet
+export default class ArchetypeSheet extends SoulboundItemSheet
 {
     static type="archetype"
 
@@ -38,6 +38,11 @@ export default class ArchetypeSheet extends IMItemSheet
         let path = ev.target.closest("[data-path]")?.dataset.path || "system.talents.list"
         let list = foundry.utils.getProperty(this.document, path);
         this.document.update(list.add(item));
+      }
+
+      if (item.type == "species")
+      {
+        this.document.update(this.document.system.species.add(item));
       }
     }
   

@@ -1,6 +1,6 @@
-import IMItemSheet from "../item.js";
+import SoulboundItemSheet from "../item.js";
 
-export default class PartyItemSheet extends IMItemSheet
+export default class PartyItemSheet extends SoulboundItemSheet
 {
     static type="party"
 

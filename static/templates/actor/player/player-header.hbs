@@ -8,8 +8,26 @@
         </div>
         <div class="header-details">
             <div class="detail-group">
-                <input readonly type="text" value="{{system.bio.archetype}}" placeholder="{{localize 'BIO.ARCHETYPE'}}" />
-                <input name="system.bio.species" type="text" value="{{system.bio.species}}" placeholder="{{localize 'BIO.SPECIES'}}" />
+                <div class="singleton">
+                    {{#if system.archetype.document}}
+                    <div>
+                        <a data-action="editEmbedded" data-id="{{system.archetype.document.id}}">{{system.archetype.name}}</a>
+                        <a data-action="unset" data-path="system.archetype"><i class="fas fa-xmark"></i></a>
+                    </div>
+                    {{else}}
+                        <input type="text" value="{{system.archetype.name}}" name="system.archetype.name" placeholder="{{localize 'BIO.ARCHETYPE'}}" />
+                    {{/if}}
+                </div>
+                <div class="singleton">
+                    {{#if system.species.document}}
+                    <div>
+                        <a data-action="editEmbedded" data-id="{{system.species.document.id}}">{{system.species.name}}</a>
+                        <a data-action="unset" data-path="system.species"><i class="fas fa-xmark"></i></a>
+                    </div>
+                    {{else}}
+                        <input type="text" value="{{system.species.name}}" name="system.species.name" placeholder="{{localize 'BIO.SPECIES'}}" />
+                    {{/if}}
+                </div>
             </div>
             <div class="detail-group experience">
                 <input name="header.experience.spent" type="number" value="{{system.experience.spent}}" data-dtype="Number" disabled /> 

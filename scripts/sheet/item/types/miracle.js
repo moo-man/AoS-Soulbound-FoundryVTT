@@ -1,6 +1,6 @@
-import IMItemSheet from "../item.js";
+import SoulboundItemSheet from "../item.js";
 
-export default class MiracleSheet extends IMItemSheet
+export default class MiracleSheet extends SoulboundItemSheet
 {
     static type="miracle"
 

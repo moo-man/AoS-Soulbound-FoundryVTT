@@ -34,6 +34,7 @@
   "TYPES.Item.weapon": "Weapon",
   "TYPES.Item.partyItem": "Party Item",
   "TYPES.Item.archetype": "Archetype",
+  "TYPES.Item.species": "Species",
 
   "ABILITIES.POOR": "Poor",
   "ABILITIES.AVERAGE": "Average",
@@ -298,6 +299,7 @@
   "HEADER.STRUCTURE": "Structure",
   "HEADER.MANOEUVRE": "Manoeuvre",
   "HEADER.HULL": "Hull",
+  "HEADER.SPECIES" : "Species",
 
   "ITEM.GOAL": "Goal",
   "ITEM.CONNECTION": "Connection",

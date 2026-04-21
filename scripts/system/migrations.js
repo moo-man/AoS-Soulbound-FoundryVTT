@@ -123,6 +123,12 @@ export default class Migration {
             updateData["system.notes"] = html;
         }
 
+        if (actor.system.bio.archetype)
+        {
+            updateData["system.archetype.name"] = actor.system.bio.archetype;
+            updateData["system.bio.archetype"] = "";
+        }
+
         for(let item of actor.items)
         {
             let itemData = this.migrateItem(item);

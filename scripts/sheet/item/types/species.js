@@ -1,8 +1,8 @@
 import SoulboundItemSheet from "../item.js";
 
-export default class SpellSheet extends SoulboundItemSheet
+export default class SpeciesSheet extends SoulboundItemSheet
 {
-    static type="spell"
+    static type="species"
 
     static DEFAULT_OPTIONS = {
       classes: [this.type],

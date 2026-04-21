@@ -40,6 +40,8 @@ import { SoulboundTestMessageModel } from "./model/message/test.js";
 import { PostedItemMessageModel } from "./model/message/item.js";
 import { SoulboundChatMessage } from "./document/message.js";
 import ZoneConfig from "./apps/zone-config.js";
+import { SpeciesModel } from "./model/item/species.js";
+import SpeciesSheet from "./sheet/item/types/species.js";
 
 Hooks.once("init", () => {
 
@@ -69,6 +71,7 @@ Hooks.once("init", () => {
     CONFIG.Item.dataModels["weapon"] = WeaponModel;
     CONFIG.Item.dataModels["partyItem"] = PartyItemModel;
     CONFIG.Item.dataModels["archetype"] = ArchetypeModel;
+    CONFIG.Item.dataModels["species"] = SpeciesModel;
     
     CONFIG.ActiveEffect.dataModels["base"] = SoulboundActiveEffectModel
     CONFIG.ChatMessage.dataModels["test"] = SoulboundTestMessageModel;
@@ -91,6 +94,7 @@ Hooks.once("init", () => {
     DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", PartyItemSheet, { types: ["partyItem"], makeDefault: true, label : "Party Item Sheet" });
     DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", RuneSheet, { types: ["rune"], makeDefault: true, label : "Rune Sheet" });
     DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", TalentSheet, { types: ["talent"], makeDefault: true, label : "Talent Sheet" });
+    DocumentSheetConfig.registerSheet(Item, "age-of-sigmar-soulbound", SpeciesSheet, { types: ["species"], makeDefault: true, label : "Species Sheet" });
 
     DocumentSheetConfig.registerSheet(ActiveEffect, "age-of-sigmar-soulbound", SoulboundActiveEffectConfig, { makeDefault: true, label : "Soulbound Active Effect Config" });
     initializeHandlebars();

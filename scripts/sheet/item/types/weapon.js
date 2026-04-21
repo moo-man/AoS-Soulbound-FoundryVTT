@@ -1,6 +1,6 @@
-import IMItemSheet from "../item.js";
+import SoulboundItemSheet from "../item.js";
 
-export default class WeaponSheet extends IMItemSheet
+export default class WeaponSheet extends SoulboundItemSheet
 {
     static type="weapon"
 

@@ -41,6 +41,26 @@ body.soulbound-theme .application.soulbound.actor.sheet {
       }
    }
 
+   .singleton {
+      div {
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         color: var(--color-dark-1);
+         border-radius: 5px;
+         height: 1.5rem;
+         background: rgba(0, 0, 0, 0.05);
+         a {
+            flex: 1;
+            text-align: center;
+         }
+         a:last-of-type {
+            margin-left: -2rem;
+            flex: 0 0 2rem;
+         }
+      }
+   }
+
    &.party {
       .header-details {
          padding-left: 2rem;

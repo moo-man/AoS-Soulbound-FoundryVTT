@@ -1,6 +1,6 @@
-import IMItemSheet from "../item.js";
+import SoulboundItemSheet from "../item.js";
 
-export default class AethericDeviceSheet extends IMItemSheet
+export default class AethericDeviceSheet extends SoulboundItemSheet
 {
     static type="aethericDevice"
 
