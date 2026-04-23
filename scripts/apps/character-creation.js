@@ -89,6 +89,23 @@ export default class CharacterCreation extends FormApplication {
 
         let items = talents.concat(equipment).map(i => i.toObject())
 
+        let species = await this.archetype.system.species.awaitDocuments();
+
+        if (!species.length)
+        {
+            species = [await DragDialog.create({text: "Provide Species Item", title: "Species", filter: (document) => document.type == "species", onError: "Must be Species Item"})]
+        }
+        else if (species.length >= 2)
+        {
+            species = await ItemDialog.create(species, 1, {title : "Select Species", text: "Species"})
+        }
+        else 
+        {
+            species = species[0];
+        }
+
+        items = items.concat(species || []);
+
         await this.actor.update(foundry.utils.mergeObject(this.character.toObject(), { overwrite: true }))
         this.actor.createEmbeddedDocuments("Item", items);
         this.close();
