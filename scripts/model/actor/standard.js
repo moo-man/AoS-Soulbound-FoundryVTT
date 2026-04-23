@@ -301,7 +301,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
              wounds = await this.parent.update(this.combat.computeNewWound(remaining));
          }
  
-         this.parent.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || []})
+         this.parent.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || [], messageId: test?.message?.id})
  
  
          await Promise.all(this.runScripts("takeDamage", {actor : this.parent, update: ret, wounds, remaining, damage, test, text, tags}) || []);

@@ -6,10 +6,11 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
     constructor(data, context) {
         super(data, context);
     }
-
     static CONFIGURATION = {
-        zone: true
-    }
+        zone : true,
+        exclude : {},
+        bracket : ["(", ")"]
+    };
 
     get testDisplay() {
 

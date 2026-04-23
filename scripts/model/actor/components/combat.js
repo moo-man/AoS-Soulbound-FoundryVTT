@@ -8,7 +8,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         let schema = {};
         schema.mettle = new fields.SchemaField({
             value : new fields.NumberField({initial : 0, min : 0}),
-            bonus : new fields.NumberField({initial : 0, min : 0}),
+            bonus : new fields.NumberField({initial : 0}),
             regain : new fields.NumberField({initial : 0, min : 0}),
             max : new fields.NumberField({initial: 0, min: 0}),
         });
@@ -115,6 +115,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             this.mettle.max += Math.ceil(parent.attributes.soul.value / 2);
         }
         this.mettle.max += this.mettle.bonus;
+        this.mettle.value = Math.clamp(this.mettle.value, 0, this.mettle.max);
         this.computeSpeedModifier();
     }
 
