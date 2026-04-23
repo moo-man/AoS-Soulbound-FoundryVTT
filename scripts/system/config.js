@@ -227,6 +227,10 @@ AOS.traits = {
     twohanded : "TRAITS.TWOHANDED"
 }
 
+AOS.traitEffects = {
+    
+}
+
 AOS.dicePath = "systems/age-of-sigmar-soulbound/assets/image"
 AOS.traitDescriptions = {}
 AOS.conditionDescriptions = {}

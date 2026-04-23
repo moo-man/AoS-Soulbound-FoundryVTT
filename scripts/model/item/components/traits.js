@@ -22,6 +22,12 @@ const TraitsMixin = (cls) => class extends cls
         return this.traitList.magical || this.traitList.realmstone
     }
 
+    getOtherEffects()
+    {
+        let traitEffects = Object.values(this.traitList).map(e => e.effect).filter(i => i);
+        return super.getOtherEffects().concat(traitEffects);
+    }
+
     get traitList () {
         let traits = {}
         if (!this.traits || !Array.isArray(this.traits))
@@ -42,6 +48,15 @@ const TraitsMixin = (cls) => class extends cls
                 {
                     traits[i.name].rating = i.value;
                     traits[i.name].display += ` (${i.value})`
+                }
+
+                if (game.aos.config.traitEffects[i.name])
+                {
+                    let effectData = foundry.utils.deepClone(game.aos.config.traitEffects[i.name]);
+                    foundry.utils.setProperty(effectData, `flags.${game.system.id}.path`, `system.traitList.${i.name}.effect`);
+                    effectData.img = this.parent.img;
+
+                    traits[i.name].effect = new ActiveEffect.implementation(effectData, {parent: this.parent});
                 }
             }   
         })
