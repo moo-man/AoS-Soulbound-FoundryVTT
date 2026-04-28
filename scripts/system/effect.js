@@ -117,7 +117,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
                         effectData.duration.units = "days";
                     }
 
-                    effectData.duration.value = parseInt(duration.value)
+                    effectData.duration.value = parseInt(duration.value) || undefined;
                 }
                 else 
                 {
@@ -136,6 +136,15 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
                 }
             }
         }
+
+        for(let change of effectData.system.changes)
+        {
+            if (change.value.includes?.("@test"))
+            {
+                change.value = foundry.utils.getProperty(test, change.value.replace("@test.", ""));
+            }
+        }
+
         return effectData
     }
 
@@ -212,7 +221,7 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
         if (testData)
         {
             let message = game.messages.get(testData.context?.messageId);
-            return message? message.system.test : game.wng.rollClasses[testData.class].recreate(testData);  
+            return message? message.system.test : game.aos.config.rollClasses[testData.context.rollClass].recreate(testData);  
         }
     }
 

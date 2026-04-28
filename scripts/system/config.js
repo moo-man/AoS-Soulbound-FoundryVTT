@@ -258,6 +258,9 @@ foundry.utils.mergeObject(AOS.scriptTriggers, {
     rollTest : "WH.Trigger.RollTest",
     rollCombatTest : "WH.Trigger.RollCombatTest",
     rollSpellTest : "WH.Trigger.RollSpellTest",
+
+    receiveWound : "WH.Trigger.ReceiveWound",
+    causeWound : "WH.Trigger.CauseWound"
 }),
 
 AOS.effectKeysTemplate = "systems/age-of-sigmar-soulbound/templates/apps/effect-key-options.hbs",

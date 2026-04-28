@@ -4,6 +4,14 @@ export class MiracleRollDialog extends CommonRollDialog {
 
     dialogTitle = "DIALOG.MIRACLE_ROLL";
 
+    
+    get miracle()
+    {
+        return this.data.miracle;
+    }
+
+
+
     static setupData(miracle, actor, context={}, options={})
     {
         if (typeof miracle == "string")

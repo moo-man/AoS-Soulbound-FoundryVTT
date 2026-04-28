@@ -30,6 +30,10 @@ body.soulbound-theme .application{
       --button-background-color: transparent;
    }
 
+   file-picker {
+      background: none;
+   }
+
    input[type=number],
    input[type=text],
    color-picker,
@@ -201,6 +205,14 @@ body.soulbound-theme .application.warhammer {
          line-height: 2rem;
          @include sheet-header;
       }
+   }
+  }
+
+  &.choice-config {
+   --list-row-alternate: rgba(0, 0, 0, 0.1);
+   .list-header {
+      background: rgba(0, 0, 0, 0.1);
+      border-color: var(--color-header-blue)
    }
   }
 }

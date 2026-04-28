@@ -20,7 +20,7 @@ export class ArchetypeModel extends BaseSoulboundItemModel
         });
 
         schema.skills = new fields.SchemaField({
-            core : new fields.StringField(),
+            core : new fields.ArrayField(new fields.StringField()),
             xp : new fields.NumberField(),
             list : new fields.ArrayField(new fields.StringField()),
         });
@@ -65,6 +65,10 @@ export class ArchetypeModel extends BaseSoulboundItemModel
             data.talents.list = {list : data.talents.list};
         }
 
+        if (typeof data.skills.core == "string")
+        {
+            data.skills.core = [data.skills.core];
+        }
 
 
         let _convertStructure = (structure, equipment) => {
@@ -138,6 +142,7 @@ export class ArchetypeModel extends BaseSoulboundItemModel
 
         let coreTalents = await this.talents.core.awaitDocuments();
         let talents = await this.talents.list.awaitDocuments();
+        let species = await this.species.awaitDocuments();
 
         let html = `
 
@@ -155,9 +160,9 @@ export class ArchetypeModel extends BaseSoulboundItemModel
             </div>
         </div>
 
-        <p><strong>Species</strong>: TODO</p>
-        <p><strong>Core Skill</strong>: ${game.aos.config.skills[this.skills.core]}</p>
-        <p><strong>Skills (${this.skills.xp} XP):</strong> ${this.skills.list.map(i => i).join(", ")}</p>
+        <p><strong>Species</strong>: ${species.map(i => `@UUID[${i.uuid}]{${i.name}}`).join(", ") || "Any"} ${config.faction ? `(${config.faction})` : ""}</p>
+        <p><strong>Core Skill</strong>: ${this.skills.core.map(i => game.aos.config.skills[i]).join(", ")}</p>
+        <p><strong>Skills (${this.skills.xp} XP):</strong> ${this.skills.list.map(i => game.aos.config.skills[i]).join(", ")}</p>
         <p><strong>Core Talents</strong>: ${coreTalents.map(t => `@UUID[${t.uuid}]{${t.name}}`).join(", ")}</p>
         <p><strong>Talents (Choose ${this.talents.choose})</strong>: ${talents.map(t => `@UUID[${t.uuid}]{${t.name}}`).join(", ")}</p>
         <p><strong>Equipment</strong>: ${this.equipment.textDisplayWithLinks}</p>`

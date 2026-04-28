@@ -27,7 +27,7 @@ export class SpellRollDialog extends CommonRollDialog {
             }
         }
 
-        let skill = "channelling" 
+        let skill = spell.system.skill;
         let attribute = spell.system.attribute || game.aos.config.skillAttributes[skill]
 
         

@@ -4,20 +4,25 @@
 
         <div class="box-row">
             <div class="attribute-box">
-                <div class="label" style="grid-column: 1 / span 4">
+                <div class="label" style="grid-column: 1 / span 3">
                     {{localize "SPELL.LORE"}}
                 </div>
 
-                <div class="label" style="grid-column: 5 / span 4">
+                <div class="label" style="grid-column: 4 / span 2">
                     {{localize "SPELL.DN"}}
                 </div>
-                <div class="label" style="grid-column: 9 / span 4">
+                <div class="label" style="grid-column: 6 / span 3">
                     {{localize "SPELL.ATTRIBUTE"}}
                 </div>
+                <div class="label" style="grid-column: 9 / span 4">
+                    {{localize "SPELL.SKILL"}}
+                </div>
 
-                <div class="field" style="grid-column: 1 / span 4">{{formInput fields.lore value=source.system.lore}}</div>
-                <div class="field" style="grid-column: 5 / span 4">{{formInput fields.dn value=source.system.dn}}</div>
-                <div class="field" style="grid-column: 9 / span 4">{{formInput fields.attribute value=source.system.attribute choices=(config "attributes")}}</div>
+
+                <div class="field" style="grid-column: 1 / span 3">{{formInput fields.lore value=source.system.lore}}</div>
+                <div class="field" style="grid-column: 4 / span 2">{{formInput fields.dn value=source.system.dn}}</div>
+                <div class="field" style="grid-column: 6 / span 3">{{formInput fields.attribute value=source.system.attribute choices=(config "attributes")}}</div>
+                <div class="field" style="grid-column: 9 / span 4">{{formInput fields.skill value=source.system.skill choices=(config "skills")}}</div>
             </div>
         </div>
 

@@ -214,7 +214,7 @@ export class StandardCombatModel extends foundry.abstract.DataModel
      * creates and adds a wound based on how far the actors health has gone below zero
      * @param {int} remaining 
      */
-      computeNewWound(remaining) {
+      computeNewWound(remaining, {fromItem, fromActor, fromTest}) {
 
         if (remaining >= 0)
             return
@@ -233,12 +233,48 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             damage = 3; 
         }
 
+        // Helper for scripts
+        let increaseSeverity = function (args) {
+            if (args.type == "minor")
+            {
+                args.type = "serious";
+                args.damage = 2;
+                this.script?.notification("Wound increased to Serious")
+            }
+            else if (args.type == "serious")
+            {
+                args.type = "deadly";
+                args.damage = 3;
+                this.script?.notification("Wound increased to Deadly")
+            }
+        }
+
+        let decreaseSeverity = function (args) {
+            if (args.type == "serious")
+            {
+                args.type = "minor";
+                args.damage = 1;
+                this.script?.notification("Wound decreased to Minor")
+            }
+            else if (args.type == "deadly")
+            {
+                args.type = "serious";
+                args.damage = 2;
+                this.script?.notification("Wound decreased to Serious")
+            }
+        }
+
+        let args = {type, damage, item: fromItem, actor: fromActor, test: fromTest, toughness: remaining, increaseSeverity, decreaseSeverity};
+        this.parent.runScripts("receiveWound", args);
+        fromItem?.runScripts("causeWound", args);
+        fromActor?.runScripts("causeWound", args);
+
         //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
         if((this.health.wounds.value + damage) > this.health.wounds.max) {
             damage = this.health.wounds.max - this.health.wounds.value
         }
 
-        return this.addWound(type, damage)
+        return this.addWound(args.type, args.damage)
     }
 
     // Add new wound according to the given type, 'minor' 'serious' or 'deadly'

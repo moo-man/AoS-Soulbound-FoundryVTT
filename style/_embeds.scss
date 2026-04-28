@@ -1,12 +1,31 @@
 .age-of-sigmar-soulbound-embed.archetype {
+    border: 2px solid black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5)  inset;
+    padding: 1rem;
+    margin-top: 3rem;
     .attributes {
-        .values,
+
+        .values {
+            display: flex;
+            justify-content: space-around;
+            margin-top: -3rem;
+            > * {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: white;
+                border: 2px solid black;
+                border-radius: 50%;
+                width: 4rem;
+                height: 4rem;
+                font-size: var(--font-size-32);
+
+            }
+        }
         .labels {
             display: flex;
             justify-content: space-around;
-            font-size: var(--font-size-24);
-            font-weight: bold;
-            border: 1px solid black;
+            font-size: var(--font-size-20);
         }
 
         .values {

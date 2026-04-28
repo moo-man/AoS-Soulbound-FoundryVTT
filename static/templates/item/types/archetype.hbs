@@ -25,20 +25,17 @@
 
 
         <div class="box-row skills">
-            <div class="skill-header">
-                <div class="core">
-                    <label>{{localize "ARCHETYPE.CORE_SKILL"}}:</label>
-                    <select name="system.skills.core">
-                        {{selectOptions (config "skills") selected=system.skills.core blank=""}}
-                    </select>
-                </div>
+            {{> nameListSelect label="ARCHETYPE.CORE_SKILL" list=system.skills.core path="system.skills.core" options=(config "skills")}}
 
+            <div class="skill-header">
                 <label>{{localize "ARCHETYPE.SKILLS"}}</label>
                 <div class="xp">
                     <input type="number" value="{{system.skills.xp}}" name="system.skills.xp" data-dtype="Number" />
                     <label>{{localize "EXPERIENCE.XP"}}</label>
                 </div>
             </div>
+
+
             <div class="skill-selection">
                 {{#each (config "skills")}}
                     <div class="skill-group">

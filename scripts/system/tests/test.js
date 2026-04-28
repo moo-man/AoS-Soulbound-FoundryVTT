@@ -13,6 +13,7 @@ export default class SoulboundTest extends WarhammerTestBase {
                 focus : data.focus,
                 bonusDice : data.bonusDice,
                 bonusFocus : data.bonusFocus,
+                bonusSuccesses : data.bonusSuccesses || 0,
                 dn : data.dn || {difficulty : data.difficulty, complexity : data.complexity, name : data.context.title},
                 allocation: data.allocation || [],
                 itemId : data.itemId,
@@ -55,6 +56,10 @@ export default class SoulboundTest extends WarhammerTestBase {
     async roll() {
         this.dice = this.testData.dice ? Roll.fromData(this.testData.dice) : new Roll(`${this.numberOfDice}d6cs>=${this.testData.dn.difficulty}`);  
         this.testData.dice = this.dice.toJSON()
+        if (!this.result.other)
+        {
+            this.result.other = [];
+        }
         await this.runPreScripts()
         await this.dice.evaluate()  
         this.dice.dice[0].results.forEach((result, i) => {
@@ -87,7 +92,7 @@ export default class SoulboundTest extends WarhammerTestBase {
             dice : [],
             focus : this.testData.focus || this.skill?.focus || 0,
             triggerToDamage : this.testData.triggerToDamage || false,
-            other : [],
+            other : this.result.other,
         }
         result.focus = (this.testData.doubleFocus ? result.focus * 2 : result.focus) + this.testData.bonusFocus
         let dn = this.testData.dn
@@ -134,7 +139,7 @@ export default class SoulboundTest extends WarhammerTestBase {
             }            
     
         result.triggers = result.dice.filter(die => die.value === 6).length
-        result.successes = result.dice.reduce((prev, current) => prev += current.success, 0)
+        result.successes = result.dice.reduce((prev, current) => prev += current.success, 0) + (this.testData.bonusSuccesses || 0)
 
         let path = game.aos.config.dicePath;
         result.dice.forEach(die => {

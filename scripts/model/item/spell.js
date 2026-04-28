@@ -12,6 +12,7 @@ export class SpellModel extends StandardItemModel
         schema.target = new fields.StringField();
         schema.dn = new fields.StringField();
         schema.attribute = new fields.StringField({initial : "mind"});
+        schema.skill = new fields.StringField({initial : "channelling"});
         schema.range = new fields.StringField({initial: "you"});
         schema.duration = new fields.SchemaField({
             value : new fields.StringField({nullable : true}),

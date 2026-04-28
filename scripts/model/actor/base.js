@@ -60,7 +60,7 @@ export class BaseSoulboundActorModel extends BaseWarhammerActorModel
             item = await fromUuid(item);
         }
 
-        let use = SoulboundItemUseTest.fromItem(item, this);
+        let use = SoulboundItemUseTest.fromItem(item, this.parent);
         await use.roll();
         use.sendToChat();
     }

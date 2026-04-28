@@ -133,6 +133,16 @@ export class SoulboundItem extends WarhammerItem {
         return this.system.traitList
     }
 
+    get hasTrait()
+    {
+        let traits = foundry.utils.deepClone(game.aos.config.traits);
+        for(let t in traits)
+        {
+            traits[t] = !!this.traitList[t];
+        }
+        return traits;
+    }
+
     // @@@@@@ FORMATTED GETTERs @@@@@@
     get State() {
         switch (this.type) {

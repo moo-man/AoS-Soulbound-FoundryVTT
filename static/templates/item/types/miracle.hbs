@@ -3,6 +3,14 @@
         <div class="box-header">{{localize "TITLE.STATS"}}</div>
         <div class="box-row">
             <div class="attribute-box">
+                <div class="label" style="grid-column: 1 / span 12">
+                    {{localize "MIRACLE.GOD"}}
+                </div>
+                <div class="field" style="grid-column: 1 / span 12">{{formInput fields.god value=source.system.god}}</div>
+            </div>
+        </div>
+        <div class="box-row">
+            <div class="attribute-box">
                 <div class="label" style="grid-column: 1 / span 3">
                     {{localize "MIRACLE.TARGET"}}
                 </div>

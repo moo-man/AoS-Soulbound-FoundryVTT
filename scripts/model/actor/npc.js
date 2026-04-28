@@ -198,7 +198,7 @@ export class NPCModel extends StandardActorModel
                 <p>${this.combat.armour.value}</p>
             </td>
             <td colspan="3">
-                <p>${this.combat.health.toughness.max}</p>
+                <p>${this.isSwarm ? this.combat.health.toughness.value : this.combat.health.toughness.max}</p>
             </td>
             <td colspan="3">
                 <p>${this.combat.health.wounds.max}</p>

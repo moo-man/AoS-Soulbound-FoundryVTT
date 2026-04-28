@@ -13,7 +13,12 @@ export class SoulboundActor extends WarhammerActor {
 
 
     async _preUpdate(updateData, options, user) {
-        await super._preUpdate(updateData, options, user);
+        let allowed = await super._preUpdate(updateData, options, user);
+
+        if (allowed == false)
+        {
+            return false;
+        }
 
         // Treat the custom default token as a true default token
         // If you change the actor image from the default token, it will automatically set the same image to be the token image
@@ -203,10 +208,7 @@ export class SoulboundActor extends WarhammerActor {
     }
 
     get size() {
-        if (this.type == "npc")
-            return this.bio.size
-        else
-            return 2
+        return this.bio?.size || 2;
     }
 
     // @@@@@ BOOLEAN GETTERS @@@@@

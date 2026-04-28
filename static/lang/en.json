@@ -418,6 +418,7 @@
   "SPELL.NAME": "Name",
   "SPELL.DN": "DN",
   "SPELL.ATTRIBUTE": "Attribute",
+  "SPELL.SKILL": "Skill",
   "SPELL.TARGET": "Target",
   "SPELL.RANGE": "Range",
   "SPELL.DURATION": "Duration",
@@ -683,7 +684,9 @@
       "PreRollSpellTest" : "Pre-Roll Spell Test",
       "RollTest" : "Roll-Test",
       "RollCombatTest" : "Roll Combat Test",
-      "RollSpellTest" : "Roll Spell Test"
+      "RollSpellTest" : "Roll Spell Test",
+      "ReceiveWound" : "Receive Wound",
+      "CauseWound" : "Cause Wound"
     }
   }
 }

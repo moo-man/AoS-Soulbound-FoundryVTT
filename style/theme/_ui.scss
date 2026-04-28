@@ -132,6 +132,12 @@ body.soulbound-theme
             font-family: var(--font-header);
             background: #806b3a33;
         }
+
+        .token-initiative {
+            input {
+                background: none;
+            }
+        }
       }
 
     .placeables-sidebar search {

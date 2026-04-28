@@ -7,7 +7,6 @@ export default class CharacterCreation extends FormApplication {
         this.actor = object.actor;
         this.archetype = object.archetype.clone();
 
-        this.initializeCharacter();
     }
 
     static get defaultOptions() {
@@ -23,22 +22,48 @@ export default class CharacterCreation extends FormApplication {
     }
 
 
-    initializeCharacter() {
+    async initializeCharacter() {
         this.character = new SoulboundActor({ type: "player", name: this.object.actor.name }) // Temporary actor 
 
 
         // Only apply skills to calculate skill EXP correctly, apply attributes on submit
 
-        if (this.archetype.skills.core)
+        let coreSkill;
+        let coreSkillList = (this.archetype.skills.core.length ? this.archetype.skills.core : Object.keys(game.aos.config.skills)).map(i => {
+            return {
+                id: i,
+                name: game.aos.config.skills[i]
+            }
+        })
+        if (coreSkillList.length == 1)
         {
-            this.character.updateSource({ [`system.skills.${this.archetype.skills.core}.training`]: 1 })
-            this.character.updateSource({ [`system.skills.${this.archetype.skills.core}.focus`]: 1 })
+            coreSkill = this.archetype.skills.core[0]
         }
+        else
+        {
+            coreSkill = (await ItemDialog.create(coreSkillList, 1, {text: "Select Core Skill", title : "Core Skill"}))[0]?.id;
+        }
+
+        if (coreSkill)
+        {
+            this.character.updateSource({ [`system.skills.${coreSkill}.training`]: 1 })
+            this.character.updateSource({ [`system.skills.${coreSkill}.focus`]: 1 })
+        }
+
         this.character.updateSource({ "system.bio.archetype": this.archetype.name })
 
         this.character.prepareData();
 
         // Allows us to prevent user from going below base stats
+    }
+
+    async _render(...args)
+    {
+        if (!this.character)
+        {
+            await this.initializeCharacter();
+        }
+        await super._render(...args)
     }
 
     async getData() {

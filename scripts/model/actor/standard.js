@@ -297,8 +297,8 @@ export class StandardActorModel extends BaseSoulboundActorModel
          // Doing this here because foundry throws an error if wounds are added before the update
          if(remaining < 0 && this.combat.health.wounds.max > 0) {
              if (ineffective)
-                 remaining = -1 // ineffective can only cause minor wounds          
-             wounds = await this.parent.update(this.combat.computeNewWound(remaining));
+                 remaining = -1 // ineffective can only cause minor wounds
+             wounds = await this.parent.update(this.combat.computeNewWound(remaining, {fromItem: item, fromActor: test?.actor, fromTest: test}));
          }
  
          this.parent.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || [], messageId: test?.message?.id})

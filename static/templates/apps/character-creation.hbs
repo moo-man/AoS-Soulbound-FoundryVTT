@@ -33,25 +33,18 @@
                         <span>{{localize "HEADER.TRAINING"}}</span>
                         <span>{{localize "HEADER.FOCUS"}}</span>
                     </div>
+                    {{log this}}
                     {{#each archetype.skills.list as |skill sk|}}
                         <div class="skill" data-skill="{{skill}}">
                             <span>{{configLookup "skills" skill}}</span>
                             <span class="skill-button" data-type="training">
                                 <button type="button" data-type="dec">-</button>
-                                {{#if (eq ../archetype.skills.core skill)}}
-                                    <span class="skill-value">1</span>
-                                {{else}}
-                                    <span class="skill-value">0</span>
-                                {{/if}}
+                                    <span class="skill-value">{{lookup (lookup ../character.system.skills skill) "training"}}</span>
                                 <button type="button" data-type="inc">+</button>
                             </span>
                             <span class="skill-button" data-type="focus">
                                 <button type="button" data-type="dec">-</button>
-                                {{#if (eq ../archetype.skills.core skill)}}
-                                    <span class="skill-value">1</span>
-                                {{else}}
-                                    <span class="skill-value">0</span>
-                                {{/if}}
+                                    <span class="skill-value">{{lookup (lookup ../character.system.skills skill) "focus"}}</span>
                                 <button type="button" data-type="inc">+</button>
                             </span>
                         </div>
