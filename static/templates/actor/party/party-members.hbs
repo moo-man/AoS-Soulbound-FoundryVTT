@@ -5,7 +5,7 @@
         </div>
         <div class="list-content">
             {{#each members}}
-                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-index="{{@key}}" data-path="system.members" >
                     <div class="row-content">
                         <div class="list-name">
                             <img src="{{this.prototypeToken.texture.src}}">
@@ -13,7 +13,7 @@
                         </div>
                         <div class="flex large">{{this.system.bio.species}} - {{this.system.bio.archetype}}</div>
                         <div class="list-controls">
-                            <a class="list-control context-menu"><i class="fas fa-xmark"></i></a>
+                            <a class="list-control" data-action="listDelete" data-document="this"><i class="fas fa-xmark"></i></a>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="list-content">
                 {{#each items.party.ally}}
-                    <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}">
+                    <div class="list-row" data-uuid="{{this.uuid}}" data-id="{{this.id}}" data-index="{{@key}}">
                         <div class="row-content">
                             <div class="list-name">
                                 {{#if this.system.state}}

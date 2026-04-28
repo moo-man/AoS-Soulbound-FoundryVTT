@@ -36,12 +36,17 @@ export class PartySheet extends SoulboundActorSheet {
     async _prepareContext(options) {
         const context = await super._prepareContext(options);
         context.items.party = this.costructPartyItemLists(context.items)
-        context.members = {}
-        for (let id of this.document.system.members) {
-          let actor = game.actors.get(id);
-          context.members[id] = actor;
+        context.members = this.document.system.members.map(id => game.actors.get(id))
+        return context;
+    }
+
+    async _onDropActor(data)
+    {
+      let actor = await Actor.implementation.fromDropData(data);
+      if (actor)
+      {
+        this.document.update({"system.members" : this.document.system.members.concat(actor.id)})
       }
-      return context;
     }
 
     costructPartyItemLists(items)
