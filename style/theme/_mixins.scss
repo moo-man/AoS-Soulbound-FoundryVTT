@@ -158,6 +158,10 @@
       margin-right: 10px;
    }
 
+   blockquote.block {
+      font-style: normal;
+   }
+
    /* .block::before,
 .journal-entry-page.text .block::before {
     content: "";
@@ -167,19 +171,52 @@
    table {
       background: none;
       border: 1px solid var(--color-header-gold);
-
+      
+      thead,
       .table-header {
-
-         background: url(./assets/image/header-background.webp);
-         background-size: cover;
-         text-transform: uppercase;
-         color: white;
-         font-family: var(--font-header);
+         background: none;
+         .title {
+            background: url(./assets/image/header-background.webp);
+            background-size: cover;
+            text-transform: uppercase;
+            color: white;
+            font-family: var(--font-header);
+            .content-link {
+               color: whitesmoke;
+               border: none;
+               font-weight: normal;
+               i {
+                  color: whitesmoke;
+               }
+         }
+         .subheader {
+            font-size: var(--font-size-14);
+         }
       }
+   }
+
+   // Non embedded table
+   .table-header {
+      background: url(./assets/image/header-background.webp);
+      background-size: cover;
+      text-transform: uppercase;
+      color: white;
+      font-family: var(--font-header);
+      .content-link {
+         color: whitesmoke;
+         border: none;
+         font-weight: normal;
+         i {
+            color: whitesmoke;
+         }
+   }
+}
 
       td {
          border: 1px solid var(--color-header-gold)
       }
+
+      margin-bottom: 0.5rem;
       
    }
 

@@ -207,11 +207,13 @@ export class SoulboundTestMessageModel extends WarhammerTestMessageModel {
       let table = game.tables.getName("The Price of Failure")
       if (table)
       {
-          let {roll, results} =  await table.roll({roll : tableRoll})
-          ChatMessage.create({content : `<b>${roll.total}</b>: ${results[0].text}`, flavor : `The Price of Failure (${formula})`, speaker : test.context.speaker, roll, type : CONST.CHAT_MESSAGE_TYPES.ROLL})
+          await table.draw({roll : tableRoll});
       }
       else
-          ui.notifications.error("No Table Found")
+      {
+        tableRoll.toMessage({flavor: "Spell Failure"});
+        ui.notifications.error("No Table Found")
+      }
   }
 
   static _onAllocateOvercast(ev, target)

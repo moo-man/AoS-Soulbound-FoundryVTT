@@ -297,7 +297,7 @@ AOS.premiumModules = {
     "soulbound-bestiary" : "Soulbound Bestiary",
     "soulbound-artefacts" : "Artefacts of Power",
     "soulbound-sitm" : "Shadows in the Mist",
-
+    "soulbound-death" : "Champions of Death"
 }
 
 AOS.copyrightText = `

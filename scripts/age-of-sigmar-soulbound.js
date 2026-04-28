@@ -55,6 +55,8 @@ Hooks.once("init", () => {
     CONFIG.Item.documentClass = SoulboundItem;
     CONFIG.ActiveEffect.documentClass = SoulboundEffect
     CONFIG.ChatMessage.documentClass = SoulboundChatMessage;
+    CONFIG.RollTable.documentClass = WarhammerRollTable;
+
 
     CONFIG.Actor.dataModels["player"] = PlayerModel;
     CONFIG.Actor.dataModels["npc"] = NPCModel;
