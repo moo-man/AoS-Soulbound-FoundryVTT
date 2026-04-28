@@ -1,7 +1,7 @@
 export default class Migration {
 
     static async checkMigration() {
-        let migrationTarget = "8.0.0"
+        let migrationTarget = "9.0.0"
         let systemMigrationVersion = game.settings.get("age-of-sigmar-soulbound", "systemMigrationVersion")
 
         if (!systemMigrationVersion || foundry.utils.isNewerVersion(migrationTarget, systemMigrationVersion)) 
@@ -27,7 +27,7 @@ export default class Migration {
                 </ul>`
             })
 
-            if (foundry.utils.isNewerVersion("7.0.0", systemMigrationVersion))
+            if (foundry.utils.isNewerVersion("9.0.0", systemMigrationVersion))
             {
                 this.migrateWorld();
             }
@@ -127,6 +127,12 @@ export default class Migration {
         {
             updateData["system.archetype.name"] = actor.system.bio.archetype;
             updateData["system.bio.archetype"] = "";
+        }
+
+        if (actor.system.bio.species)
+        {
+            updateData["system.species.name"] = actor.system.bio.species;
+            updateData["system.bio.species"] = "";
         }
 
         for(let item of actor.items)
@@ -262,7 +268,7 @@ export default class Migration {
                     if (changes[i].value === "true" || changes[i].value === "false") {
                         script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} = ${changes[i].value}`
                     }
-                    else if (changes[i].value.includes("@"))
+                    else if (changes[i].value?.includes?.("@"))
                     {
                         script = `args.fields.${changes[i].key.split("-").map((i, index) => index > 0 ? i.capitalize() : i).join("")} += (${changes[i].value.replace("@", "args.actor.system.")})`
                     }
