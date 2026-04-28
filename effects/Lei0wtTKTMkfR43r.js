@@ -1,0 +1,1 @@
+return !["awareness", "determination"].includes(args.fields.skill);

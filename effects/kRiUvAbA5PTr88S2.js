@@ -1,0 +1,1 @@
+this.actor.applyDamage(this.effect.sourceActor.system.attributes.soul.value, {ignoreArmour: true})

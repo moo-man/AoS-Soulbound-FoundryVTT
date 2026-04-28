@@ -1,0 +1,1 @@
+this.actor.update({"prototypeToken.height" : 1, "prototypeToken.width" : 1});

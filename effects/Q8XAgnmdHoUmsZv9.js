@@ -1,0 +1,1 @@
+this.effect.system.itemTargets.forEach(i => i.update({name: i.setSpecifier("Decorated")}));

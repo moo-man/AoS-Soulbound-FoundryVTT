@@ -1,0 +1,1 @@
+return args.fields.skill != "channelling" || !["Amethyst", "Deathmage"].includes(args.spell?.system?.lore)

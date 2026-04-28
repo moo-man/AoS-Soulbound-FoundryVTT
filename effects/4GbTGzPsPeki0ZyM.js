@@ -1,0 +1,1 @@
+args.fields.bonusDamage += args.actor.system.skills.weaponSkill.focus;

@@ -1,0 +1,1 @@
+this.actor.applyDamage(5, {ignoreArmour: true})

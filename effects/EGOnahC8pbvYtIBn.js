@@ -1,0 +1,1 @@
+this.effect.system.itemTargets[0]?.deleteEmbeddedDocuments("ActiveEffect", [this.effect.getFlag(game.system.id, "id")]);

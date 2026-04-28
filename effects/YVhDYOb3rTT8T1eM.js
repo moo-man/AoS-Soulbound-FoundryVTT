@@ -1,0 +1,1 @@
+args.increaseSeverity.bind(this)(args);

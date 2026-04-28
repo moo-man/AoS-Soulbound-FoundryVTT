@@ -1,0 +1,1 @@
+args.fields.bonusDice += args.actor.system.combat.wounds.length

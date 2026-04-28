@@ -1,0 +1,1 @@
+return !["awareness", "survival"].includes(args.fields.skill) || args.fields.attribute != "mind"

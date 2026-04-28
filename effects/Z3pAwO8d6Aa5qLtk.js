@@ -1,0 +1,1 @@
+this.actor.applyDamage(1 + this.effect.sourceTest.result.dmg);

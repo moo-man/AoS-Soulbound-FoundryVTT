@@ -1,0 +1,1 @@
+return ["fortitude", "determination"].includes(args.fields.skill);

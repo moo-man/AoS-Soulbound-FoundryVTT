@@ -1,0 +1,1 @@
+this.actor.applyDamage(this.effect.getFlag(game.system.id, "damage") || this.effect.sourceTest.result.damage.total)

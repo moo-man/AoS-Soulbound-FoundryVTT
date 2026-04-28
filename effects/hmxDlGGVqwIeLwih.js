@@ -1,0 +1,1 @@
+args.fields.bonusDice += this.effect.sourceActor.system.skills.intimidation.training;

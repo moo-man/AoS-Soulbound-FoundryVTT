@@ -1,0 +1,1 @@
+return args.fields.attribute != "mind" || args.spell?.system.lore == "Madness"

@@ -1,0 +1,1 @@
+return args.fields.skill != "fortitude" || args.fields.attribute != "body"

@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Compendium.soulbound-core.items.Item.folkhN0UWkl41efl", this.effect);

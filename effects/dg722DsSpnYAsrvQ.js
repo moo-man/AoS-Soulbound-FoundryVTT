@@ -1,0 +1,1 @@
+return args.actor.system.combat.wounds.length == 0 || !["fortitude", "determination"].includes(args.fields.skill);

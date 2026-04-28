@@ -1,0 +1,1 @@
+return args.fields.skill == this.effect.getFlag(game.system.id, "skill");

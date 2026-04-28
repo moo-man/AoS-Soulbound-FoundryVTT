@@ -1,0 +1,1 @@
+this.actor.addEffectItems("Compendium.soulbound-death.items.Item.z2Uiaz6BGcCsW6pm", this.effect)

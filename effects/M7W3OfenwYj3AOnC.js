@@ -1,0 +1,1 @@
+return args.fields.attribute != "mind" || args.fields.skill != "channelling" || !args.spell || !["Amethyst", "Deathmage", "Madness", "Mortisan", "Underworlds", "Vampires"].includes(args.spell.system.lore)

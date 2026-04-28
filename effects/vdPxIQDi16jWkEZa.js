@@ -1,0 +1,1 @@
+this.actor.applyHealing({toughness: this.actor.system.skills.fortitude.focus})

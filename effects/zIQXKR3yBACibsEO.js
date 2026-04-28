@@ -1,0 +1,1 @@
+return args.fields.attribute != "body" || !["athletics", "might"].includes(args.fields.skill);

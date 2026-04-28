@@ -1,0 +1,2 @@
+this.script.message("Took a Minor Wound to recover Mettle");
+this.actor.update(foundry.utils.mergeObject(this.actor.system.combat.addWound("minor"), {"system.combat.mettle.value" : this.actor.system.combat.mettle.value + 1}))

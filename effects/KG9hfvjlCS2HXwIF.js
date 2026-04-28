@@ -1,0 +1,1 @@
+return args.actor.system.combat.wounds.length == 0 || !args.weapon;

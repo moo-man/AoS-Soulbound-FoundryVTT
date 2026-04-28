@@ -1,0 +1,1 @@
+args.test?.message.setFlag(game.system.id, "damage", args.damage);

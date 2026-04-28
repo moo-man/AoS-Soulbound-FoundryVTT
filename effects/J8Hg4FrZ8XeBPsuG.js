@@ -1,0 +1,1 @@
+return !(args.spell) || !["Amethyst", "Deathmage"].includes(args.spell.system.lore)

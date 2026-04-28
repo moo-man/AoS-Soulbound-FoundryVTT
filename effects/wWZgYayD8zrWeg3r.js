@@ -1,0 +1,1 @@
+this.actor.applyHealing({toughness: this.effect.sourceTest.result.toughness})

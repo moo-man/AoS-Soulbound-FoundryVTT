@@ -1,0 +1,1 @@
+args.fields.bonusDice += args.actor.system.attributes.soul.value;

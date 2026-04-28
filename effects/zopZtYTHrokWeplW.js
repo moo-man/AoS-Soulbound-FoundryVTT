@@ -1,0 +1,1 @@
+return this.actor.friendliesInZone.filter(i => i.name == "Dire Wolf").length >= 2
