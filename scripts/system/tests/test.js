@@ -14,6 +14,7 @@ export default class SoulboundTest extends WarhammerTestBase {
                 bonusDice : data.bonusDice,
                 bonusFocus : data.bonusFocus,
                 bonusSuccesses : data.bonusSuccesses || 0,
+                maximize : data.maximize || false,
                 dn : data.dn || {difficulty : data.difficulty, complexity : data.complexity, name : data.context.title},
                 allocation: data.allocation || [],
                 itemId : data.itemId,
@@ -116,7 +117,7 @@ export default class SoulboundTest extends WarhammerTestBase {
 
         for(let i = 0; i < sorted.length; i++) {
                 let die = {
-                    value : this.context.maximized ? 6 : sorted[i].result,
+                    value : this.testData.maximize ? 6 : sorted[i].result,
                     index : sorted[i].index,
                     highlight : false,
                     success: false,
@@ -155,7 +156,7 @@ export default class SoulboundTest extends WarhammerTestBase {
 
     async promptAllocation()
     {
-        if (this.context.focusAllocated)
+        if (this.context.focusAllocated || this.testData.maximize)
         {
             return;
         }
@@ -205,13 +206,6 @@ export default class SoulboundTest extends WarhammerTestBase {
 
         await this.roll();
         // this.computeResult();
-        this.sendToChat();
-    }
-
-    async maximize()
-    {
-        this.context.maximized = true;
-        await this.roll();
         this.sendToChat();
     }
 

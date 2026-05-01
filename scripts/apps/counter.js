@@ -147,6 +147,11 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
     return await this.setCounter(value + diff, type)
   }
 
+  async change(diff, type)
+  {
+    this.constructor.changeCounter(diff, type);
+  }
+
 
   static getValue(type)
   {
@@ -161,6 +166,16 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
   get doom()
   {
     return this.constructor.getValue("doom")
+  }
+
+  set soulfire(value)
+  {
+    return this.constructor.setCounter(value, "soulfire")
+  }
+
+  set doom(value)
+  {
+    return this.constructor.setCounter(value, "doom")
   }
 
 }

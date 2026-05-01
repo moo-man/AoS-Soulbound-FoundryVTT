@@ -56,6 +56,16 @@ export class BaseRollDialog extends WarhammerRollDialogV2 {
         return this.context.title;
     }
 
+    _getSubmissionData()
+    {
+        let data = super._getSubmissionData();
+        if (this.fields.maximize)
+        {
+            game.counter.soulfire--;
+        }
+        return data;
+    }
+
     async _prepareContext(options)
     {
         let context = await super._prepareContext(options);
@@ -89,6 +99,8 @@ export class BaseRollDialog extends WarhammerRollDialogV2 {
             "19": 19,
             "20": 20
         }
+
+        context.hasSoulfire = game.counter.soulfire > 0;
         return context;
     }
 
@@ -129,6 +141,7 @@ export class BaseRollDialog extends WarhammerRollDialogV2 {
             complexity : 1,
             bonusDice : 0,
             bonusFocus : 0,
+            maximize: false
         });
     }
 }

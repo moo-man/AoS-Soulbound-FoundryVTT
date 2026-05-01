@@ -13,19 +13,13 @@ export class SoulboundChatMessage extends WarhammerChatMessage
         let canReroll = li => {
             const message = game.messages.get(li.dataset.messageId);
             let test = message.system.test;
-            return game.user.isGM && li.querySelector(".selected") && test && !(test.context.rerolled || test.context.maximized) && message.isAuthor
+            return game.user.isGM && li.querySelector(".selected") && test && !(test.context.rerolled || test.testData.maximize) && message.isAuthor
         }
 
         let canRerollSelected = li => {
             const message = game.messages.get(li.dataset.messageId);
             let test = message.system.test;
-            return li.querySelector(".selected") && test && !(test.context.rerolled || test.context.maximized) && message.isAuthor
-        }
-
-        let canMaximize = li => {
-            const message = game.messages.get(li.dataset.messageId);
-            let test = message.system.test;
-            return test && !(test.context.focusAllocated || test.context.rerolled || test.context.maximized) && message.isAuthor
+            return li.querySelector(".selected") && test && !(test.context.rerolled || test.testData.maximize) && message.isAuthor
         }
 
         let canApplyHealing = li => {
@@ -46,30 +40,6 @@ export class SoulboundChatMessage extends WarhammerChatMessage
                     const message = game.messages.get(li.dataset.messageId);
                     let test = message.system.test;
                     await test.resetFocus();
-                }
-            }
-        );
-
-
-        options.unshift(
-            {
-                name: "CHAT.MAXIMIZE",
-                icon: '<i class="fas fa-sort-numeric-up-alt"></i>',
-                condition: canMaximize,
-                callback: async li => {
-
-                    if (game.counter.soulfire == 0)
-                    {
-                        return ui.notifications.error("ERROR.NotEnoughSoulfire", {localize : true})
-                    }
-
-
-                    const message = game.messages.get(li.dataset.messageId);
-                    let test = message.system.test;
-
-                    game.counter.constructor.changeCounter(-1, "soulfire")
-
-                    await test.maximize();
                 }
             }
         );

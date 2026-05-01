@@ -3,6 +3,11 @@
 {{else}}
     <p class="failure"><strong>{{localize "CHAT.FAILED" degree=result.degree}}</strong></p>
 {{/if}}
+
+{{#if testData.maximize}}
+    <p>{{{localize "CHAT.SOULFIRE_MAXIMIZED"}}}</p>
+{{/if}}
+
 {{#if context.focusAllocated}}
     <p><strong>{{localize "CHAT.FOCUS"}}</strong>: {{result.focus}} {{localize "CHAT.FOCUS_APPLIED"}}</p>
 {{else if result.focus}}
