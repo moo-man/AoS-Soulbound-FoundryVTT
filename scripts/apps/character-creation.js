@@ -285,6 +285,7 @@ export default class CharacterCreation extends FormApplication {
             element.classList.remove("placeholder")
             element.textContent = document.name
 
+            option.idType = "id";
             option.type = "item";
             option.name = document.name;
             option.documentId = document.id;
