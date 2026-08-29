@@ -47,12 +47,13 @@ export default class SoulboundEffect extends WarhammerActiveEffect {
 
         let context = {
             appendTitle: " - " + this.name,
-            skipTargets: true
+            skipTargets: true,
+            resist: this.sourceItem?.type
         };
 
         let test;
         if (transferData.avoidTest.value == "script") {
-            let script = new WarhammerScript({ label: this.effect + " Avoidance", script: transferData.avoidTest.script }, WarhammerScript.createContext(this));
+            let script = new WarhammerScript({ label: this.effect + " Avoidance", script: transferData.avoidTest.script, async: true }, WarhammerScript.createContext(this));
             return await script.execute();
         }
         else if (transferData.avoidTest.value == "item") {

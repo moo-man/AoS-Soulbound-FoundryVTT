@@ -34,27 +34,6 @@ export class NPCModel extends StandardActorModel
         }
     }
 
-    computeDerived()
-    {
-        super.computeDerived();
-        this.computeTokenSize();
-    }
-
-    computeTokenSize() {
-        if(this.isSwarm || !this.autoCalc.tokenSize || this.parent.pack) return; //Swarms are variable let the GM decide Size
-
-        let size = this.bio.size; 
-
-        if(size <= 2) {
-            this.parent.update({"prototypeToken.height" : 1, "prototypeToken.width" : 1});
-        } else if(size === 3) {
-            this.parent.update({"prototypeToken.height" : 2, "prototypeToken.width" : 2});
-        } else if(size === 4) {
-            this.parent.update({"prototypeToken.height" : 3, "prototypeToken.width" : 3});
-        } else if(size === 5) {
-            this.parent.update({"prototypeToken.height" : 4, "prototypeToken.width" : 4});
-        }
-    }
 
     async applyArchetype(archetype, apply) 
     {

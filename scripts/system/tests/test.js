@@ -231,7 +231,7 @@ export default class SoulboundTest extends WarhammerTestBase {
         {
             let id = foundry.utils.randomID()
             this.context.messageId = id;
-            return ChatMessage.create(chatData);
+            return ChatMessage.create(chatData, {keepId: true});
         }
     }
 

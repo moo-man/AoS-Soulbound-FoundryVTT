@@ -1,7 +1,7 @@
 if (this.item.name.includes("(Choose)"))
     {
         let allSpells = await warhammer.utility.findAllItems("spell", "Loading Spells");
-        let lores = ["Amber", "Amethyst", "Bright", "Celestial", "Gold", "Grey", "Jade", "Light", "The Deeps"];
+        let lores = ["Amber", "Amethyst", "Bright", "Celestial", "Gold", "Grey", "Jade", "Light", "Deeps"];
         let lore = await ItemDialog.create(lores.map(i => { return {id : i.slugify(), name : i, img : this.item.img};}), 1, {title : this.effect.name, text : "Choose Lore"});
             
         if (lore[0])

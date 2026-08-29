@@ -333,7 +333,7 @@ AOS.getZoneTraitEffects = (region, getGreatestTrait) =>
 
         let cover = getGreatestTrait([flags.traits?.cover].concat(flags.effects?.map(i => i.system.transferData.zone.traits.cover)).filter(i => i));
         let hazard = getGreatestTrait([flags.traits?.hazard].concat(flags.effects?.map(i => i.system.transferData.zone.traits.hazard)).filter(i => i));
-        let obscured = getGreatestTrait([flags.obscured].concat(flags.effects?.map(i => i.system.transferData.zone.traits.obscured)).filter(i => i));
+        let obscured = getGreatestTrait([flags.traits?.obscured].concat(flags.effects?.map(i => i.system.transferData.zone.traits.obscured)).filter(i => i));
         let difficult = [flags.traits?.difficult].concat(flags.effects?.map(i => i.system.transferData.zone.traits.difficult)).some(i => i);
         let ignoreArmour = [flags.traits?.ignoreArmour].concat(flags.effects?.map(i => i.system.transferData.zone.traits.ignoreArmour)).some(i => i);
 
@@ -483,6 +483,7 @@ AOS.systemEffects = {
         }
     },
     "minor" : {
+        id : "minor",
         name : "ZONE.MINOR_HAZARD",
         statuses : ["minor"],
         img : "icons/svg/hazard.svg",
@@ -502,6 +503,7 @@ AOS.systemEffects = {
         }
     },
     "major" : {
+        id : "major",
         name : "ZONE.MAJOR_HAZARD",
         statuses : ["major"],
         img : "icons/svg/hazard.svg",
@@ -521,6 +523,7 @@ AOS.systemEffects = {
         }
     },
     "deadly" : {
+        id : "deadly",
         name : "ZONE.DEADLY_HAZARD",
         statuses : ["deadly"],
         img : "icons/svg/hazard.svg",

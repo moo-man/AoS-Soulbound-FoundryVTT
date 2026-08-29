@@ -124,6 +124,11 @@ export class StandardCombatModel extends foundry.abstract.DataModel
         this.wounds.forEach(i => {
             this.health.wounds.value += i.damage;
         })
+
+        if (this.health.wounds.value > this.health.wounds.max)
+        {
+            this.health.wounds.mortal = true;
+        }
     }
 
     
@@ -264,15 +269,17 @@ export class StandardCombatModel extends foundry.abstract.DataModel
             }
         }
 
-        let args = {type, damage, item: fromItem, actor: fromActor, test: fromTest, toughness: remaining, increaseSeverity, decreaseSeverity};
+        let args = {type, damage, target: this.parent.parent, item: fromItem, actor: fromActor, test: fromTest, toughness: remaining, increaseSeverity, decreaseSeverity};
         this.parent.runScripts("receiveWound", args);
         fromItem?.runScripts("causeWound", args);
         fromActor?.runScripts("causeWound", args);
 
-        //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
-        if((this.health.wounds.value + damage) > this.health.wounds.max) {
-            damage = this.health.wounds.max - this.health.wounds.value
-        }
+
+        // Actually allow it to go over max so `mortal` property can be calculated (mortal if over max)
+        // //Woundtrack can't go over max so we change the value of the new wound to exactly fill it.
+        // if((this.health.wounds.value + damage) > this.health.wounds.max) {
+        //     damage = this.health.wounds.max - this.health.wounds.value
+        // }
 
         return this.addWound(args.type, args.damage)
     }

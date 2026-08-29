@@ -127,6 +127,24 @@ export class StandardActorModel extends BaseSoulboundActorModel
         this.computeItems();
         this.combat.computeRelative();
         this.power.isUndercharge = this.power.consumed > this.power.capacity;
+        this.computeTokenSize();
+
+    }
+
+    computeTokenSize() {
+        if(this.isSwarm || !this.autoCalc.tokenSize || this.parent.pack) return; //Swarms are variable let the GM decide Size
+
+        let size = this.bio.size; 
+
+        if(size <= 2) {
+            this.parent.update({"prototypeToken.height" : 1, "prototypeToken.width" : 1});
+        } else if(size === 3) {
+            this.parent.update({"prototypeToken.height" : 2, "prototypeToken.width" : 2});
+        } else if(size === 4) {
+            this.parent.update({"prototypeToken.height" : 3, "prototypeToken.width" : 3});
+        } else if(size === 5) {
+            this.parent.update({"prototypeToken.height" : 4, "prototypeToken.width" : 4});
+        }
     }
 
     computeItems() {
@@ -288,7 +306,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
              isBar: true
          }, updates);
  
-         let ret = allowed !== false ? await this.parent.update(updates) : this;
+         let update = allowed !== false ? await this.parent.update(updates) : this;
  
          let note = game.i18n.format("NOTIFICATION.APPLY_DAMAGE", {damage : damage, name : this.parent.prototypeToken.name});
          ui.notifications.notify(note);
@@ -301,14 +319,27 @@ export class StandardActorModel extends BaseSoulboundActorModel
              wounds = await this.parent.update(this.combat.computeNewWound(remaining, {fromItem: item, fromActor: test?.actor, fromTest: test}));
          }
  
-         this.parent.applyEffect({effectData : item?.damageEffects.map(i => i.convertToApplied(test)) || [], messageId: test?.message?.id})
+         let damageEffectData = [];
+         for(let effect of item?.damageEffects)
+            {
+                let effectData = effect.convertToApplied(test);
+                if (!(await effect.runPreApplyScript({test,damage, effectData})))
+                {
+                    
+                }
+                else 
+                {
+                    damageEffectData.push(effectData);
+                }
+            }
+
+         this.parent.applyEffect({effectData: damageEffectData, messageId: test?.message?.id})
  
+         await Promise.all(this.runScripts("takeDamage", {actor : this.parent, update, wounds, remaining, item, damage, test, text, tags}) || []);
+         await Promise.all(test?.actor.runScripts("applyDamage", {actor : this.parent, update, wounds, remaining, item, damage, test, text, tags}) || []);
+         await Promise.all(item?.runScripts("applyDamage", {actor : this.parent, update, wounds, remaining, item, damage, test, text, tags}) || []);
  
-         await Promise.all(this.runScripts("takeDamage", {actor : this.parent, update: ret, wounds, remaining, damage, test, text, tags}) || []);
-         await Promise.all(test?.actor.runScripts("applyDamage", {actor : this.parent, update: ret, wounds, remaining, damage, test, text, tags}) || []);
-         await Promise.all(item?.runScripts("applyDamage", {actor : this.parent, update: ret, wounds, remaining, damage, test, text, tags}) || []);
- 
-         return ret;
+         return {damage, remaining, wounds, update};
      }
  
      /**
