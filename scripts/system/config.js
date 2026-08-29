@@ -542,6 +542,22 @@ AOS.systemEffects = {
             ]
         }
     },
+    "charged" : {
+        id : "charged",
+        name : "EFFECT.Charged",
+        statuses : ["charged"],
+        img : "",
+        system : {
+            changes: [{key: "system.combat.defence.bonus", mode : 2, value : -1}],
+            scriptData : [
+                {
+                    "script": "this.effect.delete();",
+                    "label": "Remove",
+                    "trigger": "startTurn",
+                }
+            ]
+        }
+    },
 }
 
 CONFIG.statusEffects = [

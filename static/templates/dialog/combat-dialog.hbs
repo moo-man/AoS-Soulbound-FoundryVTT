@@ -51,6 +51,14 @@
                 <input name="doubleFocus" type="checkbox" {{checked fields.doubleFocus}} />
             </div>
         </div>
+        {{#if data.weapon.system.isMelee}}
+        <div class="form-group">
+            <label>{{localize "DIALOG.CHARGING"}}</label>
+            <div class="form-fields">
+                <input name="charging" type="checkbox" {{checked fields.charging}} />
+            </div>
+        </div>
+        {{/if}}
         {{#if (eq data.actor.type "player")}}
         <div class="form-group  {{#unless hasSoulfire}}inactive{{/unless}}" data-tooltip="{{#if hasSoulfire}}DIALOG.MAXIMIZE_TT{{else}}No Soulfire!{{/if}}" data-tooltip-direction="RIGHT">
             <label for="{{rootId}}-maximize">{{localize "DIALOG.MAXIMIZE"}}</label>

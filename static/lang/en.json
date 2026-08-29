@@ -201,6 +201,7 @@
   "DIALOG.COMBAT_ROLL": "Combat Roll",
   "DIALOG.OPPONENT": "Opponent",
   "DIALOG.CUSTOM_ROLL": "Custom Roll",
+  "DIALOG.CHARGING": "Charging",
   "DIALOG.DOUBLE_TRAINING": "Double Training",
   "DIALOG.DOUBLE_FOCUS": "Double Focus",
   "DIALOG.DUAL_WIELDING": "Dual Wielding",
@@ -641,6 +642,7 @@
   "EFFECT.HideIf" : "Hide If",
   "EFFECT.ActivateHint" : "Function must return true for automatic activation. Leave blank for manual selection.",
   "EFFECT.HideHint" : "Function must return true to prevent the effect script from showing in the dialog.",
+  "EFFECT.Charged" : "Charge Defense Penalty",
 
   "INITIALIZER.Complete": "Initialization Complete",
   "INITIALIZER.Skipped": "Skipped Initialization.",

@@ -81,6 +81,10 @@ export class CombatRollDialog extends CommonRollDialog {
                 this.fields.secondaryPool = Math.floor(dice / 2);
             }
         }
+        if (this.fields.charging)
+        {
+            this.fields.bonusDice++;
+        }
     }
 
     numberOfDice()
@@ -227,6 +231,15 @@ export class CombatRollDialog extends CommonRollDialog {
         super._onFieldChange(ev);
     }
 
+    // Actions to be performed after submission
+    async onSubmit(submitData)
+    {
+        if (this.fields.charging)
+        {
+            this.actor.addCondition("charged");
+        }
+    }
+
 
     _defaultFields() 
     {
@@ -234,6 +247,7 @@ export class CombatRollDialog extends CommonRollDialog {
             bonusDamage : 0,
             primaryDefence : 3,
             secondaryDefence : 3,
+            charging: false,
             dualWeapon : ""
         });
     }
