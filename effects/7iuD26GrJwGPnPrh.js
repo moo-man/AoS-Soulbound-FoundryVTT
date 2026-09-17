@@ -1,0 +1,1 @@
+return ["body", "mind"].includes(args.fields.attribute)

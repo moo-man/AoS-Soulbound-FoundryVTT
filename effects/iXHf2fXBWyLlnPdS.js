@@ -1,0 +1,1 @@
+this.actor.applyHealing({toughness: this.effect.getFlag(game.system.id, "successes")});

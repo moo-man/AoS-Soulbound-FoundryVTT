@@ -1,0 +1,1 @@
+return args.targets.some(t => t.actor.system.combat.armour.value == 0)

@@ -1,0 +1,1 @@
+return this.actor.combat.initiative.total > args.targets[0]?.actor?.combat?.initiative?.total

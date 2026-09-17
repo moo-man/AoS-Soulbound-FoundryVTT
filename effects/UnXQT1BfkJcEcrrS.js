@@ -1,0 +1,1 @@
+return args.weapon || args.spell || args.fields.attribute == "body"

@@ -1,0 +1,1 @@
+return this.actor.system.doom >= 3 && args.fields.charging;

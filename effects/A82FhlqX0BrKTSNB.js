@@ -1,0 +1,1 @@
+args.fields.bonusDamage += this.effect.sourceActor.system.skills.devotion.focus;

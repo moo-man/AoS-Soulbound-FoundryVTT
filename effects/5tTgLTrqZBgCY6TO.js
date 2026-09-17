@@ -1,0 +1,1 @@
+return args.targets.some(t => t.actor.system.combat.health.wounds.value > 0 || t.actor.system.combat.mettle.value > 0)

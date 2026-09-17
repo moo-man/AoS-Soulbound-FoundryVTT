@@ -1,0 +1,1 @@
+args.fields.bonusDice += this.effect.getFlag(game.system.id, "successes") || 1;

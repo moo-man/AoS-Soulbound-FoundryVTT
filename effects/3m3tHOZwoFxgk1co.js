@@ -1,0 +1,1 @@
+return ["channelling", "devotion"].includes(args.fields.skill);

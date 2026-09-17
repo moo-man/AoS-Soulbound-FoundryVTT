@@ -1,0 +1,1 @@
+return this.item.specifier == "Depleted";

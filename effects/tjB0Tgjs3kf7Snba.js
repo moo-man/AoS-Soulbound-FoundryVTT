@@ -1,0 +1,1 @@
+return args.weapon && args.actor.uuid == this.effect.sourceActor.uuid;

@@ -1,0 +1,1 @@
+await this.actor.applyDamage(3, {ignoreArmour: true, hazard: true});

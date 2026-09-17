@@ -1,0 +1,1 @@
+return !!args.targets[0]?.actor?.hasCondition("prone")

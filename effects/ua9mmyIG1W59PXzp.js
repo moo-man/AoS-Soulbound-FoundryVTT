@@ -1,0 +1,1 @@
+this.effect.updateSource({name: `Magic Nikked (${this.actor.items.get(this.effect.flags[game.system.id].spell)?.name})`});

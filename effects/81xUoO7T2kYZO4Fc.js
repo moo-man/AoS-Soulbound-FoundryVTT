@@ -1,0 +1,1 @@
+return args.weapon || args.spell || ["arcana", "athletics", "awareness", "ballisticSkill", "channelling", "crafting", "determination", "devotion", "dexterity", "fortitude", "lore", "might", "reflexes", "theology", "weaponSkill"].includes(args.fields.skill)

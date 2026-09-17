@@ -1,0 +1,1 @@
+return ["determination", "fortitude"].includes(args.fields.skill) && args.fields.attribute == "soul"

@@ -1,0 +1,1 @@
+return Array.from(args.targets).every(target => target?.actor?.uuid != this.effect.sourceActor.uuid);

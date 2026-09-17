@@ -1,0 +1,1 @@
+return args.actor.system.combat.health.toughness.value < args.actor.system.combat.health.toughness.max || args.actor.system.combat.health.wounds.value

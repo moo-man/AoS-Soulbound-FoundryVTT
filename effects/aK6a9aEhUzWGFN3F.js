@@ -1,0 +1,1 @@
+return args.fields.skill != "determination" || this.effect.sourceActor?.hasCondition("prone") || !this.effect.sourceItem.system.equipped;

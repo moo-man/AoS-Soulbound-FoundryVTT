@@ -1,0 +1,1 @@
+return !["stealth", "awareness"].includes(args.fields.skill);

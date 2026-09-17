@@ -1,0 +1,1 @@
+return args.target?.system.bio.faction == "Corrupted by Chaos" || args.target?.system.bio.role == "Daemon";

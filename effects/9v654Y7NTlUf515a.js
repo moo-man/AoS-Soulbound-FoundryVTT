@@ -1,0 +1,1 @@
+this.actor.addCondition("stunned", {}, {"duration" : {value: this.effect.duration.value, units: "rounds"}})

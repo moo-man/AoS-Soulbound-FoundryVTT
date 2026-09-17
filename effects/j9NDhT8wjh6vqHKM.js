@@ -1,0 +1,1 @@
+return args.weapon || args.spell || !["guile", "intimidation", "intuition"].includes(args.fields.skill)

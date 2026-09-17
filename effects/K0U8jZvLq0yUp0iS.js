@@ -1,0 +1,1 @@
+return this.actor.system.doom < 3 || !(args.weapon) || args.weapon.id != this.effect.item.id

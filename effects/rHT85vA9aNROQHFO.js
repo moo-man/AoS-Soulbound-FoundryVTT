@@ -1,0 +1,1 @@
+this.effect.updateSource({"duration.units": "rounds", "duration.value" : this.effect.getFlag(game.system.id, "successes")})

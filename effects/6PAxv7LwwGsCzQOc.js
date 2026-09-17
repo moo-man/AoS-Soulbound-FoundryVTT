@@ -1,0 +1,1 @@
+return args.target?.system.combat.health.toughness.value < args.target?.system.combat.health.toughness.max

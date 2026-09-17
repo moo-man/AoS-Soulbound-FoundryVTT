@@ -1,0 +1,1 @@
+return !args.weapon || args.target?.system.bio.size != 5;

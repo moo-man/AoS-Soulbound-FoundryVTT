@@ -1,0 +1,1 @@
+return args.actor.itemTypes.weapon.filter(i => i.system.isEquipped).some(weapon => weapon?.effects.contents.some(e => e.statuses.has(this.effect.getFlag("age-of-sigmar-soulbound", "realmstone"))))

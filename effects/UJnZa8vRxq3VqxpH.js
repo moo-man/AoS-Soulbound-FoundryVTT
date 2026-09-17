@@ -1,0 +1,1 @@
+return args.weapon && args.targets.length && args.targets[0].actor.bio.size >= 3

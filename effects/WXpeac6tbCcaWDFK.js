@@ -1,0 +1,1 @@
+return !["guile", "intuition", "intimidation"].includes(args.fields.skill);

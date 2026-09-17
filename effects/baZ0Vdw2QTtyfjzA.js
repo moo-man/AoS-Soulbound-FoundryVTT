@@ -1,0 +1,1 @@
+return args.weapon?.name == "Blade of Blood"

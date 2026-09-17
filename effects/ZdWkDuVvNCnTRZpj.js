@@ -1,0 +1,1 @@
+return this.actor.system.doom > 2

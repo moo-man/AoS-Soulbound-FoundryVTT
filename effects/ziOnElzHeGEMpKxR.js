@@ -1,0 +1,1 @@
+this.actor.applyHealing({toughness: this.effect.sourceActor.system.skills.devotion.training});

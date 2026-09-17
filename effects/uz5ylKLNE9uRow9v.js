@@ -1,0 +1,1 @@
+this.actor.applyHealing({toughness: Math.ceil(this.actor.system.attributes.body.value / 2) + this.effect.sourceActor.system.attributes.soul.value});

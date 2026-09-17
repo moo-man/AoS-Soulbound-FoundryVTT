@@ -1,0 +1,1 @@
+return args.fields.bonusDice += this.effect.sourceActor.system.skills.devotion.training;

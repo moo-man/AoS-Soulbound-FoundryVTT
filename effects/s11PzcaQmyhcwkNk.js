@@ -1,0 +1,1 @@
+return ["spell", "miracle"].includes(args.context.resist)

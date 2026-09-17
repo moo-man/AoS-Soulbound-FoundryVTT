@@ -1,0 +1,1 @@
+return !args.weapon || args.fields.attribute != "body" || ["weaponSkill", "ballisticSkill"].includes(args.fields.skill)

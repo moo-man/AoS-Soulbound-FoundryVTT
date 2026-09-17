@@ -1,0 +1,1 @@
+return this.actor.combat.health.wounds.value == 0

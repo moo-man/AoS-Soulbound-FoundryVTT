@@ -1,0 +1,1 @@
+return Array.from(args.targets)[0]?.actor?.uuid == this.effect.getFlag(game.system.id, "target")

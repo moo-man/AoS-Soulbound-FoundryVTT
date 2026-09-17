@@ -1,0 +1,1 @@
+args.fields.bonusDamage += game.counter.doom

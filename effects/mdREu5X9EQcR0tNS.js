@@ -1,0 +1,2 @@
+let woundDiff = this.actor.system.combat.health.wounds.max - this.actor.system.combat.health.wounds.value;
+await this.actor.update(foundry.utils.mergeObject({"system.combat.health.toughness.value" : 0}, this.actor.system.combat.addWound("", woundDiff)));

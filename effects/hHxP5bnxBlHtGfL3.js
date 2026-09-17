@@ -1,0 +1,1 @@
+return args.actor.system.bio.size > 3 || args.actor.system.bio.role == "Beast" || args.actor.system.bio.faction == "Ogor";

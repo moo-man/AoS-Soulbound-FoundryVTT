@@ -1,0 +1,1 @@
+return !(args.weapon) || args.weapon.category != "melee" || args.weapon.id != this.effect.item.id

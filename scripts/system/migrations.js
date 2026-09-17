@@ -17,14 +17,10 @@ export default class Migration {
                 <li><p><a href="https://moo-man.github.io/AoS-Soulbound-FoundryVTT/pages/troubleshooting.html">Troubleshooting</a></p></li>
                 </ul>
                 <p><strong>Note</strong>: The Wiki is still heavily WIP, having just been created.</p>
-                <p><strong>Also Note</strong>: Character Creation has not been converted to AppV2 yet (see below), until then, it may have styling issues and bugs!</p>
+                <p><strong>Also Note</strong>: Character Creation has not been converted to AppV2 yet, until then, it may have styling issues and bugs!</p>
                 <hr>
-                <h1>Soulbound in Foundry V13</h1>
-                <p>As Foundry itself progresses in its adoption of its new application framework, so too has the Soulbound system. All sheets and applications have been converted to use AppV2, my hope is that I have covered all existing functionality, but it is inevitable that more complex sheets (such as Actor sheets) may be missing some features here and there. Please be patient as I work through issues that arise!
-                <ul>
-                    <li><p>Actor and Item Sheets in V2 have had their <em>right click</em> functionalities greatly expanded. You can right click any owned Item or Active Effect to see a context menu for various actions.</p></li>
-                    <li><p>Module Initialization has been centralized in the System settings, check the wiki link above!</p></li>
-                </ul>`
+                <h2>Using your Purchased Content</h2>
+                    <p>If you purchased a premium module from Cubicle 7 for this system, see the <strong>Premium Content</strong> link above for instructions on how to use it.</p>`
             })
 
             if (foundry.utils.isNewerVersion("9.0.0", systemMigrationVersion))

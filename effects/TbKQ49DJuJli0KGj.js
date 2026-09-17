@@ -1,0 +1,1 @@
+this.actor.applyDamage(this.effect.getFlag(game.system.id, "damage" || 0) + this.effect.sourceTest.result.bonusDamage)

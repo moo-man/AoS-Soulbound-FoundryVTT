@@ -1,0 +1,1 @@
+return (args.weapon.id != this.effect.item.id) || (!args.targets[0]?.actor?.hasCondition("prone"))

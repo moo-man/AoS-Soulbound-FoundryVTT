@@ -1,0 +1,1 @@
+return args.actor.system.combat.speeds.flight == "none" && args.weapon?.system.isMelee

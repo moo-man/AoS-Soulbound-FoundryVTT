@@ -1,0 +1,1 @@
+return !["survival", "might", "intimidation", "fortitude", "entertain", "reflexes", "nature"].includes(args.fields.skill) || args.weapon || args.miracle || args.spell;

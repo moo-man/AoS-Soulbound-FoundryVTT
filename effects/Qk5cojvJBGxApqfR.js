@@ -1,0 +1,1 @@
+return args.fields.skill == this.effect.flags[game.system.id]?.forbiddenKnowledge

@@ -1,0 +1,1 @@
+return this.actor.combat.wounds.length > 0 && this.actor.combat.health.toughness.value == 0

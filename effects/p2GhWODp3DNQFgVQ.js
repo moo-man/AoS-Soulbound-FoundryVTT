@@ -1,0 +1,1 @@
+this.actor.system.bio.size = Math.min(5, this.actor.system.bio.size + 1);

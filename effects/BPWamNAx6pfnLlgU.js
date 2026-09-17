@@ -1,0 +1,1 @@
+return args.targets.some(t => t.actor.system.skills.intimidation.training > 0 || t.actor.system.skills.intimidation.focus > 0)

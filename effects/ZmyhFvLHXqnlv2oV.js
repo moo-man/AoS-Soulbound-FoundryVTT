@@ -1,0 +1,1 @@
+return args.targets.some(t => ["Undead", "Daemon"].includes(t.actor.system.bio.role))

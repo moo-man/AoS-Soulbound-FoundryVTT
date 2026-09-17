@@ -1,0 +1,1 @@
+this.item.update({name: this.item.setSpecifier("Depleted")});

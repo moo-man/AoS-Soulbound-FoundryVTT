@@ -1,0 +1,1 @@
+this.actor.system.combat.health.toughness.bonus += this.actor.system.skills.might.training;

@@ -1,0 +1,1 @@
+return args.spell && args.spell.name == "Arcane Bolt"

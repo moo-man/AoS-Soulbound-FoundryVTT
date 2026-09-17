@@ -1,0 +1,1 @@
+return ["entertain", "guile", "intuition"].includes(args.fields.skill)

@@ -1,0 +1,1 @@
+return !args.weapon || args.actor.system.bio.role != "Beast";

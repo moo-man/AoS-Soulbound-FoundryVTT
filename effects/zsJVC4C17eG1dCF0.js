@@ -1,0 +1,2 @@
+args.fields.bonusDice += args.actor.system.skills.devotion.training;
+args.fields.difficulty--;

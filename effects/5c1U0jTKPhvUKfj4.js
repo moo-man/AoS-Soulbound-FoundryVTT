@@ -1,0 +1,1 @@
+return !args.fields.skill || args.weapon || args.spell || args.miracle;

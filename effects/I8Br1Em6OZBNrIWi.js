@@ -1,0 +1,1 @@
+return this.actor.bio.role == "Beast"
