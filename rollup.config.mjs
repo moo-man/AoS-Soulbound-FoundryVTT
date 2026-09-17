@@ -1,14 +1,26 @@
 import fs from "fs";
-import getSystemPath from "./foundry-path.mjs";
+import foundryPath from "./foundry-path.js";
 import copy from 'rollup-plugin-copy-watch'
 import postcss from "rollup-plugin-postcss"
 import jscc from 'rollup-plugin-jscc'
+import simpleGit from 'simple-git';
+import yargs from 'yargs';
 
-let manifest = JSON.parse(fs.readFileSync("./system.json"))
+let args = yargs(process.argv.slice(2)).parse();
 
-let systemPath = getSystemPath(manifest.id, manifest.compatibility.verified);
+let latest = args.configLatest;
+if (!latest)
+{
+    latest = await new Promise(resolve => {
+        simpleGit({baseDir: process.cwd()}).tags((err, tags) => resolve(tags.latest));
+    })
+}
 
-console.log("Bundling to " + systemPath)
+let manifest = JSON.parse(fs.readFileSync("./system.json"));
+let systemPath = foundryPath(manifest.id, manifest.compatibility.verified);
+
+console.log("Setting Version " + latest)
+console.log("Bundling to " + systemPath);
 
 export default {
   input: [`./scripts/${manifest.id}.js`, `./style/${manifest.id}.scss`],
@@ -25,7 +37,7 @@ export default {
         copy({
             targets : [
                 {src : "./template.json", dest : systemPath},
-                {src : "./system.json", dest : systemPath},
+                {src : "./system.json", dest : systemPath, transform: (contents) => contents.toString().replaceAll("@VERSION", latest)},
                 {src : "./static/*", dest : systemPath},
             ],
             watch: process.env.NODE_ENV == "production" ? false : ["./static/*/**", "system.json", "template.json"]

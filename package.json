@@ -26,6 +26,8 @@
     "rollup-plugin-jscc": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "sass": "^1.53.0",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "simple-git": "^3.36.0",
+    "yargs": "^18.1.0"
   }
 }
