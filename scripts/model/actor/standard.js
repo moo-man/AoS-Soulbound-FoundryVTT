@@ -238,12 +238,12 @@ export class StandardActorModel extends BaseSoulboundActorModel
       * applies Damage to the actor
       * @param {int} damages 
       */
-     async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test, item, tags=[]}={}) {
+     async applyDamage(damage, {ignoreArmour = false, penetrating = 0, ineffective = false, restraining = false, test, item, hazard=false, tags=[]}={}) {
          let armour = this.combat.armour.value
          
          let abort = undefined;
          let text = [];
-         let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this.parent, abort, test, item, text, tags}
+         let args = {damage, armour, ignoreArmour, penetrating, ineffective, restraining, actor : this.parent, abort, test, item, hazard, text, tags}
          await Promise.all(this.parent.runScripts("preTakeDamage", args) || []);
          await Promise.all(test?.actor.runScripts("preApplyDamage", args) || []);
          await Promise.all(item?.runScripts("preApplyDamage", args) || []);
@@ -276,7 +276,7 @@ export class StandardActorModel extends BaseSoulboundActorModel
              damage = 0
  
  
-         args = {actor : this.parent, damage, test, item, abort, text, tags}
+         args = {actor : this.parent, damage, test, item, abort, hazard, text, tags}
          await Promise.all(this.parent.runScripts("takeDamageMod", args) || []);
          await Promise.all(test?.actor.runScripts("applyDamageMod", args) || []);
          await Promise.all(item?.runScripts("applyDamageMod", args) || []);
@@ -335,9 +335,9 @@ export class StandardActorModel extends BaseSoulboundActorModel
 
          this.parent.applyEffect({effectData: damageEffectData, messageId: test?.message?.id})
  
-         await Promise.all(this.runScripts("takeDamage", {actor : this.parent, update, wounds, remaining, item, damage, test, text, tags}) || []);
-         await Promise.all(test?.actor.runScripts("applyDamage", {actor : this.parent, update, wounds, remaining, item, damage, test, text, tags}) || []);
-         await Promise.all(item?.runScripts("applyDamage", {actor : this.parent, update, wounds, remaining, item, damage, test, text, tags}) || []);
+         await Promise.all(this.runScripts("takeDamage", {actor : this.parent, update, wounds, remaining, item, damage, hazard, test, text, tags}) || []);
+         await Promise.all(test?.actor.runScripts("applyDamage", {actor : this.parent, update, wounds, remaining, item, damage, hazard, test, text, tags}) || []);
+         await Promise.all(item?.runScripts("applyDamage", {actor : this.parent, update, wounds, remaining, item, damage, hazard, test, text, tags}) || []);
  
          return {damage, remaining, wounds, update};
      }

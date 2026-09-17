@@ -101,6 +101,16 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
         ev.target.select();
       })
     })
+
+    this.element.querySelector("a.party")?.addEventListener("mousedown", (async ev => {
+      if (ev.button == 0)
+        this.party.sheet.render({force: true})
+      else 
+      {
+        await game.settings.set('age-of-sigmar-soulbound', 'counterParty', "")
+        game.counter.render({force: true})
+      }
+    }))
   }
 
   static async  _onStepValue(ev, target)
@@ -123,6 +133,12 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
   static async setCounter(value, type) {
     value = Math.round(value);
 
+    if (this.party)
+    {
+      await this.party.update({[`system.${type}.value`] : value});
+      return value;
+    }
+
     if (!game.user.isGM) {
       await SocketHandlers.call("setCounter", {value, type}, "GM")
     }
@@ -143,7 +159,7 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
    * @param type  Type of counter, "soulfire" or "doom"
    */
   static async changeCounter(diff, type) {
-    let value = game.settings.get('age-of-sigmar-soulbound', type);
+    let value = this.party ? this.party.system[type].value : game.settings.get('age-of-sigmar-soulbound', type);
     return await this.setCounter(value + diff, type)
   }
 
@@ -155,7 +171,7 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
 
   static getValue(type)
   {
-      return game.settings.get('age-of-sigmar-soulbound', type);
+      return this.party ? this.party.system[type].value : game.settings.get('age-of-sigmar-soulbound', type);
   }
 
   get soulfire()
@@ -178,12 +194,20 @@ export default class SoulboundCounter extends HandlebarsApplicationMixin(Applica
     return this.constructor.setCounter(value, "doom")
   }
 
+  static get party() {
+    return game.actors.get(game.settings.get('age-of-sigmar-soulbound', 'counterParty'));
+  }
+
+  get party() {
+    return this.constructor.party;
+  }
+
 }
 
 
 Hooks.on("ready", (app, html, options) => {
   let button = document.createElement("li")
-  button.innerHTML = `<button class='control ui-control layer icon fa-solid fa-input-numeric' data-tooltip="${game.i18n.localize("CONTROLS.WNGCounterToggle")}"></button>`
+  button.innerHTML = `<button class='control ui-control layer icon fa-solid fa-input-numeric' data-tooltip="${game.i18n.localize("CONTROLS.CounterToggle")}"></button>`
   button.addEventListener("click", ev => {
     // Retain show/hide on refresh by storing in settings
     let position = game.settings.get("age-of-sigmar-soulbound", "counterPosition")

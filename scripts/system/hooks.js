@@ -240,9 +240,9 @@ export default function registerHooks() {
       /**
    * Add right click option to actors to add all basic skills
    */
-  Hooks.on("getActorDirectoryEntryContext", async (html, options) => {
+  Hooks.on("getActorContextOptions", async (html, options) => {
     let canLink = li => {
-      let actor = game.actors.get(li.dataset.documentId)
+      let actor = game.actors.get(li.dataset.entryId)
       return actor.type == "party"
     }
     options.push(
@@ -252,7 +252,7 @@ export default function registerHooks() {
         condition: game.user.isGM && canLink,
         icon: '<i class="fas fa-link"></i>',
         callback: async target => {
-          await game.settings.set('age-of-sigmar-soulbound', 'counterParty', target.attr('data-document-id'))
+            await game.settings.set('age-of-sigmar-soulbound', 'counterParty', target.dataset.entryId);
             game.counter.render({force: true})
         }
       })

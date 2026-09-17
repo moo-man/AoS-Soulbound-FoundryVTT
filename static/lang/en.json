@@ -662,6 +662,8 @@
   "UPDATER.Error": "You can only update if you've initialized this module at least once.",
   "UPDATER.Notification": "Created {created} and updated {updated} documents from {name} - {version}",
 
+  "CONTROLS.CounterToggle" : "Toggle Counter",
+
   "UPDATER.ResolveDuplicates" : "Resolve Duplicates",
   "UPDATER.ResolveDuplicatesNote" : "These Documents already exist in the world; would you like to apply the data from the initialized module instead?<br><br>Leaving a Document checked will apply the new data, otherwise no modifications will be made.",
 

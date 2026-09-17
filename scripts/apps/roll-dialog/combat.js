@@ -226,7 +226,7 @@ export class CombatRollDialog extends CommonRollDialog {
         }
         else if (ev.target.name == "secondaryPool")
         {
-            this.poolModified = "secondary"
+            this.poolModified = "secondary";
         }
         super._onFieldChange(ev);
     }
@@ -234,7 +234,7 @@ export class CombatRollDialog extends CommonRollDialog {
     // Actions to be performed after submission
     async onSubmit(submitData)
     {
-        if (this.fields.charging)
+        if (this.fields.charging && !this.flags.ignoreChargePenalty)
         {
             this.actor.addCondition("charged");
         }

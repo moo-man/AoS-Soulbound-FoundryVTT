@@ -1,1 +1,1 @@
-return !args.weapon || args.weapon.system.isRanged || args.spell;
+return !args.weapon || !args.fields.charging;

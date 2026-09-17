@@ -490,12 +490,12 @@ AOS.systemEffects = {
         system : {
             scriptData : [
                 {
-                    "script": "this.actor.applyDamage(1, {tags : this.effect.zoneTags});",
+                    "script": "this.actor.applyDamage(1, {hazard: true, tags : this.effect.zoneTags});",
                     "label": "Damage",
                     "trigger": "immediate",
                 },
                 {
-                    "script": "this.actor.applyDamage(1, {tags : this.effect.zoneTags});",
+                    "script": "this.actor.applyDamage(1, {hazard: true, tags : this.effect.zoneTags});",
                     "label": "Damage (Start Turn)",
                     "trigger": "startTurn",
                 }
@@ -510,12 +510,12 @@ AOS.systemEffects = {
         system : {
             scriptData : [
                 {
-                    "script": "this.actor.applyDamage(3, {tags : this.effect.zoneTags});",
+                    "script": "this.actor.applyDamage(3, {hazard: true, tags : this.effect.zoneTags});",
                     "label": "Damage",
                     "trigger": "immediate",
                 },
                 {
-                    "script": "this.actor.applyDamage(3, {tags : this.effect.zoneTags});",
+                    "script": "this.actor.applyDamage(3, {hazard: true, tags : this.effect.zoneTags});",
                     "label": "Damage (Start Turn)",
                     "trigger": "startTurn",
                 }
@@ -530,12 +530,12 @@ AOS.systemEffects = {
         system : {
             scriptData : [
                 {
-                    "script": "this.actor.applyDamage(5, {tags : this.effect.zoneTags});",
+                    "script": "this.actor.applyDamage(5, {hazard: true, tags : this.effect.zoneTags});",
                     "label": "Damage",
                     "trigger": "immediate",
                 },
                 {
-                    "script": "this.actor.applyDamage(5, {tags : this.effect.zoneTags});",
+                    "script": "this.actor.applyDamage(5, {hazard: true, tags : this.effect.zoneTags});",
                     "label": "Damage (Start Turn)",
                     "trigger": "startTurn",
                 }

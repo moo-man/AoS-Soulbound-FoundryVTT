@@ -9,7 +9,8 @@ export default class CombatTest extends SoulboundTest {
         {
             this.testData.combat = data.combat;
             this.testData.combat.bonusDamage = data.bonusDamage;
-            this.testData.dualWieldingData = data.dualWieldingData
+            this.testData.dualWieldingData = data.dualWieldingData;
+            this.testData.charging = data.charging;
         }
 
     }
